@@ -25,9 +25,10 @@
     
     UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar.png"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
-    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"nav_bar.png"]];
+    [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
 
-    [self.window.rootViewController performSegueWithIdentifier:@"toLogin" sender:self.window.rootViewController];
+
+//    [self.window.rootViewController performSegueWithIdentifier:@"toLogin" sender:self.window.rootViewController];
 
     
     

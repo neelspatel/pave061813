@@ -32,7 +32,6 @@
 		185D8582177080EE007733FA /* profile_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D857F177080EE007733FA /* profile_icon.png */; };
 		185D8583177080EE007733FA /* road_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D8580177080EE007733FA /* road_icon.png */; };
 		185D8584177080EE007733FA /* social_feed_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D8581177080EE007733FA /* social_feed_icon.png */; };
-		185D8586177082D4007733FA /* nav_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D8585177082D4007733FA /* nav_bar.png */; };
 		185D8589177085EF007733FA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185D8588177085EF007733FA /* LoginViewController.m */; };
 		18805DCA1770E0630059C37B /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805DC91770E0630059C37B /* GameController.m */; };
 		18805DE91770E0E30059C37B /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805DCD1770E0E30059C37B /* MKAnnotationView+WebCache.m */; };
@@ -78,6 +77,9 @@
 		18805E491770EC910059C37B /* PaveAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805E481770EC910059C37B /* PaveAPIClient.m */; };
 		18805E4F1770ECEC0059C37B /* FeedObjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805E4D1770ECEB0059C37B /* FeedObjectCell.m */; };
 		18805E53177134F10059C37B /* question_box.png in Resources */ = {isa = PBXBuildFile; fileRef = 18805E52177134F10059C37B /* question_box.png */; };
+		18805E59177143E70059C37B /* top_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 18805E57177143E70059C37B /* top_bar.png */; };
+		18BEC3E317714E8A001CD508 /* nav_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 18BEC3E217714E8A001CD508 /* nav_bar.png */; };
+		18BEC3E6177150C1001CD508 /* PersonalFeedController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BEC3E5177150C1001CD508 /* PersonalFeedController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,7 +125,6 @@
 		185D857F177080EE007733FA /* profile_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile_icon.png; sourceTree = "<group>"; };
 		185D8580177080EE007733FA /* road_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = road_icon.png; sourceTree = "<group>"; };
 		185D8581177080EE007733FA /* social_feed_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = social_feed_icon.png; sourceTree = "<group>"; };
-		185D8585177082D4007733FA /* nav_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_bar.png; sourceTree = "<group>"; };
 		185D8587177085EF007733FA /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		185D8588177085EF007733FA /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		18805DC91770E0630059C37B /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
@@ -183,6 +184,10 @@
 		18805E4C1770ECEB0059C37B /* FeedObjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedObjectCell.h; sourceTree = "<group>"; };
 		18805E4D1770ECEB0059C37B /* FeedObjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedObjectCell.m; sourceTree = "<group>"; };
 		18805E52177134F10059C37B /* question_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = question_box.png; sourceTree = "<group>"; };
+		18805E57177143E70059C37B /* top_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top_bar.png; sourceTree = "<group>"; };
+		18BEC3E217714E8A001CD508 /* nav_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_bar.png; sourceTree = "<group>"; };
+		18BEC3E4177150C1001CD508 /* PersonalFeedController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalFeedController.h; sourceTree = "<group>"; };
+		18BEC3E5177150C1001CD508 /* PersonalFeedController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalFeedController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -257,6 +262,8 @@
 				185D8587177085EF007733FA /* LoginViewController.h */,
 				185D8588177085EF007733FA /* LoginViewController.m */,
 				185D854E17707D46007733FA /* MainStoryboard_iPhone.storyboard */,
+				18BEC3E4177150C1001CD508 /* PersonalFeedController.h */,
+				18BEC3E5177150C1001CD508 /* PersonalFeedController.m */,
 				18805DF81770E1080059C37B /* GameController.h */,
 				18805DC91770E0630059C37B /* GameController.m */,
 				185D855117707D46007733FA /* MainStoryboard_iPad.storyboard */,
@@ -276,8 +283,9 @@
 		185D853D17707D46007733FA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				18BEC3E217714E8A001CD508 /* nav_bar.png */,
+				18805E57177143E70059C37B /* top_bar.png */,
 				18805E52177134F10059C37B /* question_box.png */,
-				185D8585177082D4007733FA /* nav_bar.png */,
 				185D857F177080EE007733FA /* profile_icon.png */,
 				185D8580177080EE007733FA /* road_icon.png */,
 				185D8581177080EE007733FA /* social_feed_icon.png */,
@@ -457,8 +465,9 @@
 				185D8582177080EE007733FA /* profile_icon.png in Resources */,
 				185D8583177080EE007733FA /* road_icon.png in Resources */,
 				185D8584177080EE007733FA /* social_feed_icon.png in Resources */,
-				185D8586177082D4007733FA /* nav_bar.png in Resources */,
 				18805E53177134F10059C37B /* question_box.png in Resources */,
+				18805E59177143E70059C37B /* top_bar.png in Resources */,
+				18BEC3E317714E8A001CD508 /* nav_bar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,6 +548,7 @@
 				18805E461770EC7F0059C37B /* UIImageView+AFNetworking.m in Sources */,
 				18805E491770EC910059C37B /* PaveAPIClient.m in Sources */,
 				18805E4F1770ECEC0059C37B /* FeedObjectCell.m in Sources */,
+				18BEC3E6177150C1001CD508 /* PersonalFeedController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

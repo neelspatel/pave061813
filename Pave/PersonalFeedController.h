@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 
 
-@interface GameController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface PersonalFeedController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -24,6 +24,5 @@
 @property (nonatomic, retain)NSArray *paths;
 @property (nonatomic, retain)NSString *dataPath;
 @property (nonatomic, retain)NSMutableDictionary *imageRequests;
-@property (nonatomic, assign)BOOL reloadingFeedObject;
-
+@property (nonatomic,assign) BOOL reloadingFeedObject;
 @end

@@ -6,33 +6,33 @@
 //  Copyright (c) 2013 Pave. All rights reserved.
 //
 
-#import "GameController.h"
+#import "PersonalFeedController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "PaveAPIClient.h"
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
 #import "FeedObjectCell.h"
 
-@interface GameController ()
+@interface PersonalFeedController ()
 
 @end
 
-@implementation GameController
+@implementation PersonalFeedController
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     //loads up the picture in the top bar
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_bar.png"] forBarMetrics:UIBarMetricsDefault];
-
+    
     
     //loads image cache
     self.myImageCache = [SDImageCache.alloc initWithNamespace:@"FeedObjects"];
@@ -42,7 +42,7 @@
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
-        
+    
     
     NSLog(@"Feed objects are %@", self.feedObjects);
     [self getFeedObjects];
