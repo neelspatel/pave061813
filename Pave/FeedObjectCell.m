@@ -26,4 +26,9 @@
     // Configure the view for the selected state
 }
 
+-(IBAction) submitLeft:(id)sender
+{
+    NSLog(@"Just submitted left");
+}
+
 @end

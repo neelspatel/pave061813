@@ -26,4 +26,6 @@
 @property (nonatomic, retain)NSMutableDictionary *imageRequests;
 @property (nonatomic, assign)BOOL reloadingFeedObject;
 
+@property (nonatomic, assign)BOOL loggedIn;
+@property (nonatomic, assign)BOOL didCompleteProfileInformation;
 @end

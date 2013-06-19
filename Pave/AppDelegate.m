@@ -7,11 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import <FacebookSDK/FacebookSDK.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //self.didCompleteProfileInformation = YES;
     // Assign tab bar item with titles
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
     UITabBar *tabBar = tabBarController.tabBar;
@@ -19,25 +21,27 @@
     UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
     UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
     
-    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"profile_icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"profile_icon.png"]];
-    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"road_icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"road_icon.png"]];
-    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"social_feed_icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"social_feed_icon.png"]];
+    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"smiley_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"smiley_off.png"]];
+    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"house_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"house_off.png"]];
+    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"globe_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"globe_off.png"]];
     
     UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar.png"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
+    //gets rid of translucent
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
-
-
-//    [self.window.rootViewController performSegueWithIdentifier:@"toLogin" sender:self.window.rootViewController];
-
     
+    tabBarController.selectedIndex = 1;
     
+    // FB Login
+    NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
     
+    self.session = [[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil];
     
     // Override point for customization after application launch.
     return YES;
+    
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -46,7 +50,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -64,5 +68,19 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // attempt to extract a token from the url
+    return [self.session handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [FBSession.activeSession handleOpenURL:url];
+}
+
 
 @end

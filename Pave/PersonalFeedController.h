@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 // store the values of the required instance variables
-@property (nonatomic, retain)NSMutableArray *feedObjects;
+@property (nonatomic, retain)NSArray *feedObjects;
 @property (nonatomic, strong)SDImageCache *myImageCache;
 @property (nonatomic, assign)BOOL doneLoadingFeed;
 

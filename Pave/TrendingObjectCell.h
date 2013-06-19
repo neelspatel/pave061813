@@ -1,0 +1,29 @@
+//
+//  TrendingObjectCell.h
+//  Pave
+//
+//  Created by Neel Patel on 6/19/13.
+//  Copyright (c) 2013 Pave. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface TrendingObjectCell : UITableViewCell
+
+@property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
+@property (weak, nonatomic) IBOutlet UIImageView *leftProduct;
+@property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
+@property (weak, nonatomic) IBOutlet UILabel *question;
+@property (weak, nonatomic) IBOutlet UILabel *leftLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePictureBackground;
+@property (weak, nonatomic) IBOutlet UIImageView *leftBackground;
+@property (weak, nonatomic) IBOutlet UIImageView *rightBackground;
+
+@property(nonatomic, assign) NSInteger leftFriendId;
+@property(nonatomic, assign) NSInteger rightFriendId;
+@property(nonatomic, assign) NSInteger leftProductId;
+@property(nonatomic, assign) NSInteger rightProductId;
+@property(nonatomic, assign) NSString *questionText;
+
+@end

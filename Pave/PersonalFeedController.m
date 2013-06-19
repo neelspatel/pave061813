@@ -1,5 +1,5 @@
 //
-//  GameController.m
+//  PersonalFeedController
 //  Pave
 //
 //  Created by Neel Patel on 6/18/13.
@@ -11,7 +11,7 @@
 #import "PaveAPIClient.h"
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
-#import "FeedObjectCell.h"
+#import "ProfileObjectCell.h"
 
 @interface PersonalFeedController ()
 
@@ -38,7 +38,7 @@
     self.myImageCache = [SDImageCache.alloc initWithNamespace:@"FeedObjects"];
     self.tableView.layer.cornerRadius=5;
     
-    self.feedObjects = [NSMutableArray array];
+    self.feedObjects = [NSArray array];
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
@@ -53,10 +53,10 @@
 {
     NSLog(@"About to get feed objects");
     
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *path = @"/data/getlistquestions/";
-    //path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
-    path = [path stringByAppendingString:@"1"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *path = @"/data/getallfeedobjects/";
+    path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+    //path = [path stringByAppendingString:@"1"];
     path = [path stringByAppendingString:@"/"];
     
     [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
@@ -103,54 +103,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row][@"fields"];
-    
-    // Configure the cell...
-    
-    cell.leftBackground.layer.cornerRadius = 5;
-    cell.leftBackground.clipsToBounds = YES;
-    cell.rightBackground.layer.cornerRadius = 5;
-    cell.rightBackground.clipsToBounds = YES;
-    cell.profilePictureBackground.layer.cornerRadius = 5;
-    cell.profilePictureBackground.clipsToBounds = YES;
-    
-    
-    NSString *newtext = currentObject[@"questionText"];
+    ProfileObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+        
+    NSString *newtext = currentObject[@"question"];
     
     cell.question.text = newtext;
-    cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1Count"]];
-    NSLog(@"about to get rightNum");
-    cell.rightNum.text = [NSString stringWithFormat:@"%@",currentObject[@"product2Count"]];
-    @try
-    {
-        NSLog(@"leftFriendId");
-        cell.leftFriendId = (int) (currentObject[@"fbFriend1"][0]);
-    }
-    @catch (NSException *e)
-    {
-        cell.leftFriendId = 0;
-    }
-    
-    @try
-    {
-        NSLog(@"rightFriendId");
-        //cell.rightFriendId = (int) [NSString stringWithFormat:@"%@", (currentObject[@"fbFriend2"][0])];
-        cell.rightFriendId = (int) (currentObject[@"fbFriend2"][0]);
-    }
-    @catch (NSException *e)
-    {
-        cell.rightFriendId = 0;
-    }
-    
-    cell.leftProductId = (int) (currentObject[@"product1"]);
-    cell.rightProductId = (int) (currentObject[@"product2"]);
     
     //now downloads and saves the images
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *currentID = @"4";
-    //NSString *currentID = [defaults objectForKey:@"id"];
-    
+    NSString *currentID = [NSString stringWithFormat:@"%@", currentObject[@"friend"]];
+    //NSString *currentID = @"4";
+
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     
     //for profile picture
@@ -189,7 +152,7 @@
          }
          
          //rounds it
-         cell.profilePicture.layer.cornerRadius = 5;
+         cell.profilePicture.layer.cornerRadius = 25;
          cell.profilePicture.clipsToBounds = YES;
      }];
     
@@ -197,7 +160,7 @@
     // instantiate them
     cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
     NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
-    leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"image1"]];
+    leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"chosenProduct"]];
     leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
     leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
@@ -240,7 +203,7 @@
     cell.rightProduct.image = [UIImage imageNamed:@"profile_icon.png"];
     
     NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
-    rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"image2"]];
+    rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"otherProduct"]];
     rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
     rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     

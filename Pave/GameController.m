@@ -12,6 +12,9 @@
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
 #import "FeedObjectCell.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface GameController ()
 
@@ -23,7 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
+    
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
@@ -53,10 +58,10 @@
 {
     NSLog(@"About to get feed objects");
     
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *path = @"/data/getlistquestions/";
-    //path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
-    path = [path stringByAppendingString:@"1"];
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    //path = [path stringByAppendingString:@"1"];
     path = [path stringByAppendingString:@"/"];
     
     [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
@@ -76,6 +81,95 @@
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        NSLog(@"error logging in user to Django %@", error);
                                    }];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    FBSession* session = delegate.session;
+    NSLog(@"Session right now is %@", session);
+    
+    if (session.state == FBSessionStateCreatedTokenLoaded) {
+        NSLog(@"Already in");
+        
+        //now opens connection
+        [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+            NSLog(@"In login block");
+            [FBSession setActiveSession:session];
+            if (status == FBSessionStateOpen) {
+                // loggedin
+                NSLog(@"Open?: ");
+                NSLog(session.isOpen ? @"Yes" : @"No");
+                NSString* accessToken = session.accessToken;
+                
+                // load into user defaults
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                if([defaults objectForKey:@"id"] == nil)
+                {
+                    //
+                    //get that info
+                    FBRequest *request = [FBRequest requestForMe];
+                    [request  startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                        // handle response
+                        if (!error) {
+                            // Parse the data received
+                            NSDictionary *userData = (NSDictionary *)result;
+                            NSString *facebookID = userData[@"id"];
+                            NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
+                            
+                            if (facebookID) {
+                                [defaults setObject:facebookID forKey:@"id"];
+                            }
+                            
+                            if (userData[@"name"]) {
+                                [defaults setObject:userData[@"name"] forKey:@"name"];
+                            }
+                            
+                            if (userData[@"location"][@"name"]) {
+                                [defaults setObject:userData[@"location"][@"name"] forKey:@"location"];
+                            }
+                            
+                            if (userData[@"gender"]) {
+                                [defaults setObject:userData[@"gender"] forKey:@"gender"];
+                            }
+                            
+                            if ([pictureURL absoluteString]) {
+                                [defaults setObject:[pictureURL absoluteString] forKey:@"pictureURL"];
+                            }
+                            [defaults synchronize];
+                            
+                            
+                        } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
+                                    isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
+                            NSLog(@"The facebook session was invalidated");
+                        } else {
+                            NSLog(@"Some other error: %@", error);
+                        }
+                    }];
+                }
+            }            
+            else
+            {
+                // deal with this case
+                NSLog(@"something happened");
+                NSLog(@"Some other status: %@", status);
+                LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+                [self presentViewController: loginViewController animated: NO completion: nil];
+                
+            }
+        }];
+        
+    }
+    else if(session.state == FBSessionStateOpen)
+    {
+        return;
+    }
+    else
+    {
+        NSLog(@"Not logged in, so not skipping login");
+        LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+        [self presentViewController: loginViewController animated: NO completion: nil];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -108,11 +202,11 @@
     
     // Configure the cell...
     
-    cell.leftBackground.layer.cornerRadius = 5;
+    cell.leftBackground.layer.cornerRadius = 10;
     cell.leftBackground.clipsToBounds = YES;
-    cell.rightBackground.layer.cornerRadius = 5;
+    cell.rightBackground.layer.cornerRadius = 10;
     cell.rightBackground.clipsToBounds = YES;
-    cell.profilePictureBackground.layer.cornerRadius = 5;
+    cell.profilePictureBackground.layer.cornerRadius = 10;
     cell.profilePictureBackground.clipsToBounds = YES;
     
     
@@ -148,17 +242,21 @@
     
     //now downloads and saves the images
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *currentID = @"4";
-    //NSString *currentID = [defaults objectForKey:@"id"];
+    //NSString *currentID = @"4";
+    NSArray *friends = [defaults objectForKey:@"friends"];
+    NSLog(@"Friends array is %@", friends);
+    cell.currentId = [NSString stringWithFormat:@"%@", [friends objectAtIndex: arc4random() % [friends count]]];
     
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     
     //for profile picture
     cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
     NSString *profileURL = @"https://graph.facebook.com/";
-    profileURL = [profileURL stringByAppendingString:currentID ];
+    profileURL = [profileURL stringByAppendingString:cell.currentId ];
     profileURL = [profileURL stringByAppendingString:@"/picture"];
     
+    NSLog(@"loading pic for %@", cell.currentId);
+    cell.questionId = currentObject[@"currentQuestion"];
     [imageCache queryDiskCacheForKey:profileURL done:^(UIImage *image, SDImageCacheType cacheType)
      {
          //if it's not there
@@ -189,7 +287,7 @@
          }
          
          //rounds it
-         cell.profilePicture.layer.cornerRadius = 5;
+         cell.profilePicture.layer.cornerRadius = 10;
          cell.profilePicture.clipsToBounds = YES;
      }];
     
@@ -232,7 +330,7 @@
          }
          
          //rounds it
-         cell.leftProduct.layer.cornerRadius = 5;
+         cell.leftProduct.layer.cornerRadius = 10;
          cell.leftProduct.clipsToBounds = YES;
      }];
     
@@ -275,7 +373,7 @@
          }
          
          //rounds it
-         cell.rightProduct.layer.cornerRadius = 5;
+         cell.rightProduct.layer.cornerRadius = 10;
          cell.rightProduct.clipsToBounds = YES;
      }];
     return cell;
