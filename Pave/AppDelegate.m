@@ -12,6 +12,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Assign tab bar item with titles
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    UITabBar *tabBar = tabBarController.tabBar;
+    UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:0];
+    UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
+    UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
+    
+    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"profile_icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"profile_icon.png"]];
+    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"road_icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"road_icon.png"]];
+    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"social_feed_icon.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"social_feed_icon.png"]];
+    
+    UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar.png"];
+    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
+    [[UITabBar appearance] setSelectionIndicatorImage:[UIImage imageNamed:@"nav_bar.png"]];
+
+    [self.window.rootViewController performSegueWithIdentifier:@"toLogin" sender:self.window.rootViewController];
+
+    
+    
+    
+    
     // Override point for customization after application launch.
     return YES;
 }
