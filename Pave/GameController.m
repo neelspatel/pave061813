@@ -60,73 +60,6 @@
     
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    UITableView *tableView = (UITableView *)gestureRecognizer.view;
-    CGPoint p = [gestureRecognizer locationInView:gestureRecognizer.view];
-    if ([tableView indexPathForRowAtPoint:p]) {
-        return YES;
-    }
-    return NO;
-}
-
-- (void)handleTap:(UITapGestureRecognizer *)tap
-{
-    if (UIGestureRecognizerStateEnded == tap.state) {
-        UITableView *tableView = (UITableView *)tap.view;
-        CGPoint p = [tap locationInView:tap.view];
-        NSIndexPath* indexPath = [tableView indexPathForRowAtPoint:p];
-        [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        FeedObjectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        CGPoint pointInCell = [tap locationInView:cell];
-        if (CGRectContainsPoint(cell.leftProduct.frame, pointInCell)) {
-            NSLog(@"In the left image!");
-        } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
-            NSLog(@"In the right image!");
-            NSLog(@"%d", cell.questionId);
-            NSLog(@"%d", cell.leftProductId);
-            NSLog(@"%d",cell.rightProductId);
-            NSLog(@"%d", cell.currentId);
-        }
-        else {
-            NSLog(@"Not in the image...");
-        }
-    }
-}
-
-- (void) getFeedObjects
-{
-    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    FBSession* session = delegate.session;
-    
-    if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
-        NSLog(@"About to get feed objects");
-        
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *path = @"/data/getlistquestions/";
-        path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
-        //path = [path stringByAppendingString:@"1"];
-        path = [path stringByAppendingString:@"/"];
-        
-        [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-            if (results) {
-                //NSMutableArray *ids = [[NSMutableArray alloc] init];
-                //for(NSDictionary *current in results)
-                //{
-                //    [ids addObject:current[@"id"]];
-                //}
-                NSLog(@"Just finished getting results: %@", results);
-                self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
-                self.doneLoadingFeed = YES;
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-                
-            } }
-                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           NSLog(@"error logging in user to Django %@", error);
-                                       }];
-    }
-}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -192,7 +125,7 @@
                         }
                     }];
                 }
-            }            
+            }
             else
             {
                 // deal with this case
@@ -217,24 +150,90 @@
     }
 }
 
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    UITableView *tableView = (UITableView *)gestureRecognizer.view;
+    CGPoint p = [gestureRecognizer locationInView:gestureRecognizer.view];
+    if ([tableView indexPathForRowAtPoint:p]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)tap
+{
+    if (UIGestureRecognizerStateEnded == tap.state) {
+        UITableView *tableView = (UITableView *)tap.view;
+        CGPoint p = [tap locationInView:tap.view];
+        NSIndexPath* indexPath = [tableView indexPathForRowAtPoint:p];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        FeedObjectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        CGPoint pointInCell = [tap locationInView:cell];
+        if (CGRectContainsPoint(cell.leftProduct.frame, pointInCell)) {
+            NSLog(@"In the left image!");
+        } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
+            NSLog(@"In the right image!");
+            NSLog(@"%d", cell.questionId);
+            NSLog(@"%d", cell.leftProductId);
+            NSLog(@"%d",cell.rightProductId);
+            NSLog(@"%d", cell.currentId);
+        }
+        else {
+            NSLog(@"Not in the image...");
+        }
+    }
+}
+
+- (void) getFeedObjects
+{
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    FBSession* session = delegate.session;
+    
+    if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
+        NSLog(@"About to get feed objects");
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *path = @"/data/getlistquestions/";
+        path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+        //path = [path stringByAppendingString:@"1"];
+        path = [path stringByAppendingString:@"/"];
+        NSLog(@"Path is %@", path);
+        [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+            if (results) {
+                //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                //for(NSDictionary *current in results)
+                //{
+                //    [ids addObject:current[@"id"]];
+                //}
+                NSLog(@"Just finished getting results: %@", results);
+                self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                self.doneLoadingFeed = YES;
+                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                
+            } }
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           NSLog(@"error getting feed objects from database %@", error);
+                                       }];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
+    // reset the array 
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return self.feedObjects.count;
 }
@@ -256,10 +255,7 @@
     cell.profilePictureBackground.layer.cornerRadius = 10;
     cell.profilePictureBackground.clipsToBounds = YES;
     
-    
-    NSString *newtext = currentObject[@"questionText"];
-    
-    cell.question.text = newtext;
+    cell.question.text = currentObject[@"questionText"];
     cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1Count"]];
     NSLog(@"about to get rightNum");
     cell.rightNum.text = [NSString stringWithFormat:@"%@",currentObject[@"product2Count"]];
@@ -299,13 +295,16 @@
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     
     //for profile picture
-    cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
     NSString *profileURL = @"https://graph.facebook.com/";
     profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
     profileURL = [profileURL stringByAppendingString:@"/picture"];
-    
-    NSLog(@"loading pic for %d", cell.currentId);
+    NSLog(@"Before loading profile picture");
+    [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
+                   placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
 
+    //NSLog(@"loading pic for %d", cell.currentId);
+    /*
+    cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
     [imageCache queryDiskCacheForKey:profileURL done:^(UIImage *image, SDImageCacheType cacheType)
      {
          //if it's not there
@@ -339,15 +338,23 @@
          cell.profilePicture.layer.cornerRadius = 10;
          cell.profilePicture.clipsToBounds = YES;
      }];
+     */
     
     //for left product picture
     // instantiate them
-    cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
+    
+    //cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
     NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
     leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"image1"]];
     leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
     leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
+    // change the default background
+    [cell.leftProduct setImageWithURL:[NSURL URLWithString:leftImageURL]
+                        placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+
+    
+    /*
     [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
      {
          //if it's not there
@@ -382,15 +389,30 @@
          cell.leftProduct.layer.cornerRadius = 10;
          cell.leftProduct.clipsToBounds = YES;
      }];
+    */
     
     //for right product picture
-    cell.rightProduct.image = [UIImage imageNamed:@"profile_icon.png"];
     
     NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
     rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"image2"]];
     rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
     rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
+    // change the default background
+    [cell.rightProduct setImageWithURL:[NSURL URLWithString:rightImageURL]
+                      placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    cell.profilePicture.layer.cornerRadius = 10;
+    cell.profilePicture.clipsToBounds = YES;
+    cell.leftProduct.layer.cornerRadius = 10;
+    cell.leftProduct.clipsToBounds = YES;
+    cell.rightProduct.layer.cornerRadius = 10;
+    cell.rightProduct.clipsToBounds = YES;
+
+    return cell;
+    
+    //cell.rightProduct.image = [UIImage imageNamed:@"profile_icon.png"];
+
+    /*
     [imageCache queryDiskCacheForKey:rightImageURL done:^(UIImage *image, SDImageCacheType cacheType)
      {
          //if it's not there
@@ -426,6 +448,16 @@
          cell.rightProduct.clipsToBounds = YES;
      }];
     return cell;
+     */
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(FeedObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"About to cancel cell");
+    // free up the requests for each ImageView
+    [cell.profilePicture cancelCurrentImageLoad];
+    [cell.rightProduct cancelCurrentImageLoad];
+    [cell.leftProduct cancelCurrentImageLoad];
 }
 
 // make the feed objects only return once
