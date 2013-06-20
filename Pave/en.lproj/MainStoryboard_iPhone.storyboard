@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E2068" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
         <!--Trending Controller-->
@@ -431,15 +431,15 @@
                                             <constraint firstItem="NzP-D6-MtK" firstAttribute="centerY" secondItem="0XU-WN-kqR" secondAttribute="centerY" type="default" id="6FL-hn-7Mr"/>
                                             <constraint firstItem="sNl-7z-hMx" firstAttribute="top" secondItem="wNc-eQ-9WR" secondAttribute="top" constant="4" id="BEI-oa-lgN"/>
                                             <constraint firstAttribute="trailing" secondItem="ol2-VL-PS3" secondAttribute="trailing" constant="20" type="default" id="BJz-pV-Dwv"/>
-                                            <constraint firstItem="DrS-Zj-Mhz" firstAttribute="leading" secondItem="wNc-eQ-9WR" secondAttribute="leading" constant="80" id="DL7-F1-KIF"/>
                                             <constraint firstItem="ol2-VL-PS3" firstAttribute="top" secondItem="0XU-WN-kqR" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="ETS-qe-Kx0"/>
                                             <constraint firstAttribute="trailing" secondItem="cf1-w1-9av" secondAttribute="trailing" constant="20" type="default" id="KyP-Af-nTY"/>
+                                            <constraint firstItem="DrS-Zj-Mhz" firstAttribute="leading" secondItem="wNc-eQ-9WR" secondAttribute="leading" constant="72" id="Lzr-IL-3IH"/>
                                             <constraint firstItem="Bw1-gq-7fF" firstAttribute="centerX" secondItem="cf1-w1-9av" secondAttribute="centerX" type="default" id="NJQ-VE-XGD"/>
                                             <constraint firstItem="sNl-7z-hMx" firstAttribute="leading" secondItem="wNc-eQ-9WR" secondAttribute="leading" constant="4" id="QMX-nt-8OW"/>
+                                            <constraint firstItem="kHk-ja-jX5" firstAttribute="leading" secondItem="wNc-eQ-9WR" secondAttribute="leading" constant="80" id="Zl9-Zk-WAg"/>
                                             <constraint firstItem="Bw1-gq-7fF" firstAttribute="bottom" secondItem="NzP-D6-MtK" secondAttribute="bottom" type="default" id="hzO-Lv-r1f"/>
                                             <constraint firstItem="DrS-Zj-Mhz" firstAttribute="top" secondItem="wNc-eQ-9WR" secondAttribute="top" constant="20" type="default" id="k8G-f1-Wfj"/>
                                             <constraint firstItem="NzP-D6-MtK" firstAttribute="centerX" secondItem="0XU-WN-kqR" secondAttribute="centerX" type="default" id="k8g-yM-IPX"/>
-                                            <constraint firstItem="DrS-Zj-Mhz" firstAttribute="leading" secondItem="kHk-ja-jX5" secondAttribute="leading" type="default" id="lry-yz-kSA"/>
                                             <constraint firstItem="kHk-ja-jX5" firstAttribute="top" secondItem="wNc-eQ-9WR" secondAttribute="top" constant="20" type="default" id="mlv-eb-7ef"/>
                                             <constraint firstItem="NzP-D6-MtK" firstAttribute="top" secondItem="Bw1-gq-7fF" secondAttribute="top" type="default" id="oEA-yj-uhD"/>
                                             <constraint firstItem="NzP-D6-MtK" firstAttribute="leading" secondItem="wNc-eQ-9WR" secondAttribute="leading" constant="19" id="oLV-Ic-YOl"/>

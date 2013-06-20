@@ -7,6 +7,8 @@
 //
 
 #import "FeedObjectCell.h"
+#import <QuartzCore/QuartzCore.h>
+
 
 @implementation FeedObjectCell
 
@@ -14,7 +16,13 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        NSLog(@"Just called init");
+        self.leftBackground.layer.cornerRadius = 10;
+        self.leftBackground.clipsToBounds = YES;
+        self.rightBackground.layer.cornerRadius = 10;
+        self.rightBackground.clipsToBounds = YES;
+        self.profilePictureBackground.layer.cornerRadius = 10;
+        self.profilePictureBackground.clipsToBounds = YES;
     }
     return self;
 }

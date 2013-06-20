@@ -176,7 +176,7 @@
             NSLog(@"%d", cell.questionId);
             NSLog(@"%d", cell.leftProductId);
             NSLog(@"%d",cell.rightProductId);
-            NSLog(@"%d", cell.currentId);
+            NSLog(@"%@", cell.currentId);
         }
         else {
             NSLog(@"Not in the image...");
@@ -208,7 +208,7 @@
                 NSLog(@"Just finished getting results: %@", results);
                 self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
                 NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
-                self.doneLoadingFeed = YES;
+                self.reloadingFeedObject = NO;
                 [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                 
             } }
@@ -244,7 +244,8 @@
     
     static NSString *CellIdentifier = @"Cell";
     FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row][@"fields"];
+    NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+    NSLog(@"***REQUESTED %@ ***", currentObject);
     
     // Configure the cell...
     
@@ -285,18 +286,20 @@
     cell.questionId = [(currentObject[@"currentQuestion"]) integerValue];
     
     //now downloads and saves the images
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //NSString *currentID = @"4";
-    NSArray *friends = [defaults objectForKey:@"friends"];
-    NSLog(@"Friends array is %@", friends);
+    //NSArray *friends = [defaults objectForKey:@"friends"];
+    //NSLog(@"Friends array is %@", friends);
     //cell.currentId = [NSString stringWithFormat:@"%d", [[friends objectAtIndex: arc4random() % [friends count]] integerValue]];
-    cell.currentId = [[friends objectAtIndex: arc4random() % [friends count]] integerValue];    
+    //cell.currentId = [[friends objectAtIndex: arc4random() % [friends count]] integerValue];
+    cell.currentId = (currentObject[@"friend"]) ;    
     
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     
     //for profile picture
     NSString *profileURL = @"https://graph.facebook.com/";
-    profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
+    //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
+    profileURL = [profileURL stringByAppendingString:cell.currentId];
     profileURL = [profileURL stringByAppendingString:@"/picture"];
     NSLog(@"Before loading profile picture");
     [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]

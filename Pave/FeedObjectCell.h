@@ -29,6 +29,6 @@
 @property(nonatomic, assign) NSInteger rightProductId;
 @property(nonatomic, assign) NSInteger questionId;
 @property(nonatomic, copy) NSString *questionText;
-@property(nonatomic, assign) NSInteger currentId;
+@property(nonatomic, copy) NSString * currentId;
 
 @end
