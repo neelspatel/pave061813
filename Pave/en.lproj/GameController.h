@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 
 
-@interface GameController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface GameController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

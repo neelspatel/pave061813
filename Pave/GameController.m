@@ -47,6 +47,12 @@
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    singleTap.delegate = self;
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [self.tableView addGestureRecognizer:singleTap];
         
     
     NSLog(@"Feed objects are %@", self.feedObjects);
@@ -54,33 +60,72 @@
     
 }
 
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    UITableView *tableView = (UITableView *)gestureRecognizer.view;
+    CGPoint p = [gestureRecognizer locationInView:gestureRecognizer.view];
+    if ([tableView indexPathForRowAtPoint:p]) {
+        return YES;
+    }
+    return NO;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)tap
+{
+    if (UIGestureRecognizerStateEnded == tap.state) {
+        UITableView *tableView = (UITableView *)tap.view;
+        CGPoint p = [tap locationInView:tap.view];
+        NSIndexPath* indexPath = [tableView indexPathForRowAtPoint:p];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        FeedObjectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        CGPoint pointInCell = [tap locationInView:cell];
+        if (CGRectContainsPoint(cell.leftProduct.frame, pointInCell)) {
+            NSLog(@"In the left image!");
+        } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
+            NSLog(@"In the right image!");
+            NSLog(@"%d", cell.questionId);
+            NSLog(@"%d", cell.leftProductId);
+            NSLog(@"%d",cell.rightProductId);
+            NSLog(@"%d", cell.currentId);
+        }
+        else {
+            NSLog(@"Not in the image...");
+        }
+    }
+}
+
 - (void) getFeedObjects
 {
-    NSLog(@"About to get feed objects");
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    FBSession* session = delegate.session;
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *path = @"/data/getlistquestions/";
-    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
-    //path = [path stringByAppendingString:@"1"];
-    path = [path stringByAppendingString:@"/"];
-    
-    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-        if (results) {
-            //NSMutableArray *ids = [[NSMutableArray alloc] init];
-            //for(NSDictionary *current in results)
-            //{
-            //    [ids addObject:current[@"id"]];
-            //}
-            NSLog(@"Just finished getting results: %@", results);
-            self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-            NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
-            self.doneLoadingFeed = YES;
-            [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-            
-        } }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"error logging in user to Django %@", error);
-                                   }];
+    if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
+        NSLog(@"About to get feed objects");
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *path = @"/data/getlistquestions/";
+        path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+        //path = [path stringByAppendingString:@"1"];
+        path = [path stringByAppendingString:@"/"];
+        
+        [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+            if (results) {
+                //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                //for(NSDictionary *current in results)
+                //{
+                //    [ids addObject:current[@"id"]];
+                //}
+                NSLog(@"Just finished getting results: %@", results);
+                self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                self.doneLoadingFeed = YES;
+                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                
+            } }
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           NSLog(@"error logging in user to Django %@", error);
+                                       }];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -196,6 +241,8 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"***REQUESTED %d ***", indexPath.row);
+    
     static NSString *CellIdentifier = @"Cell";
     FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row][@"fields"];
@@ -219,7 +266,7 @@
     @try
     {
         NSLog(@"leftFriendId");
-        cell.leftFriendId = (int) (currentObject[@"fbFriend1"][0]);
+        cell.leftFriendId = [(currentObject[@"fbFriend1"][0]) integerValue];
     }
     @catch (NSException *e)
     {
@@ -230,33 +277,35 @@
     {
         NSLog(@"rightFriendId");
         //cell.rightFriendId = (int) [NSString stringWithFormat:@"%@", (currentObject[@"fbFriend2"][0])];
-        cell.rightFriendId = (int) (currentObject[@"fbFriend2"][0]);
+        cell.rightFriendId = [(currentObject[@"fbFriend2"][0]) integerValue];
     }
     @catch (NSException *e)
     {
         cell.rightFriendId = 0;
     }
     
-    cell.leftProductId = (int) (currentObject[@"product1"]);
-    cell.rightProductId = (int) (currentObject[@"product2"]);
+    cell.leftProductId = [(currentObject[@"product1"]) integerValue];
+    cell.rightProductId = [(currentObject[@"product2"]) integerValue];
+    cell.questionId = [(currentObject[@"currentQuestion"]) integerValue];
     
     //now downloads and saves the images
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //NSString *currentID = @"4";
     NSArray *friends = [defaults objectForKey:@"friends"];
     NSLog(@"Friends array is %@", friends);
-    cell.currentId = [NSString stringWithFormat:@"%@", [friends objectAtIndex: arc4random() % [friends count]]];
+    //cell.currentId = [NSString stringWithFormat:@"%d", [[friends objectAtIndex: arc4random() % [friends count]] integerValue]];
+    cell.currentId = [[friends objectAtIndex: arc4random() % [friends count]] integerValue];    
     
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     
     //for profile picture
     cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
     NSString *profileURL = @"https://graph.facebook.com/";
-    profileURL = [profileURL stringByAppendingString:cell.currentId ];
+    profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
     profileURL = [profileURL stringByAppendingString:@"/picture"];
     
-    NSLog(@"loading pic for %@", cell.currentId);
-    cell.questionId = currentObject[@"currentQuestion"];
+    NSLog(@"loading pic for %d", cell.currentId);
+
     [imageCache queryDiskCacheForKey:profileURL done:^(UIImage *image, SDImageCacheType cacheType)
      {
          //if it's not there
@@ -309,7 +358,7 @@
                   // progression tracking code
                   // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
               }
-                                                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
+            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
               {
                   if (image && finished)
                   {

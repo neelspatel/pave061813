@@ -45,16 +45,37 @@
         // use the singleton APIClient
         NSLog(@"about to request user");
         
+        //splits the friends into id, name, and gender
+        NSMutableArray *genders = [[NSMutableArray alloc] init];
+        NSMutableArray *friends = [[NSMutableArray alloc] init];
+        NSMutableArray *names = [[NSMutableArray alloc] init];
+        
+        for(id object in self.friendIds)
+        {
+            [genders addObject:object[@"sex"]];
+            [friends addObject:object[@"uid"]];
+            [names addObject:object[@"name"]];
+        }
+        
+        
         NSData *jsonProfile = [NSJSONSerialization dataWithJSONObject:self.userProfile options:NSJSONWritingPrettyPrinted error:nil];
         NSString *jsonProfileString = [[NSString alloc] initWithData:jsonProfile encoding:NSUTF8StringEncoding];
         
-        NSData *jsonFriends = [NSJSONSerialization dataWithJSONObject:self.friendIds options:NSJSONWritingPrettyPrinted error:nil];
+        NSData *jsonFriends = [NSJSONSerialization dataWithJSONObject:friends options:NSJSONWritingPrettyPrinted error:nil];
         NSString *jsonFriendsString = [[NSString alloc] initWithData:jsonFriends encoding:NSUTF8StringEncoding];
         
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.userProfile[@"facebookId"], @"id_facebookID", jsonProfileString,  @"id_profile", jsonFriendsString, @"id_friends", nil];
+        NSData *jsonNames = [NSJSONSerialization dataWithJSONObject:names options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *jsonNamesString = [[NSString alloc] initWithData:jsonNames encoding:NSUTF8StringEncoding];
+        
+        NSData *jsonGenders = [NSJSONSerialization dataWithJSONObject:genders options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *jsonGendersString = [[NSString alloc] initWithData:jsonGenders encoding:NSUTF8StringEncoding];
+        
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.userProfile[@"facebookId"], @"id_facebookID", jsonProfileString,  @"id_profile", jsonFriendsString, @"id_friends", jsonNamesString, @"id_names", jsonGendersString, @"id_genders", nil];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [defaults setObject:self.friendIds forKey:@"friends"];
+        [defaults setObject:friends forKey:@"friends"];
+        [defaults setObject:genders forKey:@"genders"];
+        [defaults setObject:names forKey:@"names"];
         [defaults setObject:self.userProfile forKey:@"profile"];
         [defaults setObject:self.userProfile[@"facebookId"] forKey:@"id"];
                 
@@ -88,7 +109,7 @@
     
     // add gender and name to the query
     NSString *query =
-    @"SELECT uid FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY mutual_friend_count DESC";
+    @"SELECT uid, name, sex FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY mutual_friend_count DESC";
     
     NSString *query2 =
     @"SELECT (uid, gender, name) FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) ORDER BY mutual_friend_count DESC";
@@ -108,9 +129,10 @@
                                   self.friendIds = [[NSMutableArray alloc] initWithCapacity: [result count]];
                                   
                                   NSArray *parsed = result[@"data"];
+                                  
                                   for(id object in parsed)
                                   {
-                                      [self.friendIds addObject: object[@"uid"]];
+                                      [self.friendIds addObject: object];
                                   }
                                   
                                   self.didCompleteFriendsInformation = YES;
