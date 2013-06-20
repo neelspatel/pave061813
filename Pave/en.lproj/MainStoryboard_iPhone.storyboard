@@ -549,6 +549,79 @@
         <image name="question_box.png" width="464" height="85"/>
         <image name="road_icon.png" width="68" height="69"/>
     </resources>
+    <classes>
+        <class className="FeedObjectCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedObjectCell.h"/>
+            <relationships>
+                <relationship kind="action" name="submitLeft:"/>
+                <relationship kind="outlet" name="leftBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftFriend" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePictureBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightFriend" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="GameController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loginButtonTouch:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PersonalFeedController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalFeedController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="ProfileObjectCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileObjectCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="TrendingController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="TrendingObjectCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingObjectCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="leftBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePictureBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
