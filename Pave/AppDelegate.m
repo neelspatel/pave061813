@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "PaveAPIClient.h"
 #import <FacebookSDK/FacebookSDK.h>
 
 @implementation AppDelegate
@@ -80,6 +81,12 @@
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     return [FBSession.activeSession handleOpenURL:url];
+}
+
+-(NSInteger) checkForProfileUpdates
+{
+    // send request to endpoint to get shit from server if sending is not the profile
+    return 0;
 }
 
 

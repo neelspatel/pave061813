@@ -64,7 +64,7 @@
             //    [ids addObject:current[@"id"]];
             //}
             NSLog(@"Just finished getting results: %@", results);
-            self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+            self.feedObjects = results;
             NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
             self.doneLoadingFeed = YES;
             [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
@@ -85,14 +85,12 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return self.feedObjects.count;
 }

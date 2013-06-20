@@ -20,7 +20,6 @@
 		185D855317707D46007733FA /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 185D855117707D46007733FA /* MainStoryboard_iPad.storyboard */; };
 		185D855817707D46007733FA /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D855717707D46007733FA /* first.png */; };
 		185D855A17707D46007733FA /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D855917707D46007733FA /* first@2x.png */; };
-		185D855D17707D46007733FA /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185D855C17707D46007733FA /* SecondViewController.m */; };
 		185D855F17707D46007733FA /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D855E17707D46007733FA /* second.png */; };
 		185D856117707D46007733FA /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D856017707D46007733FA /* second@2x.png */; };
 		185D856917707D47007733FA /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 185D856817707D47007733FA /* SenTestingKit.framework */; };
@@ -101,6 +100,7 @@
 		18E81D2E1771F881006DE8EF /* TrendingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E81D2D1771F881006DE8EF /* TrendingController.m */; };
 		18E81D301771FB9C006DE8EF /* big_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 18E81D2F1771FB9C006DE8EF /* big_circle.png */; };
 		18E81D331771FC2D006DE8EF /* TrendingObjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */; };
+		B01707891773A20100B8D77B /* TrendingTopicsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,8 +131,6 @@
 		185D855217707D46007733FA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		185D855717707D46007733FA /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		185D855917707D46007733FA /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		185D855B17707D46007733FA /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		185D855C17707D46007733FA /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		185D855E17707D46007733FA /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		185D856017707D46007733FA /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		185D856717707D46007733FA /* PaveTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaveTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,6 +230,8 @@
 		18E81D2F1771FB9C006DE8EF /* big_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = big_circle.png; sourceTree = "<group>"; };
 		18E81D311771FC2D006DE8EF /* TrendingObjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingObjectCell.h; sourceTree = "<group>"; };
 		18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingObjectCell.m; sourceTree = "<group>"; };
+		B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingTopicsListViewController.h; sourceTree = "<group>"; };
+		B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingTopicsListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -327,13 +327,13 @@
 				18805DC91770E0630059C37B /* GameController.m */,
 				185D854E17707D46007733FA /* MainStoryboard_iPhone.storyboard */,
 				185D855117707D46007733FA /* MainStoryboard_iPad.storyboard */,
-				185D855B17707D46007733FA /* SecondViewController.h */,
-				185D855C17707D46007733FA /* SecondViewController.m */,
+				18E81D2C1771F881006DE8EF /* TrendingController.h */,
+				18E81D2D1771F881006DE8EF /* TrendingController.m */,
+				B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */,
+				B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */,
 				18805E2A1770EC7E0059C37B /* AFNetworking */,
 				18805DCB1770E0E30059C37B /* SDWebImage */,
 				185D853D17707D46007733FA /* Supporting Files */,
-				18E81D2C1771F881006DE8EF /* TrendingController.h */,
-				18E81D2D1771F881006DE8EF /* TrendingController.m */,
 			);
 			path = Pave;
 			sourceTree = "<group>";
@@ -605,7 +605,6 @@
 				18805E091770E3190059C37B /* UIImageView+WebCache.h in Sources */,
 				185D854317707D46007733FA /* main.m in Sources */,
 				185D854717707D46007733FA /* AppDelegate.m in Sources */,
-				185D855D17707D46007733FA /* SecondViewController.m in Sources */,
 				185D8589177085EF007733FA /* LoginViewController.m in Sources */,
 				18805DCA1770E0630059C37B /* GameController.m in Sources */,
 				18805DE91770E0E30059C37B /* MKAnnotationView+WebCache.m in Sources */,
@@ -637,6 +636,7 @@
 				18BEC3E917719582001CD508 /* ProfileObjectCell.m in Sources */,
 				18E81D2E1771F881006DE8EF /* TrendingController.m in Sources */,
 				18E81D331771FC2D006DE8EF /* TrendingObjectCell.m in Sources */,
+				B01707891773A20100B8D77B /* TrendingTopicsListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

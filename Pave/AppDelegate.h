@@ -13,5 +13,7 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) FBSession* session;
+@property (nonatomic, assign) NSInteger profileBadgeCount;
 
+-(NSInteger) checkForProfileUpdates;
 @end

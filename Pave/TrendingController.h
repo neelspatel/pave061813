@@ -26,4 +26,5 @@
 @property (nonatomic, retain)NSMutableDictionary *imageRequests;
 @property (nonatomic, assign)BOOL reloadingFeedObject;
 
+@property (nonatomic, copy) NSDictionary *typeDictionary;
 @end
