@@ -2,21 +2,23 @@
 //  TrendingController.h
 //  Pave
 //
-//  Created by Neel Patel on 6/19/13.
+//  Created by Neel Patel on 6/20/13.
 //  Copyright (c) 2013 Pave. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 
+@interface TrendingController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 
-@interface TrendingController : UIViewController <UITableViewDataSource, UITableViewDelegate>
-
+@property (nonatomic, copy) NSDictionary *typeDictionary;
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
+
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 // store the values of the required instance variables
 @property (nonatomic, retain)NSMutableArray *feedObjects;
+@property (nonatomic, retain)NSMutableDictionary *readStatus;
 @property (nonatomic, strong)SDImageCache *myImageCache;
 @property (nonatomic, assign)BOOL doneLoadingFeed;
 
@@ -25,6 +27,4 @@
 @property (nonatomic, retain)NSString *dataPath;
 @property (nonatomic, retain)NSMutableDictionary *imageRequests;
 @property (nonatomic, assign)BOOL reloadingFeedObject;
-
-@property (nonatomic, copy) NSDictionary *typeDictionary;
 @end

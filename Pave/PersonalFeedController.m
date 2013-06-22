@@ -12,6 +12,10 @@
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
 #import "ProfileObjectCell.h"
+#import "MBProgressHUD.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "AppDelegate.h"
+#import "LoginViewController.h"
 
 @interface PersonalFeedController ()
 
@@ -21,7 +25,7 @@
 
 
 - (void)viewDidLoad
-{
+{    
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
@@ -31,12 +35,13 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     //loads up the picture in the top bar
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_bar.png"] forBarMetrics:UIBarMetricsDefault];
-    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_bar.png"] forBarMetrics:UIBarMetricsDefault];    
     
     //loads image cache
     self.myImageCache = [SDImageCache.alloc initWithNamespace:@"FeedObjects"];
+    
     self.tableView.layer.cornerRadius=5;
+    self.tableViewBackground.layer.cornerRadius=5;
     
     self.feedObjects = [NSArray array];
     
@@ -49,33 +54,75 @@
     
 }
 
+- (IBAction)refresh:(id)sender
+{
+    NSLog(@"reloading personal datapre");
+    self.feedObjects = [NSArray array];
+    NSLog(@"reloading personal data");
+    [self getFeedObjects];
+}
+
+
+
+
+- (IBAction)logout:(id)sender;
+{
+    NSLog(@"in logout");
+    //AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    //FBSession* session = delegate.session;
+    //[session closeAndClearTokenInformation];
+    //[session close];
+    //[FBSession setActiveSession:nil];
+    //[FBSession.activeSession close];
+    //[FBSession.activeSession  closeAndClearTokenInformation];
+    
+    [self performSegueWithIdentifier:@"profileToLoginScreen" sender:self];
+}
+
+
 - (void) getFeedObjects
 {
-    NSLog(@"About to get feed objects");
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // Do something...
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *path = @"/data/getallfeedobjects/";
-    path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
-    //path = [path stringByAppendingString:@"1"];
-    path = [path stringByAppendingString:@"/"];
     
-    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-        if (results) {
-            //NSMutableArray *ids = [[NSMutableArray alloc] init];
-            //for(NSDictionary *current in results)
-            //{
-            //    [ids addObject:current[@"id"]];
-            //}
-            NSLog(@"Just finished getting results: %@", results);
-            self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-            NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
-            self.doneLoadingFeed = YES;
-            [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-            
-        } }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"error logging in user to Django %@", error);
-                                   }];
+        NSLog(@"About to get feed objects");
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *path = @"/data/getallfeedobjects/";
+        path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+        //path = [path stringByAppendingString:@"1"];
+        path = [path stringByAppendingString:@"/"];
+        
+        [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+            if (results) {
+                //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                //for(NSDictionary *current in results)
+                //{
+                //    [ids addObject:current[@"id"]];
+                //}
+                NSLog(@"Just finished getting results: %@", results);
+                self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                self.doneLoadingFeed = YES;
+                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                
+            } }
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           NSLog(@"error logging in user to Django %@", error);
+                                       }];
+        });
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    //removes the badge
+    UITabBar *tabBar = (UITabBar *)self.tabBarController.tabBar;
+    
+    [[tabBar.items objectAtIndex:0] setBadgeValue:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -152,8 +199,20 @@
          }
          
          //rounds it
-         cell.profilePicture.layer.cornerRadius = 25;
+         cell.profilePicture.layer.cornerRadius = 10;
          cell.profilePicture.clipsToBounds = YES;
+         cell.profilePictureBackground.layer.cornerRadius = 10;
+         cell.profilePictureBackground.clipsToBounds = YES;
+         
+         cell.rightProduct.layer.cornerRadius = 6;
+         cell.rightProduct.clipsToBounds = YES;
+         cell.rightProductBackground.layer.cornerRadius = 6;
+         cell.rightProductBackground.clipsToBounds = YES;
+         
+         cell.leftProduct.layer.cornerRadius = 6;
+         cell.leftProduct.clipsToBounds = YES;
+         cell.leftProductBackground.layer.cornerRadius = 6;
+         cell.leftProductBackground.clipsToBounds = YES;
      }];
     
     //for left product picture
@@ -244,19 +303,7 @@
     return cell;
 }
 
-// make the feed objects only return once
-- (void)scrollViewDidEndDecelerating:(UITableView *)tableView {
-    float bottomEdge = self.tableView.contentOffset.y + self.tableView.frame.size.height;
-    if (bottomEdge >= self.tableView.contentSize.height - 50)  {
-        NSLog(@"at the very end");
-        // what to do here
-        NSLog(@"Getting new feed objects: ");
-        if (!self.reloadingFeedObject) {
-            self.reloadingFeedObject = YES;
-            [self getFeedObjects];
-        }
-    }
-}
+
 
 /*
  // Override to support conditional editing of the table view.

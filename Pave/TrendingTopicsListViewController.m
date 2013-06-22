@@ -7,6 +7,7 @@
 //
 
 #import "TrendingTopicsListViewController.h"
+#import "TrendingListCell.h"
 #import "TrendingController.h"
 #import "AppDelegate.h"
 #import <Foundation/Foundation.h>
@@ -30,6 +31,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.feedObjects = [NSMutableArray array];
+    [self getFeedObjects];
 	// refresh data from here 
     // Do any additional setup after loading the view.
 }
@@ -42,10 +45,13 @@
 }
 
 // how to get the type
+/**
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"trendingListToTrendingTopics" sender:self.feedObjects[indexPath.row]];
 }
+*/
 
+/**
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //setup trending controller
     if([segue.identifier isEqualToString:@"trendingListToTrendingTopics"]){
@@ -53,11 +59,11 @@
         destination.typeDictionary = sender;  //note this is the back reference
     }
 }
-
+*/
 
 - (void) getFeedObjects
 {
-    NSLog(@"About to get feed objects");
+    NSLog(@"About to get feed objects in trending list view controller");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *path = @"/data/gettrendingobjects/";
@@ -96,8 +102,27 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // load in the topics
     
+    static NSString *CellIdentifier = @"Cell";
+    TrendingListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+    
+    cell.label.text = [[currentObject allKeys] objectAtIndex:0];
+    NSLog(@"Set text to %@", [[currentObject allKeys] objectAtIndex:0]);
+    
+    return cell;        
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self performSegueWithIdentifier:@"trendingListToTrendingTopics" sender:self.feedObjects[indexPath.row]];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    //setup trending controller
+    if([segue.identifier isEqualToString:@"trendingListToTrendingTopics"]){
+        TrendingController *destination = segue.destinationViewController;
+        destination.typeDictionary = sender;  //note this is the back reference
+    }
 }
 
 #pragma unused 

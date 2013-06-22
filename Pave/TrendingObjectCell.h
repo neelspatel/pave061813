@@ -15,7 +15,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
 @property (weak, nonatomic) IBOutlet UILabel *question;
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
+@property (weak, nonatomic) IBOutlet UILabel *leftNum;
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
+@property (weak, nonatomic) IBOutlet UILabel *rightNum;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *leftBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *rightBackground;
@@ -24,6 +26,8 @@
 @property(nonatomic, assign) NSInteger rightFriendId;
 @property(nonatomic, assign) NSInteger leftProductId;
 @property(nonatomic, assign) NSInteger rightProductId;
-@property(nonatomic, assign) NSString *questionText;
+@property(nonatomic, assign) NSInteger questionId;
+@property(nonatomic, copy) NSString *questionText;
+@property(nonatomic, copy) NSString * currentId;
 
 @end

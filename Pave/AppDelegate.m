@@ -25,7 +25,7 @@
     [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"smiley_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"smiley_off.png"]];
     [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"house_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"house_off.png"]];
     [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"globe_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"globe_off.png"]];
-    
+            
     UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar.png"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
     //gets rid of translucent
@@ -38,9 +38,69 @@
     
     self.session = [[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil];
     
+    //timer to check for notifications
+    NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
+                                                      selector: @selector(refreshNotifications:) userInfo: nil repeats: YES];
+    
     // Override point for customization after application launch.
     return YES;
     
+}
+
+-(void) refreshNotifications:(NSTimer*) t
+{
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    UITabBar *tabBar = tabBarController.tabBar;
+    UITabBarItem *item = [tabBar.items objectAtIndex:0];
+    NSString *oldvalue = item.badgeValue;
+
+    int seconds = (int)[[NSDate date] timeIntervalSince1970];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    //either checks the last time that we polled the server, or polls based on that previous time. then stores the current value
+    int polltime = 0;
+    if([defaults integerForKey:@"lastpolled"] != nil)
+    {
+        NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
+            //updates the poll time
+        polltime = [defaults integerForKey:@"lastpolled"];
+        
+    }
+    
+    NSString *path = @"/data/numberofnewobjects/";
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    //path = [path stringByAppendingString:@"1"];
+    path = [path stringByAppendingString:@"/"];
+    path = [path stringByAppendingString:[NSString stringWithFormat:@"%d", polltime]];
+    path = [path stringByAppendingString:@"/"];
+    NSLog(@"Path is %@", path);
+    
+    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+            if (results) {
+                NSLog(@"Results %@", results);
+                if([[results objectForKey:@"count"] intValue] != 0)
+                {
+                    NSLog(@"Incremented by %d!", [[results objectForKey:@"count"] intValue]);
+                    [[tabBar.items objectAtIndex:0] setBadgeValue:[self incrementString:oldvalue :[[results objectForKey:@"count"] intValue]]];
+                }
+                //changes the old value
+                [defaults setInteger:[[results objectForKey:@"last"] intValue] forKey:@"lastpolled"];
+            }
+        }
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"error getting notifications from database %@", error);
+        }];
+
+    
+    
+
+}
+
+-(NSString*) incrementString:(NSString*) oldvalue: (int) amount
+{
+    int intvalue = [oldvalue intValue];    
+    return [NSString stringWithFormat:@"%d", intvalue+amount];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

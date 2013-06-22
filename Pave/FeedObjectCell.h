@@ -17,8 +17,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *leftProduct;
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
 @property (weak, nonatomic) IBOutlet UIImageView *leftFriend;
+@property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UILabel *leftNum;
 @property (weak, nonatomic) IBOutlet UILabel *rightNum;
+@property (weak, nonatomic) IBOutlet UILabel *rightLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *rightFriend;
 @property (weak, nonatomic) IBOutlet UIImageView *leftBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *rightBackground;

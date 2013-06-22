@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *tableViewBackground;
 
 // store the values of the required instance variables
 @property (nonatomic, retain)NSArray *feedObjects;
@@ -25,4 +26,12 @@
 @property (nonatomic, retain)NSString *dataPath;
 @property (nonatomic, retain)NSMutableDictionary *imageRequests;
 @property (nonatomic,assign) BOOL reloadingFeedObject;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loading;
+
+- (IBAction)refresh:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+- (IBAction)logout:(id)sender;
+
+
 @end

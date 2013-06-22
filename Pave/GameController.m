@@ -15,6 +15,7 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "MBProgressHUD.h"
 
 @interface GameController ()
 
@@ -44,6 +45,7 @@
     self.tableView.layer.cornerRadius=5;
     
     self.feedObjects = [NSMutableArray array];
+    self.readStatus = [[NSMutableDictionary alloc] init];
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
@@ -70,72 +72,72 @@
     if (session.state == FBSessionStateCreatedTokenLoaded) {
         NSLog(@"Already in");
         
-        //now opens connection
-        [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            NSLog(@"In login block");
-            [FBSession setActiveSession:session];
-            if (status == FBSessionStateOpen) {
-                // loggedin
-                NSLog(@"Open?: ");
-                NSLog(session.isOpen ? @"Yes" : @"No");
-                NSString* accessToken = session.accessToken;
-                
-                // load into user defaults
-                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                if([defaults objectForKey:@"id"] == nil)
-                {
-                    //
-                    //get that info
-                    FBRequest *request = [FBRequest requestForMe];
-                    [request  startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                        // handle response
-                        if (!error) {
-                            // Parse the data received
-                            NSDictionary *userData = (NSDictionary *)result;
-                            NSString *facebookID = userData[@"id"];
-                            NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
-                            
-                            if (facebookID) {
-                                [defaults setObject:facebookID forKey:@"id"];
+            //now opens connection
+            [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
+                NSLog(@"In login block");
+                [FBSession setActiveSession:session];
+                if (status == FBSessionStateOpen) {
+                    // loggedin
+                    NSLog(@"Open?: ");
+                    NSLog(session.isOpen ? @"Yes" : @"No");
+                    NSString* accessToken = session.accessToken;
+                    
+                    // load into user defaults
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    if([defaults objectForKey:@"id"] == nil)
+                    {
+                        //
+                        //get that info
+                        FBRequest *request = [FBRequest requestForMe];
+                        [request  startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                            // handle response
+                            if (!error) {
+                                // Parse the data received
+                                NSDictionary *userData = (NSDictionary *)result;
+                                NSString *facebookID = userData[@"id"];
+                                NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
+                                
+                                if (facebookID) {
+                                    [defaults setObject:facebookID forKey:@"id"];
+                                }
+                                
+                                if (userData[@"name"]) {
+                                    [defaults setObject:userData[@"name"] forKey:@"name"];
+                                }
+                                
+                                if (userData[@"location"][@"name"]) {
+                                    [defaults setObject:userData[@"location"][@"name"] forKey:@"location"];
+                                }
+                                
+                                if (userData[@"gender"]) {
+                                    [defaults setObject:userData[@"gender"] forKey:@"gender"];
+                                }
+                                
+                                if ([pictureURL absoluteString]) {
+                                    [defaults setObject:[pictureURL absoluteString] forKey:@"pictureURL"];
+                                }
+                                [defaults synchronize];
+                                
+                                
+                            } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
+                                        isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
+                                NSLog(@"The facebook session was invalidated");
+                            } else {
+                                NSLog(@"Some other error: %@", error);
                             }
-                            
-                            if (userData[@"name"]) {
-                                [defaults setObject:userData[@"name"] forKey:@"name"];
-                            }
-                            
-                            if (userData[@"location"][@"name"]) {
-                                [defaults setObject:userData[@"location"][@"name"] forKey:@"location"];
-                            }
-                            
-                            if (userData[@"gender"]) {
-                                [defaults setObject:userData[@"gender"] forKey:@"gender"];
-                            }
-                            
-                            if ([pictureURL absoluteString]) {
-                                [defaults setObject:[pictureURL absoluteString] forKey:@"pictureURL"];
-                            }
-                            [defaults synchronize];
-                            
-                            
-                        } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
-                                    isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
-                            NSLog(@"The facebook session was invalidated");
-                        } else {
-                            NSLog(@"Some other error: %@", error);
-                        }
-                    }];
+                        }];
+                    }
                 }
-            }
-            else
-            {
-                // deal with this case
-                NSLog(@"something happened");
-                NSLog(@"Some other status: %@", status);
-                LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
-                [self presentViewController: loginViewController animated: NO completion: nil];
-                
-            }
-        }];
+                else
+                {
+                    // deal with this case
+                    NSLog(@"something happened");
+                    NSLog(@"Some other status: %@", status);
+                    LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+                    [self presentViewController: loginViewController animated: NO completion: nil];
+                    
+                }
+            }];
         
     }
     else if(session.state == FBSessionStateOpen)
@@ -160,6 +162,72 @@
     return NO;
 }
 
+- (void) displayAsRead:(FeedObjectCell *) cell: (BOOL) left
+{
+    if(left == TRUE)
+    {
+        cell.leftLabel.text = @"Agree";
+        cell.rightLabel.text = @"Disagree";                
+        
+        //shows the labels
+        cell.leftNum.text = [NSString stringWithFormat:@"%d", [cell.leftNum.text integerValue] + 1];
+        [cell.leftLabel setHidden:FALSE];
+        [cell.rightLabel setHidden:FALSE];
+        [cell.leftNum setHidden:FALSE];
+        [cell.rightNum setHidden:FALSE];
+    }
+    else
+    {
+        cell.rightLabel.text = @"Agree";
+        cell.leftLabel.text = @"Disagree";
+        
+        //shows the labels
+        cell.rightNum.text = [NSString stringWithFormat:@"%d", [cell.rightNum.text integerValue] + 1];
+        [cell.leftLabel setHidden:FALSE];
+        [cell.rightLabel setHidden:FALSE];
+        [cell.leftNum setHidden:FALSE];
+        [cell.rightNum setHidden:FALSE];
+
+    }
+}
+
+-(void)saveAnswer:(FeedObjectCell *) cell: (BOOL) left
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"cur id: %@", cell.currentId);
+    NSLog(@"left id: %d", cell.leftProductId);
+    NSLog(@"right id: %d", cell.rightProductId);
+    NSLog(@"question id: %d", cell.questionId);
+    
+    if(left == true)
+    {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        
+        [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
+                                    parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                        NSLog(@"successfully saved answer");
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"error saving answer %@", error);
+                                    }];
+
+    }
+    else
+    {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        
+        
+        [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
+                                    parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                        NSLog(@"successfully saved answer");
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"error saving answer %@", error);
+                                    }];
+
+    }
+    
+        
+}
+
 - (void)handleTap:(UITapGestureRecognizer *)tap
 {
     if (UIGestureRecognizerStateEnded == tap.state) {
@@ -169,15 +237,46 @@
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
         FeedObjectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         CGPoint pointInCell = [tap locationInView:cell];
+        
+        NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+        NSLog(@"Current object is (old): %@", currentObject);
+        
         if (CGRectContainsPoint(cell.leftProduct.frame, pointInCell)) {
             NSLog(@"In the left image!");
+            //checks if this one has been answered yet
+            if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
+            {                                
+                //saves it as read - true means left
+                [self.readStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                [self displayAsRead:cell :TRUE];
+                
+                //now saves the cell in the database
+                [self saveAnswer:cell :TRUE];
+            }
+            else
+            {
+                NSLog(@"Already answered...");
+            }
+
         } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
             NSLog(@"In the right image!");
-            NSLog(@"%d", cell.questionId);
-            NSLog(@"%d", cell.leftProductId);
-            NSLog(@"%d",cell.rightProductId);
-            NSLog(@"%@", cell.currentId);
-        }
+            if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
+            {
+                //saves it as read - false means right
+                [self.readStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                [self displayAsRead:cell :FALSE];
+                
+                //now saves the cell in the database
+                [self saveAnswer:cell :FALSE];
+            }
+            else
+            {
+                NSLog(@"Already answered...");
+            }
+            
+        }                       
         else {
             NSLog(@"Not in the image...");
         }
@@ -186,36 +285,44 @@
 
 - (void) getFeedObjects
 {
-    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    FBSession* session = delegate.session;
-    
-    if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
-        NSLog(@"About to get feed objects");
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // Do something...
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        FBSession* session = delegate.session;
         
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSString *path = @"/data/getlistquestions/";
-        path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
-        //path = [path stringByAppendingString:@"1"];
-        path = [path stringByAppendingString:@"/"];
-        NSLog(@"Path is %@", path);
-        [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-            if (results) {
-                //NSMutableArray *ids = [[NSMutableArray alloc] init];
-                //for(NSDictionary *current in results)
-                //{
-                //    [ids addObject:current[@"id"]];
-                //}
-                NSLog(@"Just finished getting results: %@", results);
-                self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
-                self.reloadingFeedObject = NO;
-                [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-                
-            } }
-                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                           NSLog(@"error getting feed objects from database %@", error);
-                                       }];
-    }
+        if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
+            NSLog(@"About to get feed objects");
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *path = @"/data/getlistquestions/";
+            path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+            //path = [path stringByAppendingString:@"1"];
+            path = [path stringByAppendingString:@"/"];
+            NSLog(@"Path is %@", path);
+            
+            [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                if (results) {
+                    //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                    //for(NSDictionary *current in results)
+                    //{
+                    //    [ids addObject:current[@"id"]];
+                    //}
+                    NSLog(@"Just finished getting results: %@", results);
+                    self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    self.reloadingFeedObject = NO;
+                    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                    [self.tableView reloadData];
+                    
+                } }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               NSLog(@"error getting feed objects from database %@", error);
+                                           }];
+        }
+    });
 }
 
 - (void)didReceiveMemoryWarning
@@ -244,10 +351,15 @@
     
     static NSString *CellIdentifier = @"Cell";
     FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+    NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+
     NSLog(@"***REQUESTED %@ ***", currentObject);
     
     // Configure the cell...
+    [cell.leftNum setHidden:TRUE];
+    [cell.rightNum setHidden:TRUE];
+    [cell.leftLabel setHidden:TRUE];
+    [cell.rightLabel setHidden:TRUE];
     
     cell.leftBackground.layer.cornerRadius = 10;
     cell.leftBackground.clipsToBounds = YES;
@@ -410,6 +522,12 @@
     cell.leftProduct.clipsToBounds = YES;
     cell.rightProduct.layer.cornerRadius = 10;
     cell.rightProduct.clipsToBounds = YES;
+    
+    //sets it as read if not set yet
+    if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
+    { 
+        [self displayAsRead:cell :[[self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] boolValue]];
+    }
 
     return cell;
     

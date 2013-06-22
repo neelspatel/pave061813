@@ -11,7 +11,7 @@
 @interface TrendingTopicsListViewController : UIViewController  <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic, retain)NSArray *feedObjects;
+@property (nonatomic, retain)NSMutableArray *feedObjects;
 @property (nonatomic, assign) BOOL doneLoadingFeed;
 
 @end

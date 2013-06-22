@@ -1,8 +1,8 @@
 //
-// TrendingController.m
+//  TrendingController.m
 //  Pave
 //
-//  Created by Neel Patel on 6/18/13.
+//  Created by Neel Patel on 6/20/13.
 //  Copyright (c) 2013 Pave. All rights reserved.
 //
 
@@ -12,6 +12,8 @@
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
 #import "TrendingObjectCell.h"
+#import <FacebookSDK/FacebookSDK.h>
+#import "AppDelegate.h"
 
 @interface TrendingController ()
 
@@ -19,10 +21,21 @@
 
 @implementation TrendingController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSLog(@"Dictionary is %@", self.typeDictionary);
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -32,8 +45,7 @@
     
     //loads up the picture in the top bar
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_bar.png"] forBarMetrics:UIBarMetricsDefault];
-    
-    
+        
     //loads image cache
     self.myImageCache = [SDImageCache.alloc initWithNamespace:@"FeedObjects"];
     self.tableView.layer.cornerRadius=5;
@@ -43,36 +55,11 @@
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
     
-    
-    NSLog(@"Feed objects are %@", self.feedObjects);
-    [self getFeedObjects];
-    
-}
-
-- (void) getFeedObjects
-{
-    NSLog(@"About to get feed objects");
-    
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *path = @"/data/gettrendingobjects/0/";
-    
-    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-        if (results) {
-            //NSMutableArray *ids = [[NSMutableArray alloc] init];
-            //for(NSDictionary *current in results)
-            //{
-            //    [ids addObject:current[@"id"]];
-            //}
-            NSLog(@"Just finished getting results: %@", results);
-            self.feedObjects = results;
-            NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
-            self.doneLoadingFeed = YES;
-            [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
-            
-        } }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"error logging in user to Django %@", error);
-                                   }];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    singleTap.delegate = self;
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    [self.tableView addGestureRecognizer:singleTap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -81,8 +68,139 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    UITableView *tableView = (UITableView *)gestureRecognizer.view;
+    CGPoint p = [gestureRecognizer locationInView:gestureRecognizer.view];
+    if ([tableView indexPathForRowAtPoint:p]) {
+        return YES;
+    }
+    return NO;
+}
 
+- (void) displayAsRead:(TrendingObjectCell *) cell: (BOOL) left
+{
+    if(left == TRUE)
+    {
+        cell.leftLabel.text = @"Agree";
+        cell.rightLabel.text = @"Disagree";
+        
+        //shows the labels
+        cell.leftNum.text = [NSString stringWithFormat:@"%d", [cell.leftNum.text integerValue] + 1];
+        [cell.leftLabel setHidden:FALSE];
+        [cell.rightLabel setHidden:FALSE];
+        [cell.leftNum setHidden:FALSE];
+        [cell.rightNum setHidden:FALSE];
+    }
+    else
+    {
+        cell.rightLabel.text = @"Agree";
+        cell.leftLabel.text = @"Disagree";
+        
+        //shows the labels
+        cell.rightNum.text = [NSString stringWithFormat:@"%d", [cell.rightNum.text integerValue] + 1];
+        [cell.leftLabel setHidden:FALSE];
+        [cell.rightLabel setHidden:FALSE];
+        [cell.leftNum setHidden:FALSE];
+        [cell.rightNum setHidden:FALSE];
+        
+    }
+}
+
+-(void)saveAnswer:(TrendingObjectCell *) cell: (BOOL) left
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"cur id: %@", cell.currentId);
+    NSLog(@"left id: %d", cell.leftProductId);
+    NSLog(@"right id: %d", cell.rightProductId);
+    NSLog(@"question id: %d", cell.questionId);
+    
+    if(left == true)
+    {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        
+        [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
+                                    parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                        NSLog(@"successfully saved answer");
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"error saving answer %@", error);
+                                    }];
+        
+    }
+    else
+    {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        
+        
+        [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
+                                    parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                        NSLog(@"successfully saved answer");
+                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                        NSLog(@"error saving answer %@", error);
+                                    }];
+        
+    }
+    
+    
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)tap
+{
+    if (UIGestureRecognizerStateEnded == tap.state) {
+        UITableView *tableView = (UITableView *)tap.view;
+        CGPoint p = [tap locationInView:tap.view];
+        NSIndexPath* indexPath = [tableView indexPathForRowAtPoint:p];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        TrendingObjectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        CGPoint pointInCell = [tap locationInView:cell];
+        
+        NSMutableDictionary *currentObject = [[[self.typeDictionary allValues] objectAtIndex:0] objectAtIndex:indexPath.row];
+        NSLog(@"Current object is (old): %@", currentObject);
+        
+        if (CGRectContainsPoint(cell.leftProduct.frame, pointInCell)) {
+            NSLog(@"In the left image!");
+            //checks if this one has been answered yet
+            if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
+            {
+                //saves it as read - true means left
+                [self.readStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                [self displayAsRead:cell :TRUE];
+                
+                //now saves the cell in the database
+                [self saveAnswer:cell :TRUE];
+            }
+            else
+            {
+                NSLog(@"Already answered...");
+            }
+            
+        } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
+            NSLog(@"In the right image!");
+            if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
+            {
+                //saves it as read - false means right
+                [self.readStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                [self displayAsRead:cell :FALSE];
+                
+                //now saves the cell in the database
+                [self saveAnswer:cell :FALSE];
+            }
+            else
+            {
+                NSLog(@"Already answered...");
+            }
+            
+        }
+        else {
+            NSLog(@"Not in the image...");
+        }
+    }
+}
+
+
+#pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -92,16 +210,23 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.feedObjects.count;
+    return [[[self.typeDictionary allValues] objectAtIndex:0] count];
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSLog(@"***REQUESTED %d ***", indexPath.row);
+    
     static NSString *CellIdentifier = @"Cell";
     TrendingObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row][@"fields"];
+    NSDictionary *currentObject = [[[self.typeDictionary allValues] objectAtIndex:0] objectAtIndex:indexPath.row];
     
     // Configure the cell...
+    [cell.leftNum setHidden:TRUE];
+    [cell.rightNum setHidden:TRUE];
+    [cell.leftLabel setHidden:TRUE];
+    [cell.rightLabel setHidden:TRUE];
     
     cell.leftBackground.layer.cornerRadius = 10;
     cell.leftBackground.clipsToBounds = YES;
@@ -110,164 +235,96 @@
     cell.profilePictureBackground.layer.cornerRadius = 10;
     cell.profilePictureBackground.clipsToBounds = YES;
     
-    
-    NSString *newtext = currentObject[@"question_text"];
-    
-    cell.question.text = newtext;
-    cell.leftLabel.text = [NSString stringWithFormat:@"%@", currentObject[@"product1_count"]];
+    cell.question.text = currentObject[@"question_text"];
+    cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1_count"]];
     NSLog(@"about to get rightNum");
-    cell.rightLabel.text = [NSString stringWithFormat:@"%@",currentObject[@"product2_count"]];
+    cell.rightNum.text = [NSString stringWithFormat:@"%@",currentObject[@"product2_count"]];
+    @try
+    {
+        NSLog(@"leftFriendId");
+        cell.leftFriendId = [(currentObject[@"fbFriend1"][0]) integerValue];
+    }
+    @catch (NSException *e)
+    {
+        cell.leftFriendId = 0;
+    }
     
-    cell.leftProductId = (int) (currentObject[@"product1"]);
-    cell.rightProductId = (int) (currentObject[@"product2"]);
+    @try
+    {
+        NSLog(@"rightFriendId");
+        //cell.rightFriendId = (int) [NSString stringWithFormat:@"%@", (currentObject[@"fbFriend2"][0])];
+        cell.rightFriendId = [(currentObject[@"fbFriend2"][0]) integerValue];
+    }
+    @catch (NSException *e)
+    {
+        cell.rightFriendId = 0;
+    }
     
-    //now downloads and saves the images
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //NSString *currentID = @"4";
-    NSString *currentID = [defaults objectForKey:@"id"];
+    cell.leftProductId = [(currentObject[@"product1_id"]) integerValue];
+    cell.rightProductId = [(currentObject[@"product2_id"]) integerValue];
+    cell.questionId = [(currentObject[@"question"]) integerValue];
+        
+    cell.currentId = (currentObject[@"forUser"]) ;
     
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
     
     //for profile picture
-    cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
     NSString *profileURL = @"https://graph.facebook.com/";
-    profileURL = [profileURL stringByAppendingString:currentID ];
+    //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
+    profileURL = [profileURL stringByAppendingString:cell.currentId];
     profileURL = [profileURL stringByAppendingString:@"/picture"];
-    
-    [imageCache queryDiskCacheForKey:profileURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-         //if it's not there
-         if(image==nil)
-         {
-             [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:profileURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-              {
-                  // progression tracking code
-                  //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-              }
-                                                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-              {
-                  if (image && finished)
-                  {
-                      // do something with image
-                      cell.profilePicture.image = image;
-                      
-                      //and now save it
-                      [imageCache storeImage:image forKey:profileURL];
-                      
-                  }
-              }];
-         }
-         //otherwise just set it
-         else
-         {
-             cell.profilePicture.image = image;
-         }
-         
-         //rounds it
-         cell.profilePicture.layer.cornerRadius = 10;
-         cell.profilePicture.clipsToBounds = YES;
-     }];
-    
+    NSLog(@"Before loading profile picture");
+    [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
+                        placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+            
     //for left product picture
     // instantiate them
-    cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
+    
+    //cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
     NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
     leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"image1"]];
     leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
     leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-         //if it's not there
-         if(image==nil)
-         {
-             [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:leftImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-              {
-                  // progression tracking code
-                  // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-              }
-                                                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-              {
-                  if (image && finished)
-                  {
-                      // do something with image
-                      NSLog(@"Finished getting left product image");
-                      cell.leftProduct.image = image;
-                      
-                      //and now save it
-                      [imageCache storeImage:image forKey:leftImageURL];
-                      
-                  }
-              }];
-         }
-         //otherwise just set it
-         else
-         {
-             cell.leftProduct.image = image;
-         }
-         
-         //rounds it
-         cell.leftProduct.layer.cornerRadius = 10;
-         cell.leftProduct.clipsToBounds = YES;
-     }];
+    // change the default background
+    [cell.leftProduct setImageWithURL:[NSURL URLWithString:leftImageURL]
+                     placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    
+        
     
     //for right product picture
-    cell.rightProduct.image = [UIImage imageNamed:@"profile_icon.png"];
     
     NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
     rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"image2"]];
     rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
     rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
-    [imageCache queryDiskCacheForKey:rightImageURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-         //if it's not there
-         if(image==nil)
-         {
-             [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:rightImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-              {
-                  // progression tracking code
-                  //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-              }
-                                                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-              {
-                  if (image && finished)
-                  {
-                      // do something with image
-                      NSLog(@"Finished getting image");
-                      cell.rightProduct.image = image;
-                      
-                      //and now save it
-                      [imageCache storeImage:image forKey:rightImageURL];
-                      
-                  }
-              }];
-         }
-         //otherwise just set it
-         else
-         {
-             cell.rightProduct.image = image;
-         }
-         
-         //rounds it
-         cell.rightProduct.layer.cornerRadius = 10;
-         cell.rightProduct.clipsToBounds = YES;
-     }];
+    // change the default background
+    [cell.rightProduct setImageWithURL:[NSURL URLWithString:rightImageURL]
+                      placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    cell.profilePicture.layer.cornerRadius = 10;
+    cell.profilePicture.clipsToBounds = YES;
+    cell.leftProduct.layer.cornerRadius = 10;
+    cell.leftProduct.clipsToBounds = YES;
+    cell.rightProduct.layer.cornerRadius = 10;
+    cell.rightProduct.clipsToBounds = YES;
+    
+    //sets it as read if not set yet
+    if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
+    {
+        [self displayAsRead:cell :[[self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] boolValue]];
+    }
+    
     return cell;
 }
 
-// make the feed objects only return once
-- (void)scrollViewDidEndDecelerating:(UITableView *)tableView {
-    float bottomEdge = self.tableView.contentOffset.y + self.tableView.frame.size.height;
-    if (bottomEdge >= self.tableView.contentSize.height - 50)  {
-        NSLog(@"at the very end");
-        // what to do here
-        NSLog(@"Getting new feed objects: ");
-        if (!self.reloadingFeedObject) {
-            self.reloadingFeedObject = YES;
-            [self getFeedObjects];
-        }
-    }
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(TrendingObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"About to cancel cell");
+    // free up the requests for each ImageView
+    [cell.profilePicture cancelCurrentImageLoad];
+    [cell.rightProduct cancelCurrentImageLoad];
+    [cell.leftProduct cancelCurrentImageLoad];
 }
 
 /*
@@ -322,5 +379,6 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
 
 @end

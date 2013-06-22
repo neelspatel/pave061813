@@ -10,6 +10,7 @@
 
 @interface LoginViewController : UIViewController
 - (IBAction)loginButtonTouch:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, assign) BOOL loggedIn;
