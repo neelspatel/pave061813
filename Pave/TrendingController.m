@@ -383,4 +383,10 @@
 }
 
 
+- (IBAction)back:(id)sender {
+    NSLog(@"Clicked");
+    [self performSegueWithIdentifier:@"trendingItemBackToList" sender:nil];
+
+}
+
 @end

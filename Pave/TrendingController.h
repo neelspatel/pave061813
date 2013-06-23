@@ -15,6 +15,9 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)back:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *backButton;
 
 // store the values of the required instance variables
 @property (nonatomic, retain)NSMutableArray *feedObjects;

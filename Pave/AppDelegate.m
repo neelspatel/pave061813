@@ -9,11 +9,21 @@
 #import "AppDelegate.h"
 #import "PaveAPIClient.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "GAI.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Optional: automatically send uncaught exceptions to Google Analytics.
+    [GAI sharedInstance].trackUncaughtExceptions = YES;
+    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
+    [GAI sharedInstance].dispatchInterval = 20;
+    // Optional: set debug to YES for extra debugging information.
+    [GAI sharedInstance].debug = YES;
+    // Create tracker instance.
+    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-37404339-2"];
+    
     //self.didCompleteProfileInformation = YES;
     // Assign tab bar item with titles
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
@@ -41,6 +51,8 @@
     //timer to check for notifications
     NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
                                                       selector: @selector(refreshNotifications:) userInfo: nil repeats: YES];
+    
+    
     
     // Override point for customization after application launch.
     return YES;

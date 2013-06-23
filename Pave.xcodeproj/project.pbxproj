@@ -77,13 +77,14 @@
 		185D857317707D47007733FA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 185D857117707D47007733FA /* InfoPlist.strings */; };
 		185D857617707D47007733FA /* PaveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 185D857517707D47007733FA /* PaveTests.m */; };
 		185D8589177085EF007733FA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185D8588177085EF007733FA /* LoginViewController.m */; };
+		1868E84B17777794003DD291 /* ProfileViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1868E84A17777794003DD291 /* ProfileViewCell.m */; };
 		187CB1B917766FA800126412 /* facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187CB1B717766FA800126412 /* facebook_icon@2x.png */; };
 		187CB1BA17766FA800126412 /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 187CB1B817766FA800126412 /* facebook_icon.png */; };
 		187CB1BC1777137400126412 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1BB1777137400126412 /* MessageUI.framework */; };
 		187CB1C517771FA600126412 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C317771FA600126412 /* libGoogleAnalytics.a */; };
-		187CB1C617771FA600126412 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C417771FA600126412 /* libGoogleAnalytics_debug.a */; };
 		187CB1C817771FCB00126412 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C717771FCB00126412 /* CoreData.framework */; };
 		187CB1CA17771FD200126412 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C917771FD200126412 /* SystemConfiguration.framework */; };
+		187CB1CD17775F1900126412 /* top_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 187CB1CC17775F1900126412 /* top_bar.png */; };
 		18805DCA1770E0630059C37B /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805DC91770E0630059C37B /* GameController.m */; };
 		18805DE91770E0E30059C37B /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805DCD1770E0E30059C37B /* MKAnnotationView+WebCache.m */; };
 		18805DEA1770E0E30059C37B /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805DCF1770E0E30059C37B /* NSData+GIF.m */; };
@@ -232,6 +233,8 @@
 		185D857517707D47007733FA /* PaveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaveTests.m; sourceTree = "<group>"; };
 		185D8587177085EF007733FA /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		185D8588177085EF007733FA /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		1868E84917777794003DD291 /* ProfileViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewCell.h; sourceTree = "<group>"; };
+		1868E84A17777794003DD291 /* ProfileViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewCell.m; sourceTree = "<group>"; };
 		187CB1B717766FA800126412 /* facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_icon@2x.png"; sourceTree = "<group>"; };
 		187CB1B817766FA800126412 /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
 		187CB1BB1777137400126412 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -241,9 +244,9 @@
 		187CB1C117771FA600126412 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
 		187CB1C217771FA600126412 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
 		187CB1C317771FA600126412 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
-		187CB1C417771FA600126412 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
 		187CB1C717771FCB00126412 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187CB1C917771FD200126412 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		187CB1CC17775F1900126412 /* top_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top_bar.png; sourceTree = "<group>"; };
 		18805DC91770E0630059C37B /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 		18805DCC1770E0E30059C37B /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		18805DCD1770E0E30059C37B /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
@@ -343,7 +346,6 @@
 				185D853917707D46007733FA /* Foundation.framework in Frameworks */,
 				185D853B17707D46007733FA /* CoreGraphics.framework in Frameworks */,
 				18BEC3EB1771B6A5001CD508 /* FacebookSDK.framework in Frameworks */,
-				187CB1C617771FA600126412 /* libGoogleAnalytics_debug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +445,7 @@
 				180E90501774EB97002ED974 /* unselected_one_trending_topic_box@2x.png */,
 				180E90511774EB97002ED974 /* unselected_reload.png */,
 				180E90521774EB97002ED974 /* unselected_reload@2x.png */,
+				187CB1CC17775F1900126412 /* top_bar.png */,
 			);
 			path = trending;
 			sourceTree = "<group>";
@@ -522,6 +525,8 @@
 				187CB1BD17771FA600126412 /* Library */,
 				18BEC3E717719582001CD508 /* ProfileObjectCell.h */,
 				18BEC3E817719582001CD508 /* ProfileObjectCell.m */,
+				1868E84917777794003DD291 /* ProfileViewCell.h */,
+				1868E84A17777794003DD291 /* ProfileViewCell.m */,
 				184472591774921100B58781 /* MBProgressHUD.m */,
 				1844725A1774921100B58781 /* MBProgressHUD.h */,
 				18805E4C1770ECEB0059C37B /* FeedObjectCell.h */,
@@ -601,7 +606,6 @@
 				187CB1C117771FA600126412 /* GAITransaction.h */,
 				187CB1C217771FA600126412 /* GAITransactionItem.h */,
 				187CB1C317771FA600126412 /* libGoogleAnalytics.a */,
-				187CB1C417771FA600126412 /* libGoogleAnalytics_debug.a */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -802,6 +806,7 @@
 				18AFB158177506EA004A4190 /* pave_top.png in Resources */,
 				187CB1B917766FA800126412 /* facebook_icon@2x.png in Resources */,
 				187CB1BA17766FA800126412 /* facebook_icon.png in Resources */,
+				187CB1CD17775F1900126412 /* top_bar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +892,7 @@
 				18A18EB91773CB06001AA17E /* TrendingListCell.m in Sources */,
 				1887F7441773D231001254BC /* TrendingController.m in Sources */,
 				1844725B1774921100B58781 /* MBProgressHUD.m in Sources */,
+				1868E84B17777794003DD291 /* ProfileViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1050,6 +1056,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pave/Pave-Prefix.pch";
 				INFOPLIST_FILE = "PaveTests/PaveTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Pave/Library\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -1067,6 +1077,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pave/Pave-Prefix.pch";
 				INFOPLIST_FILE = "PaveTests/PaveTests-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Pave/Library\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;

@@ -12,6 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
 #import "ProfileObjectCell.h"
+#import "ProfileViewCell.h"
 #import "MBProgressHUD.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "AppDelegate.h"
@@ -144,163 +145,212 @@
 {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return self.feedObjects.count;
+    //extra for profile and invite cells
+    return self.feedObjects.count + 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    ProfileObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
-        
-    NSString *newtext = currentObject[@"question"];
-    
-    cell.question.text = newtext;
-    
-    //now downloads and saves the images
-    NSString *currentID = [NSString stringWithFormat:@"%@", currentObject[@"friend"]];
-    //NSString *currentID = @"4";
+    //if it's a header
+    if(indexPath.row == 0)
+    {
+        static NSString *CellIdentifier = @"Profile";
+        ProfileViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell = [[ProfileViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            // More initializations if needed.
+        }
 
-    SDImageCache *imageCache = [SDImageCache sharedImageCache];
-    
-    //for profile picture
-    cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
-    NSString *profileURL = @"https://graph.facebook.com/";
-    profileURL = [profileURL stringByAppendingString:currentID ];
-    profileURL = [profileURL stringByAppendingString:@"/picture"];
-    
-    [imageCache queryDiskCacheForKey:profileURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-         //if it's not there
-         if(image==nil)
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSString *profileURL = @"https://graph.facebook.com/";
+        profileURL = [profileURL stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+        profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
+        
+        [cell.picture setImageWithURL:[NSURL URLWithString:profileURL]
+                            placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+        NSString *count = [NSString stringWithFormat:@"%d answers", self.feedObjects.count];
+        
+        cell.backgroundImage.layer.cornerRadius =5;
+        cell.backgroundImage.clipsToBounds = YES;
+        
+        cell.picture.layer.cornerRadius =5;
+        cell.picture.clipsToBounds = YES;
+        
+        cell.name.text = [defaults objectForKey:@"profile"][@"name"];
+        cell.number.text = count;
+
+        
+        return cell;
+    }
+    //otherwise if it's a footer
+    else if(indexPath.row == self.feedObjects.count + 1)
+    {
+        static NSString *CellIdentifier = @"InviteFriends";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            // More initializations if needed.
+        }
+        
+        cell.textLabel.text = @"footer!";        
+        
+        return cell;
+    }
+    else
+    {
+        static NSString *CellIdentifier = @"Cell";
+        ProfileObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row-1)];
+            
+        NSString *newtext = currentObject[@"question"];
+        
+        cell.question.text = newtext;
+        
+        //now downloads and saves the images
+        NSString *currentID = [NSString stringWithFormat:@"%@", currentObject[@"friend"]];
+        //NSString *currentID = @"4";
+
+        SDImageCache *imageCache = [SDImageCache sharedImageCache];
+        
+        //for profile picture
+        cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
+        NSString *profileURL = @"https://graph.facebook.com/";
+        profileURL = [profileURL stringByAppendingString:currentID ];
+        profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
+        
+        [imageCache queryDiskCacheForKey:profileURL done:^(UIImage *image, SDImageCacheType cacheType)
          {
-             [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:profileURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-              {
-                  // progression tracking code
-                  //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-              }
-                                                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-              {
-                  if (image && finished)
+             //if it's not there
+             if(image==nil)
+             {
+                 [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:profileURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
                   {
-                      // do something with image
-                      cell.profilePicture.image = image;
-                      
-                      //and now save it
-                      [imageCache storeImage:image forKey:profileURL];
-                      
+                      // progression tracking code
+                      //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
                   }
-              }];
-         }
-         //otherwise just set it
-         else
-         {
-             cell.profilePicture.image = image;
-         }
-         
-         //rounds it
-         cell.profilePicture.layer.cornerRadius = 10;
-         cell.profilePicture.clipsToBounds = YES;
-         cell.profilePictureBackground.layer.cornerRadius = 10;
-         cell.profilePictureBackground.clipsToBounds = YES;
-         
-         cell.rightProduct.layer.cornerRadius = 6;
-         cell.rightProduct.clipsToBounds = YES;
-         cell.rightProductBackground.layer.cornerRadius = 6;
-         cell.rightProductBackground.clipsToBounds = YES;
-         
-         cell.leftProduct.layer.cornerRadius = 6;
-         cell.leftProduct.clipsToBounds = YES;
-         cell.leftProductBackground.layer.cornerRadius = 6;
-         cell.leftProductBackground.clipsToBounds = YES;
-     }];
-    
-    //for left product picture
-    // instantiate them
-    cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
-    NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
-    leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"chosenProduct"]];
-    leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
-    leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    
-    [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-         //if it's not there
-         if(image==nil)
-         {
-             [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:leftImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-              {
-                  // progression tracking code
-                  // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-              }
-                                                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-              {
-                  if (image && finished)
+                                                                   completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
                   {
-                      // do something with image
-                      NSLog(@"Finished getting left product image");
-                      cell.leftProduct.image = image;
-                      
-                      //and now save it
-                      [imageCache storeImage:image forKey:leftImageURL];
-                      
-                  }
-              }];
-         }
-         //otherwise just set it
-         else
+                      if (image && finished)
+                      {
+                          // do something with image
+                          cell.profilePicture.image = image;
+                          
+                          //and now save it
+                          [imageCache storeImage:image forKey:profileURL];
+                          
+                      }
+                  }];
+             }
+             //otherwise just set it
+             else
+             {
+                 cell.profilePicture.image = image;
+             }
+             
+             //rounds it
+             cell.profilePicture.layer.cornerRadius = 2;
+             cell.profilePicture.clipsToBounds = YES;
+             cell.profilePictureBackground.layer.cornerRadius = 2;
+             cell.profilePictureBackground.clipsToBounds = YES;
+             
+             cell.rightProduct.layer.cornerRadius =2;
+             cell.rightProduct.clipsToBounds = YES;
+             cell.rightProductBackground.layer.cornerRadius = 2;
+             cell.rightProductBackground.clipsToBounds = YES;
+             
+             cell.leftProduct.layer.cornerRadius = 2;
+             cell.leftProduct.clipsToBounds = YES;
+             cell.leftProductBackground.layer.cornerRadius = 2;
+             cell.leftProductBackground.clipsToBounds = YES;
+         }];
+        
+        //for left product picture
+        // instantiate them
+        cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
+        NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
+        leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"chosenProduct"]];
+        leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
+        leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        
+        [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
          {
-             cell.leftProduct.image = image;
-         }
-         
-         //rounds it
-         cell.leftProduct.layer.cornerRadius = 5;
-         cell.leftProduct.clipsToBounds = YES;
-     }];
-    
-    //for right product picture
-    cell.rightProduct.image = [UIImage imageNamed:@"profile_icon.png"];
-    
-    NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
-    rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"otherProduct"]];
-    rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
-    rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    
-    [imageCache queryDiskCacheForKey:rightImageURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-         //if it's not there
-         if(image==nil)
-         {
-             [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:rightImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-              {
-                  // progression tracking code
-                  //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-              }
-                                                               completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-              {
-                  if (image && finished)
+             //if it's not there
+             if(image==nil)
+             {
+                 [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:leftImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
                   {
-                      // do something with image
-                      NSLog(@"Finished getting image");
-                      cell.rightProduct.image = image;
-                      
-                      //and now save it
-                      [imageCache storeImage:image forKey:rightImageURL];
-                      
+                      // progression tracking code
+                      // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
                   }
-              }];
-         }
-         //otherwise just set it
-         else
+                                                                   completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
+                  {
+                      if (image && finished)
+                      {
+                          // do something with image
+                          NSLog(@"Finished getting left product image");
+                          cell.leftProduct.image = image;
+                          
+                          //and now save it
+                          [imageCache storeImage:image forKey:leftImageURL];
+                          
+                      }
+                  }];
+             }
+             //otherwise just set it
+             else
+             {
+                 cell.leftProduct.image = image;
+             }
+             
+             //rounds it
+             cell.leftProduct.layer.cornerRadius = 2;
+             cell.leftProduct.clipsToBounds = YES;
+         }];
+        
+        //for right product picture
+        cell.rightProduct.image = [UIImage imageNamed:@"profile_icon.png"];
+        
+        NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
+        rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"otherProduct"]];
+        rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
+        rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        
+        [imageCache queryDiskCacheForKey:rightImageURL done:^(UIImage *image, SDImageCacheType cacheType)
          {
-             cell.rightProduct.image = image;
-         }
-         
-         //rounds it
-         cell.rightProduct.layer.cornerRadius = 5;
-         cell.rightProduct.clipsToBounds = YES;
-     }];
-    return cell;
+             //if it's not there
+             if(image==nil)
+             {
+                 [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:rightImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
+                  {
+                      // progression tracking code
+                      //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
+                  }
+                                                                   completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
+                  {
+                      if (image && finished)
+                      {
+                          // do something with image
+                          NSLog(@"Finished getting image");
+                          cell.rightProduct.image = image;
+                          
+                          //and now save it
+                          [imageCache storeImage:image forKey:rightImageURL];
+                          
+                      }
+                  }];
+             }
+             //otherwise just set it
+             else
+             {
+                 cell.rightProduct.image = image;
+             }
+             
+             //rounds it
+             cell.rightProduct.layer.cornerRadius = 2;
+             cell.rightProduct.clipsToBounds = YES;
+         }];
+        return cell;
+    }
 }
 
 

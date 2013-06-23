@@ -77,6 +77,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    self.trackedViewName = @"Game controller";
+    
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     NSLog(@"Session right now is %@", session);
@@ -412,11 +414,11 @@
     [cell.leftLabel setHidden:TRUE];
     [cell.rightLabel setHidden:TRUE];
     
-    cell.leftBackground.layer.cornerRadius = 10;
+    cell.leftBackground.layer.cornerRadius = 2;
     cell.leftBackground.clipsToBounds = YES;
-    cell.rightBackground.layer.cornerRadius = 10;
+    cell.rightBackground.layer.cornerRadius = 2;
     cell.rightBackground.clipsToBounds = YES;
-    cell.profilePictureBackground.layer.cornerRadius = 10;
+    cell.profilePictureBackground.layer.cornerRadius = 2;
     cell.profilePictureBackground.clipsToBounds = YES;
     
     cell.question.text = currentObject[@"questionText"];
@@ -567,11 +569,11 @@
     // change the default background
     [cell.rightProduct setImageWithURL:[NSURL URLWithString:rightImageURL]
                       placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-    cell.profilePicture.layer.cornerRadius = 10;
+    cell.profilePicture.layer.cornerRadius = 2;
     cell.profilePicture.clipsToBounds = YES;
-    cell.leftProduct.layer.cornerRadius = 10;
+    cell.leftProduct.layer.cornerRadius = 2;
     cell.leftProduct.clipsToBounds = YES;
-    cell.rightProduct.layer.cornerRadius = 10;
+    cell.rightProduct.layer.cornerRadius = 2;
     cell.rightProduct.clipsToBounds = YES;
     
     //sets it as read if not set yet

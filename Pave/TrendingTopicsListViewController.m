@@ -28,13 +28,20 @@
     return self;
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    CGRect windowFrame = [UIScreen mainScreen].applicationFrame;
+    
+    [self.navigationController.navigationBar setFrame:CGRectMake(0,16, windowFrame.size.width, 42)];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.feedObjects = [NSMutableArray array];
     [self getFeedObjects];
 	// refresh data from here 
-    // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.    
 }
 
 
@@ -84,6 +91,11 @@
         }];
 }
 
+- (void) viewWillAppear:(BOOL)animated {
+    [self.tableView deselectRowAtIndexPath:[self.tableView  indexPathForSelectedRow] animated:animated];
+    [super viewWillAppear:animated];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -100,12 +112,24 @@
     return self.feedObjects.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (TrendingListCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
     static NSString *CellIdentifier = @"Cell";
     TrendingListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+
+    
+    NSLog(@"Changing cell style in view controller..");
+    UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
+    av.backgroundColor = [UIColor clearColor];
+    av.opaque = NO;
+    av.image = [UIImage imageNamed:@"unselected_one_trending_topic_box.png"];
+     
+    
+    cell.backgroundView = av;
+    
+    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_trending_topic_box.png"]];
     
     cell.label.text = [[currentObject allKeys] objectAtIndex:0];
     NSLog(@"Set text to %@", [[currentObject allKeys] objectAtIndex:0]);
@@ -113,7 +137,7 @@
     return cell;        
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {    
     [self performSegueWithIdentifier:@"trendingListToTrendingTopics" sender:self.feedObjects[indexPath.row]];
 }
 

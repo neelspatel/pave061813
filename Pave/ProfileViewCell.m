@@ -1,23 +1,20 @@
 //
-//  TrendingListCell.m
+//  ProfileViewCell.m
 //  Pave
 //
-//  Created by Neel Patel on 6/20/13.
+//  Created by Neel Patel on 6/23/13.
 //  Copyright (c) 2013 Pave. All rights reserved.
 //
 
-#import "TrendingListCell.h"
+#import "ProfileViewCell.h"
 
-@implementation TrendingListCell
+@implementation ProfileViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSLog(@"Changing cell style..");
-        self.imageView.image = [UIImage imageNamed:@"unselected_one_trending_topic_box.png"];
-        self.imageView.highlightedImage = [UIImage imageNamed:@"selected_trending_topic_box.png"];
-        
+        // Initialization code
     }
     return self;
 }
