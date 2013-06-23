@@ -56,9 +56,19 @@
     singleTap.numberOfTouchesRequired = 1;
     [self.tableView addGestureRecognizer:singleTap];
         
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    FBSession* session = delegate.session;
+    NSLog(@"Session right now is %@", session);
     
-    NSLog(@"Feed objects are %@", self.feedObjects);
-    [self getFeedObjects];
+    if (session.state == FBSessionStateOpen) {
+        NSLog(@"Already in");
+        NSLog(@"Feed objects are %@", self.feedObjects);
+        [self getFeedObjects];
+    }
+    
+    //ability to call load from somewhere else
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedObjects) name:@"getFeedObjects" object:nil];
+
     
 }
 
@@ -117,6 +127,8 @@
                                     [defaults setObject:[pictureURL absoluteString] forKey:@"pictureURL"];
                                 }
                                 [defaults synchronize];
+                                NSLog(@"Going to get feed objects after login now");
+                                [self getFeedObjects];
                                 
                                 
                             } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
@@ -126,6 +138,11 @@
                                 NSLog(@"Some other error: %@", error);
                             }
                         }];
+                    }
+                    else
+                    {
+                        NSLog(@"Going to get feed objects after login now since id was not nil");
+                        [self getFeedObjects];
                     }
                 }
                 else
@@ -142,6 +159,7 @@
     }
     else if(session.state == FBSessionStateOpen)
     {
+        NSLog(@"(Already logged in)");
         return;
     }
     else
@@ -285,6 +303,7 @@
 
 - (void) getFeedObjects
 {
+    NSLog(@"Getting feed objects now");
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

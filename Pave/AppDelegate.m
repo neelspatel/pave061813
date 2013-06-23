@@ -49,52 +49,52 @@
 
 -(void) refreshNotifications:(NSTimer*) t
 {
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
-    UITabBar *tabBar = tabBarController.tabBar;
-    UITabBarItem *item = [tabBar.items objectAtIndex:0];
-    NSString *oldvalue = item.badgeValue;
-
-    int seconds = (int)[[NSDate date] timeIntervalSince1970];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    //either checks the last time that we polled the server, or polls based on that previous time. then stores the current value
-    int polltime = 0;
-    if([defaults integerForKey:@"lastpolled"] != nil)
+    //if we're logged in
+    if(self.session.state == FBSessionStateOpen)
     {
-        NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
-            //updates the poll time
-        polltime = [defaults integerForKey:@"lastpolled"];
+        UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+        UITabBar *tabBar = tabBarController.tabBar;
+        UITabBarItem *item = [tabBar.items objectAtIndex:0];
+        NSString *oldvalue = item.badgeValue;
+
+        int seconds = (int)[[NSDate date] timeIntervalSince1970];
         
-    }
-    
-    NSString *path = @"/data/numberofnewobjects/";
-    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
-    //path = [path stringByAppendingString:@"1"];
-    path = [path stringByAppendingString:@"/"];
-    path = [path stringByAppendingString:[NSString stringWithFormat:@"%d", polltime]];
-    path = [path stringByAppendingString:@"/"];
-    NSLog(@"Path is %@", path);
-    
-    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-            if (results) {
-                NSLog(@"Results %@", results);
-                if([[results objectForKey:@"count"] intValue] != 0)
-                {
-                    NSLog(@"Incremented by %d!", [[results objectForKey:@"count"] intValue]);
-                    [[tabBar.items objectAtIndex:0] setBadgeValue:[self incrementString:oldvalue :[[results objectForKey:@"count"] intValue]]];
-                }
-                //changes the old value
-                [defaults setInteger:[[results objectForKey:@"last"] intValue] forKey:@"lastpolled"];
-            }
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        //either checks the last time that we polled the server, or polls based on that previous time. then stores the current value
+        int polltime = 0;
+        if([defaults integerForKey:@"lastpolled"] != nil)
+        {
+            NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
+                //updates the poll time
+            polltime = [defaults integerForKey:@"lastpolled"];
+            
         }
-        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            NSLog(@"error getting notifications from database %@", error);
-        }];
-
-    
-    
-
+        NSLog(@"Trying to get the polls");
+        NSString *path = @"/data/numberofnewobjects/";
+        path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+        //path = [path stringByAppendingString:@"1"];
+        path = [path stringByAppendingString:@"/"];
+        path = [path stringByAppendingString:[NSString stringWithFormat:@"%d", polltime]];
+        path = [path stringByAppendingString:@"/"];
+        NSLog(@"Path is %@", path);
+        
+        [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                if (results) {
+                    NSLog(@"Results %@", results);
+                    if([[results objectForKey:@"count"] intValue] != 0)
+                    {
+                        NSLog(@"Incremented by %d!", [[results objectForKey:@"count"] intValue]);
+                        [[tabBar.items objectAtIndex:0] setBadgeValue:[self incrementString:oldvalue :[[results objectForKey:@"count"] intValue]]];
+                    }
+                    //changes the old value
+                    [defaults setInteger:[[results objectForKey:@"last"] intValue] forKey:@"lastpolled"];
+                }
+            }
+            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                NSLog(@"error getting notifications from database %@", error);
+            }];    
+    }
 }
 
 -(NSString*) incrementString:(NSString*) oldvalue: (int) amount

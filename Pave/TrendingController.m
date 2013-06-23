@@ -109,6 +109,7 @@
 
 -(void)saveAnswer:(TrendingObjectCell *) cell: (BOOL) left
 {
+    NSLog(@"Saving!");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"cur id: %@", cell.currentId);
     NSLog(@"left id: %d", cell.leftProductId);
@@ -118,6 +119,7 @@
     if(left == true)
     {
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        
         
         [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
                                     parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {

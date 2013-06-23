@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -289,7 +289,7 @@
                                         <color key="backgroundColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="IcD-88-2Q9"/>
-                                            <constraint firstAttribute="height" constant="372" id="ndt-q5-tNa"/>
+                                            <constraint firstAttribute="height" constant="390" id="pCT-QH-r1X"/>
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Cell" rowHeight="133" id="xhp-Wc-7ZO" customClass="ProfileObjectCell">
@@ -337,6 +337,7 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="center" image="dividing_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="LsR-op-Ajh">
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="240" id="9vv-j6-reQ"/>
+                                                                <constraint firstAttribute="height" constant="2" id="tzR-WE-nV9"/>
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="wgj-7H-ysK">
@@ -365,12 +366,12 @@
                                                 </view>
                                                 <color key="backgroundColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                                                 <constraints>
-                                                    <constraint firstItem="wgj-7H-ysK" firstAttribute="leading" secondItem="xhp-Wc-7ZO" secondAttribute="leading" constant="127" id="2ey-vq-3HR"/>
                                                     <constraint firstItem="wgj-7H-ysK" firstAttribute="centerY" secondItem="ET8-r1-rAT" secondAttribute="centerY" type="default" id="2xg-Mo-dnc"/>
                                                     <constraint firstItem="wgj-7H-ysK" firstAttribute="top" secondItem="xhp-Wc-7ZO" secondAttribute="top" constant="50" id="5Mf-FW-8Ci"/>
                                                     <constraint firstItem="K7f-JM-jkR" firstAttribute="centerY" secondItem="wSQ-GQ-GHv" secondAttribute="centerY" type="default" id="5n9-et-pls"/>
                                                     <constraint firstAttribute="trailing" secondItem="0VM-bR-8VH" secondAttribute="trailing" constant="15" id="7eI-hW-2Ts"/>
                                                     <constraint firstItem="1lk-TC-PMK" firstAttribute="centerY" secondItem="K7f-JM-jkR" secondAttribute="centerY" type="default" id="8U6-Fb-XN3"/>
+                                                    <constraint firstItem="LsR-op-Ajh" firstAttribute="leading" secondItem="xhp-Wc-7ZO" secondAttribute="leading" constant="42" id="9xV-a5-ILL"/>
                                                     <constraint firstItem="ET8-r1-rAT" firstAttribute="bottom" secondItem="JDf-Pe-hJT" secondAttribute="bottom" type="default" id="Fv3-xo-bVd"/>
                                                     <constraint firstItem="1lk-TC-PMK" firstAttribute="centerY" secondItem="0VM-bR-8VH" secondAttribute="centerY" type="default" id="G9J-8S-vWa"/>
                                                     <constraint firstItem="wgj-7H-ysK" firstAttribute="centerY" secondItem="d2X-fj-H1X" secondAttribute="centerY" type="default" id="GqJ-tP-zbf"/>
@@ -410,7 +411,6 @@
                                 <color key="backgroundColor" red="0.31764706970000001" green="0.48627454040000001" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstItem="hAK-Fm-SYy" firstAttribute="centerX" secondItem="cYD-sD-rt1" secondAttribute="centerX" type="default" id="5Vz-3q-doD"/>
-                                    <constraint firstItem="hAK-Fm-SYy" firstAttribute="leading" secondItem="cYD-sD-rt1" secondAttribute="leading" constant="1" id="PH5-KK-As3"/>
                                     <constraint firstItem="hAK-Fm-SYy" firstAttribute="top" secondItem="cYD-sD-rt1" secondAttribute="top" constant="1" id="eGI-cU-iPt"/>
                                 </constraints>
                             </view>
@@ -449,14 +449,15 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90980392160000001" green="0.41176470590000003" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="cYD-sD-rt1" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="47" id="RdQ-e1-b8G"/>
+                            <constraint firstAttribute="bottom" secondItem="cYD-sD-rt1" secondAttribute="bottom" constant="-1" id="Lqh-JV-7U9"/>
                             <constraint firstItem="cYD-sD-rt1" firstAttribute="centerX" secondItem="vrM-3r-wbc" secondAttribute="centerX" type="default" id="SNT-a3-2JM"/>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="bottom" secondItem="KvB-iD-uLR" secondAttribute="bottom" type="default" id="Ubr-mK-teg"/>
                             <constraint firstItem="KvB-iD-uLR" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="3" id="WB3-P3-uLM"/>
                             <constraint firstItem="KvB-iD-uLR" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="65" id="YP6-iq-zhP"/>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="bDZ-eZ-Bud"/>
+                            <constraint firstItem="cYD-sD-rt1" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="37" id="jim-Oa-eFH"/>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="kNn-g9-MaP"/>
-                            <constraint firstAttribute="bottom" secondItem="cYD-sD-rt1" secondAttribute="bottom" constant="-11" id="pD6-E4-59B"/>
+                            <constraint firstItem="cYD-sD-rt1" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="9" id="zQn-H6-xs3"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="8tl-gh-BoX"/>
@@ -511,7 +512,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="208" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="pn2-25-rSa">
                                 <color key="backgroundColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" priority="1" constant="372" type="user" id="6RU-RX-QsP"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="1" constant="372" type="user" id="6RU-RX-QsP"/>
                                     <constraint firstAttribute="height" constant="382" id="cyy-kv-Rb6"/>
                                     <constraint firstAttribute="width" constant="300" id="hHJ-Yz-hqk"/>
                                 </constraints>
@@ -691,15 +692,15 @@
                         <color key="backgroundColor" red="0.90980392160000001" green="0.41176470590000003" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="44E-J8-4Rz" firstAttribute="leading" secondItem="pn2-25-rSa" secondAttribute="leading" type="default" id="6DE-td-ISO"/>
                             <constraint firstItem="0ag-md-PeK" firstAttribute="centerX" secondItem="9qb-QR-T9M" secondAttribute="centerX" type="default" id="7ON-0w-s9E"/>
-                            <constraint firstItem="44E-J8-4Rz" firstAttribute="centerX" secondItem="pn2-25-rSa" secondAttribute="centerX" type="default" id="IDf-Mj-SjN"/>
                             <constraint firstItem="pn2-25-rSa" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" constant="37" id="NlW-D6-3cB"/>
                             <constraint firstItem="44E-J8-4Rz" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" constant="30" id="OJM-C3-qaT"/>
                             <constraint firstItem="9qb-QR-T9M" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" constant="-6" id="Wkq-nV-CiZ"/>
+                            <constraint firstAttribute="trailing" secondItem="44E-J8-4Rz" secondAttribute="trailing" constant="8" id="XA7-za-SvT"/>
                             <constraint firstItem="0ag-md-PeK" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" constant="4" id="YDD-tv-5ja"/>
                             <constraint firstItem="9qb-QR-T9M" firstAttribute="leading" secondItem="Gu6-uR-h9P" secondAttribute="leading" type="default" id="bkb-yQ-u88"/>
                             <constraint firstItem="0ag-md-PeK" firstAttribute="centerX" secondItem="pn2-25-rSa" secondAttribute="centerX" type="default" id="dcU-62-ohj"/>
-                            <constraint firstItem="44E-J8-4Rz" firstAttribute="leading" secondItem="Gu6-uR-h9P" secondAttribute="leading" constant="9" id="ifj-L5-pDc"/>
                             <constraint firstAttribute="bottom" secondItem="44E-J8-4Rz" secondAttribute="bottom" constant="-19" id="rHT-aP-mOe"/>
                             <constraint firstItem="9qb-QR-T9M" firstAttribute="trailing" secondItem="Gu6-uR-h9P" secondAttribute="trailing" type="default" id="xoN-U3-tKK"/>
                         </constraints>
@@ -731,7 +732,7 @@
                                     <constraint firstAttribute="height" constant="121" id="TeH-7W-LK9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="facebook_icon@2x.png">
+                                <state key="normal" image="facebook_icon.png">
                                     <color key="titleColor" white="0.51459854014598538" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -744,6 +745,7 @@
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="dividing_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-wr-JEN">
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="2" id="2fe-pu-Gj2"/>
                                     <constraint firstAttribute="width" constant="240" id="3cQ-Qz-0Sg"/>
                                 </constraints>
                             </imageView>
@@ -757,7 +759,7 @@
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="connect with" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="KJg-63-QOz">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="cmt-I0-FHc"/>
+                                    <constraint firstAttribute="height" constant="80" id="BVu-Wx-M1f"/>
                                     <constraint firstAttribute="width" constant="334" id="rB2-Y1-95t"/>
                                 </constraints>
                                 <color key="textColor" red="0.99238708939999998" green="0.99016309309999995" blue="0.99270072990000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -775,11 +777,14 @@
                             <constraint firstItem="KJg-63-QOz" firstAttribute="top" secondItem="Tub-wr-JEN" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="Zpa-Ep-AiX"/>
                             <constraint firstItem="Qe9-PM-Kej" firstAttribute="top" secondItem="Qiw-TQ-pMG" secondAttribute="top" constant="201" id="dPa-jc-aph"/>
                             <constraint firstItem="KJg-63-QOz" firstAttribute="centerX" secondItem="Tub-wr-JEN" secondAttribute="centerX" type="default" id="qyD-8B-Rkp"/>
-                            <constraint firstItem="eQV-bL-HDV" firstAttribute="centerX" secondItem="Qiw-TQ-pMG" secondAttribute="centerX" type="default" id="uFu-oB-qOf"/>
+                            <constraint firstItem="Tub-wr-JEN" firstAttribute="centerX" secondItem="Qiw-TQ-pMG" secondAttribute="centerX" type="default" id="yWW-Aq-Sr9"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="connectWith" destination="KJg-63-QOz" id="OEe-Mt-QdT"/>
+                        <outlet property="dividingBar" destination="Tub-wr-JEN" id="hgh-mX-F60"/>
                         <outlet property="loginButton" destination="Qe9-PM-Kej" id="FOl-bV-D5G"/>
+                        <outlet property="loginInfo" destination="eQV-bL-HDV" id="FMa-eq-Cfo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Hl-hy-zK2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -788,11 +793,113 @@
         </scene>
     </scenes>
     <resources>
-        <image name="dividing_bar.png" width="45" height="2"/>
-        <image name="facebook_icon@2x.png" width="13" height="29"/>
+        <image name="dividing_bar.png" width="212" height="1"/>
+        <image name="facebook_icon.png" width="143" height="143"/>
         <image name="pave_top.png" width="238" height="64"/>
         <image name="unselected_reload.png" width="20" height="20"/>
     </resources>
+    <classes>
+        <class className="FeedObjectCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedObjectCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="leftBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftFriend" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePictureBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightFriend" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="GameController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="loginButtonTouch:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="connectWith" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="dividingBar" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="loginInfo" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PersonalFeedController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalFeedController.h"/>
+            <relationships>
+                <relationship kind="action" name="logout:"/>
+                <relationship kind="action" name="refresh:"/>
+                <relationship kind="outlet" name="loading" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="logoutButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="tableViewBackground" candidateClass="UIView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="ProfileObjectCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ProfileObjectCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftProductBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftProductHighlight" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePictureBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightProductBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightProductHighlight" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="TrendingController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="TrendingListCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingListCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="TrendingObjectCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingObjectCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="leftBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePictureBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="TrendingTopicsListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingTopicsListViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

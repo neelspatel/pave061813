@@ -42,13 +42,14 @@
 // checks both instance variables to see if the requests went through
 -(void) sendSaveUserAndFacebookInformation
 {
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        // Do something...
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-        if (self.didCompleteProfileInformation && self.didCompleteFriendsInformation) {
-            // use the singleton APIClient
+
+    if (self.didCompleteProfileInformation && self.didCompleteFriendsInformation) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            // Do something...
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        // use the singleton APIClient
             NSLog(@"about to request user");
             
             //splits the friends into id, name, and gender
@@ -98,13 +99,17 @@
              //                            parameters:@{@"id_facebookID":self.userProfile[@"facebookId"], @"id_profile": self.userProfile, @"friends": self.friendIds} success:^(AFHTTPRequestOperation *operation, id JSON) {
                                         parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                                             NSLog(@"successfully logged in user to Django");
+                                            //now fetches the feed objects
+                                            [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
+
+                                            
                                             [self dismissViewControllerAnimated:NO completion:nil];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             NSLog(@"error logging in user to Django %@", error);
                                         }];
-            
-        }
-    });
+        });
+    }
+
 }
 
 - (void) initializeFacebookInformation
@@ -261,7 +266,11 @@
                 //saves and updates data
                 [self initializeFacebookInformation];
                 
+                //hides elements on screen
                 self.loginButton.hidden = TRUE;
+                self.dividingBar.hidden = TRUE;
+                self.loginInfo.hidden = TRUE;
+                self.connectWith.text = @"Awesome! We're logging you in now.";
             }
             else
             {
