@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
+#import <MessageUI/MessageUI.h>
 
-
-@interface GameController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface GameController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *emailButton;
+- (IBAction)sendEmail:(id)sender;
 
 // store the values of the required instance variables
 @property (nonatomic, retain)NSMutableArray *feedObjects;

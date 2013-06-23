@@ -16,6 +16,8 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
+#import <MessageUI/MessageUI.h>
+
 
 @interface GameController ()
 
@@ -219,6 +221,36 @@
     
     if(left == true)
     {
+        
+        NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
+             // 2. Optionally provide a 'to' param to direct the request at
+             @"100006184542452", @"to", @"true", @"new_style_message", @"Hey, get Pave!", @"message", @"apprequests", @"method", // Ali
+             nil];
+        //NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:nil];
+        
+        AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        FBSession* session = delegate.session;
+        
+        NSLog(@"Session in post to fb is %@", session);
+        
+
+        [FBWebDialogs presentRequestsDialogModallyWithSession:session
+              message:@"Ever wondered what people think about you? I'll tell you if you download Pave!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                  if (error) {
+                      NSLog(@"Error");
+                      // Case A: Error launching the dialog or sending request.
+                  } else {
+                      if (result == FBWebDialogResultDialogNotCompleted) {
+                          //Case B: User clicked the "x" icon
+                          NSLog(@"closed");                          
+                      } else {
+                          NSLog(@"Sent");
+                          //Case C: Dialog shown and the user clicks Cancel or Send
+                      }
+                  }
+              }];
+        
+        
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         
         [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
@@ -431,7 +463,7 @@
     NSString *profileURL = @"https://graph.facebook.com/";
     //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
     profileURL = [profileURL stringByAppendingString:cell.currentId];
-    profileURL = [profileURL stringByAppendingString:@"/picture"];
+    profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
     NSLog(@"Before loading profile picture");
     [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
                    placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
@@ -665,6 +697,42 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+- (IBAction)sendEmail:(id)sender {
+    NSLog(@"Calledemail");
+    MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
+    mailer.mailComposeDelegate = self;
+    [mailer setSubject:@"Pave, we need to talk..."];
+    NSArray *toRecipients = [NSArray arrayWithObjects:@"getpave@gmail.com", nil];
+    [mailer setToRecipients:toRecipients];    
+    NSString *emailBody = @"<div style = 'font-size: 10px;'> It's not me, it's you. Here's my feedback on Pave:</div>";
+    [mailer setMessageBody:emailBody isHTML:YES];
+    [self presentModalViewController:mailer animated:YES];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled: you cancelled the operation and no email message was queued.");
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved: you saved the email message in the drafts folder.");
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail send: the email message is queued in the outbox. It is ready to send.");
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail failed: the email message was not saved or queued, possibly due to an error.");
+            break;
+        default:
+            NSLog(@"Mail not sent.");
+            break;
+    }
+    // Remove the mail view
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

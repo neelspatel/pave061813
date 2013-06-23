@@ -680,7 +680,25 @@
                             </tableView>
                             <navigationBar contentMode="scaleToFill" barStyle="blackOpaque" translatesAutoresizingMaskIntoConstraints="NO" id="9qb-QR-T9M">
                                 <items>
-                                    <navigationItem id="SCr-v9-hEG"/>
+                                    <navigationItem id="SCr-v9-hEG">
+                                        <barButtonItem key="leftBarButtonItem" style="plain" id="MPl-C6-0IB">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="TMm-y8-3Al">
+                                                <rect key="frame" x="5" y="6" width="71" height="33"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                <state key="normal" title="Button">
+                                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="highlighted">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="sendEmail:" destination="PlR-f4-nCD" eventType="touchUpInside" id="gAE-bY-Cgf"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="pave_top.png" translatesAutoresizingMaskIntoConstraints="NO" id="0ag-md-PeK">
@@ -694,13 +712,13 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="44E-J8-4Rz" firstAttribute="centerX" secondItem="pn2-25-rSa" secondAttribute="centerX" type="default" id="6Rw-LQ-HYw"/>
-                            <constraint firstItem="pn2-25-rSa" firstAttribute="centerX" secondItem="9qb-QR-T9M" secondAttribute="centerX" type="default" id="D53-fT-ne6"/>
+                            <constraint firstItem="0ag-md-PeK" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" type="default" id="7hH-EC-tbX"/>
+                            <constraint firstItem="0ag-md-PeK" firstAttribute="centerX" secondItem="9qb-QR-T9M" secondAttribute="centerX" type="default" id="GMx-hM-dGR"/>
                             <constraint firstItem="pn2-25-rSa" firstAttribute="centerX" secondItem="0ag-md-PeK" secondAttribute="centerX" type="default" id="N8R-dh-e2a"/>
                             <constraint firstItem="44E-J8-4Rz" firstAttribute="leading" secondItem="Gu6-uR-h9P" secondAttribute="leading" constant="9" id="NK0-UR-uau"/>
                             <constraint firstItem="pn2-25-rSa" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" constant="37" type="user" id="NlW-D6-3cB"/>
                             <constraint firstItem="44E-J8-4Rz" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" constant="30" id="OJM-C3-qaT"/>
                             <constraint firstItem="9qb-QR-T9M" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" constant="-6" id="Wkq-nV-CiZ"/>
-                            <constraint firstItem="0ag-md-PeK" firstAttribute="top" secondItem="Gu6-uR-h9P" secondAttribute="top" constant="4" id="YDD-tv-5ja"/>
                             <constraint firstItem="9qb-QR-T9M" firstAttribute="leading" secondItem="Gu6-uR-h9P" secondAttribute="leading" type="default" id="bkb-yQ-u88"/>
                             <constraint firstAttribute="bottom" secondItem="pn2-25-rSa" secondAttribute="bottom" constant="-8" type="user" id="c0U-dK-vYP"/>
                             <constraint firstAttribute="bottom" secondItem="44E-J8-4Rz" secondAttribute="bottom" constant="-19" id="rHT-aP-mOe"/>
@@ -711,6 +729,7 @@
                         <inset key="imageInsets" minX="0.0" minY="1" maxX="0.0" maxY="0.0"/>
                     </tabBarItem>
                     <connections>
+                        <outlet property="emailButton" destination="TMm-y8-3Al" id="tSq-eq-BFN"/>
                         <outlet property="tableView" destination="pn2-25-rSa" id="fIP-Bh-oTC"/>
                         <outlet property="topBar" destination="9qb-QR-T9M" id="CME-YO-tqc"/>
                         <segue destination="Kie-5A-7GQ" kind="modal" identifier="gameScreenToLogin" id="DIQ-Ig-64G"/>
@@ -822,6 +841,8 @@
         <class className="GameController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GameController.h"/>
             <relationships>
+                <relationship kind="action" name="sendEmail:"/>
+                <relationship kind="outlet" name="emailButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
             </relationships>

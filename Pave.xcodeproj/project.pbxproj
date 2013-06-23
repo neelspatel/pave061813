@@ -79,6 +79,11 @@
 		185D8589177085EF007733FA /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185D8588177085EF007733FA /* LoginViewController.m */; };
 		187CB1B917766FA800126412 /* facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187CB1B717766FA800126412 /* facebook_icon@2x.png */; };
 		187CB1BA17766FA800126412 /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 187CB1B817766FA800126412 /* facebook_icon.png */; };
+		187CB1BC1777137400126412 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1BB1777137400126412 /* MessageUI.framework */; };
+		187CB1C517771FA600126412 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C317771FA600126412 /* libGoogleAnalytics.a */; };
+		187CB1C617771FA600126412 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C417771FA600126412 /* libGoogleAnalytics_debug.a */; };
+		187CB1C817771FCB00126412 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C717771FCB00126412 /* CoreData.framework */; };
+		187CB1CA17771FD200126412 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C917771FD200126412 /* SystemConfiguration.framework */; };
 		18805DCA1770E0630059C37B /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805DC91770E0630059C37B /* GameController.m */; };
 		18805DE91770E0E30059C37B /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805DCD1770E0E30059C37B /* MKAnnotationView+WebCache.m */; };
 		18805DEA1770E0E30059C37B /* NSData+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805DCF1770E0E30059C37B /* NSData+GIF.m */; };
@@ -229,6 +234,16 @@
 		185D8588177085EF007733FA /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		187CB1B717766FA800126412 /* facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_icon@2x.png"; sourceTree = "<group>"; };
 		187CB1B817766FA800126412 /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
+		187CB1BB1777137400126412 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		187CB1BE17771FA600126412 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		187CB1BF17771FA600126412 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		187CB1C017771FA600126412 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		187CB1C117771FA600126412 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
+		187CB1C217771FA600126412 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
+		187CB1C317771FA600126412 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
+		187CB1C417771FA600126412 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics_debug.a; sourceTree = "<group>"; };
+		187CB1C717771FCB00126412 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		187CB1C917771FD200126412 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		18805DC91770E0630059C37B /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
 		18805DCC1770E0E30059C37B /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
 		18805DCD1770E0E30059C37B /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
@@ -313,6 +328,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				187CB1C517771FA600126412 /* libGoogleAnalytics.a in Frameworks */,
+				187CB1CA17771FD200126412 /* SystemConfiguration.framework in Frameworks */,
+				187CB1C817771FCB00126412 /* CoreData.framework in Frameworks */,
+				187CB1BC1777137400126412 /* MessageUI.framework in Frameworks */,
 				18BEC3FC1771B873001CD508 /* Social.framework in Frameworks */,
 				18BEC3FA1771B86C001CD508 /* Security.framework in Frameworks */,
 				18BEC3F81771B863001CD508 /* libsqlite3.dylib in Frameworks */,
@@ -324,6 +343,7 @@
 				185D853917707D46007733FA /* Foundation.framework in Frameworks */,
 				185D853B17707D46007733FA /* CoreGraphics.framework in Frameworks */,
 				18BEC3EB1771B6A5001CD508 /* FacebookSDK.framework in Frameworks */,
+				187CB1C617771FA600126412 /* libGoogleAnalytics_debug.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +476,9 @@
 		185D852717707D46007733FA = {
 			isa = PBXGroup;
 			children = (
+				187CB1C917771FD200126412 /* SystemConfiguration.framework */,
+				187CB1C717771FCB00126412 /* CoreData.framework */,
+				187CB1BB1777137400126412 /* MessageUI.framework */,
 				185D853C17707D46007733FA /* Pave */,
 				185D856E17707D47007733FA /* PaveTests */,
 				185D853517707D46007733FA /* Frameworks */,
@@ -496,6 +519,7 @@
 		185D853C17707D46007733FA /* Pave */ = {
 			isa = PBXGroup;
 			children = (
+				187CB1BD17771FA600126412 /* Library */,
 				18BEC3E717719582001CD508 /* ProfileObjectCell.h */,
 				18BEC3E817719582001CD508 /* ProfileObjectCell.m */,
 				184472591774921100B58781 /* MBProgressHUD.m */,
@@ -566,6 +590,20 @@
 				185D857117707D47007733FA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		187CB1BD17771FA600126412 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				187CB1BE17771FA600126412 /* GAI.h */,
+				187CB1BF17771FA600126412 /* GAITrackedViewController.h */,
+				187CB1C017771FA600126412 /* GAITracker.h */,
+				187CB1C117771FA600126412 /* GAITransaction.h */,
+				187CB1C217771FA600126412 /* GAITransactionItem.h */,
+				187CB1C317771FA600126412 /* libGoogleAnalytics.a */,
+				187CB1C417771FA600126412 /* libGoogleAnalytics_debug.a */,
+			);
+			path = Library;
 			sourceTree = "<group>";
 		};
 		18805DCB1770E0E30059C37B /* SDWebImage */ = {
@@ -969,6 +1007,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pave/Pave-Prefix.pch";
 				INFOPLIST_FILE = "Pave/Pave-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Pave/Library\"",
+				);
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -986,6 +1028,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Pave/Pave-Prefix.pch";
 				INFOPLIST_FILE = "Pave/Pave-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Pave/Library\"",
+				);
 				New_Setting = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
