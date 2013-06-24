@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1800017D1778F744007028F1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 1800017C1778F743007028F1 /* Default.png */; };
+		1800017F1778F74A007028F1 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1800017E1778F74A007028F1 /* Default@2x.png */; };
+		180001811778F753007028F1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 180001801778F753007028F1 /* Default-568h@2x.png */; };
+		180001831778F75F007028F1 /* 57.png in Resources */ = {isa = PBXBuildFile; fileRef = 180001821778F75F007028F1 /* 57.png */; };
+		180001851778F764007028F1 /* 114.png in Resources */ = {isa = PBXBuildFile; fileRef = 180001841778F764007028F1 /* 114.png */; };
 		180E90541774EB97002ED974 /* house_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E90251774EB97002ED974 /* house_off.png */; };
 		180E90551774EB97002ED974 /* house_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E90261774EB97002ED974 /* house_off@2x.png */; };
 		180E90561774EB97002ED974 /* house_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 180E90271774EB97002ED974 /* house_on.png */; };
@@ -55,7 +60,6 @@
 		185D854317707D46007733FA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 185D854217707D46007733FA /* main.m */; };
 		185D854717707D46007733FA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 185D854617707D46007733FA /* AppDelegate.m */; };
 		185D854917707D46007733FA /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D854817707D46007733FA /* Default.png */; };
-		185D854B17707D46007733FA /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D854A17707D46007733FA /* Default@2x.png */; };
 		185D854D17707D46007733FA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 185D854C17707D46007733FA /* Default-568h@2x.png */; };
 		185D855017707D46007733FA /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 185D854E17707D46007733FA /* MainStoryboard_iPhone.storyboard */; };
 		185D855317707D46007733FA /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 185D855117707D46007733FA /* MainStoryboard_iPad.storyboard */; };
@@ -225,6 +229,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1800017C1778F743007028F1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		1800017E1778F74A007028F1 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		180001801778F753007028F1 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		180001821778F75F007028F1 /* 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 57.png; sourceTree = "<group>"; };
+		180001841778F764007028F1 /* 114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 114.png; sourceTree = "<group>"; };
 		180E90251774EB97002ED974 /* house_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = house_off.png; sourceTree = "<group>"; };
 		180E90261774EB97002ED974 /* house_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "house_off@2x.png"; sourceTree = "<group>"; };
 		180E90271774EB97002ED974 /* house_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = house_on.png; sourceTree = "<group>"; };
@@ -581,6 +590,11 @@
 		185D852717707D46007733FA = {
 			isa = PBXGroup;
 			children = (
+				180001841778F764007028F1 /* 114.png */,
+				180001821778F75F007028F1 /* 57.png */,
+				180001801778F753007028F1 /* Default-568h@2x.png */,
+				1800017E1778F74A007028F1 /* Default@2x.png */,
+				1800017C1778F743007028F1 /* Default.png */,
 				1890E39D17789BAB0077C755 /* MobileCoreServices.framework */,
 				185E1FD3177859E900ECB3DC /* QuartzCore.framework */,
 				185D853C17707D46007733FA /* Pave */,
@@ -923,7 +937,6 @@
 				185E1FCC1778332000ECB3DC /* trend_on.png in Resources */,
 				185D854117707D46007733FA /* InfoPlist.strings in Resources */,
 				185D854917707D46007733FA /* Default.png in Resources */,
-				185D854B17707D46007733FA /* Default@2x.png in Resources */,
 				185D854D17707D46007733FA /* Default-568h@2x.png in Resources */,
 				185D855017707D46007733FA /* MainStoryboard_iPhone.storyboard in Resources */,
 				185D855317707D46007733FA /* MainStoryboard_iPad.storyboard in Resources */,
@@ -996,6 +1009,11 @@
 				1871C4871778DFC3005F95C2 /* instruction2Large.png in Resources */,
 				188BA10A1778EC5D00BDC873 /* dividing_bar_launch@2x.png in Resources */,
 				188BA10C1778EE5A00BDC873 /* dividing_bar_launch.png in Resources */,
+				1800017D1778F744007028F1 /* Default.png in Resources */,
+				1800017F1778F74A007028F1 /* Default@2x.png in Resources */,
+				180001811778F753007028F1 /* Default-568h@2x.png in Resources */,
+				180001831778F75F007028F1 /* 57.png in Resources */,
+				180001851778F764007028F1 /* 114.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1177,7 +1195,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Nithin Tumma (ZQKYJAKQ6K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nithin Tumma (ZQKYJAKQ6K)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1192,6 +1211,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "46F30EBD-719A-4693-B835-7D45DADD8ADD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "46F30EBD-719A-4693-B835-7D45DADD8ADD";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1206,7 +1227,8 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nithin Tumma (U83RN7J4DS)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Nithin Tumma (ZQKYJAKQ6K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nithin Tumma (ZQKYJAKQ6K)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1214,7 +1236,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "CAF787AF-3C1F-429B-92E3-63B92B9D0D03";
+				PROVISIONING_PROFILE = "46F30EBD-719A-4693-B835-7D45DADD8ADD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "46F30EBD-719A-4693-B835-7D45DADD8ADD";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
