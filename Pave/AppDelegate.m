@@ -10,6 +10,7 @@
 #import "PaveAPIClient.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "GAI.h"
+#import "Flurry.h"
 
 @implementation AppDelegate
 
@@ -23,6 +24,9 @@
     [GAI sharedInstance].debug = YES;
     // Create tracker instance.
     id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-37404339-2"];
+    
+    // flurry analytics 
+    [Flurry startSession: @"N49JNZBNHFZ6PJ4Y9PSM"];
     
     //self.didCompleteProfileInformation = YES;
     // Assign tab bar item with titles
