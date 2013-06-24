@@ -51,6 +51,8 @@
     self.tableView.layer.cornerRadius=5;
     
     self.feedObjects = [NSMutableArray array];
+    self.readStatus = [[NSMutableDictionary alloc] init];
+    
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
@@ -311,6 +313,7 @@
     cell.rightProduct.layer.cornerRadius = 10;
     cell.rightProduct.clipsToBounds = YES;
     
+    NSLog(@"Read status is %@", [self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]);
     //sets it as read if not set yet
     if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
     {

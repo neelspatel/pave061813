@@ -30,16 +30,20 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
+    NSLog(@"Table list appeared");    
     CGRect windowFrame = [UIScreen mainScreen].applicationFrame;
     
     [self.navigationController.navigationBar setFrame:CGRectMake(0,16, windowFrame.size.width, 42)];
+    
+    //now updates the tables
+    self.feedObjects = [NSMutableArray array];
+    [self getFeedObjects];
 }
 
 - (void)viewDidLoad
 {
+    NSLog(@"Table list loaded");
     [super viewDidLoad];
-    self.feedObjects = [NSMutableArray array];
-    [self getFeedObjects];
 	// refresh data from here 
     // Do any additional setup after loading the view.    
 }
