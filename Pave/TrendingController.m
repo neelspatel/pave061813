@@ -30,8 +30,15 @@
     return self;
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    NSLog(@"Loaded the view ");
+    [super viewDidAppear:animated];
+}
+
 - (void)viewDidLoad
 {
+    NSLog(@"Hello loaded");
     [super viewDidLoad];
     
     NSLog(@"Dictionary is %@", self.typeDictionary);
@@ -226,7 +233,7 @@
         CGPoint p = [tap locationInView:tap.view];
         NSIndexPath* indexPath = [tableView indexPathForRowAtPoint:p];
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
-        TrendingObjectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        TrendingObjectCell *cell = (TrendingObjectCell*)[tableView cellForRowAtIndexPath:indexPath];
         CGPoint pointInCell = [tap locationInView:cell];
         
         NSMutableDictionary *currentObject = [[[self.typeDictionary allValues] objectAtIndex:0] objectAtIndex:indexPath.row];
