@@ -620,6 +620,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="logout:" destination="7eU-vq-G9g" eventType="touchUpInside" id="gHm-32-wdV"/>
                                     <action selector="sendEmail:" destination="PlR-f4-nCD" eventType="touchUpInside" id="7LN-r1-VKE"/>
                                 </connections>
                             </button>
@@ -967,7 +968,6 @@
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="dividing_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-wr-JEN">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="2" id="2fe-pu-Gj2"/>
                                     <constraint firstAttribute="width" constant="240" id="3cQ-Qz-0Sg"/>
                                 </constraints>
                             </imageView>
@@ -1042,9 +1042,14 @@
                 <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
             </relationships>
         </class>
-        <class className="GameController" superclassName="UIViewController">
+        <class className="GAITrackedViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GAITrackedViewController.h"/>
+        </class>
+        <class className="GameController" superclassName="GAITrackedViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GameController.h"/>
             <relationships>
+                <relationship kind="action" name="sendEmail:"/>
+                <relationship kind="outlet" name="emailButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
             </relationships>
@@ -1142,7 +1147,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="DIQ-Ig-64G"/>
+        <segue reference="dVu-9J-WCR"/>
         <segue reference="JtQ-MH-ANF"/>
     </inferredMetricsTieBreakers>
 </document>

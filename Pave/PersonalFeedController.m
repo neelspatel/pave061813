@@ -69,10 +69,10 @@
 - (IBAction)logout:(id)sender;
 {
     NSLog(@"in logout");
-    //AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    //FBSession* session = delegate.session;
-    //[session closeAndClearTokenInformation];
-    //[session close];
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    FBSession* session = delegate.session;
+    [session closeAndClearTokenInformation];
+    [session close];
     //[FBSession setActiveSession:nil];
     //[FBSession.activeSession close];
     //[FBSession.activeSession  closeAndClearTokenInformation];

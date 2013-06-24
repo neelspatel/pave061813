@@ -228,7 +228,7 @@
     NSLog(@"About to login");
     // login Facebook User
     
-    if(session.state == 513)
+    if(session.state == 513 || session.state == 258)
     {
         NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
         
