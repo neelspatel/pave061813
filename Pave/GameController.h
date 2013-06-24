@@ -24,6 +24,10 @@
 @property (nonatomic, strong)SDImageCache *myImageCache;
 @property (nonatomic, assign)BOOL doneLoadingFeed;
 
+@property (weak, nonatomic) IBOutlet UIButton *refreshButton;
+- (IBAction)refresh:(id)sender;
+
+
 //stores the image paths
 @property (nonatomic, retain)NSArray *paths;
 @property (nonatomic, retain)NSString *dataPath;

@@ -116,6 +116,7 @@
         frame.size.height = 115;
         cell.leftBackground.frame = frame;
         cell.leftBackground.backgroundColor = ourblue;
+        [cell.leftFacebookButton setHidden:FALSE];
 
         
     }
@@ -137,6 +138,7 @@
         frame.size.height = 115;
         cell.rightBackground.frame = frame;
         cell.rightBackground.backgroundColor = ourblue;
+        [cell.rightFacebookButton setHidden:FALSE];
 
         
     }
@@ -185,7 +187,6 @@
     frame.size.height = 105;
     cell.rightBackground.frame = frame;
 }
-
 
 -(void)saveAnswer:(TrendingObjectCell *) cell: (BOOL) left
 {
@@ -251,6 +252,7 @@
                 
                 //now saves the cell in the database
                 [self saveAnswer:cell :TRUE];
+                [cell.leftFacebookButton setHidden:FALSE];
             }
             else
             {
@@ -268,6 +270,7 @@
                 
                 //now saves the cell in the database
                 [self saveAnswer:cell :FALSE];
+                [cell.rightFacebookButton setHidden:FALSE];
             }
             else
             {
@@ -309,6 +312,8 @@
     [cell.rightNum setHidden:TRUE];
     [cell.leftLabel setHidden:TRUE];
     [cell.rightLabel setHidden:TRUE];
+    [cell.leftFacebookButton setHidden:TRUE];
+    [cell.rightFacebookButton setHidden:TRUE];
     
     cell.leftBackground.layer.cornerRadius = 2;
     cell.leftBackground.clipsToBounds = YES;

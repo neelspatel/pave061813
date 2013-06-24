@@ -8,6 +8,7 @@
 
 #import "FeedObjectCell.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 
 @implementation FeedObjectCell
@@ -39,4 +40,44 @@
     NSLog(@"Just submitted left");
 }
 
+-(void)showFBRequest: (NSString*) currentId
+{
+    NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                          // 2. Optionally provide a 'to' param to direct the request at
+                                          currentId, @"to", @"true", @"new_style_message", @"Hey, get Pave!", @"message", @"apprequests", @"method", // Ali
+                                          nil];
+    //NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:nil];
+    
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    FBSession* session = delegate.session;
+    
+    NSLog(@"Session in post to fb is %@", session);
+    
+    
+    [FBWebDialogs presentRequestsDialogModallyWithSession:session
+          message:@"Ever wondered what people think about you? I'll tell you if you download Side!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+              if (error) {
+                  NSLog(@"Error");
+                  // Case A: Error launching the dialog or sending request.
+              } else {
+                  if (result == FBWebDialogResultDialogNotCompleted) {
+                      //Case B: User clicked the "x" icon
+                      NSLog(@"closed");
+                  } else {
+                      NSLog(@"Sent");
+                      //Case C: Dialog shown and the user clicks Cancel or Send
+                  }
+              }
+          }];
+}
+
+- (IBAction)leftFacebookNotify:(id)sender {
+    [self showFBRequest:self.currentId];
+    
+}
+
+- (IBAction)rightFacebookNotify:(id)sender {
+    [self showFBRequest:self.currentId];
+    
+}
 @end

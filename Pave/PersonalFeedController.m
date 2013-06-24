@@ -63,8 +63,41 @@
     [self getFeedObjects];
 }
 
+- (IBAction)inviteFriends:(id)sender {    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *topFriends = [[defaults objectForKey:@"friends"]subarrayWithRange:NSMakeRange(0, 10)];
+    
+    NSMutableDictionary* params =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
+     [topFriends componentsJoinedByString:@","], @"suggestions", nil];
+    
+    [FBWebDialogs presentRequestsDialogModallyWithSession:nil
+      message:[NSString stringWithFormat:@"Get Side, the hottest new social discovery app!"]
+        title:nil
+   parameters:params
+      handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+          if (error) {
+              // Case A: Error launching the dialog or sending request.
+              NSLog(@"Error sending request.");
+          } else {
+              if (result == FBWebDialogResultDialogNotCompleted) {
+                  // Case B: User clicked the "x" icon
+                  NSLog(@"User canceled request.");
+              } else {
+                  NSLog(@"Request Sent.");
+              }
+          }}];
+
+}
 
 
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(ProfileObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"About to cancel cell");
+    // free up the requests for each ImageView
+    [cell.profilePicture cancelCurrentImageLoad];
+    [cell.rightProduct cancelCurrentImageLoad];
+    [cell.leftProduct cancelCurrentImageLoad];
+}
 
 - (IBAction)logout:(id)sender;
 {
@@ -177,8 +210,26 @@
         cell.picture.clipsToBounds = YES;
         
         cell.name.text = [defaults objectForKey:@"profile"][@"name"];
-        cell.number.text = count;
-
+        cell.numberAnswers.text = count;
+        
+        //now gets the number of votes
+        NSString *path = @"/data/numberofanswersgiven/";
+        path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+        path = [path stringByAppendingString:@"/"];
+        
+        [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+            if (results) {
+                //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                //for(NSDictionary *current in results)
+                //{
+                //    [ids addObject:current[@"id"]];
+                //}
+                cell.numberVotes.text = [NSString stringWithFormat:@"%d votes", [results[0] integerValue]];
+                
+            } }
+                                       failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                           NSLog(@"error getting num votes %@", error);
+                                       }];
         
         return cell;
     }
@@ -350,8 +401,6 @@
         return cell;
     }
 }
-
-
 
 /*
  // Override to support conditional editing of the table view.

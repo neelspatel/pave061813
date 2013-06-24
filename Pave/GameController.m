@@ -76,7 +76,10 @@
 
 
 - (void)viewDidAppear:(BOOL)animated
-{        
+{
+    //first reload the data
+    [self.tableView reloadData];
+    
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     NSLog(@"Session right now is %@", session);
@@ -200,6 +203,7 @@
         cell.leftLabel.text = @"agree";
         cell.rightLabel.text = @"disagree";
         
+        [cell.leftFacebookButton setHidden:FALSE];
         [cell.leftLabel setHidden:FALSE];
         [cell.rightLabel setHidden:FALSE];
         [cell.leftNum setHidden:FALSE];
@@ -232,6 +236,7 @@
         cell.leftLabel.text = @"disagree";
         cell.rightLabel.text = @"agree";
         
+        [cell.rightFacebookButton setHidden:FALSE];
         [cell.leftLabel setHidden:FALSE];
         [cell.rightLabel setHidden:FALSE];
         [cell.leftNum setHidden:FALSE];
@@ -370,6 +375,9 @@
                 
                 //now saves the cell in the database
                 [self saveAnswer:cell :TRUE];
+                
+                //shows the option to post a notification
+                [cell.leftFacebookButton setHidden:FALSE];
             }
             else
             {
@@ -387,6 +395,9 @@
                 
                 //now saves the cell in the database
                 [self saveAnswer:cell :FALSE];
+                
+                //shows the option to post a notification
+                [cell.rightFacebookButton setHidden:FALSE];
             }
             else
             {
@@ -466,7 +477,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSLog(@"***REQUESTED %d ***", indexPath.row);
-    
     static NSString *CellIdentifier = @"Cell";
     FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
@@ -478,6 +488,9 @@
     [cell.rightNum setHidden:TRUE];
     [cell.leftLabel setHidden:TRUE];
     [cell.rightLabel setHidden:TRUE];
+    //shows the option to post a notification
+    [cell.leftFacebookButton setHidden:TRUE];
+    [cell.rightFacebookButton setHidden:TRUE];
     
     cell.leftBackground.layer.cornerRadius = 2;
     cell.leftBackground.clipsToBounds = YES;
@@ -497,29 +510,38 @@
     {
         cell.responseCount.text = @"1 response so far";
     }
+    else if(total ==0)
+    {
+        NSLog(@"Total was 0");
+        cell.responseCount.text = @"Be the first to answer!";
+    }
     else
     {
+        NSLog(@"Total was %d", total);
         cell.responseCount.text = [NSString stringWithFormat:@"%d responses so far", total];
     }
-    
-    UIColor *ourblue = [UIColor colorWithRed:(159/255.0) green:(184/255.0) blue:(233/255.0) alpha:1];
-    
-    cell.leftBackground.backgroundColor = ourblue;
-    cell.rightBackground.backgroundColor = ourblue;
-    
-    CGRect frame = cell.leftBackground.frame;
-    frame.origin.x = 32;
-    frame.origin.y = 91;
-    frame.size.width = 106;
-    frame.size.height = 105;
-    cell.leftBackground.frame = frame;
-    
-    frame = cell.rightBackground.frame;
-    frame.origin.x = 165;
-    frame.origin.y = 91;
-    frame.size.width = 106;
-    frame.size.height = 105;
-    cell.rightBackground.frame = frame;
+
+    if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
+    {    
+        UIColor *ourblue = [UIColor colorWithRed:(159/255.0) green:(184/255.0) blue:(233/255.0) alpha:1];
+        
+        cell.leftBackground.backgroundColor = ourblue;
+        cell.rightBackground.backgroundColor = ourblue;
+        
+        CGRect frame = cell.leftBackground.frame;
+        frame.origin.x = 32;
+        frame.origin.y = 91;
+        frame.size.width = 106;
+        frame.size.height = 105;
+        cell.leftBackground.frame = frame;
+        
+        frame = cell.rightBackground.frame;
+        frame.origin.x = 165;
+        frame.origin.y = 91;
+        frame.size.width = 106;
+        frame.size.height = 105;
+        cell.rightBackground.frame = frame;
+    }
     
     @try
     {
@@ -801,10 +823,10 @@
     NSLog(@"Calledemail");
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     mailer.mailComposeDelegate = self;
-    [mailer setSubject:@"Pave, we need to talk..."];
-    NSArray *toRecipients = [NSArray arrayWithObjects:@"getpave@gmail.com", nil];
+    [mailer setSubject:@"Side, we need to talk..."];
+    NSArray *toRecipients = [NSArray arrayWithObjects:@"getsideapp@gmail.com", nil];
     [mailer setToRecipients:toRecipients];    
-    NSString *emailBody = @"<div style = 'font-size: 10px;'> It's not me, it's you. Here's my feedback on Pave:</div>";
+    NSString *emailBody = @"<div style = 'font-size: 10px;'> It's not me, it's you. Here's my feedback on Side:</div>";
     [mailer setMessageBody:emailBody isHTML:YES];
     [self presentModalViewController:mailer animated:YES];
 }
@@ -833,4 +855,12 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+
+- (IBAction)refresh:(id)sender {
+    NSLog(@"In refresh!");
+    self.feedObjects = [NSMutableArray array];
+    self.readStatus = [[NSMutableDictionary alloc] init];
+    [self getFeedObjects];
+    [self.tableView reloadData];
+}
 @end

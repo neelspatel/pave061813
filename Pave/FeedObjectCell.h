@@ -25,6 +25,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *leftBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *rightBackground;
 @property (weak, nonatomic) IBOutlet UITextView *responseCount;
+@property (weak, nonatomic) IBOutlet UIButton *leftFacebookButton;
+@property (weak, nonatomic) IBOutlet UIButton *rightFacebookButton;
+- (IBAction)leftFacebookNotify:(id)sender;
+- (IBAction)rightFacebookNotify:(id)sender;
 
 @property(nonatomic, assign) NSInteger leftFriendId;
 @property(nonatomic, assign) NSInteger rightFriendId;

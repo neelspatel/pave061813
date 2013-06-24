@@ -27,6 +27,11 @@
 @property(nonatomic, assign) NSInteger rightFriendId;
 @property(nonatomic, assign) NSInteger leftProductId;
 @property(nonatomic, assign) NSInteger rightProductId;
+@property (weak, nonatomic) IBOutlet UIButton *leftFacebookButton;
+@property (weak, nonatomic) IBOutlet UIButton *rightFacebookButton;
+- (IBAction)leftSend:(id)sender;
+- (IBAction)rightSend:(id)sender;
+
 
 @property(nonatomic, assign) NSInteger leftProductCount;
 @property(nonatomic, assign) NSInteger rightProductCount;
