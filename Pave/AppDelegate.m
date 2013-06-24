@@ -28,7 +28,7 @@
     
     [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"smiley_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"smiley_off.png"]];
     [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"house_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"house_off.png"]];
-    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"globe_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"globe_off.png"]];
+    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"trend_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"trend_off.png"]];
             
     UIImage* tabBarBackground = [UIImage imageNamed:@"_0000_new_nav.png"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];

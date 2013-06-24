@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E2068" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -74,6 +74,7 @@
                                 <color key="backgroundColor" red="0.31764706970000001" green="0.48627454040000001" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
                                     <constraint firstItem="z64-Et-y3c" firstAttribute="centerX" secondItem="aMS-M5-n7I" secondAttribute="centerX" type="default" id="QcX-Hm-cRY"/>
+                                    <constraint firstAttribute="bottom" secondItem="z64-Et-y3c" secondAttribute="bottom" constant="-17" type="user" id="nEY-ND-9da"/>
                                     <constraint firstItem="z64-Et-y3c" firstAttribute="top" secondItem="aMS-M5-n7I" secondAttribute="top" type="user" id="rCh-0Q-71I"/>
                                 </constraints>
                             </view>
@@ -237,6 +238,7 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="center" image="dividing_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="6V5-Xj-ceZ">
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="240" id="WpZ-o9-vZ7"/>
+                                                                <constraint firstAttribute="height" constant="2" id="Xez-Xp-xUc"/>
                                                             </constraints>
                                                         </imageView>
                                                         <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="0 results so far" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YbJ-Fz-F85">
@@ -507,6 +509,7 @@
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="center" image="dividing_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="LsR-op-Ajh">
                                                             <constraints>
+                                                                <constraint firstAttribute="height" constant="2" id="3Ey-50-V8O"/>
                                                                 <constraint firstAttribute="width" constant="240" id="9vv-j6-reQ"/>
                                                             </constraints>
                                                         </imageView>
@@ -774,6 +777,7 @@
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" image="dividing_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="ol2-VL-PS3">
                                                     <constraints>
+                                                        <constraint firstAttribute="height" constant="2" id="Sf7-d9-eP0"/>
                                                         <constraint firstAttribute="width" constant="240" id="npx-LM-ct4"/>
                                                     </constraints>
                                                 </imageView>
@@ -1050,6 +1054,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="dividing_bar.png" translatesAutoresizingMaskIntoConstraints="NO" id="Tub-wr-JEN">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="3cQ-Qz-0Sg"/>
+                                    <constraint firstAttribute="height" constant="2" id="uPD-oN-I77"/>
                                 </constraints>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="we never post without your permission. we promise." textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eQV-bL-HDV">
@@ -1098,7 +1103,7 @@
     <resources>
         <image name="Feedback.png" width="75" height="29"/>
         <image name="PAVE_top.png" width="124" height="36"/>
-        <image name="dividing_bar.png" width="45" height="2"/>
+        <image name="dividing_bar.png" width="212" height="1"/>
         <image name="facebook_icon.png" width="143" height="143"/>
         <image name="facebook_share_box.png" width="110" height="33"/>
         <image name="game_facebook_icon@2x.png" width="13" height="29"/>
@@ -1231,7 +1236,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="DIQ-Ig-64G"/>
+        <segue reference="dVu-9J-WCR"/>
         <segue reference="l43-7u-TdC"/>
     </inferredMetricsTieBreakers>
 </document>
