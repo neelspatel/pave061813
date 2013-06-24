@@ -89,15 +89,22 @@
 
 }
 
-
+// this code doesn't work yet
+/**
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(ProfileObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"About to cancel cell");
-    // free up the requests for each ImageView
-    [cell.profilePicture cancelCurrentImageLoad];
-    [cell.rightProduct cancelCurrentImageLoad];
-    [cell.leftProduct cancelCurrentImageLoad];
+    NSLog(@"At row %d with feed objects %d", indexPath.row, [self.feedObjects count]);
+    if(indexPath.row != 0 && indexPath.row != ([self.feedObjects count] + 1))
+    {
+        NSLog(@"About to cancel cell");
+        // free up the requests for each ImageView
+        [cell.profilePicture cancelCurrentImageLoad];
+        [cell.rightProduct cancelCurrentImageLoad];
+        [cell.leftProduct cancelCurrentImageLoad];
+    }
+     
 }
+ */
 
 - (IBAction)logout:(id)sender;
 {

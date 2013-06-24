@@ -29,7 +29,14 @@
     self.didCompleteFriendsInformation = NO;
     self.loggedIn = NO;
     
-    
+    //sets up everything as hidden
+    self.instructionButton1.hidden = TRUE;
+    self.count = 0;
+    /**
+    [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction1Large.png"] forState: UIControlStateNormal];
+    [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction1Large.png"] forState: UIControlStateSelected];
+    [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction1Large.png"] forState: UIControlStateHighlighted];*/
+    self.instructionButton1.showsTouchWhenHighlighted = NO;
 }
 
 
@@ -102,14 +109,19 @@
                                             //now fetches the feed objects
                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
 
+                                            self.instructionButton1.hidden = FALSE;
                                             
-                                            [self dismissViewControllerAnimated:NO completion:nil];
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                             NSLog(@"error logging in user to Django %@", error);
                                         }];
         });
     }
 
+}
+
+- (void) finishIntro
+{
+    [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (void) initializeFacebookInformation
@@ -279,6 +291,23 @@
             }
         }];
         NSLog(@"Exited block");
+    
+}
+
+- (IBAction)instructionButtonTouch:(id)sender {
+    if (self.count == 0)
+    {
+        self.count += 1;
+        [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateNormal];
+        [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateSelected];
+        [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateHighlighted];
+        
+        
+    } else {
+
+        [self dismissViewControllerAnimated:NO completion:nil];
+
+    }
     
 }
 @end

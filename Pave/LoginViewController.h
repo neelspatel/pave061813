@@ -14,6 +14,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *dividingBar;
 @property (weak, nonatomic) IBOutlet UITextView *loginInfo;
 @property (weak, nonatomic) IBOutlet UITextView *connectWith;
+@property (weak, nonatomic) IBOutlet UIButton *instructionButton1;
+- (IBAction)instructionButtonTouch:(id)sender;
+
+@property (nonatomic, assign) int count;
 
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (nonatomic, assign) BOOL loggedIn;

@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/PersonalFeedController.m"
-         timestampString = "393792800.330511"
+         timestampString = "393795885.20353"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "107"
-         endingLineNumber = "107"
+         startingLineNumber = "114"
+         endingLineNumber = "114"
          landmarkName = "-logout:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/LoginViewController.m"
-         timestampString = "393642847.299237"
+         timestampString = "393800421.305726"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "229"
-         endingLineNumber = "229"
+         startingLineNumber = "241"
+         endingLineNumber = "241"
          landmarkName = "-loginButtonTouch:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/LoginViewController.m"
-         timestampString = "393642847.299237"
+         timestampString = "393800421.305726"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "230"
-         endingLineNumber = "230"
+         startingLineNumber = "242"
+         endingLineNumber = "242"
          landmarkName = "-loginButtonTouch:"
          landmarkType = "5">
       </FileBreakpoint>
