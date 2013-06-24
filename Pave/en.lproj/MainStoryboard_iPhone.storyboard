@@ -758,7 +758,7 @@
                                 <constraints>
                                     <constraint firstAttribute="width" constant="308" id="4v0-Nj-pf8"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="1" constant="372" type="user" id="6RU-RX-QsP"/>
-                                    <constraint firstAttribute="height" constant="382" type="user" id="cyy-kv-Rb6"/>
+                                    <constraint firstAttribute="height" constant="500" type="user" id="cyy-kv-Rb6"/>
                                 </constraints>
                                 <color key="separatorColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
@@ -1017,7 +1017,6 @@
                             <constraint firstAttribute="bottom" secondItem="44E-J8-4Rz" secondAttribute="bottom" constant="-19" id="rHT-aP-mOe"/>
                             <constraint firstItem="YIz-Wi-gqJ" firstAttribute="leading" secondItem="Gu6-uR-h9P" secondAttribute="leading" constant="113" id="wVN-PL-RO6"/>
                             <constraint firstItem="9qb-QR-T9M" firstAttribute="trailing" secondItem="Gu6-uR-h9P" secondAttribute="trailing" type="default" id="xoN-U3-tKK"/>
-                            <constraint firstItem="pn2-25-rSa" firstAttribute="bottom" secondItem="Gu6-uR-h9P" secondAttribute="bottom" type="user" id="zZ7-Oj-Plt"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="AbU-g6-W8D">
