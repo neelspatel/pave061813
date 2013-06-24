@@ -150,7 +150,6 @@
                                         <color key="backgroundColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="308" id="oc4-gB-TRm"/>
-                                            <constraint firstAttribute="height" constant="400" type="user" id="qv7-57-L4V"/>
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Cell" rowHeight="249" id="QE5-2W-6Ix" customClass="TrendingObjectCell">
@@ -330,6 +329,7 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.31764706970000001" green="0.48627454040000001" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="dXo-Nc-lmY" secondAttribute="bottom" constant="-10" type="user" id="ZuY-WZ-WKh"/>
                                     <constraint firstItem="dXo-Nc-lmY" firstAttribute="centerX" secondItem="QlY-LC-Zbi" secondAttribute="centerX" type="default" id="idN-pu-Mbu"/>
                                     <constraint firstItem="dXo-Nc-lmY" firstAttribute="top" secondItem="QlY-LC-Zbi" secondAttribute="top" type="user" id="y2o-eu-gN0"/>
                                 </constraints>
@@ -373,8 +373,8 @@
                             <constraint firstItem="QlY-LC-Zbi" firstAttribute="top" secondItem="pTI-2E-PKf" secondAttribute="top" constant="32" type="user" id="H8k-Hx-PVP"/>
                             <constraint firstItem="QlY-LC-Zbi" firstAttribute="centerX" secondItem="bFU-Ul-Sau" secondAttribute="centerX" type="default" id="MeP-sX-p6I"/>
                             <constraint firstItem="bFU-Ul-Sau" firstAttribute="leading" secondItem="pTI-2E-PKf" secondAttribute="leading" type="default" id="PfY-31-JGM"/>
+                            <constraint firstAttribute="bottom" secondItem="QlY-LC-Zbi" secondAttribute="bottom" constant="-20" type="user" id="aji-ES-bQX"/>
                             <constraint firstItem="bFU-Ul-Sau" firstAttribute="bottom" secondItem="HEv-n1-Mw8" secondAttribute="bottom" type="default" id="lcb-zk-DwX"/>
-                            <constraint firstAttribute="bottom" secondItem="QlY-LC-Zbi" secondAttribute="bottom" constant="20" type="user" id="vXa-B3-qDu"/>
                             <constraint firstItem="QlY-LC-Zbi" firstAttribute="leading" secondItem="pTI-2E-PKf" secondAttribute="leading" constant="5" id="y3G-A6-fGE"/>
                         </constraints>
                     </view>
@@ -417,7 +417,7 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cPu-g6-ZCJ">
                                                             <color key="backgroundColor" red="0.31372549019607843" green="0.52156862745098043" blue="0.90980392156862744" alpha="1" colorSpace="deviceRGB"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="width" constant="300" id="9Zy-Sb-fN6"/>
+                                                                <constraint firstAttribute="width" constant="309" id="eRy-4U-TzI"/>
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="WiU-7Z-2ob">
@@ -450,13 +450,13 @@
                                                 </view>
                                                 <color key="backgroundColor" red="0.34812944280000002" green="1" blue="0.42748325669999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
-                                                    <constraint firstItem="cPu-g6-ZCJ" firstAttribute="leading" secondItem="oeF-He-3jo" secondAttribute="leading" constant="-1" id="1pc-jh-Lap"/>
                                                     <constraint firstItem="cPu-g6-ZCJ" firstAttribute="top" secondItem="oeF-He-3jo" secondAttribute="top" type="default" id="4ZC-GA-c3e"/>
                                                     <constraint firstItem="npE-ew-mvI" firstAttribute="leading" secondItem="E6i-9x-JpV" secondAttribute="leading" type="default" id="NCB-Cy-4MP"/>
                                                     <constraint firstAttribute="bottom" secondItem="WiU-7Z-2ob" secondAttribute="bottom" constant="20" type="default" id="PyO-Nk-ISe"/>
                                                     <constraint firstItem="cPu-g6-ZCJ" firstAttribute="bottom" secondItem="oeF-He-3jo" secondAttribute="bottom" type="default" id="Yl5-bn-buE"/>
                                                     <constraint firstItem="E6i-9x-JpV" firstAttribute="leading" secondItem="oeF-He-3jo" secondAttribute="leading" constant="118" id="afN-LZ-cet"/>
                                                     <constraint firstItem="WiU-7Z-2ob" firstAttribute="leading" secondItem="oeF-He-3jo" secondAttribute="leading" constant="20" type="default" id="lfF-dN-4tA"/>
+                                                    <constraint firstItem="cPu-g6-ZCJ" firstAttribute="trailing" secondItem="oeF-He-3jo" secondAttribute="trailing" type="default" id="tXR-8p-XRg"/>
                                                     <constraint firstItem="E6i-9x-JpV" firstAttribute="top" secondItem="oeF-He-3jo" secondAttribute="top" constant="54" id="upS-HI-5TF"/>
                                                     <constraint firstAttribute="bottom" secondItem="npE-ew-mvI" secondAttribute="bottom" constant="35" id="yXj-CD-gcs"/>
                                                 </constraints>
@@ -636,7 +636,8 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.31764706970000001" green="0.48627454040000001" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstItem="hAK-Fm-SYy" firstAttribute="top" secondItem="cYD-sD-rt1" secondAttribute="top" type="default" id="xuF-24-aUR"/>
+                                    <constraint firstAttribute="bottom" secondItem="hAK-Fm-SYy" secondAttribute="bottom" constant="-10" type="user" id="UB6-T3-FCc"/>
+                                    <constraint firstItem="hAK-Fm-SYy" firstAttribute="top" secondItem="cYD-sD-rt1" secondAttribute="top" type="user" id="xuF-24-aUR"/>
                                     <constraint firstItem="hAK-Fm-SYy" firstAttribute="centerX" secondItem="cYD-sD-rt1" secondAttribute="centerX" type="default" id="yGF-lq-L9B"/>
                                 </constraints>
                             </view>
@@ -1016,6 +1017,7 @@
                             <constraint firstAttribute="bottom" secondItem="44E-J8-4Rz" secondAttribute="bottom" constant="-19" id="rHT-aP-mOe"/>
                             <constraint firstItem="YIz-Wi-gqJ" firstAttribute="leading" secondItem="Gu6-uR-h9P" secondAttribute="leading" constant="113" id="wVN-PL-RO6"/>
                             <constraint firstItem="9qb-QR-T9M" firstAttribute="trailing" secondItem="Gu6-uR-h9P" secondAttribute="trailing" type="default" id="xoN-U3-tKK"/>
+                            <constraint firstItem="pn2-25-rSa" firstAttribute="bottom" secondItem="Gu6-uR-h9P" secondAttribute="bottom" type="user" id="zZ7-Oj-Plt"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="AbU-g6-W8D">
