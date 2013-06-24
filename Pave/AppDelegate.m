@@ -40,7 +40,7 @@
     [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"house_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"house_off.png"]];
     [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"globe_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"globe_off.png"]];
             
-    UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar.png"];
+    UIImage* tabBarBackground = [UIImage imageNamed:@"_0000_new_nav.png"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
     //gets rid of translucent
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];

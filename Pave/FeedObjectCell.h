@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rightFriend;
 @property (weak, nonatomic) IBOutlet UIImageView *leftBackground;
 @property (weak, nonatomic) IBOutlet UIImageView *rightBackground;
+@property (weak, nonatomic) IBOutlet UITextView *responseCount;
 
 @property(nonatomic, assign) NSInteger leftFriendId;
 @property(nonatomic, assign) NSInteger rightFriendId;

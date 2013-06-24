@@ -191,9 +191,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
             // More initializations if needed.
         }
-        
-        cell.textLabel.text = @"footer!";        
-        
+                
         return cell;
     }
     else

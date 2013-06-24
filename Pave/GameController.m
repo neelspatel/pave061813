@@ -186,31 +186,93 @@
 
 - (void) displayAsRead:(FeedObjectCell *) cell: (BOOL) left
 {
+    UIColor *ourblue = [UIColor colorWithRed:(80/255.0) green:(133/255.0) blue:(232/255.0) alpha:1];
+    
+    cell.leftLabel.textColor = ourblue;
+    cell.rightLabel.textColor = ourblue;
+    cell.leftNum.textColor = ourblue;
+    cell.rightNum.textColor = ourblue;
+    cell.responseCount.textColor = [UIColor colorWithRed:(136/255.0) green:(136/255.0) blue:(143/255.0) alpha:1];    
+    
     if(left == TRUE)
     {
-        cell.leftLabel.text = @"Agree";
-        cell.rightLabel.text = @"Disagree";                
         
         //shows the labels
         cell.leftNum.text = [NSString stringWithFormat:@"%d", [cell.leftNum.text integerValue] + 1];
+        cell.leftLabel.text = @"agree";
+        cell.rightLabel.text = @"disagree";
+        
         [cell.leftLabel setHidden:FALSE];
         [cell.rightLabel setHidden:FALSE];
         [cell.leftNum setHidden:FALSE];
         [cell.rightNum setHidden:FALSE];
+        CGRect frame = cell.leftBackground.frame;
+        frame.origin.x = 27;
+        frame.origin.y = 86;
+        frame.size.width = 116;
+        frame.size.height = 115;
+        cell.leftBackground.frame = frame;
+        cell.leftBackground.backgroundColor = ourblue;
+        
+        //hides things if need be
+        if([cell.leftNum.text isEqual: @"1"])
+        {
+            [cell.leftLabel setHidden:TRUE];
+            [cell.leftNum setHidden:TRUE];
+        }
+        if([cell.rightNum.text isEqual: @"0"])
+        {
+            [cell.rightLabel setHidden:TRUE];
+            [cell.rightNum setHidden:TRUE];
+        }
+        
+        
     }
     else
     {
-        cell.rightLabel.text = @"Agree";
-        cell.leftLabel.text = @"Disagree";
-        
-        //shows the labels
         cell.rightNum.text = [NSString stringWithFormat:@"%d", [cell.rightNum.text integerValue] + 1];
+        cell.leftLabel.text = @"disagree";
+        cell.rightLabel.text = @"agree";
+        
         [cell.leftLabel setHidden:FALSE];
         [cell.rightLabel setHidden:FALSE];
         [cell.leftNum setHidden:FALSE];
         [cell.rightNum setHidden:FALSE];
-
+        
+        CGRect frame = cell.rightBackground.frame;
+        frame.origin.x = 160;
+        frame.origin.y = 86;
+        frame.size.width = 116;
+        frame.size.height = 115;
+        cell.rightBackground.frame = frame;
+        cell.rightBackground.backgroundColor = ourblue;
+        
+        //hides things if need be
+        if([cell.leftNum.text isEqual: @"0"])
+        {
+            [cell.leftLabel setHidden:TRUE];
+            [cell.leftNum setHidden:TRUE];
+        }
+        if([cell.rightNum.text isEqual: @"1"])
+        {
+            [cell.rightLabel setHidden:TRUE];
+            [cell.rightNum setHidden:TRUE];
+        }
+        
     }
+    
+    
+    
+    int total = [cell.leftNum.text integerValue] + [cell.rightNum.text integerValue];
+    if(total == 1)
+    {
+        cell.responseCount.text = @"1 response so far";
+    }
+    else
+    {
+        cell.responseCount.text = [NSString stringWithFormat:@"%d responses so far", total];
+    }
+    
 }
 
 -(void)showFBRequest: (NSString*) currentId
@@ -430,6 +492,37 @@
     cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1Count"]];
     NSLog(@"about to get rightNum");
     cell.rightNum.text = [NSString stringWithFormat:@"%@",currentObject[@"product2Count"]];
+    
+    //shows the number of responses so far
+    int total = [cell.leftNum.text integerValue] + [cell.rightNum.text integerValue];
+    if(total == 1)
+    {
+        cell.responseCount.text = @"1 response so far";
+    }
+    else
+    {
+        cell.responseCount.text = [NSString stringWithFormat:@"%d responses so far", total];
+    }
+    
+    UIColor *ourblue = [UIColor colorWithRed:(159/255.0) green:(184/255.0) blue:(233/255.0) alpha:1];
+    
+    cell.leftBackground.backgroundColor = ourblue;
+    cell.rightBackground.backgroundColor = ourblue;
+    
+    CGRect frame = cell.leftBackground.frame;
+    frame.origin.x = 32;
+    frame.origin.y = 91;
+    frame.size.width = 106;
+    frame.size.height = 105;
+    cell.leftBackground.frame = frame;
+    
+    frame = cell.rightBackground.frame;
+    frame.origin.x = 165;
+    frame.origin.y = 91;
+    frame.size.width = 106;
+    frame.size.height = 105;
+    cell.rightBackground.frame = frame;
+    
     @try
     {
         NSLog(@"leftFriendId");
