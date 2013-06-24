@@ -213,6 +213,37 @@
     }
 }
 
+-(void)showFBRequest: (NSString*) currentId
+{
+    NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                          // 2. Optionally provide a 'to' param to direct the request at
+                                          currentId, @"to", @"true", @"new_style_message", @"Hey, get Pave!", @"message", @"apprequests", @"method", // Ali
+                                          nil];
+    //NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:nil];
+    
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    FBSession* session = delegate.session;
+    
+    NSLog(@"Session in post to fb is %@", session);
+    
+    
+    [FBWebDialogs presentRequestsDialogModallyWithSession:session
+                                                  message:@"Ever wondered what people think about you? I'll tell you if you download Pave!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      if (error) {
+                                                          NSLog(@"Error");
+                                                          // Case A: Error launching the dialog or sending request.
+                                                      } else {
+                                                          if (result == FBWebDialogResultDialogNotCompleted) {
+                                                              //Case B: User clicked the "x" icon
+                                                              NSLog(@"closed");                          
+                                                          } else {
+                                                              NSLog(@"Sent");
+                                                              //Case C: Dialog shown and the user clicks Cancel or Send
+                                                          }
+                                                      }
+                                                  }];
+}
+
 -(void)saveAnswer:(FeedObjectCell *) cell: (BOOL) left
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -224,33 +255,7 @@
     if(left == true)
     {
         
-        NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
-             // 2. Optionally provide a 'to' param to direct the request at
-             @"100006184542452", @"to", @"true", @"new_style_message", @"Hey, get Pave!", @"message", @"apprequests", @"method", // Ali
-             nil];
-        //NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:nil];
         
-        AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-        FBSession* session = delegate.session;
-        
-        NSLog(@"Session in post to fb is %@", session);
-        
-
-        [FBWebDialogs presentRequestsDialogModallyWithSession:session
-              message:@"Ever wondered what people think about you? I'll tell you if you download Pave!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
-                  if (error) {
-                      NSLog(@"Error");
-                      // Case A: Error launching the dialog or sending request.
-                  } else {
-                      if (result == FBWebDialogResultDialogNotCompleted) {
-                          //Case B: User clicked the "x" icon
-                          NSLog(@"closed");                          
-                      } else {
-                          NSLog(@"Sent");
-                          //Case C: Dialog shown and the user clicks Cancel or Send
-                      }
-                  }
-              }];
         
         
         NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];

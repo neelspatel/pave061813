@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import <Foundation/Foundation.h>
 #import "PaveAPIClient.h"
+#import "MBProgressHUD.h"
 
 @interface TrendingTopicsListViewController ()
 
@@ -39,6 +40,7 @@
     self.feedObjects = [NSMutableArray array];
     [self getFeedObjects];
 }
+
 
 - (void)viewDidLoad
 {
@@ -194,5 +196,16 @@
  */
 
 
-
+- (IBAction)refresh:(id)sender {
+    NSLog(@"Refreshing frmo button click");
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // Do something...
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        //now updates the tables
+        self.feedObjects = [NSMutableArray array];
+        [self getFeedObjects];
+    });
+}
 @end

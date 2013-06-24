@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain)NSMutableArray *feedObjects;
 @property (nonatomic, assign) BOOL doneLoadingFeed;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
+- (IBAction)refresh:(id)sender;
 
 @end
