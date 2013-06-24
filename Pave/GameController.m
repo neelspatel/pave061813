@@ -76,9 +76,7 @@
 
 
 - (void)viewDidAppear:(BOOL)animated
-{
-    self.trackedViewName = @"Game controller";
-    
+{        
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     NSLog(@"Session right now is %@", session);

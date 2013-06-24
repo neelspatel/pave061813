@@ -9,22 +9,12 @@
 #import "AppDelegate.h"
 #import "PaveAPIClient.h"
 #import <FacebookSDK/FacebookSDK.h>
-#import "GAI.h"
 #import "Flurry.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Optional: automatically send uncaught exceptions to Google Analytics.
-    [GAI sharedInstance].trackUncaughtExceptions = YES;
-    // Optional: set Google Analytics dispatch interval to e.g. 20 seconds.
-    [GAI sharedInstance].dispatchInterval = 20;
-    // Optional: set debug to YES for extra debugging information.
-    [GAI sharedInstance].debug = YES;
-    // Create tracker instance.
-    id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-37404339-2"];
-    
     // flurry analytics 
     [Flurry startSession: @"N49JNZBNHFZ6PJ4Y9PSM"];
     

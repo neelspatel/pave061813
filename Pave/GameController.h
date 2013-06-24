@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 #import <MessageUI/MessageUI.h>
-#import "GAITrackedViewController.h"
 
 
-@interface GameController : GAITrackedViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
+@interface GameController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;

@@ -112,7 +112,6 @@
 		187CB1B917766FA800126412 /* facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 187CB1B717766FA800126412 /* facebook_icon@2x.png */; };
 		187CB1BA17766FA800126412 /* facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 187CB1B817766FA800126412 /* facebook_icon.png */; };
 		187CB1BC1777137400126412 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1BB1777137400126412 /* MessageUI.framework */; };
-		187CB1C517771FA600126412 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C317771FA600126412 /* libGoogleAnalytics.a */; };
 		187CB1C817771FCB00126412 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C717771FCB00126412 /* CoreData.framework */; };
 		187CB1CA17771FD200126412 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 187CB1C917771FD200126412 /* SystemConfiguration.framework */; };
 		187CB1CD17775F1900126412 /* top_bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 187CB1CC17775F1900126412 /* top_bar.png */; };
@@ -302,12 +301,6 @@
 		187CB1B717766FA800126412 /* facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook_icon@2x.png"; sourceTree = "<group>"; };
 		187CB1B817766FA800126412 /* facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook_icon.png; sourceTree = "<group>"; };
 		187CB1BB1777137400126412 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		187CB1BE17771FA600126412 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
-		187CB1BF17771FA600126412 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
-		187CB1C017771FA600126412 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
-		187CB1C117771FA600126412 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransaction.h; sourceTree = "<group>"; };
-		187CB1C217771FA600126412 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITransactionItem.h; sourceTree = "<group>"; };
-		187CB1C317771FA600126412 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalytics.a; sourceTree = "<group>"; };
 		187CB1C717771FCB00126412 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		187CB1C917771FD200126412 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		187CB1CC17775F1900126412 /* top_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = top_bar.png; sourceTree = "<group>"; };
@@ -424,7 +417,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				185E1FD4177859E900ECB3DC /* QuartzCore.framework in Frameworks */,
-				187CB1C517771FA600126412 /* libGoogleAnalytics.a in Frameworks */,
 				187CB1CA17771FD200126412 /* SystemConfiguration.framework in Frameworks */,
 				187CB1C817771FCB00126412 /* CoreData.framework in Frameworks */,
 				187CB1BC1777137400126412 /* MessageUI.framework in Frameworks */,
@@ -617,7 +609,6 @@
 		185D853C17707D46007733FA /* Pave */ = {
 			isa = PBXGroup;
 			children = (
-				187CB1BD17771FA600126412 /* Library */,
 				185E1FCD1778369900ECB3DC /* FooterCell.h */,
 				185E1FCE1778369A00ECB3DC /* FooterCell.m */,
 				185E1FD01778591C00ECB3DC /* LeftToRightSegue.h */,
@@ -722,19 +713,6 @@
 				185D857117707D47007733FA /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		187CB1BD17771FA600126412 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				187CB1BE17771FA600126412 /* GAI.h */,
-				187CB1BF17771FA600126412 /* GAITrackedViewController.h */,
-				187CB1C017771FA600126412 /* GAITracker.h */,
-				187CB1C117771FA600126412 /* GAITransaction.h */,
-				187CB1C217771FA600126412 /* GAITransactionItem.h */,
-				187CB1C317771FA600126412 /* libGoogleAnalytics.a */,
-			);
-			path = Library;
 			sourceTree = "<group>";
 		};
 		18805DCB1770E0E30059C37B /* SDWebImage */ = {
