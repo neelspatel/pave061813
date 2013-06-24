@@ -16,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (weak, nonatomic) IBOutlet UILabel *header;
 
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 - (IBAction)back:(id)sender;

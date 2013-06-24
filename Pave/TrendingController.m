@@ -32,6 +32,11 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
+    NSLog(@"Dictionary is %@", self.typeDictionary);
+    NSString *key = [[self.typeDictionary allKeys] objectAtIndex:0];
+    NSLog(@"Key is %@", key);
+    self.header.text = key;
+    
     NSLog(@"Loaded the view ");
     [super viewDidAppear:animated];
 }
