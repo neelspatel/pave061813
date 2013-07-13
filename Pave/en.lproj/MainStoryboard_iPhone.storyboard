@@ -25,7 +25,7 @@
             <objects>
                 <viewController id="jSP-AM-evD" customClass="TrendingTopicsListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zJI-Bz-MW2">
-                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="499"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aMS-M5-n7I">
@@ -143,7 +143,7 @@
             <objects>
                 <viewController id="cqf-EM-0zS" customClass="TrendingController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pTI-2E-PKf">
-                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="499"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QlY-LC-Zbi">
@@ -437,7 +437,7 @@
             <objects>
                 <viewController id="7eU-vq-G9g" customClass="PersonalFeedController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3T4-jM-juf" customClass="PersonalF">
-                        <rect key="frame" x="0.0" y="20" width="320" height="416"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cYD-sD-rt1">
@@ -446,7 +446,7 @@
                                         <color key="backgroundColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="308" id="UUn-W7-aGM"/>
-                                            <constraint firstAttribute="height" constant="390" type="user" id="pCT-QH-r1X"/>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="390" type="user" id="pCT-QH-r1X"/>
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Profile" id="oeF-He-3jo" customClass="ProfileViewCell">
@@ -666,7 +666,9 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.31764706970000001" green="0.48627454040000001" blue="0.9215686917" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstItem="hAK-Fm-SYy" firstAttribute="top" secondItem="cYD-sD-rt1" secondAttribute="top" type="user" id="xuF-24-aUR"/>
+                                    <constraint firstItem="hAK-Fm-SYy" firstAttribute="bottom" secondItem="cYD-sD-rt1" secondAttribute="bottom" type="default" id="E8T-Pc-MY4"/>
+                                    <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="hAK-Fm-SYy" secondAttribute="bottom" type="user" id="agC-FY-yDw"/>
+                                    <constraint firstItem="hAK-Fm-SYy" firstAttribute="top" secondItem="cYD-sD-rt1" secondAttribute="top" type="user" id="uPW-f7-vrV"/>
                                     <constraint firstItem="hAK-Fm-SYy" firstAttribute="centerX" secondItem="cYD-sD-rt1" secondAttribute="centerX" type="default" id="yGF-lq-L9B"/>
                                 </constraints>
                             </view>
@@ -726,7 +728,7 @@
                             <constraint firstItem="bOB-vy-IAb" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="5" id="ASQ-KG-LyO"/>
                             <constraint firstItem="GN2-vg-vkO" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" type="default" id="ENT-Mx-2ko"/>
                             <constraint firstItem="cYD-sD-rt1" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="5" id="KBN-Au-iUU"/>
-                            <constraint firstAttribute="bottom" secondItem="cYD-sD-rt1" secondAttribute="bottom" constant="-1" type="user" id="Lqh-JV-7U9"/>
+                            <constraint firstAttribute="bottom" secondItem="cYD-sD-rt1" secondAttribute="bottom" type="user" id="Lqh-JV-7U9"/>
                             <constraint firstItem="bOB-vy-IAb" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="11" id="S3Q-pZ-SaC"/>
                             <constraint firstItem="GN2-vg-vkO" firstAttribute="centerX" secondItem="vrM-3r-wbc" secondAttribute="centerX" type="default" id="Wra-eH-RYi"/>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="bDZ-eZ-Bud"/>
@@ -778,7 +780,7 @@
             <objects>
                 <viewController id="PlR-f4-nCD" customClass="GameController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gu6-uR-h9P">
-                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="499"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="44E-J8-4Rz">
@@ -1097,7 +1099,7 @@
             <objects>
                 <viewController storyboardIdentifier="loginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Kie-5A-7GQ" customClass="LoginViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qiw-TQ-pMG">
-                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qe9-PM-Kej">
@@ -1223,7 +1225,6 @@
             <relationships>
                 <relationship kind="action" name="leftFacebookNotify:"/>
                 <relationship kind="action" name="rightFacebookNotify:"/>
-                <relationship kind="action" name="submitLeft:"/>
                 <relationship kind="outlet" name="leftBackground" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftFacebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftFriend" candidateClass="UIImageView"/>
@@ -1355,10 +1356,10 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="dVu-9J-WCR"/>
         <segue reference="58v-be-xwZ"/>
-        <segue reference="DIQ-Ig-64G"/>
     </inferredMetricsTieBreakers>
 </document>

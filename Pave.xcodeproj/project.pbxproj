@@ -636,6 +636,8 @@
 		185D853C17707D46007733FA /* Pave */ = {
 			isa = PBXGroup;
 			children = (
+				B0F178D31791244100CCA291 /* Profile */,
+				B0F178D21791241600CCA291 /* Trending */,
 				185D854517707D46007733FA /* AppDelegate.h */,
 				185D854617707D46007733FA /* AppDelegate.m */,
 				18805E4C1770ECEB0059C37B /* FeedObjectCell.h */,
@@ -650,24 +652,11 @@
 				185D8588177085EF007733FA /* LoginViewController.m */,
 				185D855117707D46007733FA /* MainStoryboard_iPad.storyboard */,
 				185D854E17707D46007733FA /* MainStoryboard_iPhone.storyboard */,
-				1844725A1774921100B58781 /* MBProgressHUD.h */,
-				184472591774921100B58781 /* MBProgressHUD.m */,
 				18805E471770EC910059C37B /* PaveAPIClient.h */,
 				18805E481770EC910059C37B /* PaveAPIClient.m */,
 				18BEC3E4177150C1001CD508 /* PersonalFeedController.h */,
 				18BEC3E5177150C1001CD508 /* PersonalFeedController.m */,
-				18BEC3E717719582001CD508 /* ProfileObjectCell.h */,
-				18BEC3E817719582001CD508 /* ProfileObjectCell.m */,
-				1868E84917777794003DD291 /* ProfileViewCell.h */,
-				1868E84A17777794003DD291 /* ProfileViewCell.m */,
-				1887F7421773D231001254BC /* TrendingController.h */,
-				1887F7431773D231001254BC /* TrendingController.m */,
-				18A18EB71773CB06001AA17E /* TrendingListCell.h */,
-				18A18EB81773CB06001AA17E /* TrendingListCell.m */,
-				18E81D311771FC2D006DE8EF /* TrendingObjectCell.h */,
-				18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */,
-				B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */,
-				B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */,
+				B0F178D41791248300CCA291 /* MBProgressHUD */,
 				18805E2A1770EC7E0059C37B /* AFNetworking */,
 				18805DCB1770E0E30059C37B /* SDWebImage */,
 				185D853D17707D46007733FA /* Supporting Files */,
@@ -827,6 +816,41 @@
 				B0ED43631777E5DE00E415F8 /* libFlurry.a */,
 			);
 			path = Flurry;
+			sourceTree = "<group>";
+		};
+		B0F178D21791241600CCA291 /* Trending */ = {
+			isa = PBXGroup;
+			children = (
+				1887F7421773D231001254BC /* TrendingController.h */,
+				1887F7431773D231001254BC /* TrendingController.m */,
+				18A18EB71773CB06001AA17E /* TrendingListCell.h */,
+				18A18EB81773CB06001AA17E /* TrendingListCell.m */,
+				18E81D311771FC2D006DE8EF /* TrendingObjectCell.h */,
+				18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */,
+				B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */,
+				B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */,
+			);
+			name = Trending;
+			sourceTree = "<group>";
+		};
+		B0F178D31791244100CCA291 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				1868E84917777794003DD291 /* ProfileViewCell.h */,
+				1868E84A17777794003DD291 /* ProfileViewCell.m */,
+				18BEC3E717719582001CD508 /* ProfileObjectCell.h */,
+				18BEC3E817719582001CD508 /* ProfileObjectCell.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		B0F178D41791248300CCA291 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				1844725A1774921100B58781 /* MBProgressHUD.h */,
+				184472591774921100B58781 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
