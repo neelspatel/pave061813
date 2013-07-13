@@ -1223,6 +1223,7 @@
             <relationships>
                 <relationship kind="action" name="leftFacebookNotify:"/>
                 <relationship kind="action" name="rightFacebookNotify:"/>
+                <relationship kind="action" name="submitLeft:"/>
                 <relationship kind="outlet" name="leftBackground" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftFacebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftFriend" candidateClass="UIImageView"/>
