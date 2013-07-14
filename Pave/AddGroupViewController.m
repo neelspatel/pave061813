@@ -25,16 +25,26 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
+    // initing the arrays
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     self.friendIds = [prefs objectForKey:@"friends"];
     self.friendNames = [prefs objectForKey:@"names"];
+    
     // if no friends, reload friend data from server
+    
     self.filteredNames = [[NSMutableArray alloc] init];
-    self.addFriendsSearchBar.delegate = (id)self;
-    [super viewDidLoad];
+    
     self.addFriendsSearchBar.delaysContentTouches = NO;
 
 	// Do any additional setup after loading the view.
+    
+    // setting our delegates
+    self.addFriendsSearchBar.delegate = (id)self;
+    self.groupName.delegate = (id)self;
+    self.currentGroup = [[NSMutableArray alloc] init];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -89,7 +99,7 @@
     
     // add the seleced name to the current group
     [self.currentGroup addObject:selectedName];
-
+    NSLog(@"%@", self.currentGroup);
     NSString *curText = self.addedFriendsTextField.text;
     
     NSString *newText = [NSString stringWithFormat:@"%@, %@",curText, selectedName];
@@ -123,4 +133,41 @@
 
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.groupName) {
+        [textField resignFirstResponder];
+        self.currentGroupName = self.groupName.text;
+        // gray out the text or something
+        self.groupName.textColor = [UIColor lightGrayColor];
+        return NO;
+    }
+    return YES;
+}
+
+
+- (IBAction)createGroup:(id)sender {
+    // check if everything is in line
+    if (self.currentGroup.count > 0)
+    {
+        NSLog(@"Succesfully created group %@", self.currentGroupName);
+        // if there is no group name
+        if (!self.currentGroupName)
+                self.currentGroupName = @"";
+            
+        NSMutableDictionary *currentGroup = [[NSMutableDictionary alloc] initWithObjects:@[self.currentGroupName, self.currentGroup] forKeys:@[@"name", @"friends"]];
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        NSMutableArray *groups = [prefs objectForKey:@"groups"];
+        [groups addObject:currentGroup];
+        [prefs setObject:groups forKey:@"groups"];
+        [prefs synchronize];
+        
+        [self performSegueWithIdentifier:@"createGroupToGroupList" sender:self];
+        // You succesfully created this group!
+    }
+    else{
+        NSLog(@"Empty group cannot complete");
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You have to add group members" delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
+        [alertView show];
+    }
+}
 @end
