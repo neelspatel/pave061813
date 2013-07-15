@@ -216,6 +216,8 @@
 		B0ED43641777E5DE00E415F8 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0ED43631777E5DE00E415F8 /* libFlurry.a */; };
 		B0F178D717912A6000CCA291 /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178D617912A6000CCA291 /* GroupViewController.m */; };
 		B0F178DA1791321400CCA291 /* AddGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178D91791321400CCA291 /* AddGroupViewController.m */; };
+		B0F178DE179275C500CCA291 /* GroupGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178DD179275C500CCA291 /* GroupGameController.m */; };
+		B0F178E11792A25200CCA291 /* JSONAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178E01792A25200CCA291 /* JSONAPIClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -443,6 +445,10 @@
 		B0F178D617912A6000CCA291 /* GroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewController.m; sourceTree = "<group>"; };
 		B0F178D81791321400CCA291 /* AddGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddGroupViewController.h; sourceTree = "<group>"; };
 		B0F178D91791321400CCA291 /* AddGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddGroupViewController.m; sourceTree = "<group>"; };
+		B0F178DC179275C500CCA291 /* GroupGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupGameController.h; sourceTree = "<group>"; };
+		B0F178DD179275C500CCA291 /* GroupGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupGameController.m; sourceTree = "<group>"; };
+		B0F178DF1792A25100CCA291 /* JSONAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONAPIClient.h; sourceTree = "<group>"; };
+		B0F178E01792A25200CCA291 /* JSONAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONAPIClient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -644,9 +650,9 @@
 			children = (
 				B0F178D31791244100CCA291 /* Profile */,
 				B0F178D21791241600CCA291 /* Trending */,
-				185D854517707D46007733FA /* AppDelegate.h */,
 				B0F178DB1791321B00CCA291 /* Groups */,
 				185D854617707D46007733FA /* AppDelegate.m */,
+				185D854517707D46007733FA /* AppDelegate.h */,
 				18805E4C1770ECEB0059C37B /* FeedObjectCell.h */,
 				18805E4D1770ECEB0059C37B /* FeedObjectCell.m */,
 				185E1FCD1778369900ECB3DC /* FooterCell.h */,
@@ -661,8 +667,8 @@
 				185D854E17707D46007733FA /* MainStoryboard_iPhone.storyboard */,
 				18805E471770EC910059C37B /* PaveAPIClient.h */,
 				18805E481770EC910059C37B /* PaveAPIClient.m */,
-				18BEC3E4177150C1001CD508 /* PersonalFeedController.h */,
-				18BEC3E5177150C1001CD508 /* PersonalFeedController.m */,
+				B0F178DF1792A25100CCA291 /* JSONAPIClient.h */,
+				B0F178E01792A25200CCA291 /* JSONAPIClient.m */,
 				B0F178D41791248300CCA291 /* MBProgressHUD */,
 				18805E2A1770EC7E0059C37B /* AFNetworking */,
 				18805DCB1770E0E30059C37B /* SDWebImage */,
@@ -843,6 +849,8 @@
 		B0F178D31791244100CCA291 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				18BEC3E4177150C1001CD508 /* PersonalFeedController.h */,
+				18BEC3E5177150C1001CD508 /* PersonalFeedController.m */,
 				1868E84917777794003DD291 /* ProfileViewCell.h */,
 				1868E84A17777794003DD291 /* ProfileViewCell.m */,
 				18BEC3E717719582001CD508 /* ProfileObjectCell.h */,
@@ -867,6 +875,8 @@
 				B0F178D617912A6000CCA291 /* GroupViewController.m */,
 				B0F178D81791321400CCA291 /* AddGroupViewController.h */,
 				B0F178D91791321400CCA291 /* AddGroupViewController.m */,
+				B0F178DC179275C500CCA291 /* GroupGameController.h */,
+				B0F178DD179275C500CCA291 /* GroupGameController.m */,
 			);
 			name = Groups;
 			sourceTree = "<group>";
@@ -1163,6 +1173,8 @@
 				185E1FD21778591D00ECB3DC /* LeftToRightSegue.m in Sources */,
 				B0F178D717912A6000CCA291 /* GroupViewController.m in Sources */,
 				B0F178DA1791321400CCA291 /* AddGroupViewController.m in Sources */,
+				B0F178DE179275C500CCA291 /* GroupGameController.m in Sources */,
+				B0F178E11792A25200CCA291 /* JSONAPIClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

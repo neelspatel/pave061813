@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, assign) BOOL isFiltered;
 @property (weak, nonatomic) IBOutlet UITextView *addedFriendsTextField;
-@property (weak, nonatomic) IBOutlet UITableView *addFriendsSearchBar;
+@property (weak, nonatomic) IBOutlet UISearchBar *addFriendsSearchBar;
 @property (weak, nonatomic) IBOutlet UITextField *groupName;
 @property(nonatomic, copy) NSString *currentGroupName;
 

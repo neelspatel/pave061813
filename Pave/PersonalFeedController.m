@@ -109,10 +109,13 @@
 - (IBAction)logout:(id)sender;
 {
     NSLog(@"in logout");
+    
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
+    
     [session closeAndClearTokenInformation];
     [session close];
+    
     //[FBSession setActiveSession:nil];
     //[FBSession.activeSession close];
     //[FBSession.activeSession  closeAndClearTokenInformation];
@@ -145,9 +148,9 @@
                 //{
                 //    [ids addObject:current[@"id"]];
                 //}
-                NSLog(@"Just finished getting results: %@", results);
+                //NSLog(@"Just finished getting results: %@", results);
                 self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
                 self.doneLoadingFeed = YES;
                 [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                 
@@ -256,6 +259,7 @@
     {
         static NSString *CellIdentifier = @"Cell";
         ProfileObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        NSLog(@"IndexPath is %d", indexPath.row);
         NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row-1)];
             
         NSString *newtext = currentObject[@"question"];

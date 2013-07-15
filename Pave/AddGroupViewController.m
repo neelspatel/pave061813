@@ -29,14 +29,13 @@
     
     // initing the arrays
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    self.friendIds = [prefs objectForKey:@"friends"];
-    self.friendNames = [prefs objectForKey:@"names"];
+    self.friendNames = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"names"] copy]];
     
     // if no friends, reload friend data from server
     
     self.filteredNames = [[NSMutableArray alloc] init];
     
-    self.addFriendsSearchBar.delaysContentTouches = NO;
+    self.tableView.delaysContentTouches = NO;
 
 	// Do any additional setup after loading the view.
     
@@ -88,6 +87,9 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // [self performSegueWithIdentifier:@"trendingListToTrendingTopics" sender:self.feedObjects[indexPath.row]];
     // append name to the text view that will be displayed
+    
+    [self.tableView deselectRowAtIndexPath:[self.tableView  indexPathForSelectedRow] animated:YES];
+    
     NSLog(@"Selected %d", indexPath.row);
     [self.view endEditing:YES];
     
@@ -104,6 +106,13 @@
     
     NSString *newText = [NSString stringWithFormat:@"%@, %@",curText, selectedName];
     self.addedFriendsTextField.text = newText;
+    
+    self.addFriendsSearchBar.text =@"";
+    
+    // delete the friend from the friends array and from the autocomplete array
+    [self.filteredNames removeObject:selectedName];
+    [self.friendNames removeObject:selectedName];
+    [self.tableView reloadData];
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -149,19 +158,34 @@
     // check if everything is in line
     if (self.currentGroup.count > 0)
     {
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+
         NSLog(@"Succesfully created group %@", self.currentGroupName);
         // if there is no group name
         if (!self.currentGroupName)
-                self.currentGroupName = @"";
-            
-        NSMutableDictionary *currentGroup = [[NSMutableDictionary alloc] initWithObjects:@[self.currentGroupName, self.currentGroup] forKeys:@[@"name", @"friends"]];
-        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+                self.currentGroupName = @"Default Name";
+        
+        NSMutableArray *friendIds = [prefs objectForKey:@"friends"];
+        NSMutableArray *friendNames = [prefs objectForKey:@"names"];
+        NSMutableArray *groupFriendIds = [[NSMutableArray alloc] init];
+        NSLog(@"%@", friendNames);
+        for (NSString *curName in self.currentGroup) {
+            NSInteger index = [friendNames indexOfObject:curName];
+            NSLog(@"Index: %d", index);
+            [groupFriendIds addObject:[friendIds objectAtIndex:index]];
+        }
+        
+        NSMutableDictionary *currentGroup = [[NSMutableDictionary alloc] initWithObjects:@[self.currentGroupName, groupFriendIds, self.currentGroup] forKeys:@[@"name", @"friend_ids", @"friend_names"]];
         NSMutableArray *groups = [prefs objectForKey:@"groups"];
+        if (!groups)
+            groups = [[NSMutableArray alloc] init];
+        
         [groups addObject:currentGroup];
+        NSLog(@"Groups %@", groups);
         [prefs setObject:groups forKey:@"groups"];
         [prefs synchronize];
         
-        [self performSegueWithIdentifier:@"createGroupToGroupList" sender:self];
+        [self dismissViewControllerAnimated:YES completion:nil];
         // You succesfully created this group!
     }
     else{

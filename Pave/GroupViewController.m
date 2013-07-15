@@ -7,6 +7,7 @@
 //
 
 #import "GroupViewController.h"
+#import "GroupGameController.h"
 #import "AppDelegate.h"
 #import <Foundation/Foundation.h>
 #import "PaveAPIClient.h"
@@ -31,14 +32,7 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    self.groups = [prefs objectForKey:@"groups"];
-    // if groups is empty display it
-    
-    NSLog(@"Table list appeared");
-    CGRect windowFrame = [UIScreen mainScreen].applicationFrame;
-    
-    [self.navigationController.navigationBar setFrame:CGRectMake(0,16, windowFrame.size.width, 42)];
+    [super viewDidAppear:animated];
 }
 
 
@@ -46,6 +40,11 @@
 {
     
     NSLog(@"Table list loaded");
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    self.groups = [prefs objectForKey:@"groups"];
+    NSLog(@"Groups: %@", self.groups);
+
     [super viewDidLoad];
 	// refresh data from here
     // Do any additional setup after loading the view.
@@ -60,67 +59,65 @@
 
 
 - (void) viewWillAppear:(BOOL)animated {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    self.groups = [prefs objectForKey:@"groups"];
+
     [self.tableView deselectRowAtIndexPath:[self.tableView  indexPathForSelectedRow] animated:animated];
+    [self.tableView reloadData];
     [super viewWillAppear:animated];
+    
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
+    NSLog(@"Getting length");
     // Return the number of rows in the section.
+    NSLog(@"%@", self.groups);
     return self.groups.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    NSLog(@"Load cell");
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSMutableArray *currentObject = [self.groups objectAtIndex:indexPath.row];
+    NSMutableDictionary *currentObject = [self.groups objectAtIndex:indexPath.row];
     
     
-    NSLog(@"Changing cell style in view controller..");
-    UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
-    av.backgroundColor = [UIColor clearColor];
-    av.opaque = NO;
-    av.image = [UIImage imageNamed:@"unselected_one_trending_topic_box.png"];
-    
-    
-    cell.backgroundView = av;
-    
+        
     cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_trending_topic_box.png"]];
     
-    cell.textLabel.text = [currentObject objectAtIndex:0];
+    cell.textLabel.text = [currentObject objectForKey:@"name"];
     NSLog(@"Set text to %@", cell.textLabel.text);
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-   // [self performSegueWithIdentifier:@"trendingListToTrendingTopics" sender:self.feedObjects[indexPath.row]];
+    NSMutableDictionary *currentGroup = [self.groups objectAtIndex:indexPath.row];
+   [self performSegueWithIdentifier:@"groupListToGroupGame" sender:currentGroup];
     // do something when the table view is selected
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //setup trending controller
-    /*
-    if([segue.identifier isEqualToString:@"trendingListToTrendingTopics"]){
-        TrendingController *destination = segue.destinationViewController;
-        destination.typeDictionary = sender;  //note this is the back reference
+    
+    if([segue.identifier isEqualToString:@"groupListToGroupGame"]){
+        GroupGameController *destination = segue.destinationViewController;
+        destination.group = sender;  //note this is the back reference
     }
-     */
+     
     
 }
-
 
 
 - (IBAction)addGroup:(id)sender {
