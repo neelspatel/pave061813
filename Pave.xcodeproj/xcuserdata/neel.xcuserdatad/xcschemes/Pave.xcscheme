@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "185D853117707D46007733FA"
-               BuildableName = "Pave.app"
+               BuildableName = "Side.app"
                BlueprintName = "Pave"
                ReferencedContainer = "container:Pave.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "185D853117707D46007733FA"
-            BuildableName = "Pave.app"
+            BuildableName = "Side.app"
             BlueprintName = "Pave"
             ReferencedContainer = "container:Pave.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "185D853117707D46007733FA"
-            BuildableName = "Pave.app"
+            BuildableName = "Side.app"
             BlueprintName = "Pave"
             ReferencedContainer = "container:Pave.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "185D853117707D46007733FA"
-            BuildableName = "Pave.app"
+            BuildableName = "Side.app"
             BlueprintName = "Pave"
             ReferencedContainer = "container:Pave.xcodeproj">
          </BuildableReference>
