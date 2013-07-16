@@ -426,7 +426,9 @@
             NSLog(@"About to get feed objects");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSString *path = @"/data/getlistquestions/";
+            //NSString *path = @"/data/getlistquestions/";
+            NSString *path = @"/data/recsgetlistquestions/";
+
             path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
             //path = [path stringByAppendingString:@"1"];
             path = [path stringByAppendingString:@"/"];
