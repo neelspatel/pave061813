@@ -219,6 +219,10 @@
 		18E81D331771FC2D006DE8EF /* TrendingObjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */; };
 		B01707891773A20100B8D77B /* TrendingTopicsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */; };
 		B0ED43641777E5DE00E415F8 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0ED43631777E5DE00E415F8 /* libFlurry.a */; };
+		B0F178D717912A6000CCA291 /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178D617912A6000CCA291 /* GroupViewController.m */; };
+		B0F178DA1791321400CCA291 /* AddGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178D91791321400CCA291 /* AddGroupViewController.m */; };
+		B0F178DE179275C500CCA291 /* GroupGameController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178DD179275C500CCA291 /* GroupGameController.m */; };
+		B0F178E11792A25200CCA291 /* JSONAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178E01792A25200CCA291 /* JSONAPIClient.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -450,6 +454,14 @@
 		B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingTopicsListViewController.m; sourceTree = "<group>"; };
 		B0ED43621777E5DE00E415F8 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		B0ED43631777E5DE00E415F8 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
+		B0F178D517912A6000CCA291 /* GroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupViewController.h; sourceTree = "<group>"; };
+		B0F178D617912A6000CCA291 /* GroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupViewController.m; sourceTree = "<group>"; };
+		B0F178D81791321400CCA291 /* AddGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddGroupViewController.h; sourceTree = "<group>"; };
+		B0F178D91791321400CCA291 /* AddGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddGroupViewController.m; sourceTree = "<group>"; };
+		B0F178DC179275C500CCA291 /* GroupGameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupGameController.h; sourceTree = "<group>"; };
+		B0F178DD179275C500CCA291 /* GroupGameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupGameController.m; sourceTree = "<group>"; };
+		B0F178DF1792A25100CCA291 /* JSONAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONAPIClient.h; sourceTree = "<group>"; };
+		B0F178E01792A25200CCA291 /* JSONAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSONAPIClient.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -653,8 +665,11 @@
 		185D853C17707D46007733FA /* Pave */ = {
 			isa = PBXGroup;
 			children = (
-				185D854517707D46007733FA /* AppDelegate.h */,
+				B0F178D31791244100CCA291 /* Profile */,
+				B0F178D21791241600CCA291 /* Trending */,
+				B0F178DB1791321B00CCA291 /* Groups */,
 				185D854617707D46007733FA /* AppDelegate.m */,
+				185D854517707D46007733FA /* AppDelegate.h */,
 				18805E4C1770ECEB0059C37B /* FeedObjectCell.h */,
 				18805E4D1770ECEB0059C37B /* FeedObjectCell.m */,
 				185E1FCD1778369900ECB3DC /* FooterCell.h */,
@@ -667,24 +682,11 @@
 				185D8588177085EF007733FA /* LoginViewController.m */,
 				185D855117707D46007733FA /* MainStoryboard_iPad.storyboard */,
 				185D854E17707D46007733FA /* MainStoryboard_iPhone.storyboard */,
-				1844725A1774921100B58781 /* MBProgressHUD.h */,
-				184472591774921100B58781 /* MBProgressHUD.m */,
 				18805E471770EC910059C37B /* PaveAPIClient.h */,
 				18805E481770EC910059C37B /* PaveAPIClient.m */,
-				18BEC3E4177150C1001CD508 /* PersonalFeedController.h */,
-				18BEC3E5177150C1001CD508 /* PersonalFeedController.m */,
-				18BEC3E717719582001CD508 /* ProfileObjectCell.h */,
-				18BEC3E817719582001CD508 /* ProfileObjectCell.m */,
-				1868E84917777794003DD291 /* ProfileViewCell.h */,
-				1868E84A17777794003DD291 /* ProfileViewCell.m */,
-				1887F7421773D231001254BC /* TrendingController.h */,
-				1887F7431773D231001254BC /* TrendingController.m */,
-				18A18EB71773CB06001AA17E /* TrendingListCell.h */,
-				18A18EB81773CB06001AA17E /* TrendingListCell.m */,
-				18E81D311771FC2D006DE8EF /* TrendingObjectCell.h */,
-				18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */,
-				B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */,
-				B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */,
+				B0F178DF1792A25100CCA291 /* JSONAPIClient.h */,
+				B0F178E01792A25200CCA291 /* JSONAPIClient.m */,
+				B0F178D41791248300CCA291 /* MBProgressHUD */,
 				18805E2A1770EC7E0059C37B /* AFNetworking */,
 				18805DCB1770E0E30059C37B /* SDWebImage */,
 				185D853D17707D46007733FA /* Supporting Files */,
@@ -850,6 +852,56 @@
 				B0ED43631777E5DE00E415F8 /* libFlurry.a */,
 			);
 			path = Flurry;
+			sourceTree = "<group>";
+		};
+		B0F178D21791241600CCA291 /* Trending */ = {
+			isa = PBXGroup;
+			children = (
+				1887F7421773D231001254BC /* TrendingController.h */,
+				1887F7431773D231001254BC /* TrendingController.m */,
+				18A18EB71773CB06001AA17E /* TrendingListCell.h */,
+				18A18EB81773CB06001AA17E /* TrendingListCell.m */,
+				18E81D311771FC2D006DE8EF /* TrendingObjectCell.h */,
+				18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */,
+				B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */,
+				B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */,
+			);
+			name = Trending;
+			sourceTree = "<group>";
+		};
+		B0F178D31791244100CCA291 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				18BEC3E4177150C1001CD508 /* PersonalFeedController.h */,
+				18BEC3E5177150C1001CD508 /* PersonalFeedController.m */,
+				1868E84917777794003DD291 /* ProfileViewCell.h */,
+				1868E84A17777794003DD291 /* ProfileViewCell.m */,
+				18BEC3E717719582001CD508 /* ProfileObjectCell.h */,
+				18BEC3E817719582001CD508 /* ProfileObjectCell.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		B0F178D41791248300CCA291 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				1844725A1774921100B58781 /* MBProgressHUD.h */,
+				184472591774921100B58781 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		B0F178DB1791321B00CCA291 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				B0F178D517912A6000CCA291 /* GroupViewController.h */,
+				B0F178D617912A6000CCA291 /* GroupViewController.m */,
+				B0F178D81791321400CCA291 /* AddGroupViewController.h */,
+				B0F178D91791321400CCA291 /* AddGroupViewController.m */,
+				B0F178DC179275C500CCA291 /* GroupGameController.h */,
+				B0F178DD179275C500CCA291 /* GroupGameController.m */,
+			);
+			name = Groups;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1145,6 +1197,10 @@
 				1855058417928675005D3348 /* AskViewController.m in Sources */,
 				1857A64117938907007213A9 /* WebSearchViewController.m in Sources */,
 				18B441BF179392F000811D92 /* WebImageCell.m in Sources */,
+				B0F178D717912A6000CCA291 /* GroupViewController.m in Sources */,
+				B0F178DA1791321400CCA291 /* AddGroupViewController.m in Sources */,
+				B0F178DE179275C500CCA291 /* GroupGameController.m in Sources */,
+				B0F178E11792A25200CCA291 /* JSONAPIClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
