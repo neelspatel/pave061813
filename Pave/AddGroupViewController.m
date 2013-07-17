@@ -43,6 +43,13 @@
     self.addFriendsSearchBar.delegate = (id)self;
     self.groupName.delegate = (id)self;
     self.currentGroup = [[NSMutableArray alloc] init];
+    
+    //customize searchbar
+    [[UISearchBar appearance] setSearchFieldBackgroundImage:[UIImage imageNamed:@"add_text_box.png"]forState:UIControlStateNormal];
+    CGRect frame = self.addFriendsSearchBar.frame;
+    frame.size.height = 30;
+    self.addFriendsSearchBar.frame = frame;
+    
 
 }
 
@@ -85,7 +92,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // [self performSegueWithIdentifier:@"trendingListToTrendingTopics" sender:self.feedObjects[indexPath.row]];
+
     // append name to the text view that will be displayed
     
     [self.tableView deselectRowAtIndexPath:[self.tableView  indexPathForSelectedRow] animated:YES];
@@ -107,12 +114,13 @@
     NSString *newText = [NSString stringWithFormat:@"%@, %@",curText, selectedName];
     self.addedFriendsTextField.text = newText;
     
-    self.addFriendsSearchBar.text =@"";
+    self.addFriendsSearchBar.text = @"";
     
     // delete the friend from the friends array and from the autocomplete array
     [self.filteredNames removeObject:selectedName];
     [self.friendNames removeObject:selectedName];
     [self.tableView reloadData];
+    self.isFiltered = NO;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar

@@ -11,24 +11,25 @@
 
 @interface FeedObjectCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *profilePictureBackground;
+
 @property (weak, nonatomic) IBOutlet UILabel *question;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet UIImageView *leftProduct;
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
-@property (weak, nonatomic) IBOutlet UIImageView *leftFriend;
+
+@property (weak, nonatomic) IBOutlet UIImageView *leftCheck;
+@property (weak, nonatomic) IBOutlet UIImageView *leftX;
+@property (weak, nonatomic) IBOutlet UIImageView *rightCheck;
+@property (weak, nonatomic) IBOutlet UIImageView *rightX;
 @property (weak, nonatomic) IBOutlet UILabel *leftLabel;
 @property (weak, nonatomic) IBOutlet UILabel *leftNum;
 @property (weak, nonatomic) IBOutlet UILabel *rightNum;
 @property (weak, nonatomic) IBOutlet UILabel *rightLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *rightFriend;
-@property (weak, nonatomic) IBOutlet UIImageView *leftBackground;
-@property (weak, nonatomic) IBOutlet UIImageView *rightBackground;
+
 @property (weak, nonatomic) IBOutlet UITextView *responseCount;
-@property (weak, nonatomic) IBOutlet UIButton *leftFacebookButton;
-@property (weak, nonatomic) IBOutlet UIButton *rightFacebookButton;
-- (IBAction)leftFacebookNotify:(id)sender;
-- (IBAction)rightFacebookNotify:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *facebookButton;
+
+- (IBAction)facebookNotify:(id)sender;
 
 @property(nonatomic, assign) NSInteger leftFriendId;
 @property(nonatomic, assign) NSInteger rightFriendId;

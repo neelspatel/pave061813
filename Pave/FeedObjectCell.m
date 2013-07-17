@@ -16,14 +16,8 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        NSLog(@"Just called init");
-        self.leftBackground.layer.cornerRadius = 10;
-        self.leftBackground.clipsToBounds = YES;
-        self.rightBackground.layer.cornerRadius = 10;
-        self.rightBackground.clipsToBounds = YES;
-        self.profilePictureBackground.layer.cornerRadius = 10;
-        self.profilePictureBackground.clipsToBounds = YES;
+    if (self) {        
+        
     }
     return self;
 }
@@ -71,13 +65,9 @@
           }];
 }
 
-- (IBAction)leftFacebookNotify:(id)sender {
+- (IBAction)facebookNotify:(id)sender {
     [self showFBRequest:self.currentId];
     
 }
 
-- (IBAction)rightFacebookNotify:(id)sender {
-    [self showFBRequest:self.currentId];
-    
-}
 @end

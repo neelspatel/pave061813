@@ -90,15 +90,10 @@
     return NO;
 }
 
-- (void) displayAsRead:(FeedObjectCell *)cell: (BOOL) left
+- (void) displayAsRead:(FeedObjectCell *) cell: (BOOL) left
 {
-    UIColor *ourblue = [UIColor colorWithRed:(80/255.0) green:(133/255.0) blue:(232/255.0) alpha:1];
     
-    cell.leftLabel.textColor = ourblue;
-    cell.rightLabel.textColor = ourblue;
-    cell.leftNum.textColor = ourblue;
-    cell.rightNum.textColor = ourblue;
-    cell.responseCount.textColor = [UIColor colorWithRed:(136/255.0) green:(136/255.0) blue:(143/255.0) alpha:1];
+    [cell.facebookButton setHidden:FALSE];
     
     if(left == TRUE)
     {
@@ -108,18 +103,10 @@
         cell.leftLabel.text = @"agree";
         cell.rightLabel.text = @"disagree";
         
-        [cell.leftFacebookButton setHidden:FALSE];
         [cell.leftLabel setHidden:FALSE];
         [cell.rightLabel setHidden:FALSE];
         [cell.leftNum setHidden:FALSE];
         [cell.rightNum setHidden:FALSE];
-        CGRect frame = cell.leftBackground.frame;
-        frame.origin.x = 27;
-        frame.origin.y = 86;
-        frame.size.width = 116;
-        frame.size.height = 115;
-        cell.leftBackground.frame = frame;
-        cell.leftBackground.backgroundColor = ourblue;
         
         //hides things if need be
         if([cell.leftNum.text isEqual: @"1"])
@@ -137,23 +124,15 @@
     }
     else
     {
+        //shows the labels
         cell.rightNum.text = [NSString stringWithFormat:@"%d", [cell.rightNum.text integerValue] + 1];
         cell.leftLabel.text = @"disagree";
         cell.rightLabel.text = @"agree";
         
-        [cell.rightFacebookButton setHidden:FALSE];
         [cell.leftLabel setHidden:FALSE];
         [cell.rightLabel setHidden:FALSE];
         [cell.leftNum setHidden:FALSE];
         [cell.rightNum setHidden:FALSE];
-        
-        CGRect frame = cell.rightBackground.frame;
-        frame.origin.x = 160;
-        frame.origin.y = 86;
-        frame.size.width = 116;
-        frame.size.height = 115;
-        cell.rightBackground.frame = frame;
-        cell.rightBackground.backgroundColor = ourblue;
         
         //hides things if need be
         if([cell.leftNum.text isEqual: @"0"])
@@ -174,11 +153,11 @@
     int total = [cell.leftNum.text integerValue] + [cell.rightNum.text integerValue];
     if(total == 1)
     {
-        cell.responseCount.text = @"1 response so far";
+        cell.responseCount.text = @"1 response";
     }
     else
     {
-        cell.responseCount.text = [NSString stringWithFormat:@"%d responses so far", total];
+        cell.responseCount.text = [NSString stringWithFormat:@"%d responses", total];
     }
     
 }
@@ -282,7 +261,7 @@
                 [self saveAnswer:cell :TRUE];
                 
                 //shows the option to post a notification
-                [cell.leftFacebookButton setHidden:FALSE];
+                [cell.facebookButton setHidden:FALSE];
             }
             else
             {
@@ -302,7 +281,7 @@
                 [self saveAnswer:cell :FALSE];
                 
                 //shows the option to post a notification
-                [cell.rightFacebookButton setHidden:FALSE];
+                [cell.facebookButton setHidden:FALSE];
             }
             else
             {
@@ -332,7 +311,7 @@
             NSLog(@"About to get feed objects");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSString *path = @"/data/groupgetlistquestions/";
+            NSString *path = @"/data/getlistquestions/";
             path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
             //path = [path stringByAppendingString:@"1"];
             path = [path stringByAppendingString:@"/"];
@@ -390,20 +369,14 @@
     NSLog(@"***REQUESTED GROUP %@ ***", currentObject);
     
     // Configure the cell...
+    cell.profilePicture.clipsToBounds = YES;
     [cell.leftNum setHidden:TRUE];
     [cell.rightNum setHidden:TRUE];
     [cell.leftLabel setHidden:TRUE];
     [cell.rightLabel setHidden:TRUE];
     //shows the option to post a notification
-    [cell.leftFacebookButton setHidden:TRUE];
-    [cell.rightFacebookButton setHidden:TRUE];
+    [cell.facebookButton setHidden:TRUE];
     
-    cell.leftBackground.layer.cornerRadius = 2;
-    cell.leftBackground.clipsToBounds = YES;
-    cell.rightBackground.layer.cornerRadius = 2;
-    cell.rightBackground.clipsToBounds = YES;
-    cell.profilePictureBackground.layer.cornerRadius = 2;
-    cell.profilePictureBackground.clipsToBounds = YES;
     
     cell.question.text = currentObject[@"questionText"];
     cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1Count"]];
@@ -414,7 +387,7 @@
     int total = [cell.leftNum.text integerValue] + [cell.rightNum.text integerValue];
     if(total == 1)
     {
-        cell.responseCount.text = @"1 response so far";
+        cell.responseCount.text = @"1 response";
     }
     else if(total ==0)
     {
@@ -424,29 +397,13 @@
     else
     {
         NSLog(@"Total was %d", total);
-        cell.responseCount.text = [NSString stringWithFormat:@"%d responses so far", total];
+        cell.responseCount.text = [NSString stringWithFormat:@"%d responses", total];
     }
     
+    //if unread
     if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
     {
-        UIColor *ourblue = [UIColor colorWithRed:(159/255.0) green:(184/255.0) blue:(233/255.0) alpha:1];
         
-        cell.leftBackground.backgroundColor = ourblue;
-        cell.rightBackground.backgroundColor = ourblue;
-        
-        CGRect frame = cell.leftBackground.frame;
-        frame.origin.x = 32;
-        frame.origin.y = 91;
-        frame.size.width = 106;
-        frame.size.height = 105;
-        cell.leftBackground.frame = frame;
-        
-        frame = cell.rightBackground.frame;
-        frame.origin.x = 165;
-        frame.origin.y = 91;
-        frame.size.width = 106;
-        frame.size.height = 105;
-        cell.rightBackground.frame = frame;
     }
     
     @try
@@ -461,8 +418,7 @@
     
     @try
     {
-        NSLog(@"rightFriendId");
-        //cell.rightFriendId = (int) [NSString stringWithFormat:@"%@", (currentObject[@"fbFriend2"][0])];
+        NSLog(@"rightFriendId");        
         cell.rightFriendId = [(currentObject[@"fbFriend2"][0]) integerValue];
     }
     @catch (NSException *e)
@@ -473,14 +429,7 @@
     cell.leftProductId = [(currentObject[@"product1"]) integerValue];
     cell.rightProductId = [(currentObject[@"product2"]) integerValue];
     cell.questionId = [(currentObject[@"currentQuestion"]) integerValue];
-    
-    //now downloads and saves the images
-    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //NSString *currentID = @"4";
-    //NSArray *friends = [defaults objectForKey:@"friends"];
-    //NSLog(@"Friends array is %@", friends);
-    //cell.currentId = [NSString stringWithFormat:@"%d", [[friends objectAtIndex: arc4random() % [friends count]] integerValue]];
-    //cell.currentId = [[friends objectAtIndex: arc4random() % [friends count]] integerValue];
+        
     cell.currentId = (currentObject[@"friend"]) ;
     
     SDImageCache *imageCache = [SDImageCache sharedImageCache];
@@ -493,49 +442,7 @@
     NSLog(@"Before loading profile picture");
     [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
                         placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-    
-    //NSLog(@"loading pic for %d", cell.currentId);
-    /*
-     cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
-     [imageCache queryDiskCacheForKey:profileURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-     //if it's not there
-     if(image==nil)
-     {
-     [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:profileURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-     {
-     // progression tracking code
-     //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-     }
-     completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-     {
-     if (image && finished)
-     {
-     // do something with image
-     cell.profilePicture.image = image;
-     
-     //and now save it
-     [imageCache storeImage:image forKey:profileURL];
-     
-     }
-     }];
-     }
-     //otherwise just set it
-     else
-     {
-     cell.profilePicture.image = image;
-     }
-     
-     //rounds it
-     cell.profilePicture.layer.cornerRadius = 10;
-     cell.profilePicture.clipsToBounds = YES;
-     }];
-     */
-    
-    //for left product picture
-    // instantiate them
-    
-    //cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
+        
     NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
     leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"image1"]];
     leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
@@ -544,45 +451,7 @@
     // change the default background
     [cell.leftProduct setImageWithURL:[NSURL URLWithString:leftImageURL]
                      placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-    
-    
-    /*
-     [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-     //if it's not there
-     if(image==nil)
-     {
-     [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:leftImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-     {
-     // progression tracking code
-     // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-     }
-     completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-     {
-     if (image && finished)
-     {
-     // do something with image
-     NSLog(@"Finished getting left product image");
-     cell.leftProduct.image = image;
-     
-     //and now save it
-     [imageCache storeImage:image forKey:leftImageURL];
-     
-     }
-     }];
-     }
-     //otherwise just set it
-     else
-     {
-     cell.leftProduct.image = image;
-     }
-     
-     //rounds it
-     cell.leftProduct.layer.cornerRadius = 10;
-     cell.leftProduct.clipsToBounds = YES;
-     }];
-     */
-    
+            
     //for right product picture
     
     NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
@@ -608,45 +477,6 @@
     
     return cell;
     
-    //cell.rightProduct.image = [UIImage imageNamed:@"profile_icon.png"];
-    
-    /*
-     [imageCache queryDiskCacheForKey:rightImageURL done:^(UIImage *image, SDImageCacheType cacheType)
-     {
-     //if it's not there
-     if(image==nil)
-     {
-     [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:rightImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
-     {
-     // progression tracking code
-     //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
-     }
-     completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
-     {
-     if (image && finished)
-     {
-     // do something with image
-     NSLog(@"Finished getting image");
-     cell.rightProduct.image = image;
-     
-     //and now save it
-     [imageCache storeImage:image forKey:rightImageURL];
-     
-     }
-     }];
-     }
-     //otherwise just set it
-     else
-     {
-     cell.rightProduct.image = image;
-     }
-     
-     //rounds it
-     cell.rightProduct.layer.cornerRadius = 10;
-     cell.rightProduct.clipsToBounds = YES;
-     }];
-     return cell;
-     */
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(FeedObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
