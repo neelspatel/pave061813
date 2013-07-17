@@ -45,11 +45,32 @@
     self.currentGroup = [[NSMutableArray alloc] init];
     
     //customize searchbar
-    [[UISearchBar appearance] setSearchFieldBackgroundImage:[UIImage imageNamed:@"add_text_box.png"]forState:UIControlStateNormal];
+    /**
+    [[[self.addFriendsSearchBar subviews] objectAtIndex:0] setHidden:YES];
+    for (id img in self.addFriendsSearchBar.subviews) {
+        if ([img isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [img removeFromSuperview];
+        }
+    }
+    */
+
+    //[[UISearchBar appearance] setSearchFieldBackgroundImage:[UIImage imageNamed:@"group_searchbar.png"]forState:UIControlStateNormal];
+    [self.addFriendsSearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"group_searchbar.png"] forState:UIControlStateNormal];
+    
+    for (UIView * view in [self.addFriendsSearchBar  subviews]) {
+        if (![view isKindOfClass:[UITextField class]]) {
+            view .alpha = 0;
+        }
+    }
+
+
+    
     CGRect frame = self.addFriendsSearchBar.frame;
     frame.size.height = 30;
     self.addFriendsSearchBar.frame = frame;
     
+    //hides the popup
+    self.popup.hidden = YES;    
 
 }
 
@@ -117,10 +138,10 @@
     self.addFriendsSearchBar.text = @"";
     
     // delete the friend from the friends array and from the autocomplete array
+    self.isFiltered = NO;
     [self.filteredNames removeObject:selectedName];
     [self.friendNames removeObject:selectedName];
     [self.tableView reloadData];
-    self.isFiltered = NO;
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -159,6 +180,10 @@
         return NO;
     }
     return YES;
+}
+
+- (IBAction)showCreate:(id)sender {
+    self.popup.hidden = NO;
 }
 
 

@@ -11,6 +11,7 @@
 @interface AddGroupViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 
+- (IBAction)showCreate:(id)sender;
 - (IBAction)createGroup:(id)sender;
 
 @property (nonatomic, retain) NSMutableArray *friendNames;
@@ -24,4 +25,5 @@
 @property (weak, nonatomic) IBOutlet UITextField *groupName;
 @property(nonatomic, copy) NSString *currentGroupName;
 
+@property (weak, nonatomic) IBOutlet UIView *popup;
 @end
