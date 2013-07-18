@@ -13,6 +13,7 @@
 #import "SDImageCache.h"
 #import "AnswersCell.h"
 #import "UGQuestionsCell.h"
+#import "RecsCell.h"
 #import "ProfileViewCell.h"
 #import "MBProgressHUD.h"
 #import <FacebookSDK/FacebookSDK.h>
@@ -33,6 +34,7 @@
     //sets the active table
     self.currentTable = @"answers";
     self.answers.hidden = NO;
+    self.recs.hidden = YES;
     self.ugQuestions.hidden = YES;
     
     
@@ -56,24 +58,75 @@
     
 }
 
+//logic for switching in the buttons and tables
+- (IBAction)viewAnswers:(id)sender
+{
+    //change the button
+    [self.answersButton setImage:[UIImage imageNamed:@"selected_answers_about_me@2x.png"] forState:UIControlStateNormal];
+    [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me@2x.png"] forState:UIControlStateNormal];
+    [self.questionsButton setImage:[UIImage imageNamed:@"unselected_questions_by_me.png"] forState:UIControlStateNormal];
+
+    
+    self.currentTable = @"answers";
+    [self changeTable];
+}
+
+- (IBAction)viewInsights:(id)sender
+{
+    //change the button
+    [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me@2x.png"] forState:UIControlStateNormal];
+    [self.insightsButton setImage:[UIImage imageNamed:@"selected_insights_for_me@2x.png"] forState:UIControlStateNormal];
+    [self.questionsButton setImage:[UIImage imageNamed:@"unselected_questions_by_me.png"] forState:UIControlStateNormal];
+    
+    self.currentTable = @"recs";
+    [self changeTable];
+}
+
+- (IBAction)viewQuestions:(id)sender
+{
+    //change the button
+    [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me@2x.png"] forState:UIControlStateNormal];
+    [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me@2x.png"] forState:UIControlStateNormal];
+    [self.questionsButton setImage:[UIImage imageNamed:@"selected_questions_by_me.png"] forState:UIControlStateNormal];
+    
+    self.currentTable = @"ugQuestions";
+    [self changeTable];    
+}
+
 //changes the table
-- (IBAction)changeTable:(id)sender
+- (void) changeTable
+//- (IBAction)changeTable:(id)sender
 {
     if([self.currentTable isEqualToString:@"answers"])
-    {
-        self.currentTable = @"ugQuestions";
-        self.answers.hidden = YES;
-        self.ugQuestions.hidden = NO;
+    {        
+        //self.currentTable = @"ugQuestions";
+        self.answers.hidden = NO;
+        self.ugQuestions.hidden = YES;
+        self.recs.hidden = YES;
 
         //now reloads the data
         self.feedObjects = [NSArray array];
         [self getFeedObjects];
     }
-    else
+    else if([self.currentTable isEqualToString:@"ugQuestions"])
     {
-        self.currentTable = @"answers";
-        self.answers.hidden = NO;
+        //self.currentTable = @"recs";
+        self.answers.hidden = YES;
+        self.ugQuestions.hidden = NO;
+        self.recs.hidden = YES;
+        
+        //now reloads the data
+        self.feedObjects = [NSArray array];
+        [self getFeedObjects];
+    }
+    else //if recs
+    {
+        //self.currentTable = @"answers";
+        self.answers.hidden = YES;
         self.ugQuestions.hidden = YES;
+        self.recs.hidden = NO;
+
+        //now reloads the data        
         self.feedObjects = [NSArray array];
         [self getFeedObjects];
     }
@@ -180,6 +233,35 @@
                     self.doneLoadingFeed = YES;
                     
                     [self.answers performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                    
+                } }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               NSLog(@"error logging in user to Django %@", error);
+                                           }];
+        }
+        else if([self.currentTable isEqualToString:@"recs"])
+        {
+            NSLog(@"About to get feed objects");
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *path = @"/data/getallfeedobjects/";
+            path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+            //path = [path stringByAppendingString:@"1"];
+            path = [path stringByAppendingString:@"/"];
+            
+            [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                if (results) {
+                    //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                    //for(NSDictionary *current in results)
+                    //{
+                    //    [ids addObject:current[@"id"]];
+                    //}
+                    //NSLog(@"Just finished getting results: %@", results);
+                    self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    self.doneLoadingFeed = YES;
+                    
+                    [self.recs performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -321,7 +403,7 @@
         if([self.currentTable isEqualToString:@"answers"])
         {        
             static NSString *CellIdentifier = @"AnswersCell";
-            AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];            
             NSLog(@"IndexPath is %d", indexPath.row);
             NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
                 
@@ -454,6 +536,66 @@
              }];
             cell.rightProduct.clipsToBounds = YES;
             
+            return cell;
+        }
+        else if([self.currentTable isEqualToString:@"recs"]) //if it's a rec
+        {
+            static NSString *CellIdentifier = @"RecsCell";
+            //static NSString *CellIdentifier = @"UGQuestionsCell";
+            RecsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            
+            NSLog(@"IndexPath is %d", indexPath.row);
+            NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
+            
+            NSString *newtext = currentObject[@"question"];
+            
+            cell.text.text = newtext;
+            
+            //now downloads and saves the images
+            
+            SDImageCache *imageCache = [SDImageCache sharedImageCache];
+            
+            //for image
+            // instantiate them
+            cell.image.image = [UIImage imageNamed:@"profile_icon.png"];
+            NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
+            leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"chosenProduct"]];
+            leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
+            leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+            
+            [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
+             {
+                 //if it's not there
+                 if(image==nil)
+                 {
+                     [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:leftImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
+                      {
+                          // progression tracking code
+                          // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
+                      }
+                                                                       completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
+                      {
+                          if (image && finished)
+                          {
+                              // do something with image
+                              NSLog(@"Finished getting left product image");
+                              cell.image.image = image;
+                              
+                              //and now save it
+                              [imageCache storeImage:image forKey:leftImageURL];
+                              
+                          }
+                      }];
+                 }
+                 //otherwise just set it
+                 else
+                 {
+                     cell.image.image = image;
+                 }
+                 
+             }];
+            cell.image.clipsToBounds = YES;
+                                    
             return cell;
         }
         else //if it's a UGAnswer

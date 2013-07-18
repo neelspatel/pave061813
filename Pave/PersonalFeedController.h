@@ -35,6 +35,14 @@
 //stores and changes the current table
 @property (nonatomic, retain)NSString *currentTable;
 - (IBAction)changeTable:(id)sender;
+- (IBAction)viewAnswers:(id)sender;
+- (IBAction)viewInsights:(id)sender;
+- (IBAction)viewQuestions:(id)sender;
+
+//buttons for changing the table
+@property (weak, nonatomic) IBOutlet UIButton *answersButton;
+@property (weak, nonatomic) IBOutlet UIButton *insightsButton;
+@property (weak, nonatomic) IBOutlet UIButton *questionsButton;
 
 - (IBAction)refresh:(id)sender;
 - (IBAction)inviteFriends:(id)sender;
