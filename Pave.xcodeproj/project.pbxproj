@@ -287,6 +287,16 @@
 		18BEC3FA1771B86C001CD508 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BEC3F91771B86C001CD508 /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		18BEC3FC1771B873001CD508 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BEC3FB1771B873001CD508 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		18E81D331771FC2D006DE8EF /* TrendingObjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */; };
+		18FBF318179819D60070BBC2 /* selected_answers_about_me.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF30E179819D60070BBC2 /* selected_answers_about_me.png */; };
+		18FBF319179819D60070BBC2 /* selected_answers_about_me@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF30F179819D60070BBC2 /* selected_answers_about_me@2x.png */; };
+		18FBF31A179819D60070BBC2 /* selected_insights_for_me.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF310179819D60070BBC2 /* selected_insights_for_me.png */; };
+		18FBF31B179819D60070BBC2 /* selected_insights_for_me@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF311179819D60070BBC2 /* selected_insights_for_me@2x.png */; };
+		18FBF31C179819D60070BBC2 /* selected_questions_by_me.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF312179819D60070BBC2 /* selected_questions_by_me.png */; };
+		18FBF31D179819D60070BBC2 /* selected_questions_by_me@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF313179819D60070BBC2 /* selected_questions_by_me@2x.png */; };
+		18FBF31E179819D60070BBC2 /* unselected_answers_about_me.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF314179819D60070BBC2 /* unselected_answers_about_me.png */; };
+		18FBF31F179819D60070BBC2 /* unselected_answers_about_me@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF315179819D60070BBC2 /* unselected_answers_about_me@2x.png */; };
+		18FBF320179819D60070BBC2 /* unselected_insights_for_me@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF316179819D60070BBC2 /* unselected_insights_for_me@2x.png */; };
+		18FBF321179819D60070BBC2 /* unselected_questions_by_me.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF317179819D60070BBC2 /* unselected_questions_by_me.png */; };
 		B01707891773A20100B8D77B /* TrendingTopicsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */; };
 		B0ED43641777E5DE00E415F8 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0ED43631777E5DE00E415F8 /* libFlurry.a */; };
 		B0F178D717912A6000CCA291 /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178D617912A6000CCA291 /* GroupViewController.m */; };
@@ -593,6 +603,16 @@
 		18BEC3FB1771B873001CD508 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		18E81D311771FC2D006DE8EF /* TrendingObjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingObjectCell.h; sourceTree = "<group>"; };
 		18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingObjectCell.m; sourceTree = "<group>"; };
+		18FBF30E179819D60070BBC2 /* selected_answers_about_me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected_answers_about_me.png; sourceTree = "<group>"; };
+		18FBF30F179819D60070BBC2 /* selected_answers_about_me@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected_answers_about_me@2x.png"; sourceTree = "<group>"; };
+		18FBF310179819D60070BBC2 /* selected_insights_for_me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected_insights_for_me.png; sourceTree = "<group>"; };
+		18FBF311179819D60070BBC2 /* selected_insights_for_me@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected_insights_for_me@2x.png"; sourceTree = "<group>"; };
+		18FBF312179819D60070BBC2 /* selected_questions_by_me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = selected_questions_by_me.png; sourceTree = "<group>"; };
+		18FBF313179819D60070BBC2 /* selected_questions_by_me@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "selected_questions_by_me@2x.png"; sourceTree = "<group>"; };
+		18FBF314179819D60070BBC2 /* unselected_answers_about_me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected_answers_about_me.png; sourceTree = "<group>"; };
+		18FBF315179819D60070BBC2 /* unselected_answers_about_me@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected_answers_about_me@2x.png"; sourceTree = "<group>"; };
+		18FBF316179819D60070BBC2 /* unselected_insights_for_me@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "unselected_insights_for_me@2x.png"; sourceTree = "<group>"; };
+		18FBF317179819D60070BBC2 /* unselected_questions_by_me.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unselected_questions_by_me.png; sourceTree = "<group>"; };
 		B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingTopicsListViewController.h; sourceTree = "<group>"; };
 		B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingTopicsListViewController.m; sourceTree = "<group>"; };
 		B0ED43621777E5DE00E415F8 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
@@ -836,6 +856,16 @@
 		185D853D17707D46007733FA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				18FBF30E179819D60070BBC2 /* selected_answers_about_me.png */,
+				18FBF30F179819D60070BBC2 /* selected_answers_about_me@2x.png */,
+				18FBF310179819D60070BBC2 /* selected_insights_for_me.png */,
+				18FBF311179819D60070BBC2 /* selected_insights_for_me@2x.png */,
+				18FBF312179819D60070BBC2 /* selected_questions_by_me.png */,
+				18FBF313179819D60070BBC2 /* selected_questions_by_me@2x.png */,
+				18FBF314179819D60070BBC2 /* unselected_answers_about_me.png */,
+				18FBF315179819D60070BBC2 /* unselected_answers_about_me@2x.png */,
+				18FBF316179819D60070BBC2 /* unselected_insights_for_me@2x.png */,
+				18FBF317179819D60070BBC2 /* unselected_questions_by_me.png */,
 				1863CC88179815D300D6CDF6 /* top_profilebox.png */,
 				1863CC89179815D300D6CDF6 /* top_profilebox@2x.png */,
 				1863CC841797E4CC00D6CDF6 /* nithin.png */,
@@ -1402,6 +1432,16 @@
 				1863CC871797E4CC00D6CDF6 /* nithin@2x.png in Resources */,
 				1863CC8A179815D300D6CDF6 /* top_profilebox.png in Resources */,
 				1863CC8B179815D300D6CDF6 /* top_profilebox@2x.png in Resources */,
+				18FBF318179819D60070BBC2 /* selected_answers_about_me.png in Resources */,
+				18FBF319179819D60070BBC2 /* selected_answers_about_me@2x.png in Resources */,
+				18FBF31A179819D60070BBC2 /* selected_insights_for_me.png in Resources */,
+				18FBF31B179819D60070BBC2 /* selected_insights_for_me@2x.png in Resources */,
+				18FBF31C179819D60070BBC2 /* selected_questions_by_me.png in Resources */,
+				18FBF31D179819D60070BBC2 /* selected_questions_by_me@2x.png in Resources */,
+				18FBF31E179819D60070BBC2 /* unselected_answers_about_me.png in Resources */,
+				18FBF31F179819D60070BBC2 /* unselected_answers_about_me@2x.png in Resources */,
+				18FBF320179819D60070BBC2 /* unselected_insights_for_me@2x.png in Resources */,
+				18FBF321179819D60070BBC2 /* unselected_questions_by_me.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1181,10 +1181,10 @@
                             <constraint firstItem="QVF-Fr-tpq" firstAttribute="bottom" secondItem="vif-Og-X60" secondAttribute="bottom" type="default" id="c50-Nf-F8E"/>
                             <constraint firstItem="hWm-no-EuD" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="9" id="eFl-wk-RD7"/>
                             <constraint firstItem="iR7-SC-sRN" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="f3Q-i3-RY9"/>
+                            <constraint firstItem="3mX-iX-dWP" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="4" id="gkm-Qm-mse"/>
                             <constraint firstAttribute="trailing" secondItem="3mX-iX-dWP" secondAttribute="trailing" constant="32" id="iRo-hg-dqE"/>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="kNn-g9-MaP"/>
                             <constraint firstItem="mEU-D9-l1J" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="71" id="kaC-Eb-oY2"/>
-                            <constraint firstItem="3mX-iX-dWP" firstAttribute="top" secondItem="bOB-vy-IAb" secondAttribute="top" type="default" id="knq-c3-Ib1"/>
                             <constraint firstItem="6pg-Ep-aV0" firstAttribute="top" secondItem="GN2-vg-vkO" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="mKy-nD-cQ1"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="bottom" secondItem="mEU-D9-l1J" secondAttribute="bottom" type="default" id="nCI-2w-N0c"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="12" id="o5I-ju-XrK"/>
@@ -3000,12 +3000,12 @@
         <image name="members_label.png" width="310" height="22"/>
         <image name="name_text_box@2x.png" width="502" height="85"/>
         <image name="nithin.png" width="63" height="66"/>
-        <image name="selected_insights_for_me@2x.png" width="16" height="16"/>
+        <image name="selected_insights_for_me@2x.png" width="214" height="82"/>
         <image name="share_timeline.png" width="98" height="28"/>
         <image name="suggestions_label.png" width="310" height="22"/>
         <image name="top_bar@2x.png" width="640" height="91"/>
         <image name="top_profilebox@2x.png" width="620" height="162"/>
-        <image name="unselected_answers_about_me@2x.png" width="16" height="16"/>
+        <image name="unselected_answers_about_me@2x.png" width="214" height="82"/>
         <image name="unselected_back_arrow@2x.png" width="40" height="40"/>
         <image name="unselected_questions_by_me@2x.png" width="16" height="16"/>
         <image name="unselected_reload.png" width="20" height="20"/>
