@@ -64,18 +64,27 @@
         name:@"refreshAskImages"
         object:nil];
     
-    //sets the button tags - 0 for left, 1 for right
-    self.leftChooseButton.tag = 0;
-    self.leftTakeButton.tag = 0;
-    self.rightChooseButton.tag = 1;
-    self.rightTakeButton.tag = 1;
+    //hides the add view
+    self.addOptions.hidden = YES;
+}
+
+//exit text field on enter
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     
+    if([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
     
+    return YES;
 }
 
 //listen for the notification
 - (void) refreshAskImages:(NSNotification *) notification
 {
+    //hides the option
+    self.addOptions.hidden = YES;
+    
     if ([[notification name] isEqualToString:@"refreshAskImages"])
     {
 
@@ -107,22 +116,27 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)choosePicture:(id)sender {
-    NSLog(@"Sender was %d", ((UIView*)sender).tag);
+//adds from the left side
+- (IBAction)leftAdd:(id)sender {
+    //sets the current side
+    self.currentSide = @"Left";
     
-    NSInteger tag = ((UIView*)sender).tag;
+    //now shows the 'add' dialog
+    self.addOptions.hidden = FALSE;
     
-    //sets the correct side
-    if(tag == 0)
-    {
-        self.currentSide = @"Left";
-    }
-    else if(tag == 1)
-    {
-        self.currentSide = @"Right";
-    }
+}
 
+//adds from the right side
+- (IBAction)rightAdd:(id)sender {
+    //sets the current side
+    self.currentSide = @"Right";
     
+    //now shows the 'add' dialog
+    self.addOptions.hidden = FALSE;
+    
+}
+
+- (IBAction)choosePicture:(id)sender {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.allowsEditing = YES;
@@ -130,19 +144,7 @@
     [self presentModalViewController:imagePicker animated:YES];
 }
 
-- (IBAction)takePicture:(id)sender {
-    NSInteger tag = ((UIView*)sender).tag;
-    
-    //sets the correct side
-    if(tag == 0)
-    {
-        self.currentSide = @"Left";
-    }
-    else if(tag == 1)
-    {
-        self.currentSide = @"Right";
-    }
-    
+- (IBAction)takePicture:(id)sender {    
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
@@ -151,8 +153,15 @@
     [self presentModalViewController:imagePicker animated:YES];
 }
 
+-(void) clearImage:(NSString *) side {
+    
+}
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
+    //hides the option
+    self.addOptions.hidden = YES;
+    
     // Get the selected image.
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
@@ -182,6 +191,9 @@
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
+    //hides the option
+    self.addOptions.hidden = YES;
+    
     [picker dismissModalViewControllerAnimated:YES];
 }
 
@@ -241,15 +253,17 @@
 
 //prepares to get an image
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"askToWebLeft"]) {
-        WebSearchViewController *destViewController = segue.destinationViewController;
-        
-        destViewController.side = @"Left";
-    }
-    else if ([segue.identifier isEqualToString:@"askToWebRight"]) {
-        WebSearchViewController *destViewController = segue.destinationViewController;
-        
-        destViewController.side = @"Right";
+    if([segue.identifier isEqualToString:@"askToWeb"]) {
+        if ([self.currentSide isEqualToString:@"Left"]) {
+            WebSearchViewController *destViewController = segue.destinationViewController;
+            
+            destViewController.side = @"Left";
+        }
+        else if ([self.currentSide isEqualToString:@"Right"]) {
+            WebSearchViewController *destViewController = segue.destinationViewController;
+            
+            destViewController.side = @"Right";
+        }
     }
 }
 
