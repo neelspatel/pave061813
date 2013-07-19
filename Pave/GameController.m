@@ -200,19 +200,32 @@
         [cell.leftLabel setHidden:FALSE];
         [cell.rightLabel setHidden:FALSE];
         [cell.leftNum setHidden:FALSE];
-        [cell.rightNum setHidden:FALSE];        
+        [cell.rightNum setHidden:FALSE];
+        
+        [cell.leftCheck setHidden:FALSE];
+        [cell.rightX setHidden:FALSE];
+        
+        
+        
         
         //hides things if need be
+        /**
         if([cell.leftNum.text isEqual: @"1"])
         {
             [cell.leftLabel setHidden:TRUE];
             [cell.leftNum setHidden:TRUE];
         }
-        if([cell.rightNum.text isEqual: @"0"])
+        else if([cell.rightNum.text isEqual: @"0"])
         {
             [cell.rightLabel setHidden:TRUE];
             [cell.rightNum setHidden:TRUE];
         }
+        else
+        {
+            [cell.leftCheck setHidden:FALSE];
+            [cell.rightX setHidden:FALSE];
+        }
+         */
         
         
     }
@@ -226,19 +239,29 @@
         [cell.leftLabel setHidden:FALSE];
         [cell.rightLabel setHidden:FALSE];
         [cell.leftNum setHidden:FALSE];
-        [cell.rightNum setHidden:FALSE];                
+        [cell.rightNum setHidden:FALSE];
+        
+        [cell.leftX setHidden:FALSE];
+        [cell.rightCheck setHidden:FALSE];
         
         //hides things if need be
+        /*
         if([cell.leftNum.text isEqual: @"0"])
         {
             [cell.leftLabel setHidden:TRUE];
             [cell.leftNum setHidden:TRUE];
         }
-        if([cell.rightNum.text isEqual: @"1"])
+        else if([cell.rightNum.text isEqual: @"1"])
         {
             [cell.rightLabel setHidden:TRUE];
             [cell.rightNum setHidden:TRUE];
         }
+        else
+        {
+            [cell.leftX setHidden:FALSE];
+            [cell.rightCheck setHidden:FALSE];
+        }
+         */
         
     }
     
@@ -295,37 +318,56 @@
     NSLog(@"right id: %d", cell.rightProductId);
     NSLog(@"question id: %d", cell.questionId);
     
+    if(cell.onOffSwitch.on)
+    {
+        NSLog(@"Anon!");
+    }
+    else    
+    {
+        NSLog(@"Public");
+    }
+    
+    NSDictionary *params;
+    
     if(left == true)
     {
+        if(cell.onOffSwitch.on)
+        {
+            NSLog(@"Anon!");
+            params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        }
+        else
+        {
+            params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        }
         
         
         
         
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
-        
-        [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
-                                    parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                        NSLog(@"successfully saved answer");
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"error saving answer %@", error);
-                                    }];
-
     }
     else
-    {
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
-        
-        
-        [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
-                                    parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                        NSLog(@"successfully saved answer");
-                                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        NSLog(@"error saving answer %@", error);
-                                    }];
+    {        
+        if(cell.onOffSwitch.on)
+        {
+            NSLog(@"Anon!");
+            params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        }
+        else
+        {
+            params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        }
 
     }
     
-        
+    [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
+                                parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSLog(@"successfully saved answer");
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    NSLog(@"error saving answer %@", error);
+                                }];
+
+    
+    
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)tap
@@ -465,6 +507,10 @@
     
     // Configure the cell...
     cell.profilePicture.clipsToBounds = YES;
+    [cell.rightX setHidden:TRUE];
+    [cell.leftX setHidden:TRUE];
+    [cell.rightCheck setHidden:TRUE];
+    [cell.leftCheck setHidden:TRUE];
     [cell.leftNum setHidden:TRUE];
     [cell.rightNum setHidden:TRUE];
     [cell.leftLabel setHidden:TRUE];
@@ -556,12 +602,34 @@
     
     //sets it as read if not set yet
     if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
-    { 
+    {
+        NSLog(@"Displaying %d as read", indexPath.row);
         [self displayAsRead:cell :[[self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] boolValue]];
     }
-
+    
+    [cell.onOffSwitch setOn:NO];
+    cell.anonymous = @"No";
+    
+    //changes the state of the cell
     return cell;
     
+}
+
+- (FeedObjectCell *) flipSwitch: (FeedObjectCell *)cell
+{
+    //sets the anonymous switch
+    if([cell.anonymous isEqualToString:@"Yes"])
+    {
+        NSLog(@"Was already anon");
+        [cell.onOffSwitch setOn:YES];
+        
+    }
+    else
+    {
+        NSLog(@"Was public");
+        [cell.onOffSwitch setOn:NO];        
+    }
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(FeedObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

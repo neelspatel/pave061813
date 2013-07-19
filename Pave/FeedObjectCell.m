@@ -16,7 +16,8 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {        
+    if (self) {
+        self.anonymous = @"No";
         
     }
     return self;
@@ -32,6 +33,19 @@
 -(IBAction) submitLeft:(id)sender
 {
     NSLog(@"Just submitted left");
+}
+
+//changes the anon on switch
+-(IBAction) switched:(id)sender
+{
+    if(self.onOffSwitch.on)
+    {
+        self.anonymous = @"Yes";
+    }
+    else
+    {
+        self.anonymous = @"No";
+    }
 }
 
 -(void)showFBRequest: (NSString*) currentId

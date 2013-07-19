@@ -16,6 +16,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet UIImageView *leftProduct;
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
+@property (weak, nonatomic) IBOutlet UISwitch *onOffSwitch;
+- (IBAction)switched:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *leftCheck;
 @property (weak, nonatomic) IBOutlet UIImageView *leftX;
@@ -38,5 +40,6 @@
 @property(nonatomic, assign) NSInteger questionId;
 @property(nonatomic, copy) NSString *questionText;
 @property(nonatomic, copy) NSString * currentId;
+@property(nonatomic, copy) NSString * anonymous;
 
 @end
