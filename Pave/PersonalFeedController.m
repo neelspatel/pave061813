@@ -53,7 +53,15 @@
     //self.tableViewBackground.layer.cornerRadius=5;
     
     self.feedObjects = [NSArray array];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
     self.answerReadStatus = [[NSMutableDictionary alloc] init];
+    if([defaults objectForKey:@"answerReadStatus"])
+    {
+        self.answerReadStatus = [defaults objectForKey:@"answerReadStatus"];
+    }
+    
     self.recReadStatus = [[NSMutableDictionary alloc] init];
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
@@ -77,9 +85,6 @@
     [ugRefreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
     [self.ugQuestions addSubview:ugRefreshControl];
     
-    //sets the handler to listen for taps
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    
     NSLog(@"Feed objects are %@", self.feedObjects);
     [self getFeedObjects];
 }
@@ -90,18 +95,26 @@
     //[self viewInsights:self];
 }
 
-- (void)handleTap:(UITapGestureRecognizer *)tap
+- (void)handleTap:(id)sender event:(id)event
 {
-    if ([self.currentTable isEqualToString:@"answers"] &&UIGestureRecognizerStateEnded == tap.state) {
-        UITableView *tableView = (UITableView *)tap.view;
-        CGPoint p = [tap locationInView:tap.view];
-        NSIndexPath* indexPath = [tableView indexPathForRowAtPoint:p];
+    NSLog(@"Tapped");
+    if ([self.currentTable isEqualToString:@"answers"]) {
+        UITableView *tableView = self.answers;
+        
+        NSSet *touches = [event allTouches];
+        UITouch *touch = [touches anyObject];
+        
+        CGPoint currentTouchPosition = [touch locationInView:self.answers];        
+        
+        NSIndexPath *indexPath = [self.answers indexPathForRowAtPoint: currentTouchPosition];
         [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        
         AnswersCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        CGPoint pointInCell = [tap locationInView:cell];
+        
+        CGPoint pointInCell = [touch locationInView:cell];
         
         NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
-        NSLog(@"Current object is (old): %@", currentObject);
+        NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
         
         NSString *key = [NSString stringWithFormat:@"%@%@%@%@", [NSString stringWithFormat:@"%@", currentObject[@"friend"]], currentObject[@"question"], currentObject[@"chosenProduct"], currentObject[@"otherProduct"], nil];
         
@@ -111,7 +124,7 @@
             if([self.answerReadStatus valueForKey:key]  == nil)
             {
                 //saves it as read - true means left
-                [self.answerReadStatus setObject:[NSNumber numberWithBool:TRUE] forKey:key];
+                [self.answerReadStatus setObject:@"Left" forKey:key];
                 
                 [self displayAnswerAsRead:cell side:@"Left"];
                 
@@ -120,15 +133,19 @@
             }
             else
             {
-                NSLog(@"Already answered...");
+                NSLog(@"Already answered but changing anyway");
+                //saves it as read - true means left
+                [self.answerReadStatus setObject:@"Left" forKey:key];
+                
+                [self displayAnswerAsRead:cell side:@"Left"];                                
             }
             
-        } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
+        } else if (CGRectContainsPoint(cell.disagree.frame, pointInCell)) {
             NSLog(@"In the right image!");
             if([self.answerReadStatus valueForKey:key]  == nil)
             {
                 //saves it as read - true means left
-                [self.answerReadStatus setObject:[NSNumber numberWithBool:FALSE] forKey:key];
+                [self.answerReadStatus setObject:@"Right" forKey:key];
                 
                 [self displayAnswerAsRead:cell side:@"Right"];
                 
@@ -137,7 +154,11 @@
             }
             else
             {
-                NSLog(@"Already answered...");
+                NSLog(@"Already answered but changing anyway");
+                //saves it as read - true means left
+                [self.answerReadStatus setObject:@"Right" forKey:key];
+                
+                [self displayAnswerAsRead:cell side:@"Right"];
             }
             
         }
@@ -448,9 +469,11 @@
     if([side isEqualToString:@"Left"])
     {
         [cell.agree setImage:[UIImage imageNamed:@"SELECTED_BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+        [cell.disagree setImage:[UIImage imageNamed:@"BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
     }
     else
     {
+        [cell.agree setImage:[UIImage imageNamed:@"BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
         [cell.disagree setImage:[UIImage imageNamed:@"SELECTED_BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
     }
     return cell;
@@ -619,8 +642,19 @@
                 //checks if we've agreed or disagreed with this product before
                 //key is in the format of friend, question, answer1, answer2
                 NSString *key = [NSString stringWithFormat:@"%@%@%@%@", currentID, newtext, currentObject[@"chosenProduct"], currentObject[@"otherProduct"], nil];
+                
+                //adds tap listener
+                [cell.agree addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];
+                
+                [cell.disagree addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];
+                
+                //resets the buttons
+                [cell.agree setImage:[UIImage imageNamed:@"BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+                [cell.disagree setImage:[UIImage imageNamed:@"BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
+                
                 if([self.answerReadStatus objectForKey:key])
                 {
+                    NSLog(@"Was read at position %d", indexPath.row);
                     return [ self displayAnswerAsRead:cell side:[self.answerReadStatus objectForKey:key]];
                 }
                 else
