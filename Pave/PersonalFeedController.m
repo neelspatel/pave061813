@@ -52,10 +52,20 @@
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(switchToInsights:)
+                                                 name:@"newRecommendation"
+                                               object:nil];
+
     
     NSLog(@"Feed objects are %@", self.feedObjects);
     [self getFeedObjects];
-    
+}
+
+-(void)switchToInsights:(NSNotification *) notification
+{
+    NSLog(@"Getting called after notif");
+    //[self viewInsights:self];
 }
 
 //logic for switching in the buttons and tables
@@ -227,9 +237,9 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    //NSLog(@"Just finished getting results: %@", results);
+                    NSLog(@"Just finished getting results: %@", results);
                     self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                    //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
                     self.doneLoadingFeed = YES;
                     
                     [self.answers performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
@@ -400,8 +410,9 @@
     }
     else
     {
-        if([self.currentTable isEqualToString:@"answers"])
-        {        
+       // if([self.currentTable isEqualToString:@"answers"])
+        if(tableView == self.answers)
+        {
             static NSString *CellIdentifier = @"AnswersCell";
             AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];            
             NSLog(@"IndexPath is %d", indexPath.row);
@@ -538,7 +549,8 @@
             
             return cell;
         }
-        else if([self.currentTable isEqualToString:@"recs"]) //if it's a rec
+        //else if([self.currentTable isEqualToString:@"recs"]) //if it's a rec
+        else if (tableView == self.recs)
         {
             static NSString *CellIdentifier = @"RecsCell";
             //static NSString *CellIdentifier = @"UGQuestionsCell";

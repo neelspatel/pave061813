@@ -37,6 +37,8 @@
     
     tabBarController.selectedIndex = 1;
     
+    self.tabBarController = tabBarController;
+    
     // FB Login
     NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
     
@@ -46,7 +48,8 @@
     NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
                                                       selector: @selector(refreshNotifications:) userInfo: nil repeats: YES];
     
-    
+    self.currentStatusScore = 80;
+    NSLog(@"APP DELEGATE: %d", self.currentStatusScore);
     
     // Override point for customization after application launch.
     return YES;
@@ -88,6 +91,13 @@
         [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
                     NSLog(@"Results %@", results);
+                    NSInteger status_score = 40;
+                    self.currentStatusScore = 80;
+                    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
+                    [[NSNotificationCenter defaultCenter]
+                     postNotificationName:@"refreshStatusScore"
+                     object:self userInfo: data];
+
                     if([[results objectForKey:@"count"] intValue] != 0)
                     {
                         NSLog(@"Incremented by %d!", [[results objectForKey:@"count"] intValue]);

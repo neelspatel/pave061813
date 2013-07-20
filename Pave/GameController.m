@@ -17,7 +17,8 @@
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
 #import <MessageUI/MessageUI.h>
-
+#import "StatusBar.h"
+#import "NotificationPopupView.h"
 
 @interface GameController ()
 
@@ -30,7 +31,8 @@
 {
     [super viewDidLoad];
     
-    
+    // instantiate the status bar and set it to the right location
+    [self setUpStatusBar];
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -73,7 +75,14 @@
     
 }
 
-
+- (void) setUpStatusBar
+{
+    self.sbar = [StatusBar statusBarCreate];
+    self.sbar.frame = CGRectMake(0, 37, self.sbar.frame.size.width, self.sbar.frame.size.height);
+    [self.sbar redrawBar];
+    [self.view addSubview:self.sbar];
+    
+}
 - (void)viewDidAppear:(BOOL)animated
 {
     //first reload the data
@@ -294,7 +303,7 @@
     
     
     [FBWebDialogs presentRequestsDialogModallyWithSession:session
-                                                  message:@"Ever wondered what people think about you? I'll tell you if you download Pave!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                  message:@"Ever wondered what people think about you? I'll tell you if you download Side!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                       if (error) {
                                                           NSLog(@"Error");
                                                           // Case A: Error launching the dialog or sending request.
@@ -431,6 +440,13 @@
     }
 }
 
+-(void)createNotificationPopup:(NSDictionary *) data
+{
+    NotificationPopupView *notificationPopup = [NotificationPopupView notificationPopupCreateWithData:data];
+    [self.view addSubview:notificationPopup];
+    
+}
+
 - (void) getFeedObjects
 {
     NSLog(@"Getting feed objects now");
@@ -455,6 +471,9 @@
             NSLog(@"Path is %@", path);
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                
+                [self createNotificationPopup: [NSDictionary dictionaryWithObjectsAndKeys:@"Looks Good",@"rec_text", nil]];
+                
                 if (results) {
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
                     //for(NSDictionary *current in results)

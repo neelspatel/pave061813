@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 #import <MessageUI/MessageUI.h>
-
+#import "StatusBar.h"
 
 @interface GameController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
@@ -36,4 +36,6 @@
 
 @property (nonatomic, assign)BOOL loggedIn;
 @property (nonatomic, assign)BOOL didCompleteProfileInformation;
+
+@property (nonatomic, retain) StatusBar *sbar;
 @end

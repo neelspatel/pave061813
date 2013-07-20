@@ -14,6 +14,10 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) FBSession* session;
 @property (nonatomic, assign) NSInteger profileBadgeCount;
+@property (nonatomic, assign) NSInteger currentStatusScore;
 
 -(NSInteger) checkForProfileUpdates;
+
+@property (nonatomic, retain) UITabBarController *tabBarController;
+
 @end
