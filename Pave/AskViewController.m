@@ -31,6 +31,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    NSLog(@"Defaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+
+    
     self.title = @"Ask away!";
     
     // Initial the S3 Client.
@@ -99,6 +102,12 @@
             self.leftURLView.text = url;
             NSLog(@"Left Url is %@", self.leftURL);
             [self.leftImage setImageWithURL:[NSURL URLWithString:self.leftURL] ];
+            
+            //hides the button
+            self.leftAddButton.hidden = YES;
+            
+            //shows the x button
+            self.leftCancelButton.hidden = NO;
         }
         else if( [side isEqualToString: @"right"])
         {
@@ -106,6 +115,12 @@
             self.rightURLView.text = url;
             NSLog(@"Right Url is %@", self.rightURL);
             [self.rightImage setImageWithURL:[NSURL URLWithString:self.rightURL] ];
+            
+            //hides the button
+            self.rightAddButton.hidden = YES;
+            
+            //shows the x button
+            self.rightCancelButton.hidden = NO;
         }                
     }
 }
@@ -136,6 +151,22 @@
     
 }
 
+//cancels from the left side
+- (IBAction)leftCancel:(id)sender
+{
+    self.leftCancelButton.hidden = TRUE;
+    self.leftAddButton.hidden = FALSE;
+    [self.leftImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
+}
+
+//cancels from the left side
+- (IBAction)rightCancel:(id)sender
+{
+    self.rightCancelButton.hidden = TRUE;
+    self.rightAddButton.hidden = FALSE;
+    [self.rightImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
+}
+
 - (IBAction)choosePicture:(id)sender {
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
@@ -160,7 +191,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     //hides the option
-    self.addOptions.hidden = YES;
+    self.addOptions.hidden = YES;    
     
     // Get the selected image.
     UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -170,11 +201,23 @@
     {
         NSLog(@"Setting left image");
         [self.leftImage setImage:image];
+        
+        //hides the button
+        self.leftAddButton.hidden = YES;
+        
+        //shows the x button
+        self.leftCancelButton.hidden = NO;
     }
     else if( [self.currentSide isEqualToString: @"Right"])
     {
         NSLog(@"Setting right image");
         [self.rightImage setImage:image];
+        
+        //hides the button
+        self.rightAddButton.hidden = YES;
+        
+        //shows the x button
+        self.rightCancelButton.hidden = NO;
     }
     
     
