@@ -14,6 +14,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *leftProduct;
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
 @property (weak, nonatomic) IBOutlet UILabel *question;
+@property (weak, nonatomic) IBOutlet UIButton *agree;
+@property (weak, nonatomic) IBOutlet UIButton *disagree;
+
 
 @property(nonatomic, assign) NSInteger leftProductId;
 @property(nonatomic, assign) NSInteger rightProductId;

@@ -94,10 +94,21 @@
 
     if([side isEqualToString:@"left"])
     {
+        //displays an image
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 240, 100, 50)];
+        imgView.image = [UIImage imageNamed:@"BLUE_CREATE.png"];
+        [self.view addSubview: imgView];
+        
+        
         params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookID", [NSString stringWithFormat:@"%d", self.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", self.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", self.questionId], @"id_question", @"true", @"is_training", nil];
     }
     else
     {
+        //displays an image
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 240, 100, 50)];
+        imgView.image = [UIImage imageNamed:@"BLUE_CREATE.png"];
+        [self.view addSubview: imgView];
+        
         params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookID", [NSString stringWithFormat:@"%d", self.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", self.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", self.questionId], @"id_question", @"true", @"is_training", nil];
     }
     
@@ -111,6 +122,7 @@
                                     
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     NSLog(@"error saving answer %@", error);
+                                    [self refreshScreen];
                                 }];
     
 }
@@ -133,8 +145,21 @@
         self.questionId = [(currentObject[@"currentQuestion"]) integerValue];
         
         //sets images
-        [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-        [self.rightProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image2"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+        [UIView transitionWithView:self.view
+                          duration:5.0f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+                        } completion:nil];
+        
+        [UIView transitionWithView:self.view
+                          duration:5.0f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [self.rightProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image2"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+                        } completion:nil];
+        
+        
         
         self.currentNumber += 1;
         

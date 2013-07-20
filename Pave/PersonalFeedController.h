@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
+#import "AboutUGQuestion.h"
 
 
 @interface PersonalFeedController : UIViewController <UITableViewDataSource, UITableViewDelegate>
@@ -43,6 +44,17 @@
 @property (weak, nonatomic) IBOutlet UIButton *answersButton;
 @property (weak, nonatomic) IBOutlet UIButton *insightsButton;
 @property (weak, nonatomic) IBOutlet UIButton *questionsButton;
+
+//for the popup
+@property (nonatomic, retain)AboutUGQuestion *popup;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+
+//for the read status of recs and answers
+@property (nonatomic, retain)NSMutableDictionary *answerReadStatus;
+@property (nonatomic, retain)NSMutableDictionary *recReadStatus;
+
+
+
 
 - (IBAction)refresh:(id)sender;
 - (IBAction)inviteFriends:(id)sender;

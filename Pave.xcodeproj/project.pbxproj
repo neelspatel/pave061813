@@ -99,6 +99,10 @@
 		18BEC3F81771B863001CD508 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BEC3F71771B863001CD508 /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Weak, ); }; };
 		18BEC3FA1771B86C001CD508 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BEC3F91771B86C001CD508 /* Security.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		18BEC3FC1771B873001CD508 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18BEC3FB1771B873001CD508 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		18C4D3CC179A642F008BC25E /* AboutUGQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D3CA179A642F008BC25E /* AboutUGQuestion.m */; };
+		18C4D3CD179A642F008BC25E /* AboutUGQuestion.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C4D3CB179A642F008BC25E /* AboutUGQuestion.xib */; };
+		18C4D3D0179A8D8C008BC25E /* NameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18C4D3CF179A8D8C008BC25E /* NameCell.m */; };
+		18C4D3D2179A8DA9008BC25E /* NameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18C4D3D1179A8DA9008BC25E /* NameCell.xib */; };
 		18E81D331771FC2D006DE8EF /* TrendingObjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */; };
 		18FBF3B81798AE230070BBC2 /* back_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF3221798AE1E0070BBC2 /* back_arrow.png */; };
 		18FBF3B91798AE230070BBC2 /* back_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18FBF3231798AE1E0070BBC2 /* back_arrow@2x.png */; };
@@ -401,6 +405,12 @@
 		18BEC3F71771B863001CD508 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		18BEC3F91771B86C001CD508 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		18BEC3FB1771B873001CD508 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		18C4D3C9179A642F008BC25E /* AboutUGQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUGQuestion.h; sourceTree = "<group>"; };
+		18C4D3CA179A642F008BC25E /* AboutUGQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUGQuestion.m; sourceTree = "<group>"; };
+		18C4D3CB179A642F008BC25E /* AboutUGQuestion.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUGQuestion.xib; sourceTree = "<group>"; };
+		18C4D3CE179A8D8C008BC25E /* NameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NameCell.h; sourceTree = "<group>"; };
+		18C4D3CF179A8D8C008BC25E /* NameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NameCell.m; sourceTree = "<group>"; };
+		18C4D3D1179A8DA9008BC25E /* NameCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NameCell.xib; sourceTree = "<group>"; };
 		18E81D311771FC2D006DE8EF /* TrendingObjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingObjectCell.h; sourceTree = "<group>"; };
 		18E81D321771FC2D006DE8EF /* TrendingObjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingObjectCell.m; sourceTree = "<group>"; };
 		18FBF3221798AE1E0070BBC2 /* back_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back_arrow.png; sourceTree = "<group>"; };
@@ -919,6 +929,9 @@
 			children = (
 				1863CC7A17967FA400D6CDF6 /* Content */,
 				1863CC7917967F8B00D6CDF6 /* Head/Foot */,
+				18C4D3C9179A642F008BC25E /* AboutUGQuestion.h */,
+				18C4D3CA179A642F008BC25E /* AboutUGQuestion.m */,
+				18C4D3CB179A642F008BC25E /* AboutUGQuestion.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -1041,6 +1054,9 @@
 				1863CC7817967F8200D6CDF6 /* Table Cells */,
 				18BEC3E4177150C1001CD508 /* PersonalFeedController.h */,
 				18BEC3E5177150C1001CD508 /* PersonalFeedController.m */,
+				18C4D3CE179A8D8C008BC25E /* NameCell.h */,
+				18C4D3CF179A8D8C008BC25E /* NameCell.m */,
+				18C4D3D1179A8DA9008BC25E /* NameCell.xib */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -1304,6 +1320,8 @@
 				18FBF4551798AEEF0070BBC2 /* dividing_bar_launch@2x.png in Resources */,
 				18FBF4581798AF000070BBC2 /* Side_launch.png in Resources */,
 				18FBF4591798AF000070BBC2 /* Side_launch@2x.png in Resources */,
+				18C4D3CD179A642F008BC25E /* AboutUGQuestion.xib in Resources */,
+				18C4D3D2179A8DA9008BC25E /* NameCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1403,6 +1421,8 @@
 				1863CC801796801B00D6CDF6 /* UGQuestionsCell.m in Sources */,
 				1863CC831796802B00D6CDF6 /* AnswersCell.m in Sources */,
 				185C39D81798BC5400AC555C /* TrainingController.m in Sources */,
+				18C4D3CC179A642F008BC25E /* AboutUGQuestion.m in Sources */,
+				18C4D3D0179A8D8C008BC25E /* NameCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
