@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 #import "AboutUGQuestion.h"
+#import "MKNumberBadgeView.h"
+
 
 
 @interface PersonalFeedController : UIViewController <UITableViewDataSource, UITableViewDelegate>
@@ -53,8 +55,14 @@
 @property (nonatomic, retain)NSMutableDictionary *answerReadStatus;
 @property (nonatomic, retain)NSMutableDictionary *recReadStatus;
 
+@property (retain, nonatomic)  MKNumberBadgeView *badge_answers;
+@property (retain, nonatomic)  MKNumberBadgeView *badge_ug_answers;
+@property (retain, nonatomic)  MKNumberBadgeView *badge_recs;
 
-
+@property (weak, nonatomic) IBOutlet UITextView *votesTextField;
+@property (weak, nonatomic) IBOutlet UITextView *answersTextField;
+@property (weak, nonatomic) IBOutlet UITextView *questionsTextField;
+@property (weak, nonatomic) IBOutlet UITextView *levelTextField;
 
 - (IBAction)refresh:(id)sender;
 - (IBAction)inviteFriends:(id)sender;

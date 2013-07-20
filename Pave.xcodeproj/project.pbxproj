@@ -265,6 +265,8 @@
 		B074E99D179A616C00183699 /* off_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = B074E99C179A616C00183699 /* off_circle.png */; };
 		B074E99F179A9DCA00183699 /* NotificationPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = B074E99E179A9DCA00183699 /* NotificationPopup.xib */; };
 		B074E9A2179A9EAD00183699 /* NotificationPopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = B074E9A1179A9EAD00183699 /* NotificationPopupView.m */; };
+		B0C8CE17179B472500117306 /* MKNumberBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C8CE16179B472500117306 /* MKNumberBadgeView.m */; };
+		B0C8CE18179B485000117306 /* MKNumberBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C8CE16179B472500117306 /* MKNumberBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B0ED43641777E5DE00E415F8 /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0ED43631777E5DE00E415F8 /* libFlurry.a */; };
 		B0F178D717912A6000CCA291 /* GroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178D617912A6000CCA291 /* GroupViewController.m */; };
 		B0F178DA1791321400CCA291 /* AddGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F178D91791321400CCA291 /* AddGroupViewController.m */; };
@@ -582,6 +584,8 @@
 		B074E99E179A9DCA00183699 /* NotificationPopup.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NotificationPopup.xib; sourceTree = "<group>"; };
 		B074E9A0179A9EAC00183699 /* NotificationPopupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationPopupView.h; sourceTree = "<group>"; };
 		B074E9A1179A9EAD00183699 /* NotificationPopupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationPopupView.m; sourceTree = "<group>"; };
+		B0C8CE15179B472500117306 /* MKNumberBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKNumberBadgeView.h; sourceTree = "<group>"; };
+		B0C8CE16179B472500117306 /* MKNumberBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKNumberBadgeView.m; sourceTree = "<group>"; };
 		B0ED43621777E5DE00E415F8 /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		B0ED43631777E5DE00E415F8 /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry.a; sourceTree = "<group>"; };
 		B0F178D517912A6000CCA291 /* GroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupViewController.h; sourceTree = "<group>"; };
@@ -705,8 +709,10 @@
 				B0F178D31791244100CCA291 /* Profile */,
 				B0F178D21791241600CCA291 /* Trending */,
 				B0F178DB1791321B00CCA291 /* Groups */,
-				185D854617707D46007733FA /* AppDelegate.m */,
+				B0C8CE14179B454F00117306 /* StatusBar */,
+				B074E9A4179A9EC500183699 /* NotificationPopup */,
 				185D854517707D46007733FA /* AppDelegate.h */,
+				185D854617707D46007733FA /* AppDelegate.m */,
 				185E1FD01778591C00ECB3DC /* LeftToRightSegue.h */,
 				185E1FD11778591C00ECB3DC /* LeftToRightSegue.m */,
 				185D8587177085EF007733FA /* LoginViewController.h */,
@@ -717,14 +723,10 @@
 				18805E481770EC910059C37B /* PaveAPIClient.m */,
 				B0F178DF1792A25100CCA291 /* JSONAPIClient.h */,
 				B0F178E01792A25200CCA291 /* JSONAPIClient.m */,
+				185D853D17707D46007733FA /* Supporting Files */,
 				B0F178D41791248300CCA291 /* MBProgressHUD */,
 				18805E2A1770EC7E0059C37B /* AFNetworking */,
 				18805DCB1770E0E30059C37B /* SDWebImage */,
-				B074E995179A1AC700183699 /* StatusBar.h */,
-				B074E996179A1AC700183699 /* StatusBar.m */,
-				B074E998179A47D200183699 /* StatusBarView.xib */,
-				B074E9A4179A9EC500183699 /* NotificationPopup */,
-				185D853D17707D46007733FA /* Supporting Files */,
 			);
 			path = Pave;
 			sourceTree = "<group>";
@@ -1051,6 +1053,16 @@
 			name = NotificationPopup;
 			sourceTree = "<group>";
 		};
+		B0C8CE14179B454F00117306 /* StatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				B074E995179A1AC700183699 /* StatusBar.h */,
+				B074E996179A1AC700183699 /* StatusBar.m */,
+				B074E998179A47D200183699 /* StatusBarView.xib */,
+			);
+			name = StatusBar;
+			sourceTree = "<group>";
+		};
 		B0ED43611777E5DE00E415F8 /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
@@ -1078,6 +1090,8 @@
 		B0F178D31791244100CCA291 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				B0C8CE15179B472500117306 /* MKNumberBadgeView.h */,
+				B0C8CE16179B472500117306 /* MKNumberBadgeView.m */,
 				1863CC7817967F8200D6CDF6 /* Table Cells */,
 				18BEC3E4177150C1001CD508 /* PersonalFeedController.h */,
 				18BEC3E5177150C1001CD508 /* PersonalFeedController.m */,
@@ -1385,6 +1399,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0C8CE18179B485000117306 /* MKNumberBadgeView.m in Sources */,
 				18805DFB1770E3190059C37B /* MKAnnotationView+WebCache.h in Sources */,
 				18805DFC1770E3190059C37B /* NSData+GIF.h in Sources */,
 				18805DFD1770E3190059C37B /* SDImageCache.h in Sources */,
@@ -1462,6 +1477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				185D857617707D47007733FA /* PaveTests.m in Sources */,
+				B0C8CE17179B472500117306 /* MKNumberBadgeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "AboutUGQuestion.h"
+#import "MKNumberBadgeView.h"
 
 @interface PersonalFeedController ()
 
@@ -80,14 +81,96 @@
     //sets the handler to listen for taps
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     
+    [self updateProfileStats];
     NSLog(@"Feed objects are %@", self.feedObjects);
     [self getFeedObjects];
+    
+    self.badge_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
+    [self.badge_answers setValue:[self getAnswerCount]];
+    self.badge_answers.hideWhenZero = YES;
+    [self.answersButton addSubview: self.badge_answers];
+    
+    self.badge_recs= [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
+    [self.badge_recs setValue:[self getRecCount]];
+    self.badge_recs.hideWhenZero = YES;
+    [self.insightsButton addSubview: self.badge_recs];
+    
+    self.badge_ug_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
+    [self.badge_ug_answers  setValue:[self getUGCount]];
+    self.badge_ug_answers.hideWhenZero = YES;
+    [self.questionsButton addSubview: self.badge_ug_answers];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeCounts) name:@"updateProfileBadgeCounts" object:nil];
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[self.tabBarController.tabBar.items objectAtIndex:0] setBadgeValue:nil];
+}
+
+-(void) updateBadgeCounts
+{
+    [self setBadgeForIndex:0 withCount:[self getAnswerCount]];
+    [self setBadgeForIndex:1 withCount:[self getRecCount]];
+    [self setBadgeForIndex:2 withCount:[self getUGCount]];
+
+}
+-(NSInteger) getUGCount
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger num_answers = [defaults integerForKey:@"num_ug_answers"];
+    if (num_answers)
+        return num_answers;
+    else
+        return 0;
+}
+
+-(NSInteger) getAnswerCount
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger num_answers = [defaults integerForKey:@"num_answers"];
+    if (num_answers)
+        return num_answers;
+    else
+        return 0;
+}
+
+-(NSInteger) getRecCount
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger num_answers = [defaults integerForKey:@"num_recs"];
+    if (num_answers)
+        return num_answers;
+    else
+        return 0;
+}
+
+- (void) setBadgeForIndex: (NSInteger)index  withCount:(NSInteger) count
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    switch (index) {
+        case 1:
+            [defaults setInteger:count forKey:@"num_answers"];
+            [self.badge_answers setValue: count];
+            break;
+        case 2:
+            [defaults setInteger:count forKey:@"num_recs"];
+            [self.badge_recs setValue: count];
+            break;
+        case 3:
+            [defaults setInteger:count forKey:@"num_ug_answers"];
+            [self.badge_ug_answers setValue: count];
+            break;
+        default:
+            break;
+    }
+    [defaults synchronize];
+}
+
 
 -(void)switchToInsights:(NSNotification *) notification
 {
     NSLog(@"Getting called after notif");
-    //[self viewInsights:self];
+    [self viewInsights:self];
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)tap
@@ -150,6 +233,8 @@
 //logic for switching in the buttons and tables
 - (IBAction)viewAnswers:(id)sender
 {
+    [self setBadgeForIndex:1 withCount:0];
+
     //change the button
     [self.answersButton setImage:[UIImage imageNamed:@"selected_answers_about_me@2x.png"] forState:UIControlStateNormal];
     [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me@2x.png"] forState:UIControlStateNormal];
@@ -162,6 +247,8 @@
 
 - (IBAction)viewInsights:(id)sender
 {
+    [self setBadgeForIndex:2 withCount:0];
+
     //change the button
     [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me@2x.png"] forState:UIControlStateNormal];
     [self.insightsButton setImage:[UIImage imageNamed:@"selected_insights_for_me@2x.png"] forState:UIControlStateNormal];
@@ -173,6 +260,8 @@
 
 - (IBAction)viewQuestions:(id)sender
 {
+    [self setBadgeForIndex:3 withCount:0];
+
     //change the button
     [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me@2x.png"] forState:UIControlStateNormal];
     [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me@2x.png"] forState:UIControlStateNormal];
@@ -456,6 +545,51 @@
     return cell;
 }
 
+-(void) updateProfileStats
+{
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults valueForKey:@"profile_answer_count"]!= nil)
+    {
+        self.votesTextField.text = [defaults objectForKey:@"profile_vote_count"];
+        self.answersTextField.text = [defaults objectForKey:@"profile_answer_count"];
+        self.questionsTextField.text = [defaults objectForKey:@"profile_question_count"];
+        self.levelTextField.text = [@"Level " stringByAppendingString:[defaults objectForKey:@"level"]];
+    }
+    
+
+    NSString *path = @"/data/getprofilestats/";
+    path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+    path = [path stringByAppendingString:@"/"];
+    NSLog(@"updateProfileStats");
+    [[PaveAPIClient sharedClient] postPath:path parameters:nil
+                                   success:^(AFHTTPRequestOperation *operation, id results) {
+        if (results) {
+            NSString *answer_count = [[results objectForKey:@"answer_count"] stringValue];
+            NSString *ug_question_count = [[results objectForKey:@"ug_question_count"] stringValue];
+            NSString *vote_count = [[results objectForKey:@"vote_count"] stringValue];
+            NSString *level = [[results objectForKey: @"level" ]  stringValue];
+            self.votesTextField.text = vote_count;
+            self.answersTextField.text = answer_count;
+            self.questionsTextField.text = ug_question_count;
+            self.levelTextField.text = [@"Level " stringByAppendingString:level];
+            
+            [defaults setObject:answer_count forKey:@"profile_answer_count"];
+            [defaults setObject:ug_question_count forKey:@"profile_ug_answer_count"];
+            [defaults setObject:vote_count forKey:@"profile_vote_count"];
+            [defaults setObject:level forKey:@"level"];
+            [defaults synchronize];
+            NSLog(@"Profile Stats: %d, %d, %d", answer_count, ug_question_count, vote_count);
+            
+        }
+    }
+     
+        failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"error while updating profile stats: %@", error);
+                                   }];
+    
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(self.reloadingFeedObject)
@@ -480,7 +614,7 @@
         }
         else
         {
-            if([self.currentTable isEqualToString:@"answers"])
+            if(tableView == self.answers)
             {        
                 static NSString *CellIdentifier = @"AnswersCell";
                 AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];            
@@ -631,7 +765,7 @@
                 
 
             }
-            else if([self.currentTable isEqualToString:@"recs"]) //if it's a rec
+            else if(tableView == self.recs) //if it's a rec
             {
                 static NSString *CellIdentifier = @"RecsCell";
                 //static NSString *CellIdentifier = @"UGQuestionsCell";

@@ -1227,6 +1227,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="51" id="6Ka-EI-LVZ"/>
+                                    <constraint firstAttribute="height" constant="23" id="q2x-jX-2Py"/>
                                 </constraints>
                                 <color key="textColor" red="0.3921568627" green="0.70588235290000001" blue="0.61176470589999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
@@ -1318,7 +1319,6 @@
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="34" id="Mwc-n3-uIn"/>
                             <constraint firstItem="j1y-1P-snl" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="82" id="PM4-G6-mn0"/>
                             <constraint firstItem="mEU-D9-l1J" firstAttribute="top" secondItem="fzw-ua-DSv" secondAttribute="top" type="default" id="PME-a1-gwG"/>
-                            <constraint firstItem="zZ8-HZ-Wjx" firstAttribute="top" secondItem="bU1-P2-P7y" secondAttribute="top" type="default" id="PXt-kZ-YbD"/>
                             <constraint firstItem="j1y-1P-snl" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="PmI-3s-YeB"/>
                             <constraint firstItem="QVF-Fr-tpq" firstAttribute="top" secondItem="vif-Og-X60" secondAttribute="top" type="user" id="Q2U-04-V4W"/>
                             <constraint firstItem="6pg-Ep-aV0" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="52" id="SAd-Zz-mcm"/>
@@ -1335,6 +1335,7 @@
                             <constraint firstItem="mEU-D9-l1J" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="71" id="kaC-Eb-oY2"/>
                             <constraint firstItem="apK-Z4-xst" firstAttribute="bottom" secondItem="iR7-SC-sRN" secondAttribute="bottom" type="default" id="kvs-81-3aJ"/>
                             <constraint firstItem="QVF-Fr-tpq" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="107" type="user" id="lTf-G9-2NM"/>
+                            <constraint firstItem="zZ8-HZ-Wjx" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="79" id="n8V-cl-eqU"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="bottom" secondItem="mEU-D9-l1J" secondAttribute="bottom" type="default" id="nCI-2w-N0c"/>
                             <constraint firstAttribute="trailing" secondItem="wl3-15-fGN" secondAttribute="trailing" constant="11" id="pZA-6U-1bw"/>
                             <constraint firstItem="QVF-Fr-tpq" firstAttribute="top" secondItem="Ht9-zW-oln" secondAttribute="top" type="user" id="pqj-v2-CpT"/>
@@ -1342,7 +1343,6 @@
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="15" id="rgH-QA-ccH"/>
                             <constraint firstItem="FhT-Na-l8g" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="txz-Am-4cZ"/>
                             <constraint firstItem="Ht9-zW-oln" firstAttribute="bottom" secondItem="QVF-Fr-tpq" secondAttribute="bottom" type="user" id="uQz-54-fZA"/>
-                            <constraint firstItem="bU1-P2-P7y" firstAttribute="bottom" secondItem="zZ8-HZ-Wjx" secondAttribute="bottom" type="default" id="vE7-Oz-fWJ"/>
                             <constraint firstItem="hWm-no-EuD" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="77" id="vjO-Io-goe"/>
                             <constraint firstItem="vif-Og-X60" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="117" id="y3X-pH-vSg"/>
                             <constraint firstItem="cX2-pm-whI" firstAttribute="centerX" secondItem="hXL-vU-ovF" secondAttribute="centerX" type="user" id="zcw-UH-rkK"/>
@@ -1354,10 +1354,14 @@
                     <connections>
                         <outlet property="answers" destination="FhT-Na-l8g" id="KEo-n6-xhy"/>
                         <outlet property="answersButton" destination="vif-Og-X60" id="GcN-fe-kW3"/>
+                        <outlet property="answersTextField" destination="bU1-P2-P7y" id="Kyu-Up-SoN"/>
                         <outlet property="insightsButton" destination="QVF-Fr-tpq" id="TXy-xd-9YJ"/>
+                        <outlet property="levelTextField" destination="6pg-Ep-aV0" id="iWt-lh-t9Z"/>
                         <outlet property="questionsButton" destination="Ht9-zW-oln" id="95o-dM-HhP"/>
+                        <outlet property="questionsTextField" destination="zZ8-HZ-Wjx" id="6Uk-ez-d6r"/>
                         <outlet property="recs" destination="apK-Z4-xst" id="4PZ-w3-bfG"/>
                         <outlet property="ugQuestions" destination="iR7-SC-sRN" id="X7r-m4-75K"/>
+                        <outlet property="votesTextField" destination="hWm-no-EuD" id="f6c-ru-AQ0"/>
                         <segue destination="Kie-5A-7GQ" kind="modal" identifier="profileToLoginScreen" animates="NO" id="dVu-9J-WCR"/>
                     </connections>
                 </viewController>
@@ -3197,6 +3201,8 @@
         <class className="AnswersCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AnswersCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="agree" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="disagree" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="question" candidateClass="UILabel"/>
@@ -3208,18 +3214,18 @@
             <relationships>
                 <relationship kind="action" name="choosePicture:"/>
                 <relationship kind="action" name="leftAdd:"/>
+                <relationship kind="action" name="leftCancel:"/>
                 <relationship kind="action" name="rightAdd:"/>
+                <relationship kind="action" name="rightCancel:"/>
                 <relationship kind="action" name="takePicture:"/>
                 <relationship kind="outlet" name="addOptions" candidateClass="UIView"/>
                 <relationship kind="outlet" name="leftAddButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftChooseButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftCancelButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftTakeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftURLView" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="rightAddButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="rightChooseButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="rightCancelButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="rightImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightTakeButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="rightURLView" candidateClass="UITextField"/>
             </relationships>
         </class>
@@ -3302,14 +3308,17 @@
                 <relationship kind="action" name="viewQuestions:"/>
                 <relationship kind="outlet" name="answers" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="answersButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="answersTextField" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="insightsButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="loading" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="logoutButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="questionsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="questionsTextField" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="recs" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="tableViewBackground" candidateClass="UIView"/>
                 <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
                 <relationship kind="outlet" name="ugQuestions" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="votesTextField" candidateClass="UITextView"/>
             </relationships>
         </class>
         <class className="RecsCell" superclassName="UITableViewCell">
