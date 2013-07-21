@@ -25,17 +25,21 @@
     UITabBarItem *tabBarItem1 = [tabBar.items objectAtIndex:0];
     UITabBarItem *tabBarItem2 = [tabBar.items objectAtIndex:1];
     UITabBarItem *tabBarItem3 = [tabBar.items objectAtIndex:2];
+    UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
+    UITabBarItem *tabBarItem5 = [tabBar.items objectAtIndex:4];
     
-    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"smiley_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"smiley_off.png"]];
-    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"house_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"house_off.png"]];
-    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"trend_on.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"trend_off.png"]];
+    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"profile_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"profile_unselected.png"]];
+    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"group_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"group_unselected.png"]];
+    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"home_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"home_unselected.png"]];
+    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"ugc_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"ugc_unselected.png"]];
+    [tabBarItem5 setFinishedSelectedImage:[UIImage imageNamed:@"training_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"training_unselected.png"]];
             
-    UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar3.png"];
+    UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar.png"];
     [[UITabBar appearance] setBackgroundImage:tabBarBackground];
     //gets rid of translucent
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     
-    tabBarController.selectedIndex = 1;
+    tabBarController.selectedIndex = 2;
     
     self.tabBarController = tabBarController;
     

@@ -146,14 +146,14 @@
         
         //sets images
         [UIView transitionWithView:self.view
-                          duration:5.0f
+                          duration:0.5f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
                         } completion:nil];
         
         [UIView transitionWithView:self.view
-                          duration:5.0f
+                          duration:0.5f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             [self.rightProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image2"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];

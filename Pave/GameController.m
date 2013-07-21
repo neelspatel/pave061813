@@ -49,6 +49,7 @@
     
     self.feedObjects = [NSMutableArray array];
     self.readStatus = [[NSMutableDictionary alloc] init];
+    self.anonStatus = [[NSMutableDictionary alloc] init];
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
@@ -71,9 +72,29 @@
     
     //ability to call load from somewhere else
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedObjects) name:@"getFeedObjects" object:nil];
+    
+    //pull to reload
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];    
+}
+
+- (void)refreshWithPull:(UIRefreshControl *)refreshControl
+{
+    self.reloadingFeedObject = YES;
+    
+    NSLog(@"reloading personal datapre");
+    self.feedObjects = [NSMutableArray array];
+    self.readStatus = [[NSMutableDictionary alloc] init];
+    self.anonStatus = [[NSMutableDictionary alloc] init];
+    NSLog(@"reloading personal data");
+    [self getFeedObjects];
+    [self.tableView reloadData];
 
     
+    [refreshControl endRefreshing];
 }
+
 
 - (void) setUpStatusBar
 {
@@ -288,6 +309,20 @@
     
 }
 
+- (void) displayAsAnon:(FeedObjectCell *) cell: (BOOL) anon
+{
+    
+    
+    if(anon == TRUE)
+    {
+        cell.onOffButton.text = @"Anon is on"; 
+    }
+    else
+    {
+        cell.onOffButton.text = @"Anon is off";
+    }                    
+}
+
 -(void)showFBRequest: (NSString*) currentId
 {
     NSMutableDictionary* paramsForFB =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -327,20 +362,14 @@
     NSLog(@"right id: %d", cell.rightProductId);
     NSLog(@"question id: %d", cell.questionId);
     
-    if(cell.onOffSwitch.on)
-    {
-        NSLog(@"Anon!");
-    }
-    else    
-    {
-        NSLog(@"Public");
-    }
-    
     NSDictionary *params;
+    NSIndexPath* path = [self.tableView indexPathForCell:cell];
+    NSInteger row = [path row];
+
     
     if(left == true)
     {
-        if(cell.onOffSwitch.on)
+        if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])
         {
             NSLog(@"Anon!");
             params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
@@ -356,8 +385,7 @@
     }
     else
     {        
-        if(cell.onOffSwitch.on)
-        {
+        if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])        {
             NSLog(@"Anon!");
             params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
@@ -400,6 +428,7 @@
                 //saves it as read - true means left
                 [self.readStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
                 
+                
                 [self displayAsRead:cell :TRUE];
                 
                 //now saves the cell in the database
@@ -408,14 +437,22 @@
                 //shows the option to post a notification
                 [cell.facebookButton setHidden:FALSE];
             }
-            else
+            else //in the future we will hit a different endpoint
             {
                 NSLog(@"Already answered...");
+                //saves it as read - true means left
+                [self.readStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                //refreshes                
+                [self.tableView beginUpdates];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [self.tableView endUpdates];
+
             }
 
         } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
             NSLog(@"In the right image!");
-            if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
+            if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] == nil)
             {
                 //saves it as read - false means right
                 [self.readStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
@@ -431,9 +468,38 @@
             else
             {
                 NSLog(@"Already answered...");
+                //saves it as read - false means right
+                [self.readStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                //refreshes
+                [self.tableView beginUpdates];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [self.tableView endUpdates];
             }
             
-        }                       
+        }
+        else if (CGRectContainsPoint(cell.onOffButton.frame, pointInCell)) {
+            NSLog(@"Selected to switch anonymous");
+            if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])//if we're anonymous
+            {
+                NSLog(@"Turning anon off for %d", indexPath.row);
+                //saves it as public - false means public
+                [self.anonStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                [self displayAsAnon:cell :FALSE];
+                                
+            }
+            else
+            {
+                NSLog(@"Turning anon on for %d", indexPath.row);
+                //saves it as anon - true means anon
+                [self.anonStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                [self displayAsAnon:cell :TRUE];
+                
+            }
+            
+        }
         else {
             NSLog(@"Not in the image...");
         }
@@ -517,138 +583,140 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"***REQUESTED %d ***", indexPath.row);
-    static NSString *CellIdentifier = @"Cell";
-    FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
-
-    NSLog(@"***REQUESTED %@ ***", currentObject);
-    
-    // Configure the cell...
-    cell.profilePicture.clipsToBounds = YES;
-    [cell.rightX setHidden:TRUE];
-    [cell.leftX setHidden:TRUE];
-    [cell.rightCheck setHidden:TRUE];
-    [cell.leftCheck setHidden:TRUE];
-    [cell.leftNum setHidden:TRUE];
-    [cell.rightNum setHidden:TRUE];
-    [cell.leftLabel setHidden:TRUE];
-    [cell.rightLabel setHidden:TRUE];
-    //shows the option to post a notification
-    [cell.facebookButton setHidden:TRUE];
-    
-    cell.question.text = currentObject[@"questionText"];
-    cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1Count"]];
-    cell.rightNum.text = [NSString stringWithFormat:@"%@",currentObject[@"product2Count"]];
-    
-    //shows the number of responses so far
-    int total = [cell.leftNum.text integerValue] + [cell.rightNum.text integerValue];
-    if(total == 1)
+    if(self.reloadingFeedObject)
     {
-        cell.responseCount.text = @"1 response";
-    }
-    else if(total ==0)
-    {
-        NSLog(@"Total was 0");
-        cell.responseCount.text = @"Be the first to answer!";
+        NSLog(@"Still reloading");
+        UITableView *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        return cell;
     }
     else
     {
-        cell.responseCount.text = [NSString stringWithFormat:@"%d responses", total];
-    }
+    
+        NSLog(@"***REQUESTED %d ***", indexPath.row);
+        static NSString *CellIdentifier = @"Cell";
+        FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
 
-    //if unread
-    if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
-    {    
-       
-    }
-    
-    @try
-    {
-        NSLog(@"leftFriendId");
-        cell.leftFriendId = [(currentObject[@"fbFriend1"][0]) integerValue];
-    }
-    @catch (NSException *e)
-    {
-        cell.leftFriendId = 0;
-    }
-    
-    @try
-    {
-        NSLog(@"rightFriendId");        
-        cell.rightFriendId = [(currentObject[@"fbFriend2"][0]) integerValue];
-    }
-    @catch (NSException *e)
-    {
-        cell.rightFriendId = 0;
-    }
-    
-    cell.leftProductId = [(currentObject[@"product1"]) integerValue];
-    cell.rightProductId = [(currentObject[@"product2"]) integerValue];
-    cell.questionId = [(currentObject[@"currentQuestion"]) integerValue];
-       
-    cell.currentId = (currentObject[@"friend"]) ;    
-    
-    SDImageCache *imageCache = [SDImageCache sharedImageCache];
-    
-    //for profile picture
-    NSString *profileURL = @"https://graph.facebook.com/";
-    //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
-    profileURL = [profileURL stringByAppendingString:cell.currentId];
-    profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
-    NSLog(@"Before loading profile picture");
-    [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
-                   placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-    
-    NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
-    leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"image1"]];
-    leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
-    leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    
-    // change the default background
-    [cell.leftProduct setImageWithURL:[NSURL URLWithString:leftImageURL]
-                        placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-    
-    //for right product picture    
-    NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
-    rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"image2"]];
-    rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
-    rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    
-    // change the default background
-    [cell.rightProduct setImageWithURL:[NSURL URLWithString:rightImageURL]
-                      placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];    
-    
-    //sets it as read if not set yet
-    if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
-    {
-        NSLog(@"Displaying %d as read", indexPath.row);
-        [self displayAsRead:cell :[[self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] boolValue]];
-    }
-    
-    [cell.onOffSwitch setOn:NO];
-    cell.anonymous = @"No";
-    
-    //changes the state of the cell
-    return cell;
-    
-}
-
-- (FeedObjectCell *) flipSwitch: (FeedObjectCell *)cell
-{
-    //sets the anonymous switch
-    if([cell.anonymous isEqualToString:@"Yes"])
-    {
-        NSLog(@"Was already anon");
-        [cell.onOffSwitch setOn:YES];
+        NSLog(@"***REQUESTED %@ ***", currentObject);
         
+        // Configure the cell...
+        cell.profilePicture.clipsToBounds = YES;
+        [cell.rightX setHidden:TRUE];
+        [cell.leftX setHidden:TRUE];
+        [cell.rightCheck setHidden:TRUE];
+        [cell.leftCheck setHidden:TRUE];
+        [cell.leftNum setHidden:TRUE];
+        [cell.rightNum setHidden:TRUE];
+        [cell.leftLabel setHidden:TRUE];
+        [cell.rightLabel setHidden:TRUE];
+        //shows the option to post a notification
+        [cell.facebookButton setHidden:TRUE];
+        
+        cell.question.text = currentObject[@"questionText"];
+        cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1Count"]];
+        cell.rightNum.text = [NSString stringWithFormat:@"%@",currentObject[@"product2Count"]];
+        
+        //shows the number of responses so far
+        int total = [cell.leftNum.text integerValue] + [cell.rightNum.text integerValue];
+        if(total == 1)
+        {
+            cell.responseCount.text = @"1 response";
+        }
+        else if(total ==0)
+        {
+            NSLog(@"Total was 0");
+            cell.responseCount.text = @"Be the first to answer!";
+        }
+        else
+        {
+            cell.responseCount.text = [NSString stringWithFormat:@"%d responses", total];
+        }
+
+        //if unread
+        if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
+        {    
+           
+        }
+        
+        @try
+        {
+            NSLog(@"leftFriendId");
+            cell.leftFriendId = [(currentObject[@"fbFriend1"][0]) integerValue];
+        }
+        @catch (NSException *e)
+        {
+            cell.leftFriendId = 0;
+        }
+        
+        @try
+        {
+            NSLog(@"rightFriendId");        
+            cell.rightFriendId = [(currentObject[@"fbFriend2"][0]) integerValue];
+        }
+        @catch (NSException *e)
+        {
+            cell.rightFriendId = 0;
+        }
+        
+        cell.leftProductId = [(currentObject[@"product1"]) integerValue];
+        cell.rightProductId = [(currentObject[@"product2"]) integerValue];
+        cell.questionId = [(currentObject[@"currentQuestion"]) integerValue];
+           
+        cell.currentId = (currentObject[@"friend"]) ;    
+        
+        SDImageCache *imageCache = [SDImageCache sharedImageCache];
+        
+        //for profile picture
+        NSString *profileURL = @"https://graph.facebook.com/";
+        //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
+        profileURL = [profileURL stringByAppendingString:cell.currentId];
+        profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
+        NSLog(@"Before loading profile picture");
+        [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
+                       placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+        
+        NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
+        leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"image1"]];
+        leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
+        leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        
+        // change the default background
+        [cell.leftProduct setImageWithURL:[NSURL URLWithString:leftImageURL]
+                            placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+        
+        //for right product picture    
+        NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
+        rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"image2"]];
+        rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
+        rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        
+        // change the default background
+        [cell.rightProduct setImageWithURL:[NSURL URLWithString:rightImageURL]
+                          placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];    
+        
+        //sets it as read if not set yet
+        if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
+        {
+            NSLog(@"Displaying %d as read", indexPath.row);
+            [self displayAsRead:cell :[[self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] boolValue]];
+        }
+        
+        //sets it as anon if not set yet
+        if([self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
+        {
+            [self displayAsAnon:cell :[[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] boolValue]];
+        }
+        else //otherwise, display as public
+        {
+            [self displayAsAnon:cell :FALSE];
+        }
+            
+        cell.anonymous = @"No";
+        
+        //changes the state of the cell
+        return cell;
     }
-    else
-    {
-        NSLog(@"Was public");
-        [cell.onOffSwitch setOn:NO];        
-    }
-    return cell;
+    
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(FeedObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -763,12 +831,4 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
-
-- (IBAction)refresh:(id)sender {
-    NSLog(@"In refresh!");
-    self.feedObjects = [NSMutableArray array];
-    self.readStatus = [[NSMutableDictionary alloc] init];
-    [self getFeedObjects];
-    [self.tableView reloadData];
-}
 @end
