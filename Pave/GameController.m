@@ -609,8 +609,15 @@
         [cell.rightNum setHidden:TRUE];
         [cell.leftLabel setHidden:TRUE];
         [cell.rightLabel setHidden:TRUE];
+        
+        //sets the background
+        cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+
+        
         //shows the option to post a notification
         [cell.facebookButton setHidden:TRUE];
+        
+        
         
         cell.question.text = currentObject[@"questionText"];
         cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1Count"]];
