@@ -7,6 +7,7 @@
 //
 
 #import "AddGroupViewController.h"
+#import "AddFriendCell.h"
 
 @interface AddGroupViewController ()
 
@@ -55,14 +56,15 @@
     */
 
     //[[UISearchBar appearance] setSearchFieldBackgroundImage:[UIImage imageNamed:@"group_searchbar.png"]forState:UIControlStateNormal];
-    [self.addFriendsSearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"group_searchbar.png"] forState:UIControlStateNormal];
-    
-    for (UIView * view in [self.addFriendsSearchBar  subviews]) {
+    //[self.addFriendsSearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"group_searchbar.png"] forState:UIControlStateNormal];
+
+    /*for (UIView * view in [self.addFriendsSearchBar  subviews]) {
         if (![view isKindOfClass:[UITextField class]]) {
             view .alpha = 0;
         }
-    }
+    }*/
 
+    [[self.addFriendsSearchBar.subviews objectAtIndex:0] removeFromSuperview];
 
     
     CGRect frame = self.addFriendsSearchBar.frame;
@@ -104,12 +106,16 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    AddFriendCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (self.isFiltered)
-        cell.textLabel.text = [self.filteredNames objectAtIndex:indexPath.row];
+        cell.friendName.text = [self.filteredNames objectAtIndex:indexPath.row];
     else
-        cell.textLabel.text = [self.friendNames objectAtIndex:indexPath.row];
+        cell.friendName.text = [self.friendNames objectAtIndex:indexPath.row];
+    
+    // do logic for getting profile picture here 
+    [cell.friendProfilePicture setImage: [UIImage imageNamed:@"add_picture_icon.png"]];
     return cell;
+
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -131,8 +137,13 @@
     [self.currentGroup addObject:selectedName];
     NSLog(@"%@", self.currentGroup);
     NSString *curText = self.addedFriendsTextField.text;
+    NSString *newText;
+    if ([curText isEqual: @"add some friends below!"])
+        newText = selectedName;
+    else
+        newText = [NSString stringWithFormat:@"%@, %@",curText, selectedName];
     
-    NSString *newText = [NSString stringWithFormat:@"%@, %@",curText, selectedName];
+    NSLog(@"%@", newText);
     self.addedFriendsTextField.text = newText;
     
     self.addFriendsSearchBar.text = @"";
