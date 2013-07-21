@@ -26,6 +26,7 @@
                                              selector:@selector(redrawBarFromNotification:)
                                                  name:@"refreshStatusScore"
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetBar) name:@"resetStatusScore" object:nil];
     
     self.onCircle = [UIImage imageNamed: @"blue_circle.png"];
     self.offCircle = [UIImage imageNamed: @"gray_circle.png"];

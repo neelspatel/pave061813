@@ -12,6 +12,7 @@
 #import <Foundation/Foundation.h>
 #import "PaveAPIClient.h"
 #import "MBProgressHUD.h"
+#import "GroupListCell.h"
 
 @interface GroupViewController ()
 
@@ -45,9 +46,21 @@
     self.groups = [prefs objectForKey:@"groups"];
     NSLog(@"Groups: %@", self.groups);
 
+    // instantiate the status bar and set it to the right location
+    [self setUpStatusBar];
+
     [super viewDidLoad];
 	// refresh data from here
     // Do any additional setup after loading the view.
+}
+
+- (void) setUpStatusBar
+{
+    self.sbar = [StatusBar statusBarCreate];
+    self.sbar.frame = CGRectMake(0, 37, self.sbar.frame.size.width, self.sbar.frame.size.height);
+    [self.sbar redrawBar];
+    [self.view addSubview:self.sbar];
+    
 }
 
 
@@ -87,17 +100,18 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     NSLog(@"Load cell");
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    GroupListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSMutableDictionary *currentObject = [self.groups objectAtIndex:indexPath.row];
     
-    
-        
     cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_trending_topic_box.png"]];
     
-    cell.textLabel.text = [currentObject objectForKey:@"name"];
-    NSLog(@"Set text to %@", cell.textLabel.text);
+    cell.groupName.text = [currentObject objectForKey:@"name"];
+    NSLog(@"Current object: %@", currentObject);
+    cell.groupMembers.text = [[currentObject objectForKey:@"friend_names"] componentsJoinedByString:@", "];
     
     return cell;
 }

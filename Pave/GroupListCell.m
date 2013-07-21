@@ -1,22 +1,22 @@
 //
-//  TrendingListCell.m
+//  GroupListCell.m
 //  Pave
 //
-//  Created by Neel Patel on 6/20/13.
+//  Created by Nithin Tumma on 7/20/13.
 //  Copyright (c) 2013 Pave. All rights reserved.
 //
 
-#import "TrendingListCell.h"
+#import "GroupListCell.h"
 
-@implementation TrendingListCell
+@implementation GroupListCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        NSLog(@"Changing cell style..");
-        self.imageView.image = [UIImage imageNamed:@"unselected_one_trending_topic_box.png"];
-        self.imageView.highlightedImage = [UIImage imageNamed:@"selected_trending_topic_box.png"];
+        // Initialization code
+        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+        self.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
     }
     return self;
 }
@@ -24,6 +24,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
+    
     // Configure the view for the selected state
 }
 
