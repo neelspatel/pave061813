@@ -16,11 +16,12 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain)NSMutableArray *feedObjects;
 @property (nonatomic, retain)NSMutableDictionary *readStatus;
+@property (nonatomic, retain)NSMutableDictionary *anonStatus;
 @property (nonatomic, strong)SDImageCache *myImageCache;
 @property (nonatomic, assign)BOOL doneLoadingFeed;
 
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
-- (IBAction)refresh:(id)sender;
+- (void)refreshWithPull:(UIRefreshControl *)refreshControl;
 
 @property (nonatomic, retain)NSArray *paths;
 @property (nonatomic, retain)NSString *dataPath;

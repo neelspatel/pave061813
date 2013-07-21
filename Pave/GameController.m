@@ -233,31 +233,7 @@
         [cell.rightNum setHidden:FALSE];
         
         [cell.leftCheck setHidden:FALSE];
-        [cell.rightX setHidden:FALSE];
-        
-        
-        
-        
-        //hides things if need be
-        /**
-        if([cell.leftNum.text isEqual: @"1"])
-        {
-            [cell.leftLabel setHidden:TRUE];
-            [cell.leftNum setHidden:TRUE];
-        }
-        else if([cell.rightNum.text isEqual: @"0"])
-        {
-            [cell.rightLabel setHidden:TRUE];
-            [cell.rightNum setHidden:TRUE];
-        }
-        else
-        {
-            [cell.leftCheck setHidden:FALSE];
-            [cell.rightX setHidden:FALSE];
-        }
-         */
-        
-        
+        [cell.rightX setHidden:FALSE];                
     }
     else
     {
@@ -272,27 +248,7 @@
         [cell.rightNum setHidden:FALSE];
         
         [cell.leftX setHidden:FALSE];
-        [cell.rightCheck setHidden:FALSE];
-        
-        //hides things if need be
-        /*
-        if([cell.leftNum.text isEqual: @"0"])
-        {
-            [cell.leftLabel setHidden:TRUE];
-            [cell.leftNum setHidden:TRUE];
-        }
-        else if([cell.rightNum.text isEqual: @"1"])
-        {
-            [cell.rightLabel setHidden:TRUE];
-            [cell.rightNum setHidden:TRUE];
-        }
-        else
-        {
-            [cell.leftX setHidden:FALSE];
-            [cell.rightCheck setHidden:FALSE];
-        }
-         */
-        
+        [cell.rightCheck setHidden:FALSE];                        
     }
     
     

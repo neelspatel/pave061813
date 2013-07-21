@@ -22,11 +22,13 @@
 - (IBAction)takePicture:(id)sender;
 
 - (IBAction)create:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton * createButton;
 @property (nonatomic, retain) AmazonS3Client *s3;
 
 @property (nonatomic, retain) NSString *currentSide;
 
 @property (weak, nonatomic) IBOutlet UIView *addOptions;
+- (IBAction)closeOptions:(id)sender;
 
 @property (nonatomic, retain) NSString *leftURL;
 @property (weak, nonatomic) IBOutlet UIImageView *leftImage;
