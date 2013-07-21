@@ -123,6 +123,7 @@
                     
                     if (self.currentStatusScore != status_score)
                     {
+                        NSLog(@"ABOUT TO UPDATE STATUS SCORE");
                         self.currentStatusScore = status_score;
                         self.currentStatusScore = 100;
                         NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];

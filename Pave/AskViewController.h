@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AWSRuntime/AWSRuntime.h>
 #import <AWSS3/AWSS3.h>
+#import "StatusBar.h"
 
 @interface AskViewController : UIViewController<UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate> {}
 
@@ -43,6 +44,8 @@
 @property (weak, nonatomic) IBOutlet UIButton * rightCancelButton;
 
 @property (weak, nonatomic) IBOutlet UITextField *rightURLView;
+
+@property (nonatomic, retain) StatusBar *sbar;
 
 
 @end

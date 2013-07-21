@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
+#import "StatusBar.h"
 
 @interface TrainingController : UIViewController
 
@@ -46,6 +47,7 @@
 //stores the current object number
 @property(nonatomic, assign) NSInteger currentNumber;
 
+@property (nonatomic, retain) StatusBar *sbar;
 
 
 @end

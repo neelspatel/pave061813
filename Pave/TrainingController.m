@@ -11,8 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "SDImageCache.h"
 #import "MBProgressHUD.h"
-
-
+#import "StatusBar.h"
 
 @interface TrainingController ()
 
@@ -32,7 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    [self setUpStatusBar];
     //loads image cache
     self.myImageCache = [SDImageCache.alloc initWithNamespace:@"FeedObjects"];
     
@@ -47,10 +46,24 @@
     
 }
 
+- (void) setUpStatusBar
+{
+    self.sbar = [StatusBar statusBarCreate];
+    [self.sbar redrawBar];
+    self.sbar.frame = CGRectMake(0, 37, self.sbar.frame.size.width, self.sbar.frame.size.height);
+    [self.view addSubview:self.sbar];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.sbar redrawBar];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     //first reload the data
-    [self reloadData];    
+    [self reloadData];
+    [self.sbar redrawBar];
 }
 
 //skips to the next one

@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "AboutUGQuestion.h"
 #import "MKNumberBadgeView.h"
-
+#import "StatusBar.h"
 
 
 @interface PersonalFeedController : UIViewController <UITableViewDataSource, UITableViewDelegate>
@@ -70,5 +70,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 - (IBAction)logout:(id)sender;
 
+@property (nonatomic, retain) StatusBar *sbar;
 
 @end

@@ -11,7 +11,7 @@
 #import "UIImageView+WebCache.h"
 #import "WebSearchViewController.h"
 #import "PaveAPIClient.h"
-
+#import "StatusBar.h"
 
 @interface AskViewController ()
 
@@ -32,6 +32,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    [self setUpStatusBar];
     
     NSLog(@"Defaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 
@@ -72,6 +74,21 @@
     //hides the add view
     self.addOptions.hidden = YES;
 }
+
+-(void)viewWillAppear:(BOOL) animated
+{
+    [self.sbar redrawBar];
+}
+
+- (void) setUpStatusBar
+{
+    self.sbar = [StatusBar statusBarCreate];
+    self.sbar.frame = CGRectMake(0, 37, self.sbar.frame.size.width, self.sbar.frame.size.height);
+    [self.sbar redrawBar];
+    [self.view addSubview:self.sbar];
+    
+}
+
 
 - (IBAction)create:(id)sender
 {

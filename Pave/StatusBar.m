@@ -51,9 +51,10 @@
     [self.connector1 setImage: self.line];
     */
     
+    /*
     self.imageViews = [[NSMutableArray alloc] initWithObjects: self.image1, self.image2, self.image3, self.image4, self.image5, self.image6, self.image7, self.image8, self.image9, self.image10, nil];
     self.lineViews = [[NSMutableArray alloc] initWithObjects: self.connector1, self.connector2, self.connector3, self.connector4, self.connector5, self.connector6, self.connector7, self.connector8, self.connector9, nil];
-
+     */
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
 
     self.statusScore = delegate.currentStatusScore;
@@ -124,8 +125,12 @@
     self.statusScore = delegate.currentStatusScore;
     
     NSInteger num_bars = self.statusScore / 10;
-    NSLog(@"Number of bars: %d", num_bars);
-   
+    NSLog(@"Number of bars: %d", delegate.currentStatusScore);
+    
+    // make sure that we never go over
+    if (num_bars > 10)
+        num_bars = 10;
+    
     NSInteger num_tags = (2 * num_bars) - 1;
     for (int i = 1; i <= num_tags; i++)
     {

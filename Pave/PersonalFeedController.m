@@ -21,6 +21,7 @@
 #import "LoginViewController.h"
 #import "AboutUGQuestion.h"
 #import "MKNumberBadgeView.h"
+#import "StatusBar.h"
 
 @interface PersonalFeedController ()
 
@@ -33,6 +34,10 @@
 {    
     [super viewDidLoad];
     
+    // setup status bar
+    [self setUpStatusBar];
+
+    NSLog(@"VIEW DID LOAD");
     //sets the active table
     self.currentTable = @"answers";
     self.answers.hidden = NO;
@@ -68,11 +73,6 @@
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(switchToInsights:)
-                                                 name:@"newRecommendation"
-                                               object:nil];
-
     //sets up the pull to refresh controller
     UIRefreshControl *answersRefreshControl = [[UIRefreshControl alloc] init];
     [answersRefreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
@@ -108,7 +108,26 @@
     [self.questionsButton addSubview: self.badge_ug_answers];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeCounts) name:@"updateProfileBadgeCounts" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(switchToInsights:)
+                                                 name:@"newRecommendation"
+                                               object:nil];
+
 }
+
+- (void) setUpStatusBar
+{
+    self.sbar = [StatusBar statusBarCreate];
+    self.sbar.frame = CGRectMake(0, 37, self.sbar.frame.size.width, self.sbar.frame.size.height);
+    [self.sbar redrawBar];
+    [self.view addSubview:self.sbar];
+}
+
+-(void)viewWillAppear:(BOOL) animated
+{
+    [self.sbar redrawBar];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [[self.tabBarController.tabBar.items objectAtIndex:0] setBadgeValue:nil];
@@ -276,9 +295,11 @@
     [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me@2x.png"] forState:UIControlStateNormal];
     [self.insightsButton setImage:[UIImage imageNamed:@"selected_insights_for_me@2x.png"] forState:UIControlStateNormal];
     [self.questionsButton setImage:[UIImage imageNamed:@"unselected_questions_by_me.png"] forState:UIControlStateNormal];
-    
+
     self.currentTable = @"recs";
+    NSLog(@"About to change table");
     [self changeTable];
+    NSLog(@"Changed table");
 }
 
 - (IBAction)viewQuestions:(id)sender
@@ -415,6 +436,11 @@
     [self performSegueWithIdentifier:@"profileToLoginScreen" sender:self];
 }
 
+-(void) hideLoadingBar
+{
+    NSLog(@"Getting called");
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+}
 
 - (void) getFeedObjects
 {
@@ -424,7 +450,7 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         // Do something...
         [MBProgressHUD hideHUDForView:self.view animated:YES];
-    
+
         if([self.currentTable isEqualToString:@"answers"])
         {
             NSLog(@"About to get feed objects for answers");
@@ -437,6 +463,8 @@
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
+                    
+                    [self hideLoadingBar];
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
                     //for(NSDictionary *current in results)
                     //{
@@ -454,6 +482,7 @@
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               [self hideLoadingBar];
                                                NSLog(@"error logging in user to Django %@", error);
                                            }];
         }
@@ -469,14 +498,17 @@
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
+                    [self hideLoadingBar];
+                    
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
                     //for(NSDictionary *current in results)
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
                     //NSLog(@"Just finished getting results: %@", results);
+                    NSLog(@"Results: %@", results);
                     self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                    //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    NSLog(@"Just finished getting recs ids: %@", self.feedObjects);
                     self.doneLoadingFeed = YES;
                     
                     self.reloadingFeedObject = NO;
@@ -485,12 +517,12 @@
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               [self hideLoadingBar];
                                                NSLog(@"error logging in user to Django %@", error);
                                            }];
         }
         else
         {
-        
             NSLog(@"About to get feed objects for ugquestions");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -501,6 +533,8 @@
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
+                    [self hideLoadingBar];
+
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
                     //for(NSDictionary *current in results)
                     //{
@@ -517,6 +551,8 @@
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               [self hideLoadingBar];
+
                                                NSLog(@"error logging in user to Django %@", error);
                                            }];
         }

@@ -71,6 +71,7 @@
     
     //ability to call load from somewhere else
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedObjects) name:@"getFeedObjects" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
 
     
 }
@@ -83,10 +84,17 @@
     [self.view addSubview:self.sbar];
     
 }
+
+-(void)viewWillAppear:(BOOL) animated
+{
+    [self.sbar redrawBar];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     //first reload the data
     [self.tableView reloadData];
+    [self.sbar redrawBar];
     
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
@@ -440,11 +448,35 @@
     }
 }
 
+-(void) requestInsight:(NSNotification *) notification
+{
+    NSLog(@"Getting called request insight");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // hit the endpoint
+    NSString *path = @"/data/getnewrec/";
+
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    //path = [path stringByAppendingString:@"1"];
+    path = [path stringByAppendingString:@"/"];
+    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+        if (results)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:@"THIS IS THE NEW TEXT", @"rec_text", nil]];
+            });
+        }
+    }
+                                   failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Failure while getting rec");
+                                   }
+     ];
+
+}
+
 -(void)createNotificationPopup:(NSDictionary *) data
 {
     NotificationPopupView *notificationPopup = [NotificationPopupView notificationPopupCreateWithData:data];
     [self.view addSubview:notificationPopup];
-    
 }
 
 - (void) getFeedObjects
@@ -454,7 +486,7 @@
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         // Do something...
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+//        [MBProgressHUD hideHUDForView:self.view animated:YES];
         AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         FBSession* session = delegate.session;
         
@@ -463,7 +495,7 @@
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             //NSString *path = @"/data/getlistquestions/";
-            NSString *path = @"/data/recsgetlistquestions/";
+            NSString *path = @"/data/newgetlistquestions/";
 
             path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
             //path = [path stringByAppendingString:@"1"];
@@ -471,8 +503,7 @@
             NSLog(@"Path is %@", path);
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-                
-                [self createNotificationPopup: [NSDictionary dictionaryWithObjectsAndKeys:@"Looks Good",@"rec_text", nil]];
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 
                 if (results) {
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
