@@ -10,6 +10,8 @@
 #import <AWSRuntime/AWSRuntime.h>
 #import "UIImageView+WebCache.h"
 #import "WebSearchViewController.h"
+#import "PaveAPIClient.h"
+
 
 @interface AskViewController ()
 
@@ -69,6 +71,30 @@
     
     //hides the add view
     self.addOptions.hidden = YES;
+}
+
+- (IBAction)create:(id)sender
+{
+    NSLog(@"About to submit now");
+    
+    NSString *path = @"createugquestion/";
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    path = [path stringByAppendingString:@"/"];
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.leftURL, @"product1_url", self.rightURL, @"product2_url", @"product1", @"product1_description", @"product2", @"product2_description", @"QUESTION GOES HERE", @"question_text",  nil];
+    NSLog(@"Sent with params %@", params);
+    
+    [[PaveAPIClient sharedClient] postPath:path
+                                parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSLog(@"successfully created question");
+                                
+                                    [self performSegueWithIdentifier:@"finishedSubmitting" sender:self];
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    NSLog(@"error saving answer %@", error);
+                                }];
+    
+    
 }
 
 //exit text field on enter
@@ -245,18 +271,24 @@
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         
-        UITextView * currentURLView;
-        //sets the url view
+        UITextView * currentURLView;        
+        
+        NSString * name = [NSString stringWithFormat:@"%.0f.jpg",  [[NSDate date] timeIntervalSince1970] * 1000];
+        
         if( [self.currentSide isEqualToString: @"Left"])
         {
             currentURLView = self.leftURLView;
+            
+            self.leftURL = [@"https://s3.amazonaws.com/preparsedugproductimages/" stringByAppendingString:name];
         }
         else if( [self.currentSide isEqualToString: @"Right"])
         {
             currentURLView = self.rightURLView;
+            
+            self.rightURL = [@"https://s3.amazonaws.com/preparsedugproductimages/" stringByAppendingString:name];
         }
         
-        NSString * name = [NSString stringWithFormat:@"%.0f.jpg",  [[NSDate date] timeIntervalSince1970] * 1000];
+
         
         // Upload image data.  Remember to set the content type.
         S3PutObjectRequest *por = [[S3PutObjectRequest alloc] initWithKey:name inBucket:@"preparsedugproductimages"];

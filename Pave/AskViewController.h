@@ -20,6 +20,8 @@
 
 - (IBAction)choosePicture:(id)sender;
 - (IBAction)takePicture:(id)sender;
+
+- (IBAction)create:(id)sender;
 @property (nonatomic, retain) AmazonS3Client *s3;
 
 @property (nonatomic, retain) NSString *currentSide;

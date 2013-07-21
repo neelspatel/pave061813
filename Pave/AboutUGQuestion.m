@@ -33,6 +33,9 @@
         self.data = data;        
     }
 
+    //NSLog(@"NSUser: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+
+    
     return self;
 
 }
@@ -69,9 +72,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 #warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    //extra for profile and invite cells
-    return 5;
+    // Return the number of rows in the section.    
+    int left = [[self.data objectForKey:@"fbFriend1"] count];
+    int right = [[self.data objectForKey:@"fbFriend2"] count];
+    if( left > right)
+        return left;
+    else
+        return right;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -86,8 +93,14 @@
     NSArray * leftFriends = [self.data objectForKey:@"fbFriend1"];
     NSArray * rightFriends = [self.data objectForKey:@"fbFriend2"];
     
+    NSArray *ids = [[NSUserDefaults standardUserDefaults] objectForKey:@"friends"];
+    NSArray *names = [[NSUserDefaults standardUserDefaults] objectForKey:@"names"];
+    
     if (leftFriends.count > indexPath.row) // if we have something
     {
+        //id currentID = [leftFriends objectAtIndex:indexPath.row];
+        //int index = [ids indexOfObject:currentID];
+        //NSString *name = [names objectAtIndex:index];
         cell.leftName.text = [leftFriends objectAtIndex:indexPath.row];
     }
     else
@@ -96,7 +109,11 @@
     }
     
     if (rightFriends.count > indexPath.row) // if we have something
-    {
+    {        
+        //NSString * currentID = [rightFriends objectAtIndex:indexPath.row];
+        //int index = [ids indexOfObject:currentID];
+        //NSLog(@"For id %@ at index %d", currentID, index);
+        //NSString *name = [names objectAtIndex:index];
         cell.rightName.text = [rightFriends objectAtIndex:indexPath.row];
     }
     else

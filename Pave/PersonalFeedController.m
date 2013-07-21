@@ -462,7 +462,7 @@
             NSLog(@"About to get feed objects for recs");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            NSString *path = @"/data/getallfeedobjects/";
+            NSString *path = @"/data/getreclist/";
             path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
             //path = [path stringByAppendingString:@"1"];
             path = [path stringByAppendingString:@"/"];
@@ -579,6 +579,7 @@
         self.votesTextField.text = [defaults objectForKey:@"profile_vote_count"];
         self.answersTextField.text = [defaults objectForKey:@"profile_answer_count"];
         self.questionsTextField.text = [defaults objectForKey:@"profile_question_count"];
+        NSLog(@"Getting level");
         self.levelTextField.text = [@"Level " stringByAppendingString:[defaults objectForKey:@"level"]];
     }
     
@@ -810,7 +811,7 @@
                 NSLog(@"IndexPath is %d", indexPath.row);
                 NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
                 
-                NSString *newtext = currentObject[@"question"];
+                NSString *newtext = currentObject[@"text"];
                 
                 cell.text.text = newtext;
                 
@@ -821,10 +822,7 @@
                 //for image
                 // instantiate them
                 cell.image.image = [UIImage imageNamed:@"profile_icon.png"];
-                NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
-                leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"chosenProduct"]];
-                leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
-                leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+                NSString *leftImageURL = currentObject[@"url"];                
                 
                 [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
                  {
