@@ -73,6 +73,15 @@
     
     //hides the add view
     self.addOptions.hidden = YES;
+    
+    //updates create button
+    [self updateCreateButton];
+}
+
+- (IBAction)closeOptions:(id)sender
+{
+    //hides the add view
+    self.addOptions.hidden = YES;
 }
 
 -(void)viewWillAppear:(BOOL) animated
@@ -164,7 +173,9 @@
             
             //shows the x button
             self.rightCancelButton.hidden = NO;
-        }                
+        }
+        
+        [self updateCreateButton];
     }
 }
 
@@ -174,14 +185,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void) updateCreateButton
+{
+    if(self.leftURL && self.rightURL)
+    {
+        NSLog(@"Ready to create if you want to");
+        [self.createButton setImage:[UIImage imageNamed:@"create_selected.png"] forState:UIControlStateNormal];
+        [self.createButton setEnabled:YES];
+    }
+    else
+    {
+        [self.createButton setImage:[UIImage imageNamed:@"create_unselected.png"] forState:UIControlStateNormal];
+        [self.createButton setEnabled:NO];
+    }
+}
+
 //adds from the left side
 - (IBAction)leftAdd:(id)sender {
     //sets the current side
     self.currentSide = @"Left";
     
     //now shows the 'add' dialog
-    self.addOptions.hidden = FALSE;
-    
+    self.addOptions.hidden = FALSE;    
 }
 
 //adds from the right side
@@ -190,8 +215,7 @@
     self.currentSide = @"Right";
     
     //now shows the 'add' dialog
-    self.addOptions.hidden = FALSE;
-    
+    self.addOptions.hidden = FALSE;    
 }
 
 //cancels from the left side
@@ -200,6 +224,11 @@
     self.leftCancelButton.hidden = TRUE;
     self.leftAddButton.hidden = FALSE;
     [self.leftImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
+    
+    self.leftURL = @"";
+    self.leftURLView.text = @"";
+    
+    [self updateCreateButton];    
 }
 
 //cancels from the left side
@@ -208,6 +237,11 @@
     self.rightCancelButton.hidden = TRUE;
     self.rightAddButton.hidden = FALSE;
     [self.rightImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
+    
+    self.rightURL = @"";
+    self.rightURLView.text = @"";
+    
+    [self updateCreateButton];
 }
 
 - (IBAction)choosePicture:(id)sender {
@@ -326,6 +360,7 @@
             {
                 //[self showAlertMessage:@"The image was successfully uploaded." withTitle:@"Upload Completed"];
                 currentURLView.text = name;
+                [self updateCreateButton];
             }
             
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];

@@ -4,11 +4,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller - Hey what's up-->
+        <!--Navigation Controller-->
         <scene sceneID="Nzw-Na-eHi">
             <objects>
                 <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="rzk-4t-ZbG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Hey what's up" id="xVx-A4-ae5"/>
+                    <tabBarItem key="tabBarItem" title="" id="xVx-A4-ae5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Z0Y-Ht-x9M">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -34,6 +34,23 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="53" sectionHeaderHeight="22" sectionFooterHeight="22" id="KJJ-je-7iu">
                                 <rect key="frame" x="0.0" y="105" width="320" height="306"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="ZX5-La-RvT">
+                                <rect key="frame" x="217" y="-1" width="103" height="44"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Add Group">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addGroup:" destination="31t-xy-czc" eventType="touchUpInside" id="w2q-pS-nmc"/>
+                                    <segue destination="ePU-6B-Wlg" kind="modal" identifier="addGroupButtonToAddGroup" id="62E-2R-Z0N"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="KJJ-je-7iu">
+                                <rect key="frame" x="0.0" y="46" width="320" height="365"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="Cell" rowHeight="53" id="7y9-Xu-Mqo" customClass="GroupListCell">
@@ -51,14 +68,7 @@
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
                                                     <color key="textColor" red="0.41176470590000003" green="0.54901960780000003" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Eddy G, Max M, Alex S" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gus-Iz-95H">
-                                                    <rect key="frame" x="12" y="29" width="145" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </label>
-                                            </subviews>
+                                                </label>                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
@@ -126,6 +136,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="42" sectionHeaderHeight="22" sectionFooterHeight="22" id="cKB-0k-jQn">
+
                                 <rect key="frame" x="5" y="151" width="310" height="397"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -182,6 +193,31 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="suggestions_label.png" id="3v9-gm-RxK">
                                 <rect key="frame" x="5" y="129" width="310" height="22"/>
                             </imageView>
+                            <view contentMode="scaleToFill" id="vey-Sa-dh7">
+                                <rect key="frame" x="5" y="135" width="300" height="100"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Gimme a name! Any name!" placeholder="(optional) e.g. &quot;roommates&quot;" textAlignment="center" minimumFontSize="17" background="name_text_box@2x.png" disabledBackground="name_text_box@2x.png" id="aiq-gz-rFP">
+                                        <rect key="frame" x="25" y="12" width="250" height="30"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="FIF-gC-Zxa">
+                                        <rect key="frame" x="127" y="60" width="45" height="29"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" backgroundImage="BLUE_CREATE.png">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="createGroup:" destination="ePU-6B-Wlg" eventType="touchUpInside" id="You-dC-Pr5"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Dit-af-8TY">
                                 <rect key="frame" x="256" y="9" width="45" height="29"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -1047,8 +1083,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="7eU-vq-G9g" kind="relationship" relationship="viewControllers" id="ibN-DM-oMM"/>
-                        <segue destination="PlR-f4-nCD" kind="relationship" relationship="viewControllers" id="2Ca-Ct-EfI"/>
                         <segue destination="rzk-4t-ZbG" kind="relationship" relationship="viewControllers" id="LnW-j6-N3O"/>
+                        <segue destination="PlR-f4-nCD" kind="relationship" relationship="viewControllers" id="2Ca-Ct-EfI"/>
                         <segue destination="BVH-rt-6kQ" kind="relationship" relationship="viewControllers" id="o8W-vA-SHo"/>
                         <segue destination="c2g-dE-vRX" kind="relationship" relationship="viewControllers" id="thx-eb-fMM"/>
                     </connections>
@@ -1347,13 +1383,13 @@
             </objects>
             <point key="canvasLocation" x="-1190" y="-994"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller-->
         <scene sceneID="hlb-Cc-Ubc">
             <objects>
                 <navigationController definesPresentationContext="YES" navigationBarHidden="YES" id="BVH-rt-6kQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="dat-oD-reE"/>
+                    <tabBarItem key="tabBarItem" title="" id="dat-oD-reE"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mgI-HX-6l9">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1538,6 +1574,20 @@
                                             <segue destination="eYE-hc-mvO" kind="modal" identifier="askToWeb" id="EJR-xv-hq9"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2Up-J9-GBg">
+                                        <rect key="frame" x="10" y="10" width="45" height="44"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" image="popupX.png">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="closeOptions:" destination="CT9-OL-v3s" eventType="touchUpInside" id="3kZ-4a-nc8"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                             </view>
                         </subviews>
@@ -1546,6 +1596,7 @@
                     <navigationItem key="navigationItem" id="R2i-BK-aqp"/>
                     <connections>
                         <outlet property="addOptions" destination="2E3-EL-Y1F" id="IKJ-VB-33x"/>
+                        <outlet property="createButton" destination="hUG-uv-RbM" id="f01-nR-7YD"/>
                         <outlet property="leftAddButton" destination="YIP-sP-zQK" id="uah-f2-zyw"/>
                         <outlet property="leftCancelButton" destination="k1P-Df-swF" id="JLK-0j-SJS"/>
                         <outlet property="leftImage" destination="ZzR-nF-NSh" id="VuL-Ih-evk"/>
@@ -1775,14 +1826,17 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="42" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FLF-U8-hkK">
-                                                    <rect key="frame" x="45" y="140" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+<rect key="frame" x="45" y="140" width="42" height="21"/>
+
+<fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="agree" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kcu-jF-jCz">
-                                                    <rect key="frame" x="90" y="140" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+
+<rect key="frame" x="90" y="140" width="42" height="21"/>
+
+<fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
@@ -1795,10 +1849,14 @@
                                                     <state key="highlighted">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="facebookNotify:" destination="eKg-8N-vP9" eventType="touchUpInside" id="KYw-Pq-6Tk"/>
-                                                    </connections>
                                                 </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Make Anon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lxe-mb-bS7">
+                                                    <rect key="frame" x="214" y="235" width="86" height="21"/>
+                                                    <color key="backgroundColor" red="0.90980392160000001" green="0.41176470590000003" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -1810,7 +1868,7 @@
                                             <outlet property="leftNum" destination="FLF-U8-hkK" id="3uW-wz-PzR"/>
                                             <outlet property="leftProduct" destination="yjs-XH-N6i" id="n3A-gX-QZB"/>
                                             <outlet property="leftX" destination="4lB-N1-6Cd" id="bmo-Kr-KoQ"/>
-                                            <outlet property="onOffSwitch" destination="cRM-pF-JRD" id="m5g-rm-KUy"/>
+                                            <outlet property="onOffButton" destination="lxe-mb-bS7" id="0i1-de-scH"/>
                                             <outlet property="profilePicture" destination="oI9-ke-S1h" id="jTw-GW-jEO"/>
                                             <outlet property="question" destination="Idh-Sp-IPN" id="wuI-Gz-JQ4"/>
                                             <outlet property="responseCount" destination="z5q-wT-eNA" id="UOu-BH-o3x"/>
@@ -1889,7 +1947,7 @@
             </objects>
             <point key="canvasLocation" x="-322" y="-342"/>
         </scene>
-        <!--Training Controller - Training-->
+        <!--Training Controller-->
         <scene sceneID="uDu-OK-HfS">
             <objects>
                 <viewController id="c2g-dE-vRX" customClass="TrainingController" sceneMemberID="viewController">
@@ -1927,10 +1985,12 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="_0000_Dom_BT_SIDE@2x.png" id="BG9-e4-3pq">
                                 <rect key="frame" x="131" y="3" width="58" height="40"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="training_instructions@2x.png" id="byN-oT-3FK">
+
+<imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="training_instructions@2x.png" id="byN-oT-3FK">
                                 <rect key="frame" x="5" y="71" width="310" height="70"/>
                             </imageView>
-                            <imageView contentMode="scaleToFill" id="puY-hA-3LF">
+
+<imageView contentMode="scaleToFill" id="puY-hA-3LF">
                                 <rect key="frame" x="162" y="226" width="153" height="138"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -1980,7 +2040,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Training" id="hkB-ie-ziI"/>
+                    <tabBarItem key="tabBarItem" title="" id="hkB-ie-ziI"/>
                     <connections>
                         <outlet property="leftProduct" destination="qe9-Ja-Geq" id="DTO-eP-vgl"/>
                         <outlet property="profilePicture" destination="mIO-oH-OQ9" id="0u8-5E-cDA"/>
@@ -2098,11 +2158,11 @@
                                 <color key="backgroundColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                                 <color key="separatorColor" red="0.93333339689999995" green="0.93333339689999995" blue="0.93333339689999995" alpha="1" colorSpace="deviceRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="248" id="sFN-oq-I9Z" customClass="FeedObjectCell">
-                                        <rect key="frame" x="0.0" y="22" width="308" height="248"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="268" id="sFN-oq-I9Z" customClass="FeedObjectCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="268"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="308" height="247"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="267"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" id="0AP-8Y-uk4">
@@ -2138,6 +2198,8 @@
                                                 </textView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="42" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hhh-03-dsx">
                                                     <rect key="frame" x="190" y="117" width="42" height="21"/>
+                                                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="42" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="91L-cy-TIk">
+                                                    <rect key="frame" x="192" y="140" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2152,7 +2214,7 @@
                                                     <rect key="frame" x="88" y="0.0" width="221" height="32"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12.699999809265137"/>
                                                     <color key="textColor" red="0.41176470590000003" green="0.54901960780000003" blue="0.69803921570000005" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="42" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5GX-Lu-8ti">
                                                     <rect key="frame" x="45" y="117" width="42" height="21"/>
@@ -2176,24 +2238,36 @@
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="facebookNotify:" destination="sFN-oq-I9Z" eventType="touchUpInside" id="aGI-b6-L9X"/>
+                                                        <action selector="facebookNotify:" destination="sFN-oq-I9Z" eventType="touchUpInside" id="8m3-c0-rpd"/>
                                                     </connections>
                                                 </button>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Make Anon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9YU-Ua-fCD">
+                                                    <rect key="frame" x="214" y="235" width="86" height="21"/>
+                                                    <color key="backgroundColor" red="0.90980392160000001" green="0.41176470590000003" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" red="0.93333333330000001" green="0.93333333330000001" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
-                                            <outlet property="facebookButton" destination="50o-Y5-gkk" id="dav-zB-CZC"/>
-                                            <outlet property="leftLabel" destination="NaX-CV-ZbH" id="Vew-wE-bQB"/>
-                                            <outlet property="leftNum" destination="5GX-Lu-8ti" id="Kxl-5q-ziU"/>
-                                            <outlet property="leftProduct" destination="dbb-Wm-akj" id="tcC-ZK-vSq"/>
-                                            <outlet property="profilePicture" destination="0AP-8Y-uk4" id="TiD-h0-lHX"/>
-                                            <outlet property="question" destination="eyg-lv-1DT" id="b9a-7P-BFK"/>
-                                            <outlet property="responseCount" destination="F36-fA-8nS" id="1h7-1n-71R"/>
-                                            <outlet property="rightLabel" destination="1mv-3L-8Gq" id="Tt9-xD-8sn"/>
-                                            <outlet property="rightNum" destination="hhh-03-dsx" id="e5f-du-uPc"/>
-                                            <outlet property="rightProduct" destination="PtJ-19-2nZ" id="cwX-3V-dtD"/>
+                                            <outlet property="facebookButton" destination="5Qg-hC-MmV" id="Hte-bN-sMl"/>
+                                            <outlet property="leftCheck" destination="69J-rp-PLz" id="cQK-mu-npc"/>
+                                            <outlet property="leftLabel" destination="6F7-W9-Ol3" id="CJK-8i-aUr"/>
+                                            <outlet property="leftNum" destination="heg-Q5-PmY" id="3wV-0C-3vC"/>
+                                            <outlet property="leftProduct" destination="2Jw-d2-8xn" id="Ikz-sc-yzO"/>
+                                            <outlet property="leftX" destination="vwy-Tp-myM" id="aYy-9p-Rnf"/>
+                                            <outlet property="onOffButton" destination="9YU-Ua-fCD" id="LMf-PX-Ffp"/>
+                                            <outlet property="profilePicture" destination="EMn-rV-ug5" id="uml-lT-5PC"/>
+                                            <outlet property="question" destination="gY0-Py-KEb" id="sPL-pD-rfN"/>
+                                            <outlet property="responseCount" destination="zaL-t7-SyS" id="zur-gM-zmX"/>
+                                            <outlet property="rightCheck" destination="oyA-T6-UAA" id="zRz-jk-dJG"/>
+                                            <outlet property="rightLabel" destination="gzE-4g-8ND" id="mWo-hO-Px3"/>
+                                            <outlet property="rightNum" destination="91L-cy-TIk" id="Jxu-BL-c3G"/>
+                                            <outlet property="rightProduct" destination="l4K-dY-ejU" id="UdS-SR-N6x"/>
+                                            <outlet property="rightX" destination="OX8-7r-ceq" id="Xu3-eX-Sac"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -2236,7 +2310,6 @@
                                 </accessibility>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.90980392160000001" green="0.41176470590000003" blue="0.31764705879999999" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
                     </view>
                     <tabBarItem key="tabBarItem" title="" id="nKc-0a-doK">
@@ -2251,7 +2324,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Ef-Ry-Sc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="317" y="2292"/>
+            <point key="canvasLocation" x="519" y="2276"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hvz-OC-0AK">
@@ -2351,7 +2424,6 @@
         <image name="namegroup_background.png" width="320" height="414"/>
         <image name="nithin.png" width="63" height="66"/>
         <image name="popupX.png" width="43" height="43"/>
-        <image name="popupX@2x.png" width="85" height="85"/>
         <image name="progress_bardraft1@2x-copy.png" width="640" height="49"/>
         <image name="search_web_button.png" width="225" height="55"/>
         <image name="selected_answers_about_me.png" width="107" height="41"/>
@@ -2402,6 +2474,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/AskViewController.h"/>
             <relationships>
                 <relationship kind="action" name="choosePicture:"/>
+                <relationship kind="action" name="closeOptions:"/>
                 <relationship kind="action" name="create:"/>
                 <relationship kind="action" name="leftAdd:"/>
                 <relationship kind="action" name="leftCancel:"/>
@@ -2409,6 +2482,7 @@
                 <relationship kind="action" name="rightCancel:"/>
                 <relationship kind="action" name="takePicture:"/>
                 <relationship kind="outlet" name="addOptions" candidateClass="UIView"/>
+                <relationship kind="outlet" name="createButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftAddButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftCancelButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftImage" candidateClass="UIImageView"/>
@@ -2430,7 +2504,7 @@
                 <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="onOffSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="onOffButton" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="question" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="responseCount" candidateClass="UITextView"/>
@@ -2444,7 +2518,6 @@
         <class className="GameController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GameController.h"/>
             <relationships>
-                <relationship kind="action" name="refresh:"/>
                 <relationship kind="action" name="sendEmail:"/>
                 <relationship kind="outlet" name="emailButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
@@ -2455,7 +2528,6 @@
         <class className="GroupGameController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupGameController.h"/>
             <relationships>
-                <relationship kind="action" name="refresh:"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
@@ -2560,7 +2632,6 @@
                 <relationship kind="action" name="leftTap:"/>
                 <relationship kind="action" name="rightTap:"/>
                 <relationship kind="action" name="skip:"/>
-                <relationship kind="outlet" name="leftCheck" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>

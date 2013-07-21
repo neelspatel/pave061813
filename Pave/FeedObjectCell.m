@@ -35,18 +35,6 @@
     NSLog(@"Just submitted left");
 }
 
-//changes the anon on switch
--(IBAction) switched:(id)sender
-{
-    if(self.onOffSwitch.on)
-    {
-        self.anonymous = @"Yes";
-    }
-    else
-    {
-        self.anonymous = @"No";
-    }
-}
 
 -(void)showFBRequest: (NSString*) currentId
 {

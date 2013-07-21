@@ -21,11 +21,12 @@
 // store the values of the required instance variables
 @property (nonatomic, retain)NSMutableArray *feedObjects;
 @property (nonatomic, retain)NSMutableDictionary *readStatus;
+@property (nonatomic, retain)NSMutableDictionary *anonStatus;
 @property (nonatomic, strong)SDImageCache *myImageCache;
 @property (nonatomic, assign)BOOL doneLoadingFeed;
 
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
-- (IBAction)refresh:(id)sender;
+- (void)refreshWithPull:(UIRefreshControl *)refreshControl;
 
 
 //stores the image paths

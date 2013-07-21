@@ -74,6 +74,7 @@
     [self.rightProduct cancelCurrentImageLoad];
     [self.leftProduct cancelCurrentImageLoad];
     
+    NSLog(@"Aboutto clear all vars");
     
     //clears the data on screen (just in case...)
     self.question.text = @"";
@@ -82,7 +83,9 @@
     self.questionId = 0;
     
     //increments the count
-    //self.currentNumber += 1;
+    self.currentNumber += 1;
+
+    NSLog(@"About to refresh");
     [self refreshScreen];
 }
 
@@ -110,7 +113,8 @@
         //displays an image
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 240, 100, 50)];
         imgView.image = [UIImage imageNamed:@"BLUE_CREATE.png"];
-        [self.view addSubview: imgView];
+        self.check = imgView;
+        [self.view addSubview: self.check];
         
         
         params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookID", [NSString stringWithFormat:@"%d", self.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", self.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", self.questionId], @"id_question", @"true", @"is_training", nil];
@@ -118,9 +122,10 @@
     else
     {
         //displays an image
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 240, 100, 50)];
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(195, 240, 100, 50)];
         imgView.image = [UIImage imageNamed:@"BLUE_CREATE.png"];
-        [self.view addSubview: imgView];
+        self.check = imgView;
+        [self.view addSubview: self.check];        
         
         params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookID", [NSString stringWithFormat:@"%d", self.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", self.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", self.questionId], @"id_question", @"true", @"is_training", nil];
     }
@@ -145,10 +150,12 @@
     //if we're in the process of reloading, wait 10 sec and try again
     if(self.reloadingFeedObject)
     {
-        [self performSelector:@selector(refreshScreen) withObject:nil afterDelay:0.5];
+        NSLog(@"Refreshing right now");
+        //[self performSelector:@selector(refreshScreen) withObject:nil afterDelay:0.5];
     }
     else if(self.currentNumber < self.feedObjects.count) //otherwise if we have the data
     {
+        NSLog(@"We have the data");
         NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:self.currentNumber];
         
         self.question.text = currentObject[@"questionText"];
@@ -159,19 +166,27 @@
         
         //sets images
         [UIView transitionWithView:self.view
-                          duration:5.0f
+                          duration:0.01f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
+                            @try {
+                                // Try something
+                                [self.check removeFromSuperview];
+                            }
+                            @catch (NSException * e) {
+                                NSLog(@"Exception: %@", e);
+                            }                            
+                            
+                            @try {
+                                [self.check removeFromSuperview];
+                            }
+                            @catch (NSException * e) {
+                                NSLog(@"Exception: %@", e);
+                            }                           
+
                             [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-                        } completion:nil];
-        
-        [UIView transitionWithView:self.view
-                          duration:5.0f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
                             [self.rightProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image2"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
                         } completion:nil];
-        
         
         
         self.currentNumber += 1;
@@ -179,6 +194,7 @@
     }
     else //if we ran out of data
     {
+        NSLog(@"Getting new data - ran out");
         [self reloadData];
     }
 }

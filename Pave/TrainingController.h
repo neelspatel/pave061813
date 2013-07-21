@@ -21,7 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *leftProduct;
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
 
-@property (weak, nonatomic) IBOutlet UIImageView *leftCheck;
+@property (assign, nonatomic) UIImageView *check;
 @property (weak, nonatomic) IBOutlet UIImageView *leftX;
 @property (weak, nonatomic) IBOutlet UIImageView *rightCheck;
 @property (weak, nonatomic) IBOutlet UIImageView *rightX;
