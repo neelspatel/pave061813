@@ -147,7 +147,7 @@
     if (num_bars == 10)
     {
         // display Notification
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
     }
         
 }
