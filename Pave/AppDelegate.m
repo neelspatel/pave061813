@@ -120,13 +120,16 @@
                     NSLog(@"%d", new_inc);
                     
                     NSInteger status_score = [[results objectForKey:@"status_score"] intValue];
-                    self.currentStatusScore = status_score;
                     
-                    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
-                    [[NSNotificationCenter defaultCenter]
-                     postNotificationName:@"refreshStatusScore"
-                     object:self userInfo: data];
-
+                    if (self.currentStatusScore != status_score)
+                    {
+                        self.currentStatusScore = status_score;
+                        self.currentStatusScore = 100;
+                        NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
+                    }
+                    
+                    
                     NSInteger old_recs = [defaults integerForKey:@"num_recs"];
                     if (!old_recs)
                         old_recs = 0;
