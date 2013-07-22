@@ -23,10 +23,19 @@
 @property (weak, nonatomic) IBOutlet UIView *tableViewBackground;
 
 // store the values of the required instance variables
-@property (nonatomic, retain)NSArray *feedObjects;
 @property (nonatomic, strong)SDImageCache *myImageCache;
 @property (nonatomic, assign)BOOL doneLoadingFeed;
 
+@property (nonatomic, assign)BOOL reloadingUGAnswerObjects;
+@property (nonatomic, assign)BOOL reloadingAnswers;
+@property (nonatomic, assign)BOOL reloadingInsights;
+
+
+// new properties to prevent crashes 
+@property (nonatomic, retain)NSArray *feedObjects;
+@property (nonatomic, retain)NSArray *answerObjects;
+@property (nonatomic, retain)NSArray *insightObjects;
+@property (nonatomic, retain)NSArray *questionObjects;
 
 //stores the image paths
 @property (nonatomic, retain)NSArray *paths;

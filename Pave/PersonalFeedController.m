@@ -59,6 +59,12 @@
     //self.tableViewBackground.layer.cornerRadius=5;
     
     self.feedObjects = [NSArray array];
+    self.answerObjects = [NSArray array];
+    self.insightObjects = [NSArray array];
+    self.questionObjects = [NSArray array];
+    self.reloadingAnswers = YES;
+    self.reloadingUGAnswerObjects = YES;
+    self.reloadingInsights = YES;
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -71,7 +77,7 @@
     self.recReadStatus = [[NSMutableDictionary alloc] init];
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
-    self.reloadingFeedObject = NO;
+    self.reloadingFeedObject = YES;
     
     //sets up the pull to refresh controller
     UIRefreshControl *answersRefreshControl = [[UIRefreshControl alloc] init];
@@ -91,7 +97,8 @@
     
     NSLog(@"Feed objects are %@", self.feedObjects);
     [self getFeedObjects];
-    
+    NSLog(@"Feed objects are %@", self.answerObjects);
+
     self.badge_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
     [self.badge_answers setValue:[self getAnswerCount]];
     self.badge_answers.hideWhenZero = YES;
@@ -275,6 +282,8 @@
 //logic for switching in the buttons and tables
 - (IBAction)viewAnswers:(id)sender
 {
+    self.reloadingFeedObject = YES;
+    self.reloadingAnswers = YES;
     [self setBadgeForIndex:1 withCount:0];
 
     //change the button
@@ -289,6 +298,8 @@
 
 - (IBAction)viewInsights:(id)sender
 {
+    self.reloadingFeedObject = YES;
+    self.reloadingInsights = YES;
     [self setBadgeForIndex:2 withCount:0];
 
     //change the button
@@ -304,6 +315,8 @@
 
 - (IBAction)viewQuestions:(id)sender
 {
+    self.reloadingFeedObject = YES;
+    self.reloadingUGAnswerObjects = YES;
     [self setBadgeForIndex:3 withCount:0];
 
     //change the button
@@ -319,6 +332,7 @@
 - (void) changeTable
 //- (IBAction)changeTable:(id)sender
 {
+    self.reloadingFeedObject = YES;
     if([self.currentTable isEqualToString:@"answers"])
     {        
         //self.currentTable = @"ugQuestions";
@@ -328,6 +342,7 @@
 
         //now reloads the data
         self.feedObjects = [NSArray array];
+        self.answerObjects = [NSArray array];
         [self getFeedObjects];
     }
     else if([self.currentTable isEqualToString:@"ugQuestions"])
@@ -339,25 +354,33 @@
         
         //now reloads the data
         self.feedObjects = [NSArray array];
+        self.questionObjects = [NSArray array];
+
         [self getFeedObjects];
     }
     else //if recs
     {
         //self.currentTable = @"answers";
+        
+        self.feedObjects = [NSArray array];
+        self.insightObjects = [NSArray array];
+        
+
         self.answers.hidden = YES;
         self.ugQuestions.hidden = YES;
         self.recs.hidden = NO;
 
         //now reloads the data        
-        self.feedObjects = [NSArray array];
         [self getFeedObjects];
+
     }
 }
 
 - (void)refresh
 {
+    self.reloadingFeedObject = YES;
     NSLog(@"reloading personal datapre");
-    self.feedObjects = [NSArray array];
+    //self.feedObjects = [NSArray array];
     NSLog(@"reloading personal data");
     [self getFeedObjects];
         
@@ -365,10 +388,26 @@
 
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
 {
-    self.reloadingFeedObject = YES;
-
-    NSLog(@"reloading personal datapre");
     self.feedObjects = [NSArray array];
+    if (self.currentTable == @"answers")
+    {
+        self.reloadingAnswers = YES;
+        self.answerObjects =[NSArray array];
+    }
+    else if (self.currentTable = @"recs")
+    {
+        self.insightObjects = [NSArray array];
+        self.reloadingInsights = YES;
+    }
+    else
+    {
+        self.questionObjects = [NSArray array];
+        self.reloadingUGAnswerObjects = YES;
+    }
+    self.reloadingFeedObject = YES;
+    
+    NSLog(@"reloading personal datapre");
+    
     NSLog(@"reloading personal data");
     [self getFeedObjects];
     
@@ -453,6 +492,7 @@
 
         if([self.currentTable isEqualToString:@"answers"])
         {
+            //self.answerObjects = [NSMutableArray array];
             NSLog(@"About to get feed objects for answers");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -471,11 +511,15 @@
                     //    [ids addObject:current[@"id"]];
                     //}
                     NSLog(@"Just finished getting results: %@", results);
-                    self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                    NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    //self.answerObjects = [self.answerObjects arrayByAddingObjectsFromArray:results];
+                    
+                    self.answerObjects = [NSArray arrayWithArray:results];
+                    
+                    NSLog(@"Just finished getting feed ids: %@", self.answerObjects);
                     self.doneLoadingFeed = YES;
                     
                     self.reloadingFeedObject = NO;
+                    self.reloadingAnswers = NO;
 
                     
                     [self.answers performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
@@ -488,6 +532,7 @@
         }
         else if([self.currentTable isEqualToString:@"recs"])
         {
+            self.insightObjects = [NSMutableArray array];
             NSLog(@"About to get feed objects for recs");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -500,18 +545,22 @@
                 if (results) {
                     [self hideLoadingBar];
                     
+                    
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
                     //for(NSDictionary *current in results)
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
                     //NSLog(@"Just finished getting results: %@", results);
-                    NSLog(@"Results: %@", results);
-                    self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    NSLog(@"Insight Results: %@", results);
+                   // self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    self.insightObjects = [NSArray arrayWithArray: results];
                     NSLog(@"Just finished getting recs ids: %@", self.feedObjects);
+                    
                     self.doneLoadingFeed = YES;
                     
                     self.reloadingFeedObject = NO;
+                    self.reloadingInsights = NO;
                     
                     [self.recs performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     
@@ -523,6 +572,7 @@
         }
         else
         {
+            //self.questionObjects = [NSMutableArray array];
             NSLog(@"About to get feed objects for ugquestions");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -533,6 +583,14 @@
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
+                    NSLog(@"Question Results: %@", results);
+                    self.questionObjects = [NSArray arrayWithArray:results];
+                    self.doneLoadingFeed = YES;
+                    
+                    self.reloadingFeedObject = NO;
+                    self.reloadingUGAnswerObjects = NO;
+                    [self.ugQuestions performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+
                     [self hideLoadingBar];
 
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
@@ -541,13 +599,8 @@
                     //    [ids addObject:current[@"id"]];
                     //}
                     NSLog(@"Just finished getting results: %@ for path %@", results, path);
-                    self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    //self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
                     //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
-                    self.doneLoadingFeed = YES;
-                    
-                    self.reloadingFeedObject = NO;
-                    
-                    [self.ugQuestions performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -588,7 +641,15 @@
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
     //extra for profile and invite cells
-    return self.feedObjects.count + 1;
+    NSInteger num;
+    if(tableView == self.answers)
+        num =  self.answerObjects.count + 1;
+    else if(tableView == self.recs)
+        num =  self.insightObjects.count + 1;
+    else
+        num = self.questionObjects.count + 1;
+    NSLog(@"Number of cells: %d", num);
+    return num;
 }
 
 - (AnswersCell *) displayAnswerAsRead:(AnswersCell *) cell side:(NSString *) side
@@ -656,14 +717,23 @@
 {
     if(self.reloadingFeedObject)
     {
-        NSLog(@"Still reloading");
-        UITableView *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"InviteFriends"];
+        NSLog(@"Still reloading WHAT'S UP");
+        /*UITableView *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"InviteFriends"];
+        return cell; */
+        
+        static NSString *CellIdentifier = @"InviteFriends";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+            // More initializations if needed.
+        }
         return cell;
+
     }
     else
     {
         //otherwise if it's a footer
-        if(indexPath.row == self.feedObjects.count)
+        if(indexPath.row == 14142) //self.feedObjects.count
         {
             static NSString *CellIdentifier = @"InviteFriends";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -671,18 +741,29 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 // More initializations if needed.
             }
-                    
             return cell;
         }
+        
         else
         {
             if(tableView == self.answers)
-            {        
+            {
+                if (self.reloadingAnswers || indexPath.row == self.answerObjects.count)
+                {
+                    static NSString *CellIdentifier = @"InviteFriends";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                    if (!cell) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                        // More initializations if needed.
+                    }
+                    return cell;
+                }
+
                 static NSString *CellIdentifier = @"AnswersCell";
                 AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];            
                 NSLog(@"IndexPath is %d", indexPath.row);
-                NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
-                    
+                //NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
+                NSDictionary *currentObject = [self.answerObjects objectAtIndex:(indexPath.row)];
                 NSString *newtext = currentObject[@"question"];
                 
                 cell.question.text = newtext;
@@ -840,12 +921,24 @@
             }
             else if(tableView == self.recs) //if it's a rec
             {
+                if (self.reloadingInsights || indexPath.row == self.insightObjects.count)
+                {
+                    static NSString *CellIdentifier = @"InviteFriends";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                    if (!cell) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                        // More initializations if needed.
+                    }
+                    return cell;
+                }
+
+                NSLog(@"Getting insight");
                 static NSString *CellIdentifier = @"RecsCell";
                 //static NSString *CellIdentifier = @"UGQuestionsCell";
                 RecsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
                 
                 NSLog(@"IndexPath is %d", indexPath.row);
-                NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
+                NSDictionary *currentObject = [self.insightObjects objectAtIndex:(indexPath.row)];
                 
                 NSString *newtext = currentObject[@"text"];
                 
@@ -897,10 +990,22 @@
             }
             else //if it's a UGAnswer
             {
+                if (self.reloadingUGAnswerObjects || indexPath.row == self.questionObjects.count)
+                {
+                    static NSString *CellIdentifier = @"InviteFriends";
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                    if (!cell) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+                        // More initializations if needed.
+                    }
+                    return cell;
+                }
+                
                 static NSString *CellIdentifier = @"UGQuestionsCell";
                 UGQuestionsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
                 NSLog(@"IndexPath is %d", indexPath.row);
-                NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
+                NSLog(@"Question objects is: %@", self.questionObjects);
+                NSDictionary *currentObject = [self.questionObjects objectAtIndex:(indexPath.row)];
                 
                 NSString *newtext = currentObject[@"question_text"];
                 
