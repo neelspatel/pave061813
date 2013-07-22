@@ -30,11 +30,12 @@
 {
     [super viewDidLoad];
     
+    NSLog(@"Called view did load when adding a group");
     // initing the arrays
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     self.friendNames = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"names"] copy]];
     self.friendIds = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"friends"] copy]];
-    
+    NSLog(@"Friend ids: %@", self.friendIds);
     // if no friends, reload friend data from server
     
     self.filteredNames = [[NSMutableArray alloc] init];
@@ -179,7 +180,6 @@
     //now remove name
     [self.filteredNames removeObject:selectedName];
     [self.friendNames removeObject:selectedName];
-    
     [self.tableView reloadData];
 }
 
@@ -245,42 +245,57 @@
 
 - (void) createGroupAction
 {
+    NSLog(@"About to create a group");
     // check if everything is in line
     if (self.currentGroup.count > 0)
     {
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         
-        NSLog(@"Succesfully created group %@", self.currentGroupName);
         // if there is no group name
         if (!self.currentGroupName)
             self.currentGroupName = @"Default Name";
+
+        NSLog(@"Before accessing groups");
         
         NSMutableArray *friendIds = [prefs objectForKey:@"friends"];
         NSMutableArray *friendNames = [prefs objectForKey:@"names"];
-        NSMutableArray *groupFriendIds = [[NSMutableArray alloc] init];
-        NSLog(@"%@", friendNames);
+        NSMutableArray *groupFriendIds = [[NSMutableArray alloc] initWithCapacity: self.currentGroup.count];
+        
+       // NSLog(@"%@", friendNames);
+        
         for (NSString *curName in self.currentGroup) {
             NSInteger index = [friendNames indexOfObject:curName];
             NSLog(@"Index: %d", index);
             [groupFriendIds addObject:[friendIds objectAtIndex:index]];
         }
         
+        NSLog(@"Group Friend IDS: %@", groupFriendIds);
+        
         NSMutableDictionary *currentGroup = [[NSMutableDictionary alloc] initWithObjects:@[self.currentGroupName, groupFriendIds, self.currentGroup] forKeys:@[@"name", @"friend_ids", @"friend_names"]];
-        NSMutableArray *groups = [prefs objectForKey:@"groups"];
+        
+        NSLog(@"Current Group: %@", currentGroup);
+
+        NSMutableArray *groups = [[NSMutableArray alloc] initWithArray:[prefs objectForKey:@"groups"]];
+        NSLog(@"User defaults group: %@", groups);
+    
         if (!groups)
+        {
+            NSLog(@"Not groups");
             groups = [[NSMutableArray alloc] init];
+        }
         
         [groups addObject:currentGroup];
         NSLog(@"Groups %@", groups);
         [prefs setObject:groups forKey:@"groups"];
         [prefs synchronize];
-        
+        NSLog(@"Succesfully created group %@", self.currentGroupName);
+
         [self dismissViewControllerAnimated:YES completion:nil];
         // You succesfully created this group!
     }
     else{
         NSLog(@"Empty group cannot complete");
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You have to add group members" delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please add group members" delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
         [alertView show];
     }
 }
