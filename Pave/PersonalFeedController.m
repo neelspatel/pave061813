@@ -1147,4 +1147,43 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"About to cancel cell");
+    // free up the requests for each ImageView    
+    if(tableView == self.answers) //if it's a rec
+    {
+        AnswersCell *current = (AnswersCell *)cell;
+        @try{
+            [current.profilePicture cancelCurrentImageLoad];
+            [current.leftProduct cancelCurrentImageLoad];
+            [current.rightProduct cancelCurrentImageLoad];
+        }
+        @catch (NSException * e) {
+            NSLog(@"Got an exception: %@", e);
+        }
+    }
+    else if(tableView == self.recs) //if it's a rec
+    {
+        RecsCell *current = (RecsCell *)cell;
+        @try{
+            [current.image cancelCurrentImageLoad];
+        }
+        @catch (NSException * e) {
+            NSLog(@"Got an exception: %@", e);
+        }
+    }
+    else if(tableView == self.ugQuestions) //if it's a rec
+    {
+        UGQuestionsCell *current = (UGQuestionsCell *)cell;
+        @try{
+            [current.leftProduct cancelCurrentImageLoad];
+            [current.rightProduct cancelCurrentImageLoad];
+        }
+        @catch (NSException * e) {
+            NSLog(@"Got an exception: %@", e);
+        }
+    }
+}
+
 @end
