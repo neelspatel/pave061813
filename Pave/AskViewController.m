@@ -225,7 +225,7 @@
 
 - (void) updateCreateButton
 {
-    if(self.leftURL && self.rightURL)
+    if(self.leftURL && self.rightURL && !([self.leftURL isEqualToString:@""]) && !([self.rightURL isEqualToString:@""]) )
     {
         NSLog(@"Ready to create if you want to");
         [self.createButton setImage:[UIImage imageNamed:@"create_selected.png"] forState:UIControlStateNormal];
@@ -259,6 +259,8 @@
 //cancels from the left side
 - (IBAction)leftCancel:(id)sender
 {
+    NSLog(@"Cancelling left");
+    
     self.leftCancelButton.hidden = TRUE;
     self.leftAddButton.hidden = FALSE;
     [self.leftImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
@@ -272,6 +274,8 @@
 //cancels from the left side
 - (IBAction)rightCancel:(id)sender
 {
+    NSLog(@"Cancelling right");
+    
     self.rightCancelButton.hidden = TRUE;
     self.rightAddButton.hidden = FALSE;
     [self.rightImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
@@ -301,6 +305,34 @@
 
 -(void) clearImage:(NSString *) side {
     
+}
+
+- (UIImage*)smaller:(UIImage*)image
+{
+    int w = image.size.width;
+    int h = image.size.height;
+    int newW, newH;
+    
+    //scales so the smaller dimension is 160
+    if(w > h)
+    {
+        newH = 160;
+        newW = w * 160 /h;
+    }
+    else
+    {
+        newW = 160;
+        newH = h * 160 /w;
+    }
+    NSLog(@"Image went from %d by %d to %d by %d", w, h, newW, newH);
+
+    CGSize newSize = CGSizeMake(newW, newH);
+    UIGraphicsBeginImageContext( newSize );
+    [image drawInRect:CGRectMake(0,0,newW, newH)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -335,6 +367,7 @@
         self.rightCancelButton.hidden = NO;
     }
     
+    image = [self smaller:image];
     
     // Convert the image to JPEG data.
     NSData *imageData = UIImageJPEGRepresentation(image, 1.0);

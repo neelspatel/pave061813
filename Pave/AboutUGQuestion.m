@@ -8,6 +8,8 @@
 
 #import "AboutUGQuestion.h"
 #import "NameCell.h"
+#import "UIImageView+WebCache.h"
+#import <objc/runtime.h>
 
 @interface AboutUGQuestion ()
 
@@ -98,10 +100,21 @@
     
     if (leftFriends.count > indexPath.row) // if we have something
     {
-        //id currentID = [leftFriends objectAtIndex:indexPath.row];
-        //int index = [ids indexOfObject:currentID];
-        //NSString *name = [names objectAtIndex:index];
-        cell.leftName.text = [leftFriends objectAtIndex:indexPath.row];
+        //gets the id and name as a string
+        NSString * currentID = [leftFriends objectAtIndex:indexPath.row];
+        NSArray *ids = [[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"];
+        NSArray *names = [[NSUserDefaults standardUserDefaults] objectForKey:@"names"];
+        
+        int index = [ids indexOfObject:currentID];
+        NSString *name = [names objectAtIndex: index];
+        
+        cell.leftName.text = name;
+        
+        //now sets the image
+        NSString *profileURL = @"https://graph.facebook.com/";
+        profileURL = [profileURL stringByAppendingString:currentID];
+        profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
+        [cell.leftImage setImageWithURL:[NSURL URLWithString:profileURL] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
     }
     else
     {
@@ -109,12 +122,23 @@
     }
     
     if (rightFriends.count > indexPath.row) // if we have something
-    {        
-        //NSString * currentID = [rightFriends objectAtIndex:indexPath.row];
-        //int index = [ids indexOfObject:currentID];
-        //NSLog(@"For id %@ at index %d", currentID, index);
-        //NSString *name = [names objectAtIndex:index];
-        cell.rightName.text = [rightFriends objectAtIndex:indexPath.row];
+    {                
+        //gets the id and name as a string
+        NSString * currentID = [rightFriends objectAtIndex:indexPath.row];
+        NSArray *ids = [[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"];
+        NSArray *names = [[NSUserDefaults standardUserDefaults] objectForKey:@"names"];
+        
+        int index = [ids indexOfObject:currentID];
+        NSString *name = [names objectAtIndex: index];
+        
+        cell.rightName.text = name;
+        
+        //now sets the image
+        NSString *profileURL = @"https://graph.facebook.com/";
+        profileURL = [profileURL stringByAppendingString:currentID];
+        profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
+        [cell.rightImage setImageWithURL:[NSURL URLWithString:profileURL] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];                
+        
     }
     else
     {
@@ -124,6 +148,13 @@
     NSLog(@"Just set the stuff");
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NameCell *current = (NameCell *) cell;
+    [current.leftImage cancelCurrentImageLoad];
+    [current.rightImage cancelCurrentImageLoad];
 }
 
 @end

@@ -69,6 +69,26 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    //allocates the list of ids as strings
+    self.idStrings = [[NSMutableArray alloc] init];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"] == nil)
+    {
+        NSArray *ids = [defaults objectForKey:@"friends"];
+        for(int i = 0; i < ids.count; i++)
+        {
+            [self.idStrings addObject:[[ids objectAtIndex: i] stringValue]];
+        }
+        NSLog(@"ID strings is now %@", self.idStrings);
+
+        //saves in nsuserdefaults
+        [[NSUserDefaults standardUserDefaults] setObject:self.idStrings forKey:@"friendsStrings"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    else
+    {
+        NSLog(@"Already had friendsStrings saved");
+    }
+        
     self.answerReadStatus = [[NSMutableDictionary alloc] init];
     if([defaults objectForKey:@"answerReadStatus"])
     {
@@ -96,9 +116,8 @@
     //sets the handler to listen for taps    
     [self updateProfileStats];
     
-    NSLog(@"Feed objects are %@", self.feedObjects);
     [self getFeedObjects];
-    NSLog(@"Feed objects are %@", self.answerObjects);
+    NSLog(@"Answer objects are %@", self.answerObjects);
 
     self.badge_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
     [self.badge_answers setValue:[self getAnswerCount]];
@@ -257,7 +276,7 @@
         
         CGPoint pointInCell = [touch locationInView:cell];
         
-        NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+        NSMutableDictionary *currentObject = [self.answerObjects objectAtIndex:indexPath.row];
         NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
         
         NSString *key = [NSString stringWithFormat:@"%@%@%@%@", [NSString stringWithFormat:@"%@", currentObject[@"friend"]], currentObject[@"question"], currentObject[@"chosenProduct"], currentObject[@"otherProduct"], nil];
@@ -588,7 +607,7 @@
                     NSLog(@"Insight Results: %@", results);
                    // self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
                     self.insightObjects = [NSArray arrayWithArray: results];
-                    NSLog(@"Just finished getting recs ids: %@", self.feedObjects);
+                    NSLog(@"Just finished getting recs ids: %@", self.insightObjects);
                     
                     self.doneLoadingFeed = YES;
                     
@@ -773,7 +792,7 @@
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 // More initializations if needed.
-            }
+            }            
             return cell;
         }
         
@@ -798,6 +817,9 @@
                 //NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
                 NSDictionary *currentObject = [self.answerObjects objectAtIndex:(indexPath.row)];
                 NSString *newtext = currentObject[@"question"];
+                
+                //sets the background
+                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
                 
                 cell.question.text = newtext;
                 
@@ -975,6 +997,9 @@
                 
                 NSString *newtext = currentObject[@"text"];
                 
+                //sets the background
+                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+                
                 cell.text.text = newtext;
                 
                 //now downloads and saves the images
@@ -1041,6 +1066,9 @@
                 NSDictionary *currentObject = [self.questionObjects objectAtIndex:(indexPath.row)];
                 
                 NSString *newtext = currentObject[@"question_text"];
+                
+                //sets the background
+                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
                 
                 cell.question.text = newtext;
                 
@@ -1173,7 +1201,7 @@
     NSLog(@"Clicked");
     if([self.currentTable isEqualToString:@"ugQuestions"]) //if it's a rec
     {
-        NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
+        NSDictionary *currentObject = [self.questionObjects objectAtIndex:(indexPath.row)];
         NSLog(@"Current object before sending is %@", currentObject);
         self.popup = [[AboutUGQuestion alloc] initWithData:currentObject];
         [self.view addSubview:[self.popup view]];

@@ -30,6 +30,8 @@
 @property (nonatomic, assign)BOOL reloadingAnswers;
 @property (nonatomic, assign)BOOL reloadingInsights;
 
+//stores the list of friend ids (as strings this time)
+@property (nonatomic, retain)NSMutableArray *idStrings;
 
 // new properties to prevent crashes 
 @property (nonatomic, retain)NSArray *feedObjects;

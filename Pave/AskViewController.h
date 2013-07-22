@@ -49,5 +49,7 @@
 
 @property (nonatomic, retain) StatusBar *sbar;
 
+- (UIImage*)smaller:(UIImage*)image;
+
 
 @end

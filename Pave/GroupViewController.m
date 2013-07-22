@@ -148,6 +148,9 @@
     GroupListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSMutableDictionary *currentObject = [self.groups objectAtIndex:indexPath.row];
     
+    //sets the background
+    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+    
     cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_trending_topic_box.png"]];
     
     cell.groupName.text = [currentObject objectForKey:@"name"];
@@ -163,6 +166,31 @@
     // do something when the table view is selected
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return YES if you want the specified item to be editable.
+    return YES;
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+            NSLog(@"Tryna delete");
+        
+        //first removes and resets array
+        NSMutableArray *newArray = [NSMutableArray arrayWithArray:self.groups];
+        [newArray removeObjectAtIndex:indexPath.row];
+        self.groups = [NSArray arrayWithArray:newArray];
+        
+        //now saves it in NSUser defaults
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        
+        [prefs setObject:self.groups forKey:@"groups"];
+        
+        //now updates the table
+        [self.tableView reloadData];
+    }
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     //setup trending controller
     
@@ -173,7 +201,6 @@
      
     
 }
-
 
 - (IBAction)addGroup:(id)sender {
     NSLog(@"Clicked add group");
