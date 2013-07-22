@@ -269,6 +269,10 @@
 		B0040588179C12A400ACB665 /* NOTREADY_DONE_BUTTON@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040582179C12A400ACB665 /* NOTREADY_DONE_BUTTON@2x.png */; };
 		B0040589179C12A400ACB665 /* READY_DONE_BUTTON.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040583179C12A400ACB665 /* READY_DONE_BUTTON.png */; };
 		B004058A179C12A400ACB665 /* READY_DONE_BUTTON@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040584179C12A400ACB665 /* READY_DONE_BUTTON@2x.png */; };
+		B0040599179D799400ACB665 /* WalkthroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0040597179D799400ACB665 /* WalkthroughViewController.m */; };
+		B004059A179D799400ACB665 /* WalkthroughViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0040598179D799400ACB665 /* WalkthroughViewController.xib */; };
+		B004059E179D79A300ACB665 /* WalkthroughChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B004059C179D79A300ACB665 /* WalkthroughChildViewController.m */; };
+		B004059F179D79A300ACB665 /* WalkthroughChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B004059D179D79A300ACB665 /* WalkthroughChildViewController.xib */; };
 		B01707891773A20100B8D77B /* TrendingTopicsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */; };
 		B074E997179A1AC700183699 /* StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B074E996179A1AC700183699 /* StatusBar.m */; };
 		B074E999179A47D200183699 /* StatusBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B074E998179A47D200183699 /* StatusBarView.xib */; };
@@ -607,6 +611,12 @@
 		B0040582179C12A400ACB665 /* NOTREADY_DONE_BUTTON@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NOTREADY_DONE_BUTTON@2x.png"; sourceTree = "<group>"; };
 		B0040583179C12A400ACB665 /* READY_DONE_BUTTON.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = READY_DONE_BUTTON.png; sourceTree = "<group>"; };
 		B0040584179C12A400ACB665 /* READY_DONE_BUTTON@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "READY_DONE_BUTTON@2x.png"; sourceTree = "<group>"; };
+		B0040596179D799400ACB665 /* WalkthroughViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalkthroughViewController.h; sourceTree = "<group>"; };
+		B0040597179D799400ACB665 /* WalkthroughViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalkthroughViewController.m; sourceTree = "<group>"; };
+		B0040598179D799400ACB665 /* WalkthroughViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WalkthroughViewController.xib; sourceTree = "<group>"; };
+		B004059B179D79A300ACB665 /* WalkthroughChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalkthroughChildViewController.h; sourceTree = "<group>"; };
+		B004059C179D79A300ACB665 /* WalkthroughChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalkthroughChildViewController.m; sourceTree = "<group>"; };
+		B004059D179D79A300ACB665 /* WalkthroughChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WalkthroughChildViewController.xib; sourceTree = "<group>"; };
 		B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingTopicsListViewController.h; sourceTree = "<group>"; };
 		B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingTopicsListViewController.m; sourceTree = "<group>"; };
 		B074E995179A1AC700183699 /* StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBar.h; sourceTree = "<group>"; };
@@ -758,8 +768,9 @@
 				B0F178DB1791321B00CCA291 /* Groups */,
 				B0C8CE14179B454F00117306 /* StatusBar */,
 				B074E9A4179A9EC500183699 /* NotificationPopup */,
-				185D854517707D46007733FA /* AppDelegate.h */,
+				B0040590179D6C6A00ACB665 /* Walkthrough */,
 				185D854617707D46007733FA /* AppDelegate.m */,
+				185D854517707D46007733FA /* AppDelegate.h */,
 				185E1FD01778591C00ECB3DC /* LeftToRightSegue.h */,
 				185E1FD11778591C00ECB3DC /* LeftToRightSegue.m */,
 				185D8587177085EF007733FA /* LoginViewController.h */,
@@ -1111,6 +1122,19 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		B0040590179D6C6A00ACB665 /* Walkthrough */ = {
+			isa = PBXGroup;
+			children = (
+				B0040596179D799400ACB665 /* WalkthroughViewController.h */,
+				B0040597179D799400ACB665 /* WalkthroughViewController.m */,
+				B0040598179D799400ACB665 /* WalkthroughViewController.xib */,
+				B004059B179D79A300ACB665 /* WalkthroughChildViewController.h */,
+				B004059C179D79A300ACB665 /* WalkthroughChildViewController.m */,
+				B004059D179D79A300ACB665 /* WalkthroughChildViewController.xib */,
+			);
+			name = Walkthrough;
+			sourceTree = "<group>";
+		};
 		B074E9A4179A9EC500183699 /* NotificationPopup */ = {
 			isa = PBXGroup;
 			children = (
@@ -1456,6 +1480,8 @@
 				B0040589179C12A400ACB665 /* READY_DONE_BUTTON.png in Resources */,
 				B004058A179C12A400ACB665 /* READY_DONE_BUTTON@2x.png in Resources */,
 				1835A87D179BEC06000CA738 /* 2TESTHOMEBACKGROUND@2X.png in Resources */,
+				B004059A179D799400ACB665 /* WalkthroughViewController.xib in Resources */,
+				B004059F179D79A300ACB665 /* WalkthroughChildViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1563,6 +1589,8 @@
 				B0C8CE2F179B839B00117306 /* SettingsViewController.m in Sources */,
 				B0C8CE32179BA49F00117306 /* GroupListCell.m in Sources */,
 				B0C8CE35179BBF5900117306 /* AddFriendCell.m in Sources */,
+				B0040599179D799400ACB665 /* WalkthroughViewController.m in Sources */,
+				B004059E179D79A300ACB665 /* WalkthroughChildViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

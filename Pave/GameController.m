@@ -19,6 +19,7 @@
 #import <MessageUI/MessageUI.h>
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
+#import "WalkthroughViewController.h"
 
 @interface GameController ()
 
@@ -118,6 +119,11 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"About to push walkthrough");
+    WalkthroughViewController *walkthrough = [[WalkthroughViewController alloc] initWithNibName:@"WalkthroughViewController" bundle:nil];
+    [self presentViewController:walkthrough animated:YES completion:nil];
+    
+
     //first reload the data
     [self.tableView reloadData];
     
