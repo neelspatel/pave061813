@@ -169,11 +169,11 @@
     
     if(anon == TRUE)
     {
-        cell.onOffButton.text = @"Anon is on";
+        cell.onOffButton.image = [UIImage imageNamed:@"make_public.png"];
     }
     else
     {
-        cell.onOffButton.text = @"Anon is off";
+        cell.onOffButton.image = [UIImage imageNamed:@"make_anonymous.png"];
     }
 }
 

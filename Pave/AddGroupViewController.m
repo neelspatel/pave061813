@@ -126,7 +126,8 @@
     }
     
     //sets the background
-    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unselected_group_selector_background.png"]];
+    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_group_selector_background.png"]];
     
     NSString *profileURL = @"https://graph.facebook.com/";
     //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
@@ -238,6 +239,7 @@
 }
 
 - (IBAction)showCreate:(id)sender {
+    self.createButton.hidden = YES;
     self.popup.hidden = NO;
 }
 

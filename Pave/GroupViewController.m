@@ -147,10 +147,11 @@
     GroupListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     NSMutableDictionary *currentObject = [self.groups objectAtIndex:indexPath.row];
     
-    //sets the background
-    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
-    
-    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_trending_topic_box.png"]];
+    //sets the background    
+    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"not_selected_group.png"]];
+    cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_group.png"]];
+    cell.groupName.highlightedTextColor = [UIColor grayColor];
+    cell.groupMembers.highlightedTextColor = [UIColor grayColor];
     
     cell.groupName.text = [currentObject objectForKey:@"name"];
     NSLog(@"Current object: %@", currentObject);

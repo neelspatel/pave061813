@@ -309,6 +309,30 @@
             NSLog(@"Not in the image...");
         }
     }
+    else if([self.currentTable isEqualToString:@"ugQuestions"]) {
+        UITableView *tableView = self.ugQuestions;
+        
+        NSSet *touches = [event allTouches];
+        UITouch *touch = [touches anyObject];
+        
+        CGPoint currentTouchPosition = [touch locationInView:self.ugQuestions];
+        
+        NSIndexPath *indexPath = [self.ugQuestions indexPathForRowAtPoint: currentTouchPosition];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        
+        UGQuestionsCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        CGPoint pointInCell = [touch locationInView:cell];
+        
+        NSDictionary *currentObject = [self.questionObjects objectAtIndex:indexPath.row];
+        NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);                
+        
+        if (CGRectContainsPoint(cell.detail.frame, pointInCell)) {
+            self.popup = [[AboutUGQuestion alloc] initWithData:currentObject];
+            [self.view addSubview:[self.popup view]];            
+        }
+        
+    }
 }
 
 //logic for switching in the buttons and tables
@@ -689,11 +713,11 @@
     if([side isEqualToString:@"Left"])
     {
         [cell.agree setImage:[UIImage imageNamed:@"SELECTED_BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
-        [cell.disagree setImage:[UIImage imageNamed:@"BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
+        [cell.disagree setImage:[UIImage imageNamed:@"aboutyouBIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
     }
     else
     {
-        [cell.agree setImage:[UIImage imageNamed:@"BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+        [cell.agree setImage:[UIImage imageNamed:@"aboutyouBIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
         [cell.disagree setImage:[UIImage imageNamed:@"SELECTED_BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
     }
     return cell;
@@ -709,7 +733,7 @@
         self.answersTextField.text = [defaults objectForKey:@"profile_answer_count"];
         self.questionsTextField.text = [defaults objectForKey:@"profile_question_count"];
         NSLog(@"Getting level");
-        self.levelTextField.text = [@"Level " stringByAppendingString:[defaults objectForKey:@"level"]];
+        self.levelTextField.text = [@"level " stringByAppendingString:[defaults objectForKey:@"level"]];
     }
     
 
@@ -727,7 +751,7 @@
             self.votesTextField.text = vote_count;
             self.answersTextField.text = answer_count;
             self.questionsTextField.text = ug_question_count;
-            self.levelTextField.text = [@"Level " stringByAppendingString:level];
+            self.levelTextField.text = [@"level " stringByAppendingString:level];
             
             [defaults setObject:answer_count forKey:@"profile_answer_count"];
             [defaults setObject:ug_question_count forKey:@"profile_ug_answer_count"];
@@ -799,7 +823,7 @@
                 NSString *newtext = currentObject[@"question"];
                 
                 //sets the background
-                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"about_you_background@2x.png"]];
                 
                 cell.question.text = newtext;
                 
@@ -938,8 +962,8 @@
                 [cell.disagree addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];
                 
                 //resets the buttons
-                [cell.agree setImage:[UIImage imageNamed:@"BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
-                [cell.disagree setImage:[UIImage imageNamed:@"BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
+                [cell.agree setImage:[UIImage imageNamed:@"aboutyouBIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+                [cell.disagree setImage:[UIImage imageNamed:@"aboutyouBIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
                 
                 if([self.answerReadStatus objectForKey:key])
                 {
@@ -978,7 +1002,7 @@
                 NSString *newtext = currentObject[@"text"];
                 
                 //sets the background
-                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recommendation_for_you@2x.png"]];
                 
                 cell.text.text = newtext;
                 
@@ -1048,7 +1072,7 @@
                 NSString *newtext = currentObject[@"question_text"];
                 
                 //sets the background
-                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UGC_profile_background@2x.png"]];
                 
                 cell.question.text = newtext;
                 
@@ -1128,6 +1152,10 @@
                      }
                  }];
                 cell.rightProduct.clipsToBounds = YES;
+                
+                //touch listener
+                [cell.detail addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];
+                
                 return cell;
             }
         }
@@ -1178,14 +1206,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Clicked");
-    if([self.currentTable isEqualToString:@"ugQuestions"]) //if it's a rec
-    {
-        NSDictionary *currentObject = [self.questionObjects objectAtIndex:(indexPath.row)];
-        NSLog(@"Current object before sending is %@", currentObject);
-        self.popup = [[AboutUGQuestion alloc] initWithData:currentObject];
-        [self.view addSubview:[self.popup view]];
-    }
+    
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

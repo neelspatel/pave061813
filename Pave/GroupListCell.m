@@ -15,9 +15,14 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
-        self.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@""]];
+        //self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"not_selected_group.png"]];
+        //self.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_group.png"]];
+        
+        //self.imageView.image = [UIImage imageNamed:@"not_selected_group.png"];
+        //self.imageView.highlighted = [UIImage imageNamed:@"selected_group.png"];
     }
+    // Initialization code
+    
     return self;
 }
 
