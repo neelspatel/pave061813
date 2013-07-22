@@ -18,6 +18,7 @@
 
 - (IBAction)back:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIButton *createButton;
 @property (nonatomic, retain) NSMutableArray *friendNames;
 @property (nonatomic, retain) NSMutableArray *friendIds;
 @property (nonatomic, retain) NSMutableArray *filteredNames;

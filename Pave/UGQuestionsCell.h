@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
 @property (weak, nonatomic) IBOutlet UILabel *question;
 
+@property (weak, nonatomic) IBOutlet UIButton *detail;
+
 @property(nonatomic, assign) NSInteger leftProductId;
 @property(nonatomic, assign) NSInteger rightProductId;
 @property(nonatomic, assign) NSString *questionText;

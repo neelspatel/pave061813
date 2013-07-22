@@ -16,7 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet UIImageView *leftProduct;
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
-@property (weak, nonatomic) IBOutlet UILabel *onOffButton;
+@property (weak, nonatomic) IBOutlet UIImageView *onOffButton;
 
 - (IBAction)switched:(id)sender;
 
