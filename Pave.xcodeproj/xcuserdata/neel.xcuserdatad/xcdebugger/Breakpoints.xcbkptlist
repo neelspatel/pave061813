@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/PersonalFeedController.m"
-         timestampString = "396165850.418593"
+         timestampString = "396175569.117531"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "296"
-         endingLineNumber = "296"
+         startingLineNumber = "316"
+         endingLineNumber = "316"
          landmarkName = "-handleTap:event:"
          landmarkType = "5">
       </FileBreakpoint>

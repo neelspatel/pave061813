@@ -69,6 +69,26 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    //allocates the list of ids as strings
+    self.idStrings = [[NSMutableArray alloc] init];
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"] == nil)
+    {
+        NSArray *ids = [defaults objectForKey:@"friends"];
+        for(int i = 0; i < ids.count; i++)
+        {
+            [self.idStrings addObject:[[ids objectAtIndex: i] stringValue]];
+        }
+        NSLog(@"ID strings is now %@", self.idStrings);
+
+        //saves in nsuserdefaults
+        [[NSUserDefaults standardUserDefaults] setObject:self.idStrings forKey:@"friendsStrings"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+    else
+    {
+        NSLog(@"Already had friendsStrings saved");
+    }
+        
     self.answerReadStatus = [[NSMutableDictionary alloc] init];
     if([defaults objectForKey:@"answerReadStatus"])
     {

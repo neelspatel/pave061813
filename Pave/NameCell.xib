@@ -117,6 +117,7 @@
 								<string key="NSFrame">{{290, 0}, {30, 30}}</string>
 								<reference key="NSSuperview" ref="72146481"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -153,22 +154,6 @@
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">leftImage</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="221159677"/>
-					</object>
-					<int key="connectionID">86</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">rightImage</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="232708147"/>
-					</object>
-					<int key="connectionID">87</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">leftName</string>
 						<reference key="source" ref="178375734"/>
 						<reference key="destination" ref="18467424"/>
@@ -182,6 +167,22 @@
 						<reference key="destination" ref="316079773"/>
 					</object>
 					<int key="connectionID">13</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">leftImage</string>
+						<reference key="source" ref="178375734"/>
+						<reference key="destination" ref="221159677"/>
+					</object>
+					<int key="connectionID">89</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">rightImage</string>
+						<reference key="source" ref="178375734"/>
+						<reference key="destination" ref="232708147"/>
+					</object>
+					<int key="connectionID">90</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -665,7 +666,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">87</int>
+			<int key="maxID">90</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -686,7 +687,7 @@
 						<string key="leftName">UILabel</string>
 						<string key="right">UIImageView</string>
 						<string key="rightImage">UIImageView</string>
-						<string key="rightName">UIImageView</string>
+						<string key="rightName">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="left">
@@ -711,7 +712,7 @@
 						</object>
 						<object class="IBToOneOutletInfo" key="rightName">
 							<string key="name">rightName</string>
-							<string key="candidateClassName">UIImageView</string>
+							<string key="candidateClassName">UILabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
