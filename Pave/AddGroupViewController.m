@@ -8,6 +8,8 @@
 
 #import "AddGroupViewController.h"
 #import "AddFriendCell.h"
+#import "UIImageView+WebCache.h"
+
 
 @interface AddGroupViewController ()
 
@@ -31,10 +33,12 @@
     // initing the arrays
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     self.friendNames = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"names"] copy]];
+    self.friendIds = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"friends"] copy]];
     
     // if no friends, reload friend data from server
     
     self.filteredNames = [[NSMutableArray alloc] init];
+    self.filteredIds = [[NSMutableArray alloc] init];
     
     self.tableView.delaysContentTouches = NO;
 
@@ -102,20 +106,32 @@
     return rowCount;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (AddFriendCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
+    NSString *userID;
     
     AddFriendCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (self.isFiltered)
+    {
         cell.friendName.text = [self.filteredNames objectAtIndex:indexPath.row];
+        userID = [[self.filteredIds objectAtIndex:indexPath.row] stringValue];
+    }
+        
     else
+    {
         cell.friendName.text = [self.friendNames objectAtIndex:indexPath.row];
+        userID = [[self.friendIds objectAtIndex:indexPath.row] stringValue];                
+    }
     
-    // do logic for getting profile picture here 
-    [cell.friendProfilePicture setImage: [UIImage imageNamed:@"add_picture_icon.png"]];
+    NSString *profileURL = @"https://graph.facebook.com/";
+    //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
+    profileURL = [profileURL stringByAppendingString:userID];
+    profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
+    [cell.friendProfilePicture setImageWithURL:[NSURL URLWithString:profileURL]
+                        placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    
     return cell;
-
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -128,10 +144,17 @@
     [self.view endEditing:YES];
     
     NSString *selectedName;
+    NSString *selectedId;
     if (self.isFiltered)
+    {
         selectedName = [[NSString alloc] initWithString: [self.filteredNames objectAtIndex:indexPath.row]];
+        selectedId = [[NSString alloc] initWithString: [[self.filteredIds objectAtIndex:indexPath.row] stringValue]];
+    }
     else
+    {
         selectedName = [[NSString alloc] initWithString: [self.friendNames objectAtIndex:indexPath.row]];
+        selectedId = [[NSString alloc] initWithString: [[self.friendIds objectAtIndex:indexPath.row] stringValue]];
+    }
     
     // add the seleced name to the current group
     [self.currentGroup addObject:selectedName];
@@ -150,9 +173,21 @@
     
     // delete the friend from the friends array and from the autocomplete array
     self.isFiltered = NO;
+    //must do these two first so we remove the right ID
+    [self.filteredIds removeObject:[self.friendIds objectAtIndex:indexPath.row]];
+    [self.friendIds removeObject:[self.friendIds objectAtIndex:indexPath.row]];
+    //now remove name
     [self.filteredNames removeObject:selectedName];
     [self.friendNames removeObject:selectedName];
+    
     [self.tableView reloadData];
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(AddFriendCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"About to cancel cell");
+    // free up the requests for each ImageView
+    [cell.friendProfilePicture cancelCurrentImageLoad];    
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
@@ -171,12 +206,18 @@
     {
         self.isFiltered = YES;
         self.filteredNames = [[NSMutableArray alloc] init];
+        self.filteredIds = [[NSMutableArray alloc] init];
         for (NSString *currName in self.friendNames){
             NSRange nameRange = [currName rangeOfString:text options: NSCaseInsensitiveSearch];
             if (nameRange.location == 0) {
                 [self.filteredNames addObject:currName];
+                
+                //now gets the same position for the id
+                int index = [self.friendNames indexOfObject:currName];
+                NSNumber *currId = [self.friendIds objectAtIndex:index];
+                [self.filteredIds addObject:currId];
             }
-        }
+        }        
     }
     [self.tableView reloadData];
 
@@ -199,15 +240,20 @@
 
 
 - (IBAction)createGroup:(id)sender {
+    [self createGroupAction];
+}
+
+- (void) createGroupAction
+{
     // check if everything is in line
     if (self.currentGroup.count > 0)
     {
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-
+        
         NSLog(@"Succesfully created group %@", self.currentGroupName);
         // if there is no group name
         if (!self.currentGroupName)
-                self.currentGroupName = @"Default Name";
+            self.currentGroupName = @"Default Name";
         
         NSMutableArray *friendIds = [prefs objectForKey:@"friends"];
         NSMutableArray *friendNames = [prefs objectForKey:@"names"];
@@ -238,4 +284,10 @@
         [alertView show];
     }
 }
+
+- (IBAction)back:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 @end
