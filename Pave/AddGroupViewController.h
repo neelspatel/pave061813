@@ -16,9 +16,12 @@
 //
 - (IBAction)createGroup:(id)sender;
 
+- (IBAction)back:(id)sender;
+
 @property (nonatomic, retain) NSMutableArray *friendNames;
 @property (nonatomic, retain) NSMutableArray *friendIds;
 @property (nonatomic, retain) NSMutableArray *filteredNames;
+@property (nonatomic, retain) NSMutableArray *filteredIds;
 @property (retain, nonatomic) NSMutableArray  *currentGroup;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, assign) BOOL isFiltered;
@@ -30,4 +33,6 @@
 @property(nonatomic, copy) NSString *currentGroupName;
 
 @property (weak, nonatomic) IBOutlet UIView *popup;
+
+
 @end
