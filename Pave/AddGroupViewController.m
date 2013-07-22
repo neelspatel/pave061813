@@ -125,6 +125,9 @@
         userID = [[self.friendIds objectAtIndex:indexPath.row] stringValue];                
     }
     
+    //sets the background
+    //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+    
     NSString *profileURL = @"https://graph.facebook.com/";
     //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
     profileURL = [profileURL stringByAppendingString:userID];

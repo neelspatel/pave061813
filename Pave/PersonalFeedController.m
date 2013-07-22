@@ -772,7 +772,7 @@
             if (!cell) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                 // More initializations if needed.
-            }
+            }            
             return cell;
         }
         
@@ -797,6 +797,9 @@
                 //NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
                 NSDictionary *currentObject = [self.answerObjects objectAtIndex:(indexPath.row)];
                 NSString *newtext = currentObject[@"question"];
+                
+                //sets the background
+                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
                 
                 cell.question.text = newtext;
                 
@@ -974,6 +977,9 @@
                 
                 NSString *newtext = currentObject[@"text"];
                 
+                //sets the background
+                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
+                
                 cell.text.text = newtext;
                 
                 //now downloads and saves the images
@@ -1040,6 +1046,9 @@
                 NSDictionary *currentObject = [self.questionObjects objectAtIndex:(indexPath.row)];
                 
                 NSString *newtext = currentObject[@"question_text"];
+                
+                //sets the background
+                //cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"2TESTHOMEBACKGROUND@2X.png"]];
                 
                 cell.question.text = newtext;
                 
