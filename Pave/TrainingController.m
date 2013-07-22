@@ -114,7 +114,7 @@
     [self.rightProduct cancelCurrentImageLoad];
     [self.leftProduct cancelCurrentImageLoad];
     
-    NSLog(@"Aboutto clear all vars");
+    NSLog(@"About to clear all vars");
     
     //clears the data on screen (just in case...)
     self.question.text = @"";

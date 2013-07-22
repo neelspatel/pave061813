@@ -176,14 +176,34 @@
     
     self.addFriendsSearchBar.text = @"";
     
+    
+    
+    NSLog(@"Removing object at %d", indexPath.row);
+    
     // delete the friend from the friends array and from the autocomplete array
+    if (self.isFiltered) //get the relevant index from the filtered list
+    {
+        //must do these two first so we remove the right ID
+        [self.friendIds removeObject:[self.filteredIds objectAtIndex:indexPath.row]];
+        [self.filteredIds removeObject:[self.filteredIds objectAtIndex:indexPath.row]];
+        
+        //now remove name
+        [self.filteredNames removeObject:selectedName];
+        [self.friendNames removeObject:selectedName];
+    }
+    else 
+    {
+        //must do these two first so we remove the right ID
+        [self.filteredIds removeObject:[self.friendIds objectAtIndex:indexPath.row]];
+        [self.friendIds removeObject:[self.friendIds objectAtIndex:indexPath.row]];
+        
+        //now remove name
+        [self.filteredNames removeObject:selectedName];
+        [self.friendNames removeObject:selectedName];
+    }
+    
     self.isFiltered = NO;
-    //must do these two first so we remove the right ID
-    [self.filteredIds removeObject:[self.friendIds objectAtIndex:indexPath.row]];
-    [self.friendIds removeObject:[self.friendIds objectAtIndex:indexPath.row]];
-    //now remove name
-    [self.filteredNames removeObject:selectedName];
-    [self.friendNames removeObject:selectedName];
+    
     [self.tableView reloadData];
 }
 
