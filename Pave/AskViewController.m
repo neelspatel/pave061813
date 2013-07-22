@@ -345,7 +345,8 @@
         S3PutObjectRequest *por = [[S3PutObjectRequest alloc] initWithKey:name inBucket:@"preparsedugproductimages"];
         por.contentType = @"image/jpeg";
         por.data        = imageData;
-        
+        por.cannedACL   = [S3CannedACL publicRead];
+
         // Put the image data into the specified s3 bucket and object.
         S3PutObjectResponse *putObjectResponse = [self.s3 putObject:por];
         
