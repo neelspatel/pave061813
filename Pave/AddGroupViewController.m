@@ -199,15 +199,20 @@
 
 
 - (IBAction)createGroup:(id)sender {
+    [self createGroupAction];
+}
+
+- (void) createGroupAction
+{
     // check if everything is in line
     if (self.currentGroup.count > 0)
     {
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-
+        
         NSLog(@"Succesfully created group %@", self.currentGroupName);
         // if there is no group name
         if (!self.currentGroupName)
-                self.currentGroupName = @"Default Name";
+            self.currentGroupName = @"Default Name";
         
         NSMutableArray *friendIds = [prefs objectForKey:@"friends"];
         NSMutableArray *friendNames = [prefs objectForKey:@"names"];
