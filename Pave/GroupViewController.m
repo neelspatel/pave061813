@@ -13,6 +13,7 @@
 #import "PaveAPIClient.h"
 #import "MBProgressHUD.h"
 #import "GroupListCell.h"
+#import "NotificationPopupView.h"
 
 @interface GroupViewController ()
 
@@ -80,7 +81,46 @@
     [self.tableView reloadData];
     [super viewWillAppear:animated];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+
+    
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"insightReady" object:nil];
+}
+
+-(void) requestInsight:(NSNotification *) notification
+{
+    NSLog(@"Getting called request insight");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // hit the endpoint
+    NSString *path = @"/data/getnewrec/";
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    path = [path stringByAppendingString:@"/"];
+    
+    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+        if (results)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[[results objectForKey:@"text"] stringValue], @"rec_text", nil]];
+            });
+        }
+    }
+                                   failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Failure while getting rec");
+                                   }
+     ];
+    
+}
+
+-(void)createNotificationPopup:(NSDictionary *) data
+{
+    NotificationPopupView *notificationPopup = [NotificationPopupView notificationPopupCreateWithData:data];
+    [self.view addSubview:notificationPopup];
+}
+
 
 #pragma mark - Table view data source
 

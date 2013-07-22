@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface SettingsViewController : UIViewController
+
 - (IBAction)dismiss:(id)sender;
 
 @end

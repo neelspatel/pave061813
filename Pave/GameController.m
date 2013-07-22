@@ -72,7 +72,6 @@
     
     //ability to call load from somewhere else
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedObjects) name:@"getFeedObjects" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
     
     //pull to reload
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -109,6 +108,12 @@
 -(void)viewWillAppear:(BOOL) animated
 {
     [self.sbar redrawBar];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+}
+
+-(void) viewWillDisappear:(BOOL) animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self name:@"insightReady" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -476,15 +481,14 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
-
     path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
-    //path = [path stringByAppendingString:@"1"];
     path = [path stringByAppendingString:@"/"];
+    
     [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
         if (results)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:@"THIS IS THE NEW TEXT", @"rec_text", nil]];
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[[results objectForKey:@"text"] stringValue], @"rec_text", nil]];
             });
         }
     }
