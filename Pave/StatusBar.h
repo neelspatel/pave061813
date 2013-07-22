@@ -15,6 +15,8 @@
 // the circles
 @property (strong) NSMutableArray *imageViews;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 // individual circles
 @property (weak, nonatomic) IBOutlet UIImageView *image1;
 @property (weak, nonatomic) IBOutlet UIImageView *image2;

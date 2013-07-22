@@ -770,12 +770,12 @@
 				18805E481770EC910059C37B /* PaveAPIClient.m */,
 				B0F178DF1792A25100CCA291 /* JSONAPIClient.h */,
 				B0F178E01792A25200CCA291 /* JSONAPIClient.m */,
+				B0C8CE2D179B839B00117306 /* SettingsViewController.h */,
+				B0C8CE2E179B839B00117306 /* SettingsViewController.m */,
 				185D853D17707D46007733FA /* Supporting Files */,
 				B0F178D41791248300CCA291 /* MBProgressHUD */,
 				18805E2A1770EC7E0059C37B /* AFNetworking */,
 				18805DCB1770E0E30059C37B /* SDWebImage */,
-				B0C8CE2D179B839B00117306 /* SettingsViewController.h */,
-				B0C8CE2E179B839B00117306 /* SettingsViewController.m */,
 			);
 			path = Pave;
 			sourceTree = "<group>";

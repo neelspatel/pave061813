@@ -152,6 +152,16 @@
         
 }
 
+-(void) doneLoading
+{
+    [self.activityIndicator stopAnimating];
+}
+
+-(void) startLoading
+{
+    [self.activityIndicator startAnimating];
+}
+
 -(void) layoutSubviews
 {
     [super layoutSubviews];

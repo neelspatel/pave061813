@@ -12,6 +12,7 @@
 #import "SDImageCache.h"
 #import "MBProgressHUD.h"
 #import "StatusBar.h"
+#import "NotificationPopupView.h"
 
 @interface TrainingController ()
 
@@ -57,6 +58,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.sbar redrawBar];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -65,6 +67,44 @@
     [self reloadData];
     [self.sbar redrawBar];
 }
+
+-(void) viewWillDisappear:(BOOL) animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self name:@"insightReady" object:nil];
+}
+
+
+-(void) requestInsight:(NSNotification *) notification
+{
+    NSLog(@"Getting called request insight");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // hit the endpoint
+    NSString *path = @"/data/getnewrec/";
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    path = [path stringByAppendingString:@"/"];
+    
+    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+        if (results)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[[results objectForKey:@"text"] stringValue], @"rec_text", nil]];
+            });
+        }
+    }
+                                   failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Failure while getting rec");
+                                   }
+     ];
+    
+}
+
+-(void)createNotificationPopup:(NSDictionary *) data
+{
+    NotificationPopupView *notificationPopup = [NotificationPopupView notificationPopupCreateWithData:data];
+    [self.view addSubview:notificationPopup];
+}
+
+
 
 //skips to the next one
 - (IBAction)skip:(id)sender
