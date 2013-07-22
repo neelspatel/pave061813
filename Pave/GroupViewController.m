@@ -81,6 +81,7 @@
     [self.tableView reloadData];
     [super viewWillAppear:animated];
     
+    [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
 
     

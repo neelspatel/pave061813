@@ -103,7 +103,6 @@
             NSLog(@"Initialized friends as %@", self.friendIds);
             //NSLog(@"%@", [NSJSONSerialization dataWithJSONObject:self.friendIds options:nil error:nil]);
             [[PaveAPIClient sharedClient] postPath:@"/data/newuser"
-             //                            parameters:@{@"id_facebookID":self.userProfile[@"facebookId"], @"id_profile": self.userProfile, @"friends": self.friendIds} success:^(AFHTTPRequestOperation *operation, id JSON) {
                                         parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                                             NSLog(@"successfully logged in user to Django");
                                             //now fetches the feed objects
@@ -119,10 +118,79 @@
 
 }
 
+-(void) setupFacebookInformation
+{
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // Do something...
+        self.didCompleteProfileInformation = NO;
+        self.didCompleteFriendsInformation = NO;
+        // get basic user information and
+        FBRequest *request = [FBRequest requestForMe];
+        // set a property and call a method to check both properties
+        [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+            // handle response
+            if (!error) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                
+                // Parse the data received
+                NSDictionary *userData = (NSDictionary *)result;
+                NSString *facebookID = userData[@"id"];
+                NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
+                self.userProfile = [NSMutableDictionary dictionaryWithCapacity:7];
+                if (facebookID) 
+                    self.userProfile[@"facebookId"] = facebookID;
+                
+                
+                if (userData[@"name"]) 
+                    self.userProfile[@"name"] = userData[@"name"];
+                
+                
+                if (userData[@"location"][@"name"]) 
+                    self.userProfile[@"location"] = userData[@"location"][@"name"];
+                
+                
+                if (userData[@"gender"]) 
+                    self.userProfile[@"gender"] = userData[@"gender"];
+                
+                
+                if (userData[@"birthday"]) 
+                    self.userProfile[@"birthday"] = userData[@"birthday"];
+                
+                
+                if (userData[@"relationship_status"]) 
+                    self.userProfile[@"relationship"] = userData[@"relationship_status"];
+                
+                
+                if ([pictureURL absoluteString]) 
+                    self.userProfile[@"pictureURL"] = [pictureURL absoluteString];
+                
+                self.didCompleteProfileInformation = YES;
+                
+                // what do we want to do?
+                [self sendSaveUserAndFacebookInformation];
+                
+                //[[KCSUser activeUser] setValue: userProfile forAttribute: @"profile"];
+                
+            } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
+                        isEqualToString: @"OAuthException"]) {
+                    // Since the request failed, we can check if it was due to an invalid session
+                NSLog(@"The facebook session was invalidated");
+            } else {
+                NSLog(@"Some other error: %@", error);
+            }
+        }];
+    
+    });
+}
+                   
+                   
 - (void) finishIntro
 {
     [self dismissViewControllerAnimated:NO completion:nil];
 }
+
 
 - (void) initializeFacebookInformation
 {

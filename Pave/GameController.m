@@ -120,7 +120,6 @@
 {
     //first reload the data
     [self.tableView reloadData];
-    [self.sbar redrawBar];
     
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;

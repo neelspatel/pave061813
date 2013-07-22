@@ -64,11 +64,22 @@
     // figure out how to segue
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [delegate.tabBarController setSelectedIndex:0];
+    delegate.currentStatusScore = 0;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetStatusScore"  object:nil userInfo:nil];
     [self removeFromSuperview];
+    delegate.notificationPopupIsOpen = NO;
+
     [[NSNotificationCenter defaultCenter] postNotificationName:@"newRecommendation"  object:nil userInfo:nil];
 }
 
 - (IBAction)keepPlayingPushed:(id)sender {
+    AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    delegate.currentStatusScore = 0;
+    
+    // first post a Notification to reset the bar
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"resetStatusScore"  object:nil userInfo:nil];
     [self removeFromSuperview];
+    delegate.notificationPopupIsOpen = NO;
+
 }
 @end

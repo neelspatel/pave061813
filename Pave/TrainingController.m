@@ -65,7 +65,6 @@
 {
     //first reload the data
     [self reloadData];
-    [self.sbar redrawBar];
 }
 
 -(void) viewWillDisappear:(BOOL) animated
