@@ -95,9 +95,8 @@
     //sets the handler to listen for taps    
     [self updateProfileStats];
     
-    NSLog(@"Feed objects are %@", self.feedObjects);
     [self getFeedObjects];
-    NSLog(@"Feed objects are %@", self.answerObjects);
+    NSLog(@"Answer objects are %@", self.answerObjects);
 
     self.badge_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
     [self.badge_answers setValue:[self getAnswerCount]];
@@ -224,7 +223,7 @@
         
         CGPoint pointInCell = [touch locationInView:cell];
         
-        NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
+        NSMutableDictionary *currentObject = [self.answerObjects objectAtIndex:indexPath.row];
         NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
         
         NSString *key = [NSString stringWithFormat:@"%@%@%@%@", [NSString stringWithFormat:@"%@", currentObject[@"friend"]], currentObject[@"question"], currentObject[@"chosenProduct"], currentObject[@"otherProduct"], nil];
@@ -555,7 +554,7 @@
                     NSLog(@"Insight Results: %@", results);
                    // self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
                     self.insightObjects = [NSArray arrayWithArray: results];
-                    NSLog(@"Just finished getting recs ids: %@", self.feedObjects);
+                    NSLog(@"Just finished getting recs ids: %@", self.insightObjects);
                     
                     self.doneLoadingFeed = YES;
                     
@@ -1140,7 +1139,7 @@
     NSLog(@"Clicked");
     if([self.currentTable isEqualToString:@"ugQuestions"]) //if it's a rec
     {
-        NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
+        NSDictionary *currentObject = [self.questionObjects objectAtIndex:(indexPath.row)];
         NSLog(@"Current object before sending is %@", currentObject);
         self.popup = [[AboutUGQuestion alloc] initWithData:currentObject];
         [self.view addSubview:[self.popup view]];

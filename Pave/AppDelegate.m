@@ -39,6 +39,19 @@
     //gets rid of translucent
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     
+    tabBarItem1.title = @"";
+    tabBarItem2.title = @"";
+    tabBarItem3.title = @"";
+    tabBarItem4.title = @"";
+    tabBarItem5.title = @"";
+
+    
+    tabBarItem1.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    tabBarItem2.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    tabBarItem3.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    tabBarItem4.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+    tabBarItem5.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+
     tabBarController.selectedIndex = 2;
     
     self.tabBarController = tabBarController;

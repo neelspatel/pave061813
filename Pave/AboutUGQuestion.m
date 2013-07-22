@@ -8,6 +8,8 @@
 
 #import "AboutUGQuestion.h"
 #import "NameCell.h"
+#import "UIImageView+WebCache.h"
+#import <objc/runtime.h>
 
 @interface AboutUGQuestion ()
 
@@ -98,10 +100,7 @@
     
     if (leftFriends.count > indexPath.row) // if we have something
     {
-        //id currentID = [leftFriends objectAtIndex:indexPath.row];
-        //int index = [ids indexOfObject:currentID];
-        //NSString *name = [names objectAtIndex:index];
-        cell.leftName.text = [leftFriends objectAtIndex:indexPath.row];
+        cell.leftName.text = [leftFriends objectAtIndex:indexPath.row];                
     }
     else
     {
@@ -109,12 +108,28 @@
     }
     
     if (rightFriends.count > indexPath.row) // if we have something
-    {        
-        //NSString * currentID = [rightFriends objectAtIndex:indexPath.row];
-        //int index = [ids indexOfObject:currentID];
-        //NSLog(@"For id %@ at index %d", currentID, index);
-        //NSString *name = [names objectAtIndex:index];
+    {
         cell.rightName.text = [rightFriends objectAtIndex:indexPath.row];
+        /**
+        NSNumber *userID = [NSNumber numberWithLongLong:[rightFriends objectAtIndex:indexPath.row]];
+        NSLog(@"Converted %@ to %@", [rightFriends objectAtIndex:indexPath.row], userID);
+        int index = [ids indexOfObject:userID];
+        NSLog(@"Looking for %@ in %@", [userID stringValue], ids);
+        
+        const char* className = class_getName([[ids objectAtIndex:0] class]);
+        NSLog(@"idarray is a: %s", className);
+        className = class_getName([userID class]);
+        NSLog(@"userid is a: %s", className);
+        
+        NSString *name = [names objectAtIndex:index];
+        cell.rightName.text = name;
+        
+        NSString *profileURL = @"https://graph.facebook.com/";
+        profileURL = [profileURL stringByAppendingString:[userID stringValue]];
+        profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
+        [cell.rightImage setImageWithURL:[NSURL URLWithString:profileURL] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+         */
+        
     }
     else
     {
