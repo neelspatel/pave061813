@@ -95,17 +95,17 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
+         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Pave/FeedObjectCell.h"
-         timestampString = "396079129.864021"
+         filePath = "Pave/AskViewController.h"
+         timestampString = "396237183.745556"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "19"
-         endingLineNumber = "19"
-         landmarkName = "onOffButton"
-         landmarkType = "19">
+         startingLineNumber = "41"
+         endingLineNumber = "41"
+         landmarkName = "@interface AskViewController"
+         landmarkType = "2">
       </FileBreakpoint>
    </FileBreakpoints>
    <SymbolicBreakpoints>

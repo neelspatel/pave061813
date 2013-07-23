@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddGroupViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
+@interface AddGroupViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UITextFieldDelegate>
 
 
 - (IBAction)showCreate:(id)sender;

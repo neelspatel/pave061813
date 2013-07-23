@@ -77,21 +77,14 @@
     //pull to reload
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:refreshControl];    
+    [self.tableView addSubview:refreshControl];
+    self.refreshControl = refreshControl;
 }
 
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
 {
-    self.reloadingFeedObject = YES;
-    
-    NSLog(@"reloading personal datapre");
-    self.feedObjects = [NSMutableArray array];
-    self.readStatus = [[NSMutableDictionary alloc] init];
-    self.anonStatus = [[NSMutableDictionary alloc] init];
     NSLog(@"reloading personal data");
-    [self getFeedObjects];
-    [self.tableView reloadData];
-    [refreshControl endRefreshing];
+    [self getFeedObjectsFromPull];
 }
 
 
@@ -117,8 +110,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"About to push walkthrough");    
-
+    NSLog(@"About to push walkthrough");
     //first reload the data
     [self.tableView reloadData];
     
@@ -543,6 +535,62 @@
                     self.reloadingFeedObject = NO;
                     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     [self.tableView reloadData];
+                    
+                    //[self.refreshControl endRefreshing];
+                    
+                } }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               NSLog(@"error getting feed objects from database %@", error);
+                                           }];
+        }
+    });
+}
+
+- (void) getFeedObjectsFromPull
+{
+    NSLog(@"Getting feed objects now");
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // Do something...
+        //        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        FBSession* session = delegate.session;
+        
+        if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
+            NSLog(@"About to get feed objects");
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            //NSString *path = @"/data/getlistquestions/";
+            NSString *path = @"/data/newgetlistquestions/";
+            
+            path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+            //path = [path stringByAppendingString:@"1"];
+            path = [path stringByAppendingString:@"/"];
+            NSLog(@"Path is %@", path);
+            
+            [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                
+                if (results) {
+                    //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                    //for(NSDictionary *current in results)
+                    //{
+                    //    [ids addObject:current[@"id"]];
+                    //}
+                    NSLog(@"Just finished getting results: %@", results);
+                    
+                    //clears data
+                    self.feedObjects = [NSMutableArray array];
+                    self.readStatus = [[NSMutableDictionary alloc] init];
+                    self.anonStatus = [[NSMutableDictionary alloc] init];
+                    
+                    self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    self.reloadingFeedObject = NO;
+                    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                    [self.tableView reloadData];
+                    
+                    [self.refreshControl endRefreshing];
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
