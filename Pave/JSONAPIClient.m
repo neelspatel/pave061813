@@ -10,7 +10,8 @@
 #import "AFJSONRequestOperation.h"
 
 // the url of our AWS
-static NSString * const kPaveAPIBaseURLString = @"http://ec2-54-245-213-191.us-west-2.compute.amazonaws.com/data/";
+//static NSString * const kPaveAPIBaseURLString = @"http://ec2-54-245-213-191.us-west-2.compute.amazonaws.com/data/";
+static NSString * const kPaveAPIBaseURLString = @"http://54.244.251.104/data/";
 
 
 @implementation JSONAPIClient
@@ -38,7 +39,7 @@ static NSString * const kPaveAPIBaseURLString = @"http://ec2-54-245-213-191.us-w
     
     // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
 	[self setDefaultHeader:@"Accept" value:@"application/json"];
-    [self setParameterEncoding:AFJSONParameterEncoding];
+    [self setParameterEncoding:AFFormURLParameterEncoding];
     
     return self;
 }

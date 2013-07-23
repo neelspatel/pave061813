@@ -10,6 +10,7 @@
 #import "AskViewController.h"
 #import "WebImageCell.h"
 #import "AFJSONRequestOperation.h"
+#import "JSONAPIClient.h"
 #import "UIImageView+WebCache.h"
 
 @interface WebSearchViewController ()
@@ -32,20 +33,62 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSURL *url = [NSURL URLWithString:@"http://54.244.251.104/data/imagesearch/fast_car/"];
+    [[self.searchBar.subviews objectAtIndex:0] removeFromSuperview];
+    self.searchBar.delegate = self;
+    
+    CGRect frame = self.searchBar.frame;
+    frame.size.height = 30;
+    self.searchBar.frame = frame;
+        
+}
+
+- (IBAction)search:(id)sender
+{
+    [self searchAction];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self searchAction];
+}
+
+- (void) searchAction
+{
+    [self.view endEditing:YES];
+    
+    /**
+    //NSString *term = [self.searchBar.text stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+    NSString *term = self.searchBar.text;
+    NSString *newString = (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (__bridge CFStringRef)term, NULL, CFSTR(":/?#[]@!$ &'()*+,;=\"<>%{}|\\^~`"), CFStringConvertNSStringEncodingToEncoding(NSUTF8StringEncoding));
+
+    NSString *query = [NSString stringWithFormat:@"http://54.244.251.104/data/imagesearch/%@/", newString];
+    
+    NSURL *url = [NSURL URLWithString:query];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
-            NSLog(@"JSON: %@", JSON);
-            self.results = JSON;
-            [self.collection reloadData];
+        NSLog(@"JSON: %@", JSON);
+        self.results = JSON;
+        [self.collection reloadData];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
         NSLog(@"%@", [error userInfo]);
     }];
+     */
+    NSString *path = @"/data/imagesearch/";
     
-    [operation start];
+    NSDictionary *params  = [NSDictionary dictionaryWithObjectsAndKeys: @"query", self.searchBar.text, @"index", [NSString stringWithFormat:@"%d", 0], nil];
     
+    [[JSONAPIClient sharedClient] postPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id results) {
+        if (results) {
+            NSLog(@"Got image results: %@", results);
+            self.results = results;
+            [self.collection reloadData];            
+        }
+    }
+    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error getting image: %@", error);
+    }];
 }
 
 - (void)didReceiveMemoryWarning
@@ -102,6 +145,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-
+//segues back
+- (IBAction)back:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end
