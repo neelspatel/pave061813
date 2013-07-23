@@ -29,6 +29,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.screenNumber.text = [NSString stringWithFormat:@"Screen #%d", self.index];
+    [self.backgroundImage setImage:[UIImage imageNamed:@"2test_page1_walkthrough.png"]];
     
     if (self.index == 4)
     {

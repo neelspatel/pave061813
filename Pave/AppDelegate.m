@@ -71,6 +71,13 @@
     if (!self.currentStatusScore)
         self.currentStatusScore = 0;
     
+    BOOL firstTime = [defaults boolForKey:@"first_session"];
+    if (!firstTime)
+        [defaults setBool:YES forKey: @"first_session"];
+    else
+        [defaults setBool: NO forKey:@"first_session"];
+
+    
     self.notificationPopupIsOpen = NO;
     
     NSLog(@"APP DELEGATE: %d", self.currentStatusScore);
@@ -91,6 +98,7 @@
         int seconds = (int)[[NSDate date] timeIntervalSince1970];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                
         
         //either checks the last time that we polled the server, or polls based on that previous time. then stores the current value
         int polltime = 0;
@@ -102,7 +110,7 @@
         }
         NSLog(@"Trying to get the polls");
         
-        
+        // checks if the the user is first timer         
         NSString *path = @"/data/getnotification/";
         path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
         

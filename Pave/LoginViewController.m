@@ -45,6 +45,7 @@
 
 -(void)checkToContinueToGameFeed
 {
+    NSLog(@"Trying to continue to game feed");
     if (self.tutorialComplete && self.createdUser)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
@@ -52,6 +53,7 @@
 
     }
 }
+
 -(void)tutorialComplete:(NSNotification *)notification
 {
     self.tutorialComplete= YES;
@@ -205,12 +207,19 @@
                 if ([pictureURL absoluteString]) 
                     self.userProfile[@"pictureURL"] = [pictureURL absoluteString];
                 
-                self.didCompleteProfileInformation = YES;
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                if ([defaults objectForKey:@"first_session"])
+                {
+                    [self saveUserFacebookInformation];
+                }
+                else
+                {
+                    [self dismissViewControllerAnimated:NO completion:^{
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
+                    }];
+                }
                 
-                // what do we want to do?
-                [self saveUserFacebookInformation];
-                //[self sendSaveUserAndFacebookInformation];
-                                
             } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
                         isEqualToString: @"OAuthException"]) {
                     // Since the request failed, we can check if it was due to an invalid session
@@ -319,6 +328,8 @@
                 if ([pictureURL absoluteString]) {
                     self.userProfile[@"pictureURL"] = [pictureURL absoluteString];
                 }
+
+          
                 self.didCompleteProfileInformation = YES;
                 [self sendSaveUserAndFacebookInformation];
                 
@@ -376,7 +387,7 @@
                 [[PaveAPIClient sharedClient] postPath:@"/data/createuser"
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                                                 NSLog(@"created user");
-                                                NSLog(@"JSON for create user: %@", JSON);
+                                               // NSLog(@"JSON for create user: %@", JSON);
                                                 NSDictionary *results = JSON;
                                                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                 [defaults setObject:[results objectForKey:@"friends"] forKey:@"friends"];
@@ -385,11 +396,11 @@
                                                 [defaults setObject:[results objectForKey:@"top_friends"] forKey:@"top_friends"];
 
                                                 [defaults synchronize];
-
-                                                //now fetches the feed objects
-                                                self.createdUser = YES;
-                                                [self checkToContinueToGameFeed];
                                                 
+                                                self.createdUser = YES;
+                                                
+                                                [self checkToContinueToGameFeed];
+
                                                 //self.instructionButton1.hidden = FALSE;
                                                 
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

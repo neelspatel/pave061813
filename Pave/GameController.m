@@ -31,7 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+   
     // instantiate the status bar and set it to the right location
     [self setUpStatusBar];
     
@@ -81,6 +81,23 @@
     self.refreshControl = refreshControl;
 }
 
+-(void) sendTokenToServer: (NSString *)access_token
+{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: access_token, @"access_token", nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"sending token to server");
+    NSString *path = @"/data/updateuser/";
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    path = [path stringByAppendingString:@"/"];
+
+    [[PaveAPIClient sharedClient] postPath:path
+                                parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSLog(@"updated user");                                    
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    NSLog(@"error updating user %@", error);
+                                }];
+
+}
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
 {
     NSLog(@"reloading personal data");
@@ -101,6 +118,7 @@
 {
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 }
 
 -(void) viewWillDisappear:(BOOL) animated
@@ -110,7 +128,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    /*
     NSLog(@"About to push walkthrough");
+    WalkthroughViewController *walkthroughController = [[WalkthroughViewController alloc] initWithNibName:@"WalkthroughViewController" bundle:nil];
+    [self presentViewController:walkthroughController animated:YES completion:nil];
+*/
+    
     //first reload the data
     [self.tableView reloadData];
     
@@ -120,7 +143,7 @@
     
     if (session.state == FBSessionStateCreatedTokenLoaded) {
         NSLog(@"Already in");
-        
+            
             //now opens connection
             [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
                 NSLog(@"In login block");
@@ -129,12 +152,15 @@
                     // loggedin
                     NSLog(@"Open?: ");
                     NSLog(session.isOpen ? @"Yes" : @"No");
-                    NSString* accessToken = session.accessToken;
+                    NSString* accessToken = session.accessTokenData.accessToken;
+                    
+                    [self sendTokenToServer:accessToken];
                     
                     // load into user defaults
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     if([defaults objectForKey:@"id"] == nil)
                     {
+                        NSLog(@"Don't have id");
                         //
                         //get that info
                         FBRequest *request = [FBRequest requestForMe];

@@ -295,6 +295,9 @@
 		B004059A179D799400ACB665 /* WalkthroughViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0040598179D799400ACB665 /* WalkthroughViewController.xib */; };
 		B004059E179D79A300ACB665 /* WalkthroughChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B004059C179D79A300ACB665 /* WalkthroughChildViewController.m */; };
 		B004059F179D79A300ACB665 /* WalkthroughChildViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B004059D179D79A300ACB665 /* WalkthroughChildViewController.xib */; };
+		B00405A1179E43E700ACB665 /* test_instruction_view.png in Resources */ = {isa = PBXBuildFile; fileRef = B00405A0179E43E700ACB665 /* test_instruction_view.png */; };
+		B00405A3179E452B00ACB665 /* TESTpage1_walkthrough@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B00405A2179E452B00ACB665 /* TESTpage1_walkthrough@2x.png */; };
+		B00405A5179E76E500ACB665 /* 2test_page1_walkthrough@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B00405A4179E76E500ACB665 /* 2test_page1_walkthrough@2x.png */; };
 		B01707891773A20100B8D77B /* TrendingTopicsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */; };
 		B074E997179A1AC700183699 /* StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B074E996179A1AC700183699 /* StatusBar.m */; };
 		B074E999179A47D200183699 /* StatusBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B074E998179A47D200183699 /* StatusBarView.xib */; };
@@ -664,6 +667,9 @@
 		B004059B179D79A300ACB665 /* WalkthroughChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalkthroughChildViewController.h; sourceTree = "<group>"; };
 		B004059C179D79A300ACB665 /* WalkthroughChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalkthroughChildViewController.m; sourceTree = "<group>"; };
 		B004059D179D79A300ACB665 /* WalkthroughChildViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WalkthroughChildViewController.xib; sourceTree = "<group>"; };
+		B00405A0179E43E700ACB665 /* test_instruction_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_instruction_view.png; sourceTree = "<group>"; };
+		B00405A2179E452B00ACB665 /* TESTpage1_walkthrough@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TESTpage1_walkthrough@2x.png"; sourceTree = "<group>"; };
+		B00405A4179E76E500ACB665 /* 2test_page1_walkthrough@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2test_page1_walkthrough@2x.png"; sourceTree = "<group>"; };
 		B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingTopicsListViewController.h; sourceTree = "<group>"; };
 		B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingTopicsListViewController.m; sourceTree = "<group>"; };
 		B074E995179A1AC700183699 /* StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBar.h; sourceTree = "<group>"; };
@@ -839,6 +845,9 @@
 		185D853D17707D46007733FA /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B00405A4179E76E500ACB665 /* 2test_page1_walkthrough@2x.png */,
+				B00405A2179E452B00ACB665 /* TESTpage1_walkthrough@2x.png */,
+				B00405A0179E43E700ACB665 /* test_instruction_view.png */,
 				1885D652179DF15900C230A0 /* viewinsight_details.png */,
 				1885D653179DF15900C230A0 /* viewinsight_details@2x.png */,
 				1835A87C179BEC06000CA738 /* 2TESTHOMEBACKGROUND@2X.png */,
@@ -1576,6 +1585,9 @@
 				1A706701179D7D26005F6EAC /* make_public@2x.png in Resources */,
 				1885D654179DF15900C230A0 /* viewinsight_details.png in Resources */,
 				1885D655179DF15900C230A0 /* viewinsight_details@2x.png in Resources */,
+				B00405A1179E43E700ACB665 /* test_instruction_view.png in Resources */,
+				B00405A3179E452B00ACB665 /* TESTpage1_walkthrough@2x.png in Resources */,
+				B00405A5179E76E500ACB665 /* 2test_page1_walkthrough@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
