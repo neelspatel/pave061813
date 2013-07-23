@@ -45,6 +45,7 @@
 
 -(void)checkToContinueToGameFeed
 {
+    NSLog(@"Trying to continue to game feed");
     if (self.tutorialComplete && self.createdUser)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
@@ -52,6 +53,7 @@
 
     }
 }
+
 -(void)tutorialComplete:(NSNotification *)notification
 {
     self.tutorialComplete= YES;
@@ -205,12 +207,21 @@
                 if ([pictureURL absoluteString]) 
                     self.userProfile[@"pictureURL"] = [pictureURL absoluteString];
                 
-                self.didCompleteProfileInformation = YES;
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
                 
-                // what do we want to do?
-                [self saveUserFacebookInformation];
-                //[self sendSaveUserAndFacebookInformation];
-                                
+                if (delegate.firstLaunch)
+                {
+                    [self saveUserFacebookInformation];
+                }
+                else
+                {
+                    [self dismissViewControllerAnimated:NO completion:^{
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
+                    }];
+                }
+                
             } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
                         isEqualToString: @"OAuthException"]) {
                     // Since the request failed, we can check if it was due to an invalid session
@@ -319,6 +330,8 @@
                 if ([pictureURL absoluteString]) {
                     self.userProfile[@"pictureURL"] = [pictureURL absoluteString];
                 }
+
+          
                 self.didCompleteProfileInformation = YES;
                 [self sendSaveUserAndFacebookInformation];
                 
@@ -346,6 +359,7 @@
     
     if(session.state == 513 || session.state == 258 || session.state == 257)
     {
+        NSLog(@"In session.state comparison view login");
         NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
         
         // might be crashing here
@@ -357,13 +371,18 @@
         session = [delegate session];        
     }
     
-    NSLog(@"Session is %@", session);
-    NSLog(@"Status is %u", session.state);
+    NSLog(@"in login controller Session is %@", session);
+    NSLog(@"in login controller Status is %u", session.state);
     
-    
+    NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
+
+    [delegate setSession:[[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil]];
+    session = [delegate session];
+
         [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            [FBSession setActiveSession:session];
+            NSLog(@"Session is in loginButtonTouch: %@", session);
             if (status == FBSessionStateOpen) {
+                [FBSession setActiveSession:session];
                 NSString* accessToken = session.accessTokenData.accessToken;
                 NSLog(@"Finished login");
                 
@@ -376,7 +395,7 @@
                 [[PaveAPIClient sharedClient] postPath:@"/data/createuser"
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                                                 NSLog(@"created user");
-                                                NSLog(@"JSON for create user: %@", JSON);
+                                               // NSLog(@"JSON for create user: %@", JSON);
                                                 NSDictionary *results = JSON;
                                                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                                 [defaults setObject:[results objectForKey:@"friends"] forKey:@"friends"];
@@ -385,11 +404,11 @@
                                                 [defaults setObject:[results objectForKey:@"top_friends"] forKey:@"top_friends"];
 
                                                 [defaults synchronize];
-
-                                                //now fetches the feed objects
-                                                self.createdUser = YES;
-                                                [self checkToContinueToGameFeed];
                                                 
+                                                self.createdUser = YES;
+                                                
+                                                [self checkToContinueToGameFeed];
+
                                                 //self.instructionButton1.hidden = FALSE;
                                                 
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -404,8 +423,9 @@
             }
             else
             {
+                NSLog(@"In Login Block");
                 NSLog(@"Session: %@", session);
-                NSLog(@"Some other status: %u", status);
+                NSLog(@"Status in login block is: %u", status);
             }
         }];
         NSLog(@"Exited block");

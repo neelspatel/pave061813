@@ -31,7 +31,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+   
     // instantiate the status bar and set it to the right location
     [self setUpStatusBar];
     
@@ -80,6 +80,23 @@
     self.refreshControl = refreshControl;
 }
 
+-(void) sendTokenToServer: (NSString *)access_token
+{
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: access_token, @"access_token", nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"sending token to server");
+    NSString *path = @"/data/updateuser/";
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    path = [path stringByAppendingString:@"/"];
+
+    [[PaveAPIClient sharedClient] postPath:path
+                                parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSLog(@"updated user");                                    
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    NSLog(@"error updating user %@", error);
+                                }];
+
+}
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
 {
     NSLog(@"reloading personal data");
@@ -100,6 +117,7 @@
 {
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 }
 
 -(void) viewWillDisappear:(BOOL) animated
@@ -109,31 +127,49 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"view did appear game controller");
+    /*
     NSLog(@"About to push walkthrough");
+    WalkthroughViewController *walkthroughController = [[WalkthroughViewController alloc] initWithNibName:@"WalkthroughViewController" bundle:nil];
+    [self presentViewController:walkthroughController animated:YES completion:nil];
+     */
+    
     //first reload the data
     [self.tableView reloadData];
     
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     NSLog(@"Session right now is %@", session);
+    if (session.state == FBSessionStateClosed)
+    {
+        NSLog(@"Session is closed");
+        LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+        [self presentViewController: loginViewController animated: NO completion: nil];
+
+    }
     
-    if (session.state == FBSessionStateCreatedTokenLoaded) {
+    else if (session.state == FBSessionStateCreatedTokenLoaded) {
+        NSLog(@"Session right now is %@", session);
+
         NSLog(@"Already in");
-        
+            
             //now opens connection
             [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                NSLog(@"In login block");
+                NSLog(@"In login block in game controller");
                 [FBSession setActiveSession:session];
                 if (status == FBSessionStateOpen) {
                     // loggedin
                     NSLog(@"Open?: ");
                     NSLog(session.isOpen ? @"Yes" : @"No");
-                    NSString* accessToken = session.accessToken;
+                    NSString* accessToken = session.accessTokenData.accessToken;
+                    
+                    [self sendTokenToServer:accessToken];
                     
                     // load into user defaults
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     if([defaults objectForKey:@"id"] == nil)
                     {
+                        NSLog(@"Don't have id");
                         //
                         //get that info
                         FBRequest *request = [FBRequest requestForMe];
@@ -186,8 +222,8 @@
                 else
                 {
                     // deal with this case
-                    NSLog(@"something happened");
-                    NSLog(@"Some other status: %@", status);
+                    NSLog(@"something happened when logging in from game controller");
+                    //NSLog(@"Some other status: %@", status);
                     LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
                     [self presentViewController: loginViewController animated: NO completion: nil];
                     
@@ -338,9 +374,6 @@
         {
             params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
-        
-        
-        
         
     }
     else

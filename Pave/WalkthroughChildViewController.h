@@ -14,4 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 - (IBAction)doneButtonPushed:(id)sender;
 
+@property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
+
 @end

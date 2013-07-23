@@ -71,6 +71,19 @@
     if (!self.currentStatusScore)
         self.currentStatusScore = 0;
     
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    {
+        // dummy variable so we don't have an error
+        self.firstLaunch;
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        self.firstLaunch = YES;
+    }
+
+    
     self.notificationPopupIsOpen = NO;
     
     NSLog(@"APP DELEGATE: %d", self.currentStatusScore);
@@ -91,6 +104,7 @@
         int seconds = (int)[[NSDate date] timeIntervalSince1970];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                
         
         //either checks the last time that we polled the server, or polls based on that previous time. then stores the current value
         int polltime = 0;
@@ -102,7 +116,7 @@
         }
         NSLog(@"Trying to get the polls");
         
-        
+        // checks if the the user is first timer         
         NSString *path = @"/data/getnotification/";
         path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
         
@@ -120,7 +134,6 @@
                     if (!status_score)
                         status_score = 0;
                     
-                    self.currentStatusScore += 10;
                     if (self.currentStatusScore != status_score)
                     {
                         NSLog(@"ABOUT TO UPDATE STATUS SCORE");
@@ -160,8 +173,8 @@
                     
                     [defaults synchronize];
                     
-                    NSLog(@"Numbers: %d, %d, %d", old_recs, old_answers, old_ug_answers);
-                    NSLog(@"New Numbers: %d, %d, %d", new_recs, new_answer, new_ug_answer);
+                    NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
+                    NSLog(@"New Numbers: %d, %d, %d, %d", new_recs, new_answer, new_ug_answer, status_score);
                     
                     //[defaults setObject:[results objectForKey:@"answers"] forKey:@"num_answers"];
                     //[defaults setObject:[results objectForKey:@"ug_answers"] forKey:@"num_ug_answers"];

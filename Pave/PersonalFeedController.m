@@ -49,7 +49,6 @@
     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @"test", @"question", nil];
     self.popup = [[AboutUGQuestion alloc] initWithData:data];
     
-    
     //loads up the picture in the top bar
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"top_bar.png"] forBarMetrics:UIBarMetricsDefault];    
     
