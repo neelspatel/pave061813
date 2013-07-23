@@ -11,5 +11,10 @@
 @interface SettingsViewController : UIViewController
 
 - (IBAction)dismiss:(id)sender;
+- (IBAction)feedbackPushed:(id)sender;
+- (IBAction)invitePushed:(id)sender;
+
+- (IBAction)ratePushed:(id)sender;
+- (IBAction)logoutPushed:(id)sender;
 
 @end

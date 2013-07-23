@@ -127,11 +127,12 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    NSLog(@"view did appear game controller");
     /*
     NSLog(@"About to push walkthrough");
     WalkthroughViewController *walkthroughController = [[WalkthroughViewController alloc] initWithNibName:@"WalkthroughViewController" bundle:nil];
     [self presentViewController:walkthroughController animated:YES completion:nil];
-*/
+     */
     
     //first reload the data
     [self.tableView reloadData];
@@ -139,13 +140,22 @@
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     NSLog(@"Session right now is %@", session);
+    if (session.state == FBSessionStateClosed)
+    {
+        NSLog(@"Session is closed");
+        LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
+        [self presentViewController: loginViewController animated: NO completion: nil];
+
+    }
     
-    if (session.state == FBSessionStateCreatedTokenLoaded) {
+    else if (session.state == FBSessionStateCreatedTokenLoaded) {
+        NSLog(@"Session right now is %@", session);
+
         NSLog(@"Already in");
             
             //now opens connection
             [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-                NSLog(@"In login block");
+                NSLog(@"In login block in game controller");
                 [FBSession setActiveSession:session];
                 if (status == FBSessionStateOpen) {
                     // loggedin
@@ -212,8 +222,8 @@
                 else
                 {
                     // deal with this case
-                    NSLog(@"something happened");
-                    NSLog(@"Some other status: %@", status);
+                    NSLog(@"something happened when logging in from game controller");
+                    //NSLog(@"Some other status: %@", status);
                     LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
                     [self presentViewController: loginViewController animated: NO completion: nil];
                     
@@ -364,9 +374,6 @@
         {
             params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
-        
-        
-        
         
     }
     else

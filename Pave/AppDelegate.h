@@ -21,5 +21,6 @@
 @property (nonatomic, retain) UITabBarController *tabBarController;
 
 @property (nonatomic, assign) BOOL notificationPopupIsOpen;
+@property (nonatomic, assign) BOOL firstLaunch;
 
 @end

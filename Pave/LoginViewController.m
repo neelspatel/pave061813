@@ -208,7 +208,9 @@
                     self.userProfile[@"pictureURL"] = [pictureURL absoluteString];
                 
                 NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                if ([defaults objectForKey:@"first_session"])
+                AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+                
+                if (delegate.firstLaunch)
                 {
                     [self saveUserFacebookInformation];
                 }
@@ -357,6 +359,7 @@
     
     if(session.state == 513 || session.state == 258 || session.state == 257)
     {
+        NSLog(@"In session.state comparison view login");
         NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
         
         // might be crashing here
@@ -368,13 +371,18 @@
         session = [delegate session];        
     }
     
-    NSLog(@"Session is %@", session);
-    NSLog(@"Status is %u", session.state);
+    NSLog(@"in login controller Session is %@", session);
+    NSLog(@"in login controller Status is %u", session.state);
     
-    
+    NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
+
+    [delegate setSession:[[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil]];
+    session = [delegate session];
+
         [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            [FBSession setActiveSession:session];
+            NSLog(@"Session is in loginButtonTouch: %@", session);
             if (status == FBSessionStateOpen) {
+                [FBSession setActiveSession:session];
                 NSString* accessToken = session.accessTokenData.accessToken;
                 NSLog(@"Finished login");
                 
@@ -415,8 +423,9 @@
             }
             else
             {
+                NSLog(@"In Login Block");
                 NSLog(@"Session: %@", session);
-                NSLog(@"Some other status: %u", status);
+                NSLog(@"Status in login block is: %u", status);
             }
         }];
         NSLog(@"Exited block");

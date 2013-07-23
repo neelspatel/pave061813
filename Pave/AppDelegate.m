@@ -71,11 +71,17 @@
     if (!self.currentStatusScore)
         self.currentStatusScore = 0;
     
-    BOOL firstTime = [defaults boolForKey:@"first_session"];
-    if (!firstTime)
-        [defaults setBool:YES forKey: @"first_session"];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+    {
+        // dummy variable so we don't have an error
+        self.firstLaunch;
+    }
     else
-        [defaults setBool: NO forKey:@"first_session"];
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        self.firstLaunch = YES;
+    }
 
     
     self.notificationPopupIsOpen = NO;
@@ -128,7 +134,6 @@
                     if (!status_score)
                         status_score = 0;
                     
-                    self.currentStatusScore += 10;
                     if (self.currentStatusScore != status_score)
                     {
                         NSLog(@"ABOUT TO UPDATE STATUS SCORE");
@@ -168,8 +173,8 @@
                     
                     [defaults synchronize];
                     
-                    NSLog(@"Numbers: %d, %d, %d", old_recs, old_answers, old_ug_answers);
-                    NSLog(@"New Numbers: %d, %d, %d", new_recs, new_answer, new_ug_answer);
+                    NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
+                    NSLog(@"New Numbers: %d, %d, %d, %d", new_recs, new_answer, new_ug_answer, status_score);
                     
                     //[defaults setObject:[results objectForKey:@"answers"] forKey:@"num_answers"];
                     //[defaults setObject:[results objectForKey:@"ug_answers"] forKey:@"num_ug_answers"];
