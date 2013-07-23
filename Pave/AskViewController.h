@@ -51,5 +51,7 @@
 
 - (UIImage*)smaller:(UIImage*)image;
 
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *leftSpinner;
+@property (nonatomic, retain) UIActivityIndicatorView *rightSpinner;
 
 @end

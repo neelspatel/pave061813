@@ -30,6 +30,8 @@
 {
     [super viewDidLoad];
     
+    //NSLog(@"NSUSER %@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
+
     NSLog(@"Called view did load when adding a group");
     // initing the arrays
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -50,25 +52,6 @@
     self.groupName.delegate = (id)self;
     self.currentGroup = [[NSMutableArray alloc] init];
     
-    //customize searchbar
-    /**
-    [[[self.addFriendsSearchBar subviews] objectAtIndex:0] setHidden:YES];
-    for (id img in self.addFriendsSearchBar.subviews) {
-        if ([img isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
-            [img removeFromSuperview];
-        }
-    }
-    */
-
-    //[[UISearchBar appearance] setSearchFieldBackgroundImage:[UIImage imageNamed:@"group_searchbar.png"]forState:UIControlStateNormal];
-    //[self.addFriendsSearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"group_searchbar.png"] forState:UIControlStateNormal];
-
-    /*for (UIView * view in [self.addFriendsSearchBar  subviews]) {
-        if (![view isKindOfClass:[UITextField class]]) {
-            view .alpha = 0;
-        }
-    }*/
-
     [[self.addFriendsSearchBar.subviews objectAtIndex:0] removeFromSuperview];
 
     
@@ -77,7 +60,12 @@
     self.addFriendsSearchBar.frame = frame;
     
     //hides the popup
-    self.popup.hidden = YES;    
+    self.popup.hidden = YES;
+    
+    //gesture recognizer    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGestureCaptured:)];
+    [self.addedFriendsTextField addGestureRecognizer:singleTap];
+    
 
 }
 
@@ -253,6 +241,10 @@
         self.currentGroupName = self.groupName.text;
         // gray out the text or something
         self.groupName.textColor = [UIColor lightGrayColor];
+        
+        //now submits
+        [self createGroupAction];
+        
         return NO;
     }
     return YES;
@@ -265,6 +257,7 @@
 
 
 - (IBAction)createGroup:(id)sender {
+    self.currentGroupName = self.groupName.text;
     [self createGroupAction];
 }
 
@@ -329,5 +322,23 @@
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+//dismisses the keyboard
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    [self.view endEditing:TRUE];
+    
+}
+
+- (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
+{
+    //Get touch point
+    CGPoint touchPoint=[gesture locationInView:self.view];
+    
+    //Hide keyBoard
+    [self.view endEditing:YES];
+}
+
 
 @end

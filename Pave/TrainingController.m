@@ -194,6 +194,10 @@
     }
     else if(self.currentNumber < self.feedObjects.count) //otherwise if we have the data
     {
+        //cancel the old requests
+        [self.leftProduct cancelCurrentImageLoad];
+        [self.rightProduct cancelCurrentImageLoad];
+        
         NSLog(@"We have the data");
         NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:self.currentNumber];
         

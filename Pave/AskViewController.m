@@ -390,6 +390,19 @@
 
 - (void)processGrandCentralDispatchUpload:(NSData *)imageData
 {
+    //sets up the spinner
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc]
+                                        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    spinner.center = CGPointMake(80, 70);
+    spinner.hidesWhenStopped = YES;
+    
+    //grays the background
+    CGFloat width = CGRectGetWidth(self.leftImage.bounds);
+    CGFloat height = CGRectGetHeight(self.leftImage.bounds);
+    UIView *gray = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    [gray setBackgroundColor: [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:0.7]];
+    
+        
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
         
@@ -402,12 +415,21 @@
             currentURLView = self.leftURLView;
             
             self.leftURL = [@"https://s3.amazonaws.com/preparsedugproductimages/" stringByAppendingString:name];
+            [self.leftImage addSubview:gray];
+            [self.leftImage addSubview:spinner];
+            [spinner startAnimating];
+
+
         }
         else if( [self.currentSide isEqualToString: @"Right"])
         {
             currentURLView = self.rightURLView;
             
             self.rightURL = [@"https://s3.amazonaws.com/preparsedugproductimages/" stringByAppendingString:name];
+            
+            [self.rightImage addSubview:gray];
+            [self.rightImage addSubview:spinner];
+            [spinner startAnimating];
         }
         
 
@@ -433,6 +455,8 @@
                 //[self showAlertMessage:@"The image was successfully uploaded." withTitle:@"Upload Completed"];
                 currentURLView.text = name;
                 [self updateCreateButton];
+                [spinner stopAnimating];
+                [gray removeFromSuperview];
             }
             
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];

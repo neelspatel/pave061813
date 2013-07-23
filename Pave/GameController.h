@@ -39,4 +39,6 @@
 @property (nonatomic, assign)BOOL didCompleteProfileInformation;
 
 @property (nonatomic, retain) StatusBar *sbar;
+
+@property (nonatomic, retain) UIRefreshControl *refreshControl;
 @end

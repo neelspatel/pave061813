@@ -8,14 +8,18 @@
 
 #import "NotificationPopupView.h"
 #import "AppDelegate.h"
+#import "UIImageView+WebCache.h"
 
 @implementation NotificationPopupView
 
 + (id) notificationPopupCreateWithData: (NSDictionary *) data
 {
+    NSLog(@"Dataforrec: %@", data);
     NotificationPopupView *notificationPopup = [[[NSBundle mainBundle] loadNibNamed:@"NotificationPopup" owner:nil options:nil] lastObject];
     
     notificationPopup.label.text = [data objectForKey:@"rec_text"];
+    [notificationPopup.recImage setImageWithURL:[NSURL URLWithString:@"http://iteigo.net/wp/wp-content/uploads/2013/04/sample.jpg"]
+                      placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
     
     [notificationPopup baseInit];
     if ([notificationPopup isKindOfClass:[NotificationPopupView class]])
