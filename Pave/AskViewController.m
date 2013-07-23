@@ -35,36 +35,38 @@
 	// Do any additional setup after loading the view.
     
     [self setUpStatusBar];
-    
-    NSLog(@"Defaults: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
-
-    
+        
     self.title = @"Ask away!";
     
-    // Initial the S3 Client.
-    self.s3 = [[AmazonS3Client alloc] initWithAccessKey:@"AKIAJ5NFFKY3KUKBRTPQ" withSecretKey:@"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"];
+    //creates S3 logic in the background
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Initial the S3 Client.
+        self.s3 = [[AmazonS3Client alloc] initWithAccessKey:@"AKIAJ5NFFKY3KUKBRTPQ" withSecretKey:@"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"];
+        
+        // Create the picture bucket.
+        S3CreateBucketRequest *createBucketRequest = [[S3CreateBucketRequest alloc] initWithName:@"preparsedugproductimages"] ;
+        NSLog(@"About to create...");
+        @try {
+            S3CreateBucketResponse *createBucketResponse = [self.s3 createBucket:createBucketRequest];
+            
+            if(createBucketResponse.error != nil)
+            {
+                NSLog(@"Error: %@", createBucketResponse.error);
+            }
+            else
+            {
+                NSLog(@"Bucket created!");
+            }
+        }
+        @catch (AmazonServiceException *exception) {
+            NSLog(@"Exception: %@", exception);
+        }
+        @finally {
+            
+        }
+    });
     
-    // Create the picture bucket.
-    S3CreateBucketRequest *createBucketRequest = [[S3CreateBucketRequest alloc] initWithName:@"preparsedugproductimages"] ;
-    NSLog(@"About to create...");
-    @try {
-        S3CreateBucketResponse *createBucketResponse = [self.s3 createBucket:createBucketRequest];
-        
-        if(createBucketResponse.error != nil)
-        {
-            NSLog(@"Error: %@", createBucketResponse.error);
-        }
-        else
-        {
-            NSLog(@"Bucket created!");
-        }
-    }
-    @catch (AmazonServiceException *exception) {
-        NSLog(@"Exception: %@", exception);
-    }
-    @finally {
-        
-    }
+    
     
     //adds the notification listener
     [[NSNotificationCenter defaultCenter] addObserver:self

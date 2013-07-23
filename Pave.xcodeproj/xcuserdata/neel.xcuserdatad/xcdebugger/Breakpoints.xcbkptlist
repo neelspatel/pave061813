@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/AskViewController.m"
-         timestampString = "396060613.285695"
+         timestampString = "396250515.180544"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "40"
-         endingLineNumber = "40"
+         startingLineNumber = "38"
+         endingLineNumber = "38"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -73,24 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/AskViewController.m"
-         timestampString = "396060613.285695"
+         timestampString = "396250515.180544"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "43"
-         endingLineNumber = "43"
-         landmarkName = "-viewDidLoad"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Pave/AskViewController.m"
-         timestampString = "396060613.285695"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "45"
-         endingLineNumber = "45"
+         startingLineNumber = "68"
+         endingLineNumber = "68"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
