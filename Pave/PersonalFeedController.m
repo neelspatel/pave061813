@@ -485,7 +485,7 @@
     NSLog(@"reloading personal datapre");
     
     NSLog(@"reloading personal data");
-    [self getFeedObjects];
+    [self getFeedObjectsFromPull];
     
     [refreshControl endRefreshing];
     
@@ -562,9 +562,8 @@
     
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        // Do something...
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){        
+        
 
         if([self.currentTable isEqualToString:@"answers"])
         {
@@ -578,6 +577,7 @@
             path = [path stringByAppendingString:@"/"];
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 if (results) {
                     
                     [self hideLoadingBar];
@@ -618,6 +618,7 @@
             path = [path stringByAppendingString:@"/"];
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 if (results) {
                     [self hideLoadingBar];
                     
@@ -658,6 +659,7 @@
             path = [path stringByAppendingString:@"/"];
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 if (results) {
                     NSLog(@"Question Results: %@", results);
                     self.questionObjects = [NSArray arrayWithArray:results];
@@ -688,6 +690,141 @@
         
         });
 }
+
+- (void) getFeedObjectsFromPull
+{    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        
+        if([self.currentTable isEqualToString:@"answers"])
+        {
+            //self.answerObjects = [NSMutableArray array];
+            NSLog(@"About to get feed objects for answers");
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *path = @"/data/getallfeedobjects/";
+            path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+            //path = [path stringByAppendingString:@"1"];
+            path = [path stringByAppendingString:@"/"];
+            
+            [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                if (results) {
+                    
+                    [self hideLoadingBar];
+                    //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                    //for(NSDictionary *current in results)
+                    //{
+                    //    [ids addObject:current[@"id"]];
+                    //}
+                    NSLog(@"Just finished getting results: %@", results);
+                    //self.answerObjects = [self.answerObjects arrayByAddingObjectsFromArray:results];
+                    
+                    self.answerObjects = [NSArray arrayWithArray:results];
+                    
+                    NSLog(@"Just finished getting feed ids: %@", self.answerObjects);
+                    self.doneLoadingFeed = YES;
+                    
+                    self.reloadingFeedObject = NO;
+                    self.reloadingAnswers = NO;
+                    
+                    
+                    [self.answers performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                    
+                    [self.refreshControl endRefreshing];                    
+                    
+                } }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               [self hideLoadingBar];
+                                               NSLog(@"error logging in user to Django %@", error);
+                                           }];
+        }
+        else if([self.currentTable isEqualToString:@"recs"])
+        {
+            self.insightObjects = [NSMutableArray array];
+            NSLog(@"About to get feed objects for recs");
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *path = @"/data/getreclist/";
+            path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+            //path = [path stringByAppendingString:@"1"];
+            path = [path stringByAppendingString:@"/"];
+            
+            [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                if (results) {
+                    [self hideLoadingBar];
+                    
+                    
+                    //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                    //for(NSDictionary *current in results)
+                    //{
+                    //    [ids addObject:current[@"id"]];
+                    //}
+                    //NSLog(@"Just finished getting results: %@", results);
+                    NSLog(@"Insight Results: %@", results);
+                    // self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    self.insightObjects = [NSArray arrayWithArray: results];
+                    NSLog(@"Just finished getting recs ids: %@", self.insightObjects);
+                    
+                    self.doneLoadingFeed = YES;
+                    
+                    self.reloadingFeedObject = NO;
+                    self.reloadingInsights = NO;
+                    
+                    [self.recs performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                    
+                    [self.refreshControl endRefreshing];                    
+                    
+                } }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               [self hideLoadingBar];
+                                               NSLog(@"error logging in user to Django %@", error);
+                                           }];
+        }
+        else
+        {
+            //self.questionObjects = [NSMutableArray array];
+            NSLog(@"About to get feed objects for ugquestions");
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *path = @"/data/getugquestionslist/";
+            path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
+            //path = [path stringByAppendingString:@"1"];
+            path = [path stringByAppendingString:@"/"];
+            
+            [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+                if (results) {
+                    NSLog(@"Question Results: %@", results);
+                    self.questionObjects = [NSArray arrayWithArray:results];
+                    self.doneLoadingFeed = YES;
+                    
+                    self.reloadingFeedObject = NO;
+                    self.reloadingUGAnswerObjects = NO;
+                    [self.ugQuestions performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                    
+                    [self hideLoadingBar];
+                    
+                    //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                    //for(NSDictionary *current in results)
+                    //{
+                    //    [ids addObject:current[@"id"]];
+                    //}
+                    NSLog(@"Just finished getting results: %@ for path %@", results, path);
+                    //self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    [self.refreshControl endRefreshing];                    
+                    
+                } }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               [self hideLoadingBar];
+                                               
+                                               NSLog(@"error logging in user to Django %@", error);
+                                           }];
+        }
+        
+    });
+}
+
 
 - (void)viewDidAppear:(BOOL)animated
 {

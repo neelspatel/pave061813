@@ -76,6 +76,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *levelTextField;
 
 - (IBAction)refresh:(id)sender;
+- (void)refreshWithPull:(UIRefreshControl *)refreshControl;
 - (IBAction)inviteFriends:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
