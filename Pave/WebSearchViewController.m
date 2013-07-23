@@ -75,9 +75,14 @@
         NSLog(@"%@", [error userInfo]);
     }];
      */
+    
+    //first clears
+    self.results = [[NSArray alloc] init];
+    [self.collection reloadData];
+    
     NSString *path = @"/data/imagesearch/";
     
-    NSDictionary *params  = [NSDictionary dictionaryWithObjectsAndKeys: @"query", self.searchBar.text, @"index", [NSString stringWithFormat:@"%d", 0], nil];
+    NSDictionary *params  = [NSDictionary dictionaryWithObjectsAndKeys: self.searchBar.text, @"query", [NSString stringWithFormat:@"%d", 0], @"index", nil];
     
     [[JSONAPIClient sharedClient] postPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id results) {
         if (results) {
