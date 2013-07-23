@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
+#import "MembersView.h"
 #import <MessageUI/MessageUI.h>
 
 @interface GroupGameController ()
@@ -524,20 +525,26 @@
         [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
                             placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
         
+        NSString *leftImageURL = currentObject[@"image1"];
+        /*
         NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
         leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"image1"]];
         leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
         leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+         */
         
         // change the default background
         [cell.leftProduct setImageWithURL:[NSURL URLWithString:leftImageURL]
                          placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
         
         //for right product picture
+        NSString *rightImageURL = currentObject[@"image2"];
+        /**
         NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
         rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"image2"]];
         rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
         rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        */
         
         // change the default background
         [cell.rightProduct setImageWithURL:[NSURL URLWithString:rightImageURL]
@@ -656,6 +663,18 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//to view the members of a group
+- (IBAction)viewMembers:(id)sender
+{
+    NSLog(@"Viewing the members of the group");
+    
+    //loads the popup
+    self.popup = [[MembersView alloc] initWithData:self.group];
+    [self.view addSubview:[self.popup view]];   
+    
+    
 }
 
 @end

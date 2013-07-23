@@ -8,10 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
+#import "MembersView.h"
 
 
 @interface GroupGameController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
+
+//creates the popup
+@property (nonatomic, retain)MembersView *popup;
+
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, retain)NSMutableArray *feedObjects;
@@ -32,5 +37,8 @@
 @property (nonatomic, assign)BOOL didCompleteProfileInformation;
 
 @property (nonatomic, retain)NSMutableDictionary *group;
+
+- (IBAction)viewMembers:(id)sender;
+
 
 @end

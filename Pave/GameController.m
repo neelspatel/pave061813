@@ -719,21 +719,27 @@
         NSLog(@"Before loading profile picture");
         [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
                        placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-        
+                
+        NSString *leftImageURL = currentObject[@"image1"];
+        /**
         NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
         leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"image1"]];
         leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
         leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+         */
         
         // change the default background
         [cell.leftProduct setImageWithURL:[NSURL URLWithString:leftImageURL]
                             placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
         
-        //for right product picture    
+        //for right product picture
+        NSString *rightImageURL = currentObject[@"image2"];
+        /*
         NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
         rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"image2"]];
         rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
         rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+         */
         
         // change the default background
         [cell.rightProduct setImageWithURL:[NSURL URLWithString:rightImageURL]

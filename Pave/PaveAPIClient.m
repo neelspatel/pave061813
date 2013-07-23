@@ -9,9 +9,12 @@
 #import "PaveAPIClient.h"
 #import "AFJSONRequestOperation.h"
 
-// the url of our AWS 
-//static NSString * const kPaveAPIBaseURLString = @"http://ec2-54-245-213-191.us-west-2.compute.amazonaws.com/data/";
-static NSString * const kPaveAPIBaseURLString = @"http://54.244.251.104/data/";
+// the url of our AWS
+//actual server
+static NSString * const kPaveAPIBaseURLString = @"http://54.214.234.140/data/";
+
+//staging server
+//static NSString * const kPaveAPIBaseURLString = @"http://54.244.251.104/data/";
 
 @implementation PaveAPIClient
 

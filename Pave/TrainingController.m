@@ -209,7 +209,7 @@
         
         //sets images
         [UIView transitionWithView:self.view
-                          duration:0.01f
+                          duration:0.2f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             @try {

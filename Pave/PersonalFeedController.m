@@ -1031,10 +1031,13 @@
                 //for left product picture
                 // instantiate them
                 cell.leftProduct.image = [UIImage imageNamed:@"profile_icon.png"];
-                NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
+                
+                NSString *leftImageURL = currentObject[@"chosenProduct"];
+                /**NSString *leftImageURL = @"https://s3.amazonaws.com/pave_product_images/";
                 leftImageURL = [leftImageURL stringByAppendingString:currentObject[@"chosenProduct"]];
                 leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
                 leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+                 */
                 
                 [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
                  {
@@ -1072,11 +1075,13 @@
                 //for right product picture
                 cell.rightProduct.image = [UIImage imageNamed:@"profile_icon.png"];
                 
+                NSString *rightImageURL = currentObject[@"otherProduct"];
+                /**
                 NSString *rightImageURL = @"https://s3.amazonaws.com/pave_product_images/";
                 rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"otherProduct"]];
                 rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
                 rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-                
+                */
                 [imageCache queryDiskCacheForKey:rightImageURL done:^(UIImage *image, SDImageCacheType cacheType)
                  {
                      //if it's not there

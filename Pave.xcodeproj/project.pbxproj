@@ -86,6 +86,10 @@
 		18805E4F1770ECEC0059C37B /* FeedObjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18805E4D1770ECEB0059C37B /* FeedObjectCell.m */; };
 		1885D654179DF15900C230A0 /* viewinsight_details.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885D652179DF15900C230A0 /* viewinsight_details.png */; };
 		1885D655179DF15900C230A0 /* viewinsight_details@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1885D653179DF15900C230A0 /* viewinsight_details@2x.png */; };
+		1885D680179EAA3400C230A0 /* MembersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1885D67D179EAA3400C230A0 /* MembersView.xib */; };
+		1885D681179EAA3400C230A0 /* MembersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1885D67F179EAA3400C230A0 /* MembersView.m */; };
+		1885D684179EBD0700C230A0 /* GroupMemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1885D683179EBD0500C230A0 /* GroupMemberCell.m */; };
+		1885D686179EBE0A00C230A0 /* GroupMemberCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1885D685179EBE0A00C230A0 /* GroupMemberCell.xib */; };
 		1887F7441773D231001254BC /* TrendingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1887F7431773D231001254BC /* TrendingController.m */; };
 		1890E39E17789BAB0077C755 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1890E39D17789BAB0077C755 /* MobileCoreServices.framework */; };
 		18948E4C1792856500847B67 /* AWSRuntime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 18948E4A1792856500847B67 /* AWSRuntime.framework */; };
@@ -458,6 +462,12 @@
 		1885D667179E8E9D00C230A0 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		1885D668179E8E9D00C230A0 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		1885D669179E8E9D00C230A0 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		1885D67D179EAA3400C230A0 /* MembersView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MembersView.xib; sourceTree = "<group>"; };
+		1885D67E179EAA3400C230A0 /* MembersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MembersView.h; sourceTree = "<group>"; };
+		1885D67F179EAA3400C230A0 /* MembersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MembersView.m; sourceTree = "<group>"; };
+		1885D682179EBD0400C230A0 /* GroupMemberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMemberCell.h; sourceTree = "<group>"; };
+		1885D683179EBD0500C230A0 /* GroupMemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupMemberCell.m; sourceTree = "<group>"; };
+		1885D685179EBE0A00C230A0 /* GroupMemberCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupMemberCell.xib; sourceTree = "<group>"; };
 		1887F7421773D231001254BC /* TrendingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingController.h; sourceTree = "<group>"; };
 		1887F7431773D231001254BC /* TrendingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingController.m; sourceTree = "<group>"; };
 		1890E39D17789BAB0077C755 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -1236,6 +1246,19 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
+		1885D677179EA76600C230A0 /* Members */ = {
+			isa = PBXGroup;
+			children = (
+				1885D682179EBD0400C230A0 /* GroupMemberCell.h */,
+				1885D683179EBD0500C230A0 /* GroupMemberCell.m */,
+				1885D685179EBE0A00C230A0 /* GroupMemberCell.xib */,
+				1885D67D179EAA3400C230A0 /* MembersView.xib */,
+				1885D67E179EAA3400C230A0 /* MembersView.h */,
+				1885D67F179EAA3400C230A0 /* MembersView.m */,
+			);
+			name = Members;
+			sourceTree = "<group>";
+		};
 		B0040590179D6C6A00ACB665 /* Login/Walkthrough */ = {
 			isa = PBXGroup;
 			children = (
@@ -1322,6 +1345,7 @@
 		B0F178DB1791321B00CCA291 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
+				1885D677179EA76600C230A0 /* Members */,
 				B0F178D517912A6000CCA291 /* GroupViewController.h */,
 				B0F178D617912A6000CCA291 /* GroupViewController.m */,
 				B0F178D81791321400CCA291 /* AddGroupViewController.h */,
@@ -1619,6 +1643,8 @@
 				1A706701179D7D26005F6EAC /* make_public@2x.png in Resources */,
 				1885D654179DF15900C230A0 /* viewinsight_details.png in Resources */,
 				1885D655179DF15900C230A0 /* viewinsight_details@2x.png in Resources */,
+				1885D680179EAA3400C230A0 /* MembersView.xib in Resources */,
+				1885D686179EBE0A00C230A0 /* GroupMemberCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1728,6 +1754,8 @@
 				B0C8CE35179BBF5900117306 /* AddFriendCell.m in Sources */,
 				B0040599179D799400ACB665 /* WalkthroughViewController.m in Sources */,
 				B004059E179D79A300ACB665 /* WalkthroughChildViewController.m in Sources */,
+				1885D681179EAA3400C230A0 /* MembersView.m in Sources */,
+				1885D684179EBD0700C230A0 /* GroupMemberCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
