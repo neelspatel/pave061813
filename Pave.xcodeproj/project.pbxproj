@@ -298,6 +298,7 @@
 		B00405A1179E43E700ACB665 /* test_instruction_view.png in Resources */ = {isa = PBXBuildFile; fileRef = B00405A0179E43E700ACB665 /* test_instruction_view.png */; };
 		B00405A3179E452B00ACB665 /* TESTpage1_walkthrough@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B00405A2179E452B00ACB665 /* TESTpage1_walkthrough@2x.png */; };
 		B00405A5179E76E500ACB665 /* 2test_page1_walkthrough@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B00405A4179E76E500ACB665 /* 2test_page1_walkthrough@2x.png */; };
+		B00405A7179E835100ACB665 /* 5_AboutUGQuestionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B00405A6179E835100ACB665 /* 5_AboutUGQuestionView.xib */; };
 		B01707891773A20100B8D77B /* TrendingTopicsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */; };
 		B074E997179A1AC700183699 /* StatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B074E996179A1AC700183699 /* StatusBar.m */; };
 		B074E999179A47D200183699 /* StatusBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B074E998179A47D200183699 /* StatusBarView.xib */; };
@@ -670,6 +671,7 @@
 		B00405A0179E43E700ACB665 /* test_instruction_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_instruction_view.png; sourceTree = "<group>"; };
 		B00405A2179E452B00ACB665 /* TESTpage1_walkthrough@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TESTpage1_walkthrough@2x.png"; sourceTree = "<group>"; };
 		B00405A4179E76E500ACB665 /* 2test_page1_walkthrough@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "2test_page1_walkthrough@2x.png"; sourceTree = "<group>"; };
+		B00405A6179E835100ACB665 /* 5_AboutUGQuestionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = 5_AboutUGQuestionView.xib; sourceTree = "<group>"; };
 		B01707871773A20100B8D77B /* TrendingTopicsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrendingTopicsListViewController.h; sourceTree = "<group>"; };
 		B01707881773A20100B8D77B /* TrendingTopicsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrendingTopicsListViewController.m; sourceTree = "<group>"; };
 		B074E995179A1AC700183699 /* StatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBar.h; sourceTree = "<group>"; };
@@ -1109,6 +1111,7 @@
 				18C4D3C9179A642F008BC25E /* AboutUGQuestion.h */,
 				18C4D3CA179A642F008BC25E /* AboutUGQuestion.m */,
 				18C4D3CB179A642F008BC25E /* AboutUGQuestion.xib */,
+				B00405A6179E835100ACB665 /* 5_AboutUGQuestionView.xib */,
 			);
 			name = "Table Cells";
 			sourceTree = "<group>";
@@ -1588,6 +1591,7 @@
 				B00405A1179E43E700ACB665 /* test_instruction_view.png in Resources */,
 				B00405A3179E452B00ACB665 /* TESTpage1_walkthrough@2x.png in Resources */,
 				B00405A5179E76E500ACB665 /* 2test_page1_walkthrough@2x.png in Resources */,
+				B00405A7179E835100ACB665 /* 5_AboutUGQuestionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
