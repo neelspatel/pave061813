@@ -815,13 +815,11 @@
 				B0F178DB1791321B00CCA291 /* Groups */,
 				B0C8CE14179B454F00117306 /* StatusBar */,
 				B074E9A4179A9EC500183699 /* NotificationPopup */,
-				B0040590179D6C6A00ACB665 /* Walkthrough */,
+				B0040590179D6C6A00ACB665 /* Login/Walkthrough */,
 				185D854617707D46007733FA /* AppDelegate.m */,
 				185D854517707D46007733FA /* AppDelegate.h */,
 				185E1FD01778591C00ECB3DC /* LeftToRightSegue.h */,
 				185E1FD11778591C00ECB3DC /* LeftToRightSegue.m */,
-				185D8587177085EF007733FA /* LoginViewController.h */,
-				185D8588177085EF007733FA /* LoginViewController.m */,
 				185D855117707D46007733FA /* MainStoryboard_iPad.storyboard */,
 				185D854E17707D46007733FA /* MainStoryboard_iPhone.storyboard */,
 				18805E471770EC910059C37B /* PaveAPIClient.h */,
@@ -1194,17 +1192,19 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
-		B0040590179D6C6A00ACB665 /* Walkthrough */ = {
+		B0040590179D6C6A00ACB665 /* Login/Walkthrough */ = {
 			isa = PBXGroup;
 			children = (
 				B0040596179D799400ACB665 /* WalkthroughViewController.h */,
 				B0040597179D799400ACB665 /* WalkthroughViewController.m */,
 				B0040598179D799400ACB665 /* WalkthroughViewController.xib */,
+				185D8587177085EF007733FA /* LoginViewController.h */,
+				185D8588177085EF007733FA /* LoginViewController.m */,
 				B004059B179D79A300ACB665 /* WalkthroughChildViewController.h */,
 				B004059C179D79A300ACB665 /* WalkthroughChildViewController.m */,
 				B004059D179D79A300ACB665 /* WalkthroughChildViewController.xib */,
 			);
-			name = Walkthrough;
+			name = Login/Walkthrough;
 			sourceTree = "<group>";
 		};
 		B074E9A4179A9EC500183699 /* NotificationPopup */ = {

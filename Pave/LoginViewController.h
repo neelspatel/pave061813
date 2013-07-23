@@ -25,4 +25,8 @@
 @property (nonatomic, assign) BOOL didCompleteFriendsInformation;
 @property (nonatomic, strong) NSMutableDictionary *userProfile;
 @property (nonatomic, strong) NSMutableArray *friendIds;
+
+@property (nonatomic, assign) BOOL tutorialComplete;
+@property (nonatomic, assign) BOOL createdUser;
+
 @end
