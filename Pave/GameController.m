@@ -91,8 +91,6 @@
     NSLog(@"reloading personal data");
     [self getFeedObjects];
     [self.tableView reloadData];
-
-    
     [refreshControl endRefreshing];
 }
 
@@ -119,10 +117,7 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    NSLog(@"About to push walkthrough");
-    WalkthroughViewController *walkthrough = [[WalkthroughViewController alloc] initWithNibName:@"WalkthroughViewController" bundle:nil];
-    [self presentViewController:walkthrough animated:YES completion:nil];
-    
+    NSLog(@"About to push walkthrough");    
 
     //first reload the data
     [self.tableView reloadData];

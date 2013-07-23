@@ -57,12 +57,12 @@
     self.tabBarController = tabBarController;
     
     // FB Login
-    NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
+    NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
     
     self.session = [[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil];
     
     //timer to check for notifications
-    NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 5.0 target: self
+    NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
                                                       selector: @selector(refreshNotifications:) userInfo: nil repeats: YES];
     
     // read in the current status score from NSUserDefaults

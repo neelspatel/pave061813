@@ -27,8 +27,14 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
     self.screenNumber.text = [NSString stringWithFormat:@"Screen #%d", self.index];
-
+    
+    if (self.index == 4)
+    {
+        NSLog(@"Called index == 4");
+        self.doneButton.hidden = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,4 +43,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)doneButtonPushed:(id)sender {
+    [self dismissViewControllerAnimated:NO completion:^{
+            // send notification to login view controller to dismiss and return to game feecd
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"tutorialComplete" object:nil];
+        }];
+}
 @end

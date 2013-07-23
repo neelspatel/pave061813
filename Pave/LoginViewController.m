@@ -13,7 +13,7 @@
 #import "AFNetworking.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "MBProgressHUD.h"
-
+#import "WalkthroughViewController.h"
 
 @interface LoginViewController ()
 
@@ -37,13 +37,50 @@
     [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction1Large.png"] forState: UIControlStateSelected];
     [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction1Large.png"] forState: UIControlStateHighlighted];*/
     self.instructionButton1.showsTouchWhenHighlighted = NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tutorialComplete:) name:@"tutorialComplete" object:nil];
+    
+    self.tutorialComplete = NO;
+    self.createdUser = NO;
 }
 
+-(void)checkToContinueToGameFeed
+{
+    if (self.tutorialComplete && self.createdUser)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
 
+    }
+}
+-(void)tutorialComplete:(NSNotification *)notification
+{
+    self.tutorialComplete= YES;
+    [self checkToContinueToGameFeed];
+}
+
+-(void)serverCreateUserComplete
+{
+    
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)saveUserFacebookInformation
+{
+
+        NSLog(@"about to request user");
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:self.userProfile forKey:@"profile"];
+        [defaults setObject:self.userProfile[@"facebookId"] forKey:@"id"];
+        [defaults synchronize];
+    
+        // show tutorial screen
+    WalkthroughViewController *walkthroughController = [[WalkthroughViewController alloc] initWithNibName:@"WalkthroughViewController" bundle:nil];
+    [self presentViewController:walkthroughController animated:YES completion:nil];
+    
 }
 
 // checks both instance variables to see if the requests went through
@@ -97,7 +134,6 @@
             
             //[self performSegueWithIdentifier:@"loginToHomeScreen" sender:self];
 
-            
             //NSLog(@"%@", self.userProfile);
             //NSLog(@"%@",  jsonString);
             NSLog(@"Initialized friends as %@", self.friendIds);
@@ -120,6 +156,7 @@
 
 -(void) setupFacebookInformation
 {
+    NSLog(@"Setting up Facebook Information");
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -136,6 +173,8 @@
                 
                 // Parse the data received
                 NSDictionary *userData = (NSDictionary *)result;
+                NSLog(@"Result of profile: %@", result);
+
                 NSString *facebookID = userData[@"id"];
                 NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
                 self.userProfile = [NSMutableDictionary dictionaryWithCapacity:7];
@@ -169,10 +208,9 @@
                 self.didCompleteProfileInformation = YES;
                 
                 // what do we want to do?
-                [self sendSaveUserAndFacebookInformation];
-                
-                //[[KCSUser activeUser] setValue: userProfile forAttribute: @"profile"];
-                
+                [self saveUserFacebookInformation];
+                //[self sendSaveUserAndFacebookInformation];
+                                
             } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
                         isEqualToString: @"OAuthException"]) {
                     // Since the request failed, we can check if it was due to an invalid session
@@ -303,15 +341,14 @@
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = [delegate session];
     
-
-    
     NSLog(@"About to login");
     // login Facebook User
     
     if(session.state == 513 || session.state == 258 || session.state == 257)
     {
-        NSArray *permissionsArray = @[ @"user_about_me", @"user_relationships", @"user_birthday", @"user_location"];
+        NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
         
+        // might be crashing here
         [FBSession.activeSession closeAndClearTokenInformation];
         [FBSession.activeSession close];
         [FBSession setActiveSession:nil];
@@ -327,25 +364,38 @@
         [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
             [FBSession setActiveSession:session];
             if (status == FBSessionStateOpen) {
-                NSString* accessToken = session.accessToken;
-                /**
-                 [KCSUser loginWithSocialIdentity:KCSSocialIDFacebook accessDictionary:@{KCSUserAccessTokenKey : accessToken} withCompletionBlock:^(KCSUser *user, NSError *errorOrNil, KCSUserActionResult result) {
-                 NSLog(@"Finished login");
-                 
-                 NSLog(@"Accesstoken: %@", accessToken);
-                 
-                 //saves and updates data
-                 [self initializeFacebookInformation];
-                 [self performSegueWithIdentifier:@"loginToHomeScreen" sender:self];
-                 }];
-                 */
+                NSString* accessToken = session.accessTokenData.accessToken;
                 NSLog(@"Finished login");
                 
                 NSLog(@"Accesstoken: %@", accessToken);
                                 
                 //saves and updates data
-                [self initializeFacebookInformation];
-                
+                [self setupFacebookInformation];
+                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: accessToken, @"access_token", nil];
+
+                [[PaveAPIClient sharedClient] postPath:@"/data/createuser"
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"created user");
+                                                NSLog(@"JSON for create user: %@", JSON);
+                                                NSDictionary *results = JSON;
+                                                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                                [defaults setObject:[results objectForKey:@"friends"] forKey:@"friends"];
+                                                [defaults setObject:[results objectForKey:@"genders"] forKey:@"genders"];
+                                                [defaults setObject:[results objectForKey:@"names"] forKey:@"names"];
+                                                [defaults setObject:[results objectForKey:@"top_friends"] forKey:@"top_friends"];
+
+                                                [defaults synchronize];
+
+                                                //now fetches the feed objects
+                                                self.createdUser = YES;
+                                                [self checkToContinueToGameFeed];
+                                                
+                                                //self.instructionButton1.hidden = FALSE;
+                                                
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error creating user %@", error);
+                                            }];
+
                 //hides elements on screen
                 self.loginButton.hidden = TRUE;
                 self.dividingBar.hidden = TRUE;

@@ -292,16 +292,6 @@
 		1A706701179D7D26005F6EAC /* make_public@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A7066FD179D7D26005F6EAC /* make_public@2x.png */; };
 		B0040575179C0C8C00ACB665 /* lightbulb_on.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040573179C0C8C00ACB665 /* lightbulb_on.png */; };
 		B0040576179C0C8C00ACB665 /* lightbulb_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040574179C0C8C00ACB665 /* lightbulb_on@2x.png */; };
-		B004057B179C127800ACB665 /* name_box.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040577179C127800ACB665 /* name_box.png */; };
-		B004057C179C127800ACB665 /* name_box@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040578179C127800ACB665 /* name_box@2x.png */; };
-		B004057D179C127800ACB665 /* namegroup_background.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040579179C127800ACB665 /* namegroup_background.png */; };
-		B004057E179C127800ACB665 /* namegroup_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B004057A179C127800ACB665 /* namegroup_background@2x.png */; };
-		B0040585179C12A400ACB665 /* NOTHANKS_BUTTON.png in Resources */ = {isa = PBXBuildFile; fileRef = B004057F179C12A400ACB665 /* NOTHANKS_BUTTON.png */; };
-		B0040586179C12A400ACB665 /* NOTHANKS_BUTTON@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040580179C12A400ACB665 /* NOTHANKS_BUTTON@2x.png */; };
-		B0040587179C12A400ACB665 /* NOTREADY_DONE_BUTTON.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040581179C12A400ACB665 /* NOTREADY_DONE_BUTTON.png */; };
-		B0040588179C12A400ACB665 /* NOTREADY_DONE_BUTTON@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040582179C12A400ACB665 /* NOTREADY_DONE_BUTTON@2x.png */; };
-		B0040589179C12A400ACB665 /* READY_DONE_BUTTON.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040583179C12A400ACB665 /* READY_DONE_BUTTON.png */; };
-		B004058A179C12A400ACB665 /* READY_DONE_BUTTON@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0040584179C12A400ACB665 /* READY_DONE_BUTTON@2x.png */; };
 		B0040599179D799400ACB665 /* WalkthroughViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0040597179D799400ACB665 /* WalkthroughViewController.m */; };
 		B004059A179D799400ACB665 /* WalkthroughViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0040598179D799400ACB665 /* WalkthroughViewController.xib */; };
 		B004059E179D79A300ACB665 /* WalkthroughChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B004059C179D79A300ACB665 /* WalkthroughChildViewController.m */; };
@@ -667,16 +657,6 @@
 		1A7066FD179D7D26005F6EAC /* make_public@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "make_public@2x.png"; sourceTree = "<group>"; };
 		B0040573179C0C8C00ACB665 /* lightbulb_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightbulb_on.png; sourceTree = "<group>"; };
 		B0040574179C0C8C00ACB665 /* lightbulb_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightbulb_on@2x.png"; sourceTree = "<group>"; };
-		B0040577179C127800ACB665 /* name_box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = name_box.png; sourceTree = "<group>"; };
-		B0040578179C127800ACB665 /* name_box@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "name_box@2x.png"; sourceTree = "<group>"; };
-		B0040579179C127800ACB665 /* namegroup_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = namegroup_background.png; sourceTree = "<group>"; };
-		B004057A179C127800ACB665 /* namegroup_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "namegroup_background@2x.png"; sourceTree = "<group>"; };
-		B004057F179C12A400ACB665 /* NOTHANKS_BUTTON.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NOTHANKS_BUTTON.png; sourceTree = "<group>"; };
-		B0040580179C12A400ACB665 /* NOTHANKS_BUTTON@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NOTHANKS_BUTTON@2x.png"; sourceTree = "<group>"; };
-		B0040581179C12A400ACB665 /* NOTREADY_DONE_BUTTON.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NOTREADY_DONE_BUTTON.png; sourceTree = "<group>"; };
-		B0040582179C12A400ACB665 /* NOTREADY_DONE_BUTTON@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NOTREADY_DONE_BUTTON@2x.png"; sourceTree = "<group>"; };
-		B0040583179C12A400ACB665 /* READY_DONE_BUTTON.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = READY_DONE_BUTTON.png; sourceTree = "<group>"; };
-		B0040584179C12A400ACB665 /* READY_DONE_BUTTON@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "READY_DONE_BUTTON@2x.png"; sourceTree = "<group>"; };
 		B0040596179D799400ACB665 /* WalkthroughViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WalkthroughViewController.h; sourceTree = "<group>"; };
 		B0040597179D799400ACB665 /* WalkthroughViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WalkthroughViewController.m; sourceTree = "<group>"; };
 		B0040598179D799400ACB665 /* WalkthroughViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WalkthroughViewController.xib; sourceTree = "<group>"; };
@@ -834,13 +814,11 @@
 				B0F178DB1791321B00CCA291 /* Groups */,
 				B0C8CE14179B454F00117306 /* StatusBar */,
 				B074E9A4179A9EC500183699 /* NotificationPopup */,
-				B0040590179D6C6A00ACB665 /* Walkthrough */,
+				B0040590179D6C6A00ACB665 /* Login/Walkthrough */,
 				185D854617707D46007733FA /* AppDelegate.m */,
 				185D854517707D46007733FA /* AppDelegate.h */,
 				185E1FD01778591C00ECB3DC /* LeftToRightSegue.h */,
 				185E1FD11778591C00ECB3DC /* LeftToRightSegue.m */,
-				185D8587177085EF007733FA /* LoginViewController.h */,
-				185D8588177085EF007733FA /* LoginViewController.m */,
 				185D855117707D46007733FA /* MainStoryboard_iPad.storyboard */,
 				185D854E17707D46007733FA /* MainStoryboard_iPhone.storyboard */,
 				18805E471770EC910059C37B /* PaveAPIClient.h */,
@@ -1211,17 +1189,19 @@
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
-		B0040590179D6C6A00ACB665 /* Walkthrough */ = {
+		B0040590179D6C6A00ACB665 /* Login/Walkthrough */ = {
 			isa = PBXGroup;
 			children = (
 				B0040596179D799400ACB665 /* WalkthroughViewController.h */,
 				B0040597179D799400ACB665 /* WalkthroughViewController.m */,
 				B0040598179D799400ACB665 /* WalkthroughViewController.xib */,
+				185D8587177085EF007733FA /* LoginViewController.h */,
+				185D8588177085EF007733FA /* LoginViewController.m */,
 				B004059B179D79A300ACB665 /* WalkthroughChildViewController.h */,
 				B004059C179D79A300ACB665 /* WalkthroughChildViewController.m */,
 				B004059D179D79A300ACB665 /* WalkthroughChildViewController.xib */,
 			);
-			name = Walkthrough;
+			name = Login/Walkthrough;
 			sourceTree = "<group>";
 		};
 		B074E9A4179A9EC500183699 /* NotificationPopup */ = {
@@ -1561,7 +1541,7 @@
 				1A7066B3179D322C005F6EAC /* recommendation_for_you@2x.png in Resources */,
 				1A7066B5179D3527005F6EAC /* new_facebook_share_button@2x.png in Resources */,
 				1A7066B9179D37BB005F6EAC /* profile_background@2x.png in Resources */,
-        1A7066BB179D3D2A005F6EAC /* about_you_background@2x.png in Resources */,
+				1A7066BB179D3D2A005F6EAC /* about_you_background@2x.png in Resources */,
 				1A7066BF179D3E12005F6EAC /* about_you_background.png in Resources */,
 				1A7066C2179D40DE005F6EAC /* top_profilebox.png in Resources */,
 				1A7066C3179D40DE005F6EAC /* top_profilebox@2x.png in Resources */,

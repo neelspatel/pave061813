@@ -33,10 +33,9 @@
     self.pageController.dataSource = self;
     //self.pageController.view.frame = CGRectMake(100, 100, 20, 100);
     [[self.pageController view] setFrame:[[self view] frame]];
-    [[self.pageController view] setFrame:CGRectMake(0, 50, 300, 320)];
+    [[self.pageController view] setFrame:CGRectMake(0, 50, 320, 500)];
     
     WalkthroughChildViewController *initialViewController = [self viewControllerAtIndex:0];
-    
     NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
     
     [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
