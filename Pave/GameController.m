@@ -91,7 +91,8 @@
 
     [[PaveAPIClient sharedClient] postPath:path
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                    NSLog(@"updated user");                                    
+
+                                    NSLog(@"updated user");
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     NSLog(@"error updating user %@", error);
                                 }];

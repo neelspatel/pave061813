@@ -9,7 +9,7 @@
 #import "AddGroupViewController.h"
 #import "AddFriendCell.h"
 #import "UIImageView+WebCache.h"
-
+#import "GroupGameController.h"
 
 @interface AddGroupViewController ()
 
@@ -45,6 +45,7 @@
     
     self.tableView.delaysContentTouches = NO;
 
+    self.createButton.enabled = NO;
 	// Do any additional setup after loading the view.
     
     // setting our delegates
@@ -134,7 +135,7 @@
     [self.tableView deselectRowAtIndexPath:[self.tableView  indexPathForSelectedRow] animated:YES];
     
     NSLog(@"Selected %d", indexPath.row);
-    [self.view endEditing:YES];
+    //[self.view endEditing:YES];
     
     NSString *selectedName;
     NSString *selectedId;
@@ -158,6 +159,12 @@
         newText = selectedName;
     else
         newText = [NSString stringWithFormat:@"%@, %@",curText, selectedName];
+    
+    // SHOW THE CREATE BUTTON
+    if (self.currentGroup.count > 0)
+    {
+        self.createButton.enabled = YES;
+    }
     
     NSLog(@"%@", newText);
     self.addedFriendsTextField.text = newText;
@@ -310,7 +317,11 @@
         [prefs synchronize];
         NSLog(@"Succesfully created group %@", self.currentGroupName);
 
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:NO completion:
+         ^{
+             [[NSNotificationCenter defaultCenter] postNotificationName:@"groupCreated" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:currentGroup, @"group", nil]];
+             
+         }];
         // You succesfully created this group!
     }
     else{
@@ -320,6 +331,7 @@
     }
 }
 
+
 - (IBAction)back:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -328,19 +340,21 @@
 //dismisses the keyboard
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    
     [self.view endEditing:TRUE];
-    
 }
 
 - (void)singleTapGestureCaptured:(UITapGestureRecognizer *)gesture
 {
     //Get touch point
     CGPoint touchPoint=[gesture locationInView:self.view];
-    
     //Hide keyBoard
     [self.view endEditing:YES];
 }
 
+
+- (IBAction)closeNamePopup:(id)sender {
+    self.popup.hidden = YES;
+    self.createButton.hidden = NO;
+}
 
 @end

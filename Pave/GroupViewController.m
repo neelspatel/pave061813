@@ -34,6 +34,8 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
+    //self.tableView.editing = YES;
+
     [super viewDidAppear:animated];
 }
 
@@ -84,12 +86,21 @@
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
 
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupCreatedHandler:) name:@"groupCreated" object:nil];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"insightReady" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"groupCreated" object:nil];
+}
+
+-(void) groupCreatedHandler: (NSNotification *) notification
+{
+    NSDictionary *dict = [notification userInfo];
+    NSMutableDictionary *currentGroup = [dict objectForKey:@"group"];
+    [self performSegueWithIdentifier:@"groupListToGroupGame" sender:currentGroup];
 }
 
 -(void) requestInsight:(NSNotification *) notification
@@ -151,12 +162,42 @@
     //sets the background    
     cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"not_selected_group.png"]];
     cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_group.png"]];
+    
     cell.groupName.highlightedTextColor = [UIColor grayColor];
     cell.groupMembers.highlightedTextColor = [UIColor grayColor];
-    
+
     cell.groupName.text = [currentObject objectForKey:@"name"];
-    NSLog(@"Current object: %@", currentObject);
-    cell.groupMembers.text = [[currentObject objectForKey:@"friend_names"] componentsJoinedByString:@", "];
+    
+    NSMutableArray *names = [[NSMutableArray alloc] initWithCapacity: [[currentObject objectForKey:@"friend_names"] count]];
+                             
+    for (NSString *full_name in [currentObject objectForKey:@"friend_names"])
+    {
+        NSLog(@"Full Name: %@", full_name);
+        NSArray *first_last = [full_name componentsSeparatedByString:@" "];
+        NSString *name = [first_last objectAtIndex:0];
+        name = [name stringByAppendingString:@" "];
+        NSString *last_name = [first_last objectAtIndex:1];
+        name =  [name stringByAppendingString:[last_name substringToIndex:1]];
+        NSLog(@"Name: %@", full_name);
+        [names addObject: name];
+    }
+    
+    NSLog(@"Current names: %@", names);
+   // NSString *names = [[currentObject objectForKey:@"friend_names"] componentsJoinedByString:@", "];
+    NSString *prefix = nil;
+    NSString *joined_names = [names componentsJoinedByString:@", "];
+    if ([joined_names length] > 40)
+    {
+        prefix = [joined_names substringToIndex:37];
+        prefix = [prefix stringByAppendingString:@"..."];
+    }
+    else
+    {
+        prefix = joined_names;
+        
+    }
+    NSLog(@"Prefix: %@", prefix );
+    cell.groupMembers.text = prefix;
     
     return cell;
 }
@@ -199,13 +240,16 @@
         GroupGameController *destination = segue.destinationViewController;
         destination.group = sender;  //note this is the back reference
     }
-     
-    
 }
 
 - (IBAction)addGroup:(id)sender {
     NSLog(@"Clicked add group");
     [self performSegueWithIdentifier:@"groupListToAddGroup" sender:self];
     // display popover 
+}
+
+- (IBAction)editTableView:(id)sender {
+    NSLog(@"What is up?");
+    self.tableView.editing = YES;
 }
 @end

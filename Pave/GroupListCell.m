@@ -15,7 +15,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        //self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"not_selected_group.png"]];
+        self.contentView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"unselected_group_selector_background.png"]];
+        //self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unselected_group_selector_background.png"]];
+
         //self.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_group.png"]];
         
         //self.imageView.image = [UIImage imageNamed:@"not_selected_group.png"];

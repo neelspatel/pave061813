@@ -35,5 +35,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *popup;
 
+- (IBAction)closeNamePopup:(id)sender;
 
 @end

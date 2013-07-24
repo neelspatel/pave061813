@@ -22,4 +22,6 @@
 
 @property (nonatomic, retain) StatusBar *sbar;
 
+- (IBAction)editTableView:(id)sender;
+
 @end

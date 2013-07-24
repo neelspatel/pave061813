@@ -19,6 +19,8 @@
 #import "MBProgressHUD.h"
 #import "MembersView.h"
 #import <MessageUI/MessageUI.h>
+#import "StatusBar.h"
+#import "NotificationPopupView.h"
 
 @interface GroupGameController ()
 
@@ -40,6 +42,9 @@
     
     NSLog(@"View loaded. group is: %@", self.group);
     [super viewDidLoad];
+    
+    [self setUpStatusBar];
+
 	// Do any additional setup after loading the view.
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -81,6 +86,16 @@
     
 }
 
+- (void) setUpStatusBar
+{
+    self.sbar = [StatusBar statusBarCreate];
+    self.sbar.frame = CGRectMake(0, 37, self.sbar.frame.size.width, self.sbar.frame.size.height);
+    [self.sbar redrawBar];
+    [self.view addSubview:self.sbar];
+    
+}
+
+
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
 {
     self.reloadingFeedObject = YES;
@@ -99,9 +114,49 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self.sbar redrawBar];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+
     //first reload the data
     [self.tableView reloadData];
 }
+
+-(void) viewWillDisappear:(BOOL) animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self name:@"insightReady" object:nil];
+}
+
+
+-(void) requestInsight:(NSNotification *) notification
+{
+    NSLog(@"Getting called request insight");
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    // hit the endpoint
+    NSString *path = @"/data/getnewrec/";
+    path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+    path = [path stringByAppendingString:@"/"];
+    
+    [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+        if (results)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[[results objectForKey:@"text"] stringValue], @"rec_text", nil]];
+            });
+        }
+    }
+                                   failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
+                                       NSLog(@"Failure while getting rec");
+                                   }
+     ];
+    
+}
+
+-(void)createNotificationPopup:(NSDictionary *) data
+{
+    NotificationPopupView *notificationPopup = [NotificationPopupView notificationPopupCreateWithData:data];
+    [self.view addSubview:notificationPopup];
+}
+
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
@@ -672,8 +727,7 @@
     
     //loads the popup
     self.popup = [[MembersView alloc] initWithData:self.group];
-    [self.view addSubview:[self.popup view]];   
-    
+    [self.view addSubview:[self.popup view]];
     
 }
 

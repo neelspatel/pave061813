@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
 #import "MembersView.h"
-
+#import "StatusBar.h"
 
 @interface GroupGameController : UIViewController <UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
@@ -39,6 +39,8 @@
 @property (nonatomic, retain)NSMutableDictionary *group;
 
 - (IBAction)viewMembers:(id)sender;
+
+@property (nonatomic, retain) StatusBar *sbar;
 
 
 @end
