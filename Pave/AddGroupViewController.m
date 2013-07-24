@@ -216,16 +216,18 @@
     }
     else
     {
+        NSLog(@"FBnames: %@ FBids: %@", self.friendNames, self.friendIds);
+        
         self.isFiltered = YES;
         self.filteredNames = [[NSMutableArray alloc] init];
         self.filteredIds = [[NSMutableArray alloc] init];
-        for (NSString *currName in self.friendNames){
+        for (NSString *currName in self.friendNames){            
             NSRange nameRange = [currName rangeOfString:text options: NSCaseInsensitiveSearch];
             if (nameRange.location == 0) {
-                [self.filteredNames addObject:currName];
+                [self.filteredNames addObject:currName];                
                 
                 //now gets the same position for the id
-                int index = [self.friendNames indexOfObject:currName];
+                int index = [self.friendNames indexOfObject:currName];                
                 NSNumber *currId = [self.friendIds objectAtIndex:index];
                 [self.filteredIds addObject:currId];
             }
