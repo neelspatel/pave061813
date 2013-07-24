@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E2068" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -783,13 +783,13 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wv-Yg-oIt">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="310" id="DeX-C0-JU1"/>
-                                    <constraint firstAttribute="height" constant="55" id="lQy-Jd-8d3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Feedback">
+                                <state key="normal" title="Feedback" image="send_feedback_unselected.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected" image="send_feedback_selected.png"/>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -802,10 +802,11 @@
                                     <constraint firstAttribute="height" constant="54" id="pZH-ne-1g9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Invite">
+                                <state key="normal" title="Invite" image="invite_friends_unselected.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected" image="invite_friends_selected.png"/>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -815,13 +816,14 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EDp-iW-hLZ">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="54" id="r3T-rl-iVw"/>
+                                    <constraint firstAttribute="height" constant="54" type="user" id="r3T-rl-iVw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Rate">
+                                <state key="normal" image="rate_unselected.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected" image="rate_selected.png"/>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -831,13 +833,14 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ihY-w6-Fi0">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="54" id="yDT-0W-hds"/>
+                                    <constraint firstAttribute="height" constant="54" type="user" id="yDT-0W-hds"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Logout">
+                                <state key="normal" title="Logout" image="logout_unselected.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <state key="selected" image="logout_unselected.png"/>
                                 <state key="highlighted">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -846,13 +849,12 @@
                                 </connections>
                             </button>
                             <navigationBar contentMode="scaleToFill" barStyle="blackOpaque" translatesAutoresizingMaskIntoConstraints="NO" id="JoM-eq-9gy"/>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3WL-GS-Hmn">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3WL-GS-Hmn">
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="61" id="3ID-zC-oUS"/>
-                                    <constraint firstAttribute="height" constant="33" id="mKg-9Z-xrD"/>
+                                    <constraint firstAttribute="width" constant="55" id="78V-J1-HUb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Done">
+                                <state key="normal" title="Done" image="BLUE_DONE_BUTTON.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -867,21 +869,22 @@
                         <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="JoM-eq-9gy" firstAttribute="trailing" secondItem="s7X-mi-vTj" secondAttribute="trailing" type="default" id="6AX-CH-xCj"/>
+                            <constraint firstItem="ihY-w6-Fi0" firstAttribute="top" secondItem="EDp-iW-hLZ" secondAttribute="bottom" type="user" id="6OX-tb-pf0"/>
                             <constraint firstItem="JoM-eq-9gy" firstAttribute="leading" secondItem="s7X-mi-vTj" secondAttribute="leading" type="default" id="6sP-OU-XAg"/>
-                            <constraint firstItem="3WL-GS-Hmn" firstAttribute="top" secondItem="s7X-mi-vTj" secondAttribute="top" constant="5" id="PuT-o5-e0a"/>
-                            <constraint firstItem="ihY-w6-Fi0" firstAttribute="trailing" secondItem="EDp-iW-hLZ" secondAttribute="trailing" type="default" id="TzG-z1-OCd"/>
-                            <constraint firstItem="EDp-iW-hLZ" firstAttribute="trailing" secondItem="vMR-ZU-p35" secondAttribute="trailing" type="default" id="Z77-G1-tD6"/>
+                            <constraint firstAttribute="trailing" secondItem="3WL-GS-Hmn" secondAttribute="trailing" constant="10" id="7mZ-UJ-8v5"/>
+                            <constraint firstItem="EDp-iW-hLZ" firstAttribute="width" secondItem="vMR-ZU-p35" secondAttribute="width" type="user" id="HMz-AR-WSS"/>
+                            <constraint firstItem="EDp-iW-hLZ" firstAttribute="width" secondItem="5wv-Yg-oIt" secondAttribute="width" type="user" id="MJ6-dP-Osp"/>
+                            <constraint firstItem="3WL-GS-Hmn" firstAttribute="top" secondItem="s7X-mi-vTj" secondAttribute="top" constant="6" id="Qae-qO-wlW"/>
                             <constraint firstItem="EDp-iW-hLZ" firstAttribute="leading" secondItem="vMR-ZU-p35" secondAttribute="leading" type="default" id="aSN-Kn-bP9"/>
                             <constraint firstItem="5wv-Yg-oIt" firstAttribute="top" secondItem="s7X-mi-vTj" secondAttribute="top" constant="75" id="bUw-Nd-wEd"/>
                             <constraint firstItem="vMR-ZU-p35" firstAttribute="leading" secondItem="5wv-Yg-oIt" secondAttribute="leading" type="default" id="cNe-o0-xRD"/>
                             <constraint firstItem="vMR-ZU-p35" firstAttribute="top" secondItem="s7X-mi-vTj" secondAttribute="top" constant="130" id="dYt-gP-FYH"/>
-                            <constraint firstItem="vMR-ZU-p35" firstAttribute="trailing" secondItem="5wv-Yg-oIt" secondAttribute="trailing" type="default" id="eVF-1s-eCZ"/>
                             <constraint firstItem="ihY-w6-Fi0" firstAttribute="leading" secondItem="EDp-iW-hLZ" secondAttribute="leading" type="default" id="fPw-B6-LmY"/>
                             <constraint firstItem="JoM-eq-9gy" firstAttribute="top" secondItem="s7X-mi-vTj" secondAttribute="top" type="default" id="iTn-eK-wXP"/>
-                            <constraint firstItem="3WL-GS-Hmn" firstAttribute="trailing" secondItem="5wv-Yg-oIt" secondAttribute="trailing" type="default" id="rLo-Gz-imQ"/>
-                            <constraint firstAttribute="bottom" secondItem="ihY-w6-Fi0" secondAttribute="bottom" constant="167" id="tEP-8Q-Wew"/>
+                            <constraint firstItem="EDp-iW-hLZ" firstAttribute="width" secondItem="ihY-w6-Fi0" secondAttribute="width" type="user" id="ka5-Ey-gZi"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ihY-w6-Fi0" secondAttribute="bottom" constant="167" type="user" id="tEP-8Q-Wew"/>
                             <constraint firstItem="5wv-Yg-oIt" firstAttribute="centerX" secondItem="JoM-eq-9gy" secondAttribute="centerX" type="default" id="uiN-59-BmI"/>
-                            <constraint firstItem="EDp-iW-hLZ" firstAttribute="top" secondItem="s7X-mi-vTj" secondAttribute="top" constant="185" id="yGq-gv-Hoo"/>
+                            <constraint firstItem="EDp-iW-hLZ" firstAttribute="top" secondItem="s7X-mi-vTj" secondAttribute="top" constant="185" type="user" id="yGq-gv-Hoo"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -3495,6 +3498,7 @@
         <image name="BIG_DISAGREE_BUTTON.png" width="121" height="33"/>
         <image name="BIG_DISAGREE_BUTTON@2x.png" width="241" height="66"/>
         <image name="BLUE_CREATE.png" width="45" height="31"/>
+        <image name="BLUE_DONE_BUTTON.png" width="55" height="31"/>
         <image name="Feedback.png" width="16" height="16"/>
         <image name="GREEN_COUNT_UGC_BUTTON.png" width="66" height="29"/>
         <image name="NEWESTiphone4popup_translucent_layer_wbackground.png" width="320" height="347"/>
@@ -3527,6 +3531,9 @@
         <image name="facebook_icon.png" width="143" height="143"/>
         <image name="instruction1Large.png" width="16" height="16"/>
         <image name="invite_friends.png" width="16" height="16"/>
+        <image name="invite_friends_selected.png" width="320" height="55"/>
+        <image name="invite_friends_unselected.png" width="320" height="55"/>
+        <image name="logout_unselected.png" width="320" height="55"/>
         <image name="make_anonymous.png" width="103" height="19"/>
         <image name="members_label.png" width="310" height="22"/>
         <image name="name_box.png" width="247" height="35"/>
@@ -3536,8 +3543,12 @@
         <image name="nithin.png" width="63" height="66"/>
         <image name="popupX.png" width="30" height="30"/>
         <image name="progress_bardraft1@2x-copy.png" width="640" height="49"/>
+        <image name="rate_selected.png" width="320" height="55"/>
+        <image name="rate_unselected.png" width="320" height="55"/>
         <image name="search_web_button.png" width="225" height="55"/>
         <image name="selected_answers_about_me.png" width="107" height="41"/>
+        <image name="send_feedback_selected.png" width="320" height="55"/>
+        <image name="send_feedback_unselected.png" width="320" height="55"/>
         <image name="settings_icon@2x.png" width="35" height="35"/>
         <image name="share_timeline.png" width="16" height="16"/>
         <image name="suggestions_label.png" width="310" height="22"/>
@@ -3551,6 +3562,275 @@
         <image name="unselected_questions_by_me.png" width="107" height="41"/>
         <image name="unselected_reload.png" width="16" height="16"/>
     </resources>
+    <classes>
+        <class className="AddFriendCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFriendCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="friendName" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="friendProfilePicture" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="AddGroupViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddGroupViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="createGroup:"/>
+                <relationship kind="action" name="showCreate:"/>
+                <relationship kind="outlet" name="addFriendsSearchBar" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="addedFriendsTextField" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="createButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="groupName" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="popup" candidateClass="UIView"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="AnswersCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AnswersCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="agree" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="disagree" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="AskViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/AskViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="choosePicture:"/>
+                <relationship kind="action" name="closeOptions:"/>
+                <relationship kind="action" name="create:"/>
+                <relationship kind="action" name="leftAdd:"/>
+                <relationship kind="action" name="leftCancel:"/>
+                <relationship kind="action" name="rightAdd:"/>
+                <relationship kind="action" name="rightCancel:"/>
+                <relationship kind="action" name="takePicture:"/>
+                <relationship kind="outlet" name="addOptions" candidateClass="UIView"/>
+                <relationship kind="outlet" name="createButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftAddButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftCancelButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftSpinner" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="leftURLView" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="rightAddButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="rightCancelButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="rightImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightURLView" candidateClass="UITextField"/>
+            </relationships>
+        </class>
+        <class className="FeedObjectCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedObjectCell.h"/>
+            <relationships>
+                <relationship kind="action" name="facebookNotify:"/>
+                <relationship kind="action" name="switched:"/>
+                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftCheck" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="onOffButton" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="responseCount" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="rightCheck" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightX" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="GameController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameController.h"/>
+            <relationships>
+                <relationship kind="action" name="sendEmail:"/>
+                <relationship kind="outlet" name="emailButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="GroupGameController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupGameController.h"/>
+            <relationships>
+                <relationship kind="action" name="viewMembers:"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="GroupListCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupListCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="groupMembers" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="groupName" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="GroupViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="addGroup:"/>
+                <relationship kind="outlet" name="addGroupButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="LoginViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="instructionButtonTouch:"/>
+                <relationship kind="action" name="loginButtonTouch:"/>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="connectWith" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="dividingBar" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="instructionButton1" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="loginInfo" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PersonalFeedController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalFeedController.h"/>
+            <relationships>
+                <relationship kind="action" name="changeTable:"/>
+                <relationship kind="action" name="inviteFriends:"/>
+                <relationship kind="action" name="logout:"/>
+                <relationship kind="action" name="refresh:"/>
+                <relationship kind="action" name="viewAnswers:"/>
+                <relationship kind="action" name="viewInsights:"/>
+                <relationship kind="action" name="viewQuestions:"/>
+                <relationship kind="outlet" name="answers" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="answersButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="answersTextField" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="insightsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="levelTextField" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="loading" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="logoutButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="questionsButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="questionsTextField" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="recs" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="tableViewBackground" candidateClass="UIView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="ugQuestions" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="votesTextField" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+        <class className="RecsCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RecsCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="image" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="level" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="text" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="SettingsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="dismiss:"/>
+                <relationship kind="action" name="dismissSettingsPushed:"/>
+                <relationship kind="action" name="feedbackPushed:"/>
+                <relationship kind="action" name="invitePushed:"/>
+                <relationship kind="action" name="logoutPushed:"/>
+                <relationship kind="action" name="ratePushed:"/>
+            </relationships>
+        </class>
+        <class className="TrainingController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrainingController.h"/>
+            <relationships>
+                <relationship kind="action" name="leftTap:"/>
+                <relationship kind="action" name="rightTap:"/>
+                <relationship kind="action" name="skip:"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightCheck" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightX" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="TrendingController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingController.h"/>
+            <relationships>
+                <relationship kind="action" name="back:"/>
+                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="header" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
+            </relationships>
+        </class>
+        <class className="TrendingListCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingListCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="TrendingObjectCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingObjectCell.h"/>
+            <relationships>
+                <relationship kind="action" name="leftSend:"/>
+                <relationship kind="action" name="rightSend:"/>
+                <relationship kind="outlet" name="leftBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftFacebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="profilePictureBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="responseCount" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="rightBackground" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightFacebookButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="rightLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightNum" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="TrendingTopicsListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingTopicsListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="refresh:"/>
+                <relationship kind="outlet" name="refreshButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="UGQuestionsCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UGQuestionsCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="detail" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+        <class className="WebImageCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebImageCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="image" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="WebSearchViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebSearchViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="back:"/>
+                <relationship kind="action" name="search:"/>
+                <relationship kind="outlet" name="collection" candidateClass="UICollectionView"/>
+                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
