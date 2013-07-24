@@ -27,6 +27,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *refreshButton;
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl;
+@property (nonatomic, retain) UIRefreshControl *refreshControl;
+
 
 @property (nonatomic, retain)NSArray *paths;
 @property (nonatomic, retain)NSString *dataPath;
