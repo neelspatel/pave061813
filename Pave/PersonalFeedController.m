@@ -95,6 +95,10 @@
     }
     
     self.recReadStatus = [[NSMutableDictionary alloc] init];
+    if([defaults objectForKey:@"recReadStatus"])
+    {
+        self.recReadStatus = [defaults objectForKey:@"recReadStatus"];
+    }
     
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = YES;
@@ -158,6 +162,12 @@
 {
     [[self.tabBarController.tabBar.items objectAtIndex:0] setBadgeValue:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"insightReady" object:nil];
+    
+    //saves stufff
+    [[NSUserDefaults standardUserDefaults] setObject:self.answerReadStatus forKey:@"answerReadStatus"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.recReadStatus forKey:@"recReadStatus"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 -(void) requestInsight:(NSNotification *) notification
@@ -328,6 +338,74 @@
             NSLog(@"Not in the image...");
         }
     }
+    else if ([self.currentTable isEqualToString:@"recs"]) {
+        UITableView *tableView = self.recs;
+        
+        NSSet *touches = [event allTouches];
+        UITouch *touch = [touches anyObject];
+        
+        CGPoint currentTouchPosition = [touch locationInView:self.recs];
+        
+        NSIndexPath *indexPath = [self.recs indexPathForRowAtPoint: currentTouchPosition];
+        [tableView deselectRowAtIndexPath:indexPath animated:NO];
+        
+        RecsCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        CGPoint pointInCell = [touch locationInView:cell];
+        
+        NSMutableDictionary *currentObject = [self.insightObjects objectAtIndex:indexPath.row];
+        NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
+        
+        NSString *key = [NSString stringWithFormat:@"%@", currentObject[@"id"], nil];
+        
+        if (CGRectContainsPoint(cell.agree.frame, pointInCell)) {
+            NSLog(@"In the left image!");
+            //checks if this one has been answered yet
+            if([self.recReadStatus valueForKey:key]  == nil)
+            {
+                //saves it as read - true means left
+                [self.recReadStatus setObject:@"Left" forKey:key];
+                
+                [self displayRecAsRead:cell side:@"Left"];
+                
+                //now saves the cell in the database
+                //[self saveAnswer:cell :TRUE];
+            }
+            else
+            {
+                NSLog(@"Already answered but changing anyway");
+                //saves it as read - true means left
+                [self.recReadStatus setObject:@"Left" forKey:key];
+                
+                [self displayRecAsRead:cell side:@"Left"];
+            }
+            
+        } else if (CGRectContainsPoint(cell.disagree.frame, pointInCell)) {
+            NSLog(@"In the right image!");
+            if([self.recReadStatus valueForKey:key]  == nil)
+            {
+                //saves it as read - true means left
+                [self.recReadStatus setObject:@"Right" forKey:key];
+                
+                [self displayRecAsRead:cell side:@"Right"];
+                
+                //now saves the cell in the database
+                //[self saveAnswer:cell :TRUE];
+            }
+            else
+            {
+                NSLog(@"Already answered but changing anyway");
+                //saves it as read - true means left
+                [self.recReadStatus setObject:@"Right" forKey:key];
+                
+                [self displayRecAsRead:cell side:@"Right"];
+            }
+            
+        }
+        else {
+            NSLog(@"Not in the image...");
+        }
+    }        
     else if([self.currentTable isEqualToString:@"ugQuestions"]) {
         UITableView *tableView = self.ugQuestions;
         
@@ -879,6 +957,22 @@
     return cell;
 }
 
+- (RecsCell *) displayRecAsRead:(RecsCell *) cell side:(NSString *) side
+{
+    if([side isEqualToString:@"Left"])
+    {
+        [cell.agree setImage:[UIImage imageNamed:@"SELECTED_BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+        [cell.disagree setImage:[UIImage imageNamed:@"aboutyouBIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [cell.agree setImage:[UIImage imageNamed:@"aboutyouBIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+        [cell.disagree setImage:[UIImage imageNamed:@"SELECTED_BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
+    }
+    return cell;
+}
+
+
 -(void) updateProfileStats
 {
     
@@ -976,7 +1070,7 @@
                 NSLog(@"IndexPath is %d", indexPath.row);
                 //NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
                 NSDictionary *currentObject = [self.answerObjects objectAtIndex:(indexPath.row)];
-                NSString *newtext = currentObject[@"question"];
+                NSString *newtext = currentObject[@"question"];                
                 
                 //sets the background
                 cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"about_you_background@2x.png"]];
@@ -989,14 +1083,20 @@
 
                 SDImageCache *imageCache = [SDImageCache sharedImageCache];
                 
+                //clears the old downloads first
+                [cell.profilePicture cancelCurrentImageLoad];
+                [cell.leftProduct cancelCurrentImageLoad];
+                [cell.rightProduct cancelCurrentImageLoad];
+                
                 //for profile picture
                 cell.profilePicture.image = [UIImage imageNamed:@"profile_icon.png"];
                 NSString *profileURL = @"https://graph.facebook.com/";
                 profileURL = [profileURL stringByAppendingString:currentID ];
                 profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
                 
+                /**
                 [imageCache queryDiskCacheForKey:profileURL done:^(UIImage *image, SDImageCacheType cacheType)
-                 {
+                {
                      //if it's not there
                      if(image==nil)
                      {
@@ -1024,7 +1124,11 @@
                          cell.profilePicture.image = image;
                      }
                      
-                 }];
+                }];
+                 */
+                [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
+                                 placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+
                 cell.profilePicture.clipsToBounds = YES;
                 
                 //for left product picture
@@ -1038,6 +1142,7 @@
                 leftImageURL = [leftImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
                  */
                 
+                /**
                 [imageCache queryDiskCacheForKey:leftImageURL done:^(UIImage *image, SDImageCacheType cacheType)
                  {
                      //if it's not there
@@ -1069,6 +1174,11 @@
                      }
                      
                  }];
+                 */
+                
+                [cell.leftProduct setImageWithURL:[NSURL URLWithString:leftImageURL]
+                                 placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+                
                 cell.leftProduct.clipsToBounds = YES;
                 
                 //for right product picture
@@ -1080,7 +1190,7 @@
                 rightImageURL = [rightImageURL stringByAppendingString:currentObject[@"otherProduct"]];
                 rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@"+" withString:@"%2b"];
                 rightImageURL = [rightImageURL stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-                */
+                
                 [imageCache queryDiskCacheForKey:rightImageURL done:^(UIImage *image, SDImageCacheType cacheType)
                  {
                      //if it's not there
@@ -1111,6 +1221,11 @@
                          cell.rightProduct.image = image;
                      }
                  }];
+                 */
+                
+                [cell.rightProduct setImageWithURL:[NSURL URLWithString:rightImageURL]
+                                 placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+                
                 cell.rightProduct.clipsToBounds = YES;
                 
                 //checks if we've agreed or disagreed with this product before
@@ -1208,6 +1323,27 @@
                      
                  }];
                 cell.image.clipsToBounds = YES;
+                
+                //adds tap listener
+                [cell.agree addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];
+                
+                [cell.disagree addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];
+                
+                //resets the buttons
+                [cell.agree setImage:[UIImage imageNamed:@"aboutyouBIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+                [cell.disagree setImage:[UIImage imageNamed:@"aboutyouBIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
+                
+                NSString *key = [NSString stringWithFormat:@"%@", currentObject[@"id"], nil];
+                
+                if([self.recReadStatus objectForKey:key])
+                {
+                    NSLog(@"Was read at position %d", indexPath.row);
+                    return [ self displayRecAsRead:cell side:[self.recReadStatus objectForKey:key]];
+                }
+                else
+                {
+                    return cell;
+                }
                                         
                 return cell;
             }
@@ -1371,7 +1507,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{    
     NSLog(@"About to cancel cell");
     // free up the requests for each ImageView    
     if(tableView == self.answers) //if it's a rec
@@ -1381,6 +1517,7 @@
             [current.profilePicture cancelCurrentImageLoad];
             [current.leftProduct cancelCurrentImageLoad];
             [current.rightProduct cancelCurrentImageLoad];
+            NSLog(@"Cancelled AnswersCell for %d", indexPath.row);
         }
         @catch (NSException * e) {
             NSLog(@"Got an exception: %@", e);
@@ -1391,6 +1528,7 @@
         RecsCell *current = (RecsCell *)cell;
         @try{
             [current.image cancelCurrentImageLoad];
+            NSLog(@"Cancelled RecsCell for %d", indexPath.row);            
         }
         @catch (NSException * e) {
             NSLog(@"Got an exception: %@", e);
@@ -1402,6 +1540,7 @@
         @try{
             [current.leftProduct cancelCurrentImageLoad];
             [current.rightProduct cancelCurrentImageLoad];
+            NSLog(@"Cancelled UGQuestionsCell for %d", indexPath.row);            
         }
         @catch (NSException * e) {
             NSLog(@"Got an exception: %@", e);

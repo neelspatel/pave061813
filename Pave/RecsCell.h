@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *image;
 @property (weak, nonatomic) IBOutlet UILabel *text;
 @property (weak, nonatomic) IBOutlet UILabel *level;
+@property (weak, nonatomic) IBOutlet UIButton *agree;
+@property (weak, nonatomic) IBOutlet UIButton *disagree;
 
 @end
