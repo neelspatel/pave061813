@@ -228,8 +228,6 @@
     }
     else
     {
-        NSLog(@"FBnames: %@ FBids: %@", self.friendNames, self.friendIds);
-        
         self.isFiltered = YES;
         self.filteredNames = [[NSMutableArray alloc] init];
         self.filteredIds = [[NSMutableArray alloc] init];
@@ -297,7 +295,7 @@
         
         for (NSString *curName in self.currentGroup) {
             NSInteger index = [friendNames indexOfObject:curName];
-            NSLog(@"Index: %d", index);
+
             [groupFriendIds addObject:[friendIds objectAtIndex:index]];
         }
         

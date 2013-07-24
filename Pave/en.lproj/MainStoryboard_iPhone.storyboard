@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E2068" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -1188,6 +1188,8 @@
                                             <constraint firstItem="Wz0-Rd-zdZ" firstAttribute="top" secondItem="M5q-UT-Tz1" secondAttribute="top" constant="77" id="wvo-6s-gTI"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="agree" destination="ZPx-Gw-YbB" id="zpR-hW-OLh"/>
+                                            <outlet property="disagree" destination="nIf-dO-ztZ" id="f8s-VA-RRr"/>
                                             <outlet property="image" destination="Wz0-Rd-zdZ" id="5vr-2Y-gC1"/>
                                             <outlet property="level" destination="8or-64-wGG" id="qfm-T0-tqq"/>
                                             <outlet property="text" destination="UOw-DK-ahU" id="BIu-QL-A8u"/>
@@ -1234,7 +1236,6 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="185" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="FhT-Na-l8g">
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="440" id="89S-ma-rId"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="390" type="user" id="uCI-vy-HUu"/>
                                 </constraints>
                                 <prototypes>
@@ -1404,7 +1405,9 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="210" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="p1D-tk-aq2">
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="440" id="e0Z-co-Pi0"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="390" type="user" id="ibm-q2-dmV"/>
+                                    <constraint firstAttribute="width" constant="320" id="qYJ-A9-9IO"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UGQuestionsCell" rowHeight="210" id="SEU-YD-00M" customClass="UGQuestionsCell">
@@ -1547,30 +1550,30 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="1wH-rF-FiO"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="180" id="2KV-Ve-LBg"/>
                             <constraint firstItem="bU1-P2-P7y" firstAttribute="bottom" secondItem="hWm-no-EuD" secondAttribute="bottom" type="default" id="4My-ZC-RPK"/>
                             <constraint firstItem="bU1-P2-P7y" firstAttribute="top" secondItem="hWm-no-EuD" secondAttribute="top" type="default" id="4Oe-O4-wU8"/>
+                            <constraint firstItem="FhT-Na-l8g" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="4dj-Zu-Bhw"/>
+                            <constraint firstItem="p1D-tk-aq2" firstAttribute="bottom" secondItem="iR7-SC-sRN" secondAttribute="bottom" type="default" id="5oo-Nf-02m"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="58" id="70j-gk-m8f"/>
                             <constraint firstItem="bU1-P2-P7y" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="76" id="83x-8o-S63"/>
                             <constraint firstItem="zZ8-HZ-Wjx" firstAttribute="centerX" secondItem="fzw-ua-DSv" secondAttribute="centerX" type="default" id="ClM-3w-iTj"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="111" id="CuZ-aV-9dV"/>
+                            <constraint firstItem="hXL-vU-ovF" firstAttribute="centerX" secondItem="vrM-3r-wbc" secondAttribute="centerX" type="default" id="GDA-uH-X1K"/>
                             <constraint firstItem="hOY-wT-A8L" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="12" id="GGw-52-q9T"/>
                             <constraint firstItem="hOY-wT-A8L" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="8" id="HzY-ka-UgZ"/>
                             <constraint firstItem="hWm-no-EuD" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="99" id="IJk-bp-gIj"/>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="Ioo-Q7-B1l"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="top" secondItem="mEU-D9-l1J" secondAttribute="top" type="default" id="KNS-mV-0bL"/>
                             <constraint firstItem="mEU-D9-l1J" firstAttribute="bottom" secondItem="fzw-ua-DSv" secondAttribute="bottom" type="default" id="KPU-Be-Orh"/>
+                            <constraint firstItem="FhT-Na-l8g" firstAttribute="bottom" secondItem="p1D-tk-aq2" secondAttribute="bottom" type="default" id="Lhq-LK-noZ"/>
                             <constraint firstItem="6pg-Ep-aV0" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="74" id="MmO-Sd-7DS"/>
-                            <constraint firstItem="iR7-SC-sRN" firstAttribute="bottom" secondItem="FhT-Na-l8g" secondAttribute="bottom" type="default" id="N1u-qU-PcC"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="bottom" secondItem="iR7-SC-sRN" secondAttribute="bottom" type="default" id="OWi-hO-jdG"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="OzH-Bn-I1Q"/>
                             <constraint firstItem="mEU-D9-l1J" firstAttribute="top" secondItem="fzw-ua-DSv" secondAttribute="top" type="default" id="PME-a1-gwG"/>
-                            <constraint firstItem="vrM-3r-wbc" firstAttribute="centerX" secondItem="hXL-vU-ovF" secondAttribute="centerX" type="default" id="QaY-8E-sEx"/>
                             <constraint firstItem="mEU-D9-l1J" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="72" id="Sxn-UX-CSC"/>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" type="default" id="Tm1-eC-5MK"/>
+                            <constraint firstItem="p1D-tk-aq2" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="300" id="UOV-4e-e0j"/>
+                            <constraint firstItem="iR7-SC-sRN" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="UcE-Eq-8L7"/>
                             <constraint firstItem="Ht9-zW-oln" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="215" id="VFr-Gf-2dE"/>
                             <constraint firstAttribute="trailing" secondItem="wl3-15-fGN" secondAttribute="trailing" constant="10" id="Wq7-y2-8dW"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="trailing" secondItem="iR7-SC-sRN" secondAttribute="trailing" type="default" id="Xd2-Wr-TdV"/>
                             <constraint firstItem="QVF-Fr-tpq" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="108" id="YUp-0Z-Aj3"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="top" secondItem="hXL-vU-ovF" secondAttribute="top" type="default" id="b1x-Gr-6g2"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="trailing" secondItem="6pg-Ep-aV0" secondAttribute="trailing" type="default" id="bOv-TT-3VZ"/>
@@ -1578,20 +1581,19 @@
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="leading" secondItem="6pg-Ep-aV0" secondAttribute="leading" type="default" id="emI-mh-pZ1"/>
                             <constraint firstItem="zZ8-HZ-Wjx" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="97" id="ff3-na-bV1"/>
                             <constraint firstItem="hWm-no-EuD" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="10" id="gcN-N7-fAC"/>
-                            <constraint firstItem="FhT-Na-l8g" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="gfQ-f6-m5N"/>
                             <constraint firstItem="wl3-15-fGN" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="62" id="j25-uu-yha"/>
+                            <constraint firstItem="FhT-Na-l8g" firstAttribute="top" secondItem="p1D-tk-aq2" secondAttribute="top" type="default" id="kkD-Aq-bai"/>
                             <constraint firstItem="cX2-pm-whI" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="-3" id="krG-dN-Y0n"/>
+                            <constraint firstItem="FhT-Na-l8g" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="kvm-jU-SBd"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="bottom" secondItem="mEU-D9-l1J" secondAttribute="bottom" type="default" id="nCI-2w-N0c"/>
                             <constraint firstItem="iR7-SC-sRN" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="nK9-Ub-nf2"/>
-                            <constraint firstItem="FhT-Na-l8g" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="nPT-ah-E15"/>
                             <constraint firstItem="vif-Og-X60" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="1" id="p0d-va-nuP"/>
                             <constraint firstItem="FhT-Na-l8g" firstAttribute="top" secondItem="iR7-SC-sRN" secondAttribute="top" type="default" id="poV-s4-1Ll"/>
                             <constraint firstItem="QVF-Fr-tpq" firstAttribute="bottom" secondItem="vif-Og-X60" secondAttribute="bottom" type="user" id="qUK-5U-EIY"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="top" secondItem="iR7-SC-sRN" secondAttribute="top" type="default" id="rSG-bx-LnV"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="13" id="rg0-hk-SaX"/>
                             <constraint firstItem="Ht9-zW-oln" firstAttribute="top" secondItem="QVF-Fr-tpq" secondAttribute="top" type="default" id="t9o-hB-Wif"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="15" id="uWr-rg-NKt"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="wrQ-Y3-kFC"/>
+                            <constraint firstItem="p1D-tk-aq2" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="180" id="wWM-8a-aqj"/>
                             <constraint firstItem="cX2-pm-whI" firstAttribute="centerX" secondItem="zZ8-HZ-Wjx" secondAttribute="centerX" type="default" id="wxQ-MX-Rt8"/>
                             <constraint firstItem="vif-Og-X60" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="138" id="xUP-SR-ZTp"/>
                         </constraints>
@@ -3761,6 +3763,9 @@
         <class className="RecsCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RecsCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="agree" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="disaagree" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="disagree" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="image" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="level" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="text" candidateClass="UILabel"/>
@@ -3881,5 +3886,6 @@
         <segue reference="DIQ-Ig-64G"/>
         <segue reference="8LF-7I-z0V"/>
         <segue reference="l43-7u-TdC"/>
+        <segue reference="dVu-9J-WCR"/>
     </inferredMetricsTieBreakers>
 </document>
