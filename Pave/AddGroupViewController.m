@@ -159,6 +159,7 @@
         newText = selectedName;
     else
         newText = [NSString stringWithFormat:@"%@, %@",curText, selectedName];
+        
     
     // SHOW THE CREATE BUTTON
     if (self.currentGroup.count > 0)
@@ -168,6 +169,10 @@
     
     NSLog(@"%@", newText);
     self.addedFriendsTextField.text = newText;
+    
+    //now scrolls to the bottom
+    self.addedFriendsTextField.selectedRange = NSMakeRange(self.addedFriendsTextField.text.length - 1, 0);
+
     
     self.addFriendsSearchBar.text = @"";
     

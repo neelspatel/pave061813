@@ -27,7 +27,6 @@
 
 @implementation GameController
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

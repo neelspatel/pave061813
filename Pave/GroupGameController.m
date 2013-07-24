@@ -79,11 +79,10 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
+    self.refreshControl = refreshControl;
     
     //ability to call load from somewhere else
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedObjects) name:@"getFeedObjects" object:nil];
-    
-    
 }
 
 - (void) setUpStatusBar
@@ -98,18 +97,14 @@
 
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
 {
-    self.reloadingFeedObject = YES;
-    
     NSLog(@"reloading personal datapre");
+    /**
     self.feedObjects = [NSMutableArray array];
     self.readStatus = [[NSMutableDictionary alloc] init];
     self.anonStatus = [[NSMutableDictionary alloc] init];
-    NSLog(@"reloading personal data");
-    [self getFeedObjects];
-    [self.tableView reloadData];
+    NSLog(@"reloading personal data"); */
     
-    
-    [refreshControl endRefreshing];
+    [self getFeedObjectsFromPull];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -423,7 +418,6 @@
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         // Do something...
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
         AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
         FBSession* session = delegate.session;
         
@@ -445,6 +439,8 @@
 
                         
             [[PaveAPIClient sharedClient] postPath:path parameters:params2 success:^(AFHTTPRequestOperation *operation, id results) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                
                 if (results) {
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
                     //for(NSDictionary *current in results)
@@ -465,6 +461,66 @@
         }
     });
 }
+
+- (void) getFeedObjectsFromPull
+{
+    NSLog(@"Getting feed objects now");
+    //[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        // Do something...
+        AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+        FBSession* session = delegate.session;
+        
+        if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
+            NSLog(@"About to get feed objects");
+            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSString *path = @"/data/groupgetlistquestions/";
+            path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+            //path = [path stringByAppendingString:@"1"];
+            path = [path stringByAppendingString:@"/"];
+            NSLog(@"Path is %@", path);
+            NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [self.group objectForKey:@"friend_ids"], @"group", nil];
+            NSLog(@"Params are %@", params);
+            
+            NSData *jsonData2 = [NSJSONSerialization dataWithJSONObject:[self.group objectForKey:@"friend_ids"] options:NSJSONWritingPrettyPrinted error:nil];
+            NSString *jsonString = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
+            NSDictionary *params2 = [NSDictionary dictionaryWithObjectsAndKeys: jsonString, @"group", nil];
+            
+            
+            [[PaveAPIClient sharedClient] postPath:path parameters:params2 success:^(AFHTTPRequestOperation *operation, id results) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];                
+                if (results) {
+                    //NSMutableArray *ids = [[NSMutableArray alloc] init];
+                    //for(NSDictionary *current in results)
+                    //{
+                    //    [ids addObject:current[@"id"]];
+                    //}
+                    NSLog(@"Just finished getting group results: %@", results);
+                    
+                    //clears data
+                    self.feedObjects = [NSMutableArray array];
+                    self.readStatus = [[NSMutableDictionary alloc] init];
+                    self.anonStatus = [[NSMutableDictionary alloc] init];
+                    
+                    self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
+                    NSLog(@"Just finished getting group feed ids: %@", self.feedObjects);
+                    self.reloadingFeedObject = NO;
+                    [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                    [self.tableView reloadData];
+                    
+                    [self.refreshControl endRefreshing];
+                    
+                } }
+                                           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               NSLog(@"error getting feed objects from database %@", error);
+                                           }];
+        }
+    });
+}
+
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView

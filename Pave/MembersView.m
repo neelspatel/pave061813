@@ -27,7 +27,14 @@
 
 -(id) initWithData:(NSDictionary *)data
 {
-    self = [super init];
+//    self = [super init];
+    if ([[UIScreen mainScreen] bounds].size.height == 568) {
+        NSLog(@"Trying to create for iPhone size 5");
+        self = [super initWithNibName:@"5_MembersView" bundle: nil];
+    } else {
+        self = [super initWithNibName:@"MembersView" bundle: nil];
+    }
+    
     if(self)
     {
         NSLog(@"Just created");
