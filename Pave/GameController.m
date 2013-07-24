@@ -90,8 +90,16 @@
 
     [[PaveAPIClient sharedClient] postPath:path
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSLog(@"updated user: %@", JSON);
+                                    NSDictionary *results = JSON;
+                                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                    [defaults setObject:[results objectForKey:@"friends"] forKey:@"friends"];
+                                    [defaults setObject:[results objectForKey:@"genders"] forKey:@"genders"];
+                                    [defaults setObject:[results objectForKey:@"names"] forKey:@"names"];
+                                    [defaults setObject:[results objectForKey:@"top_friends"] forKey:@"top_friends"];
+                                    NSLog(@"user top friends are: %@", [results objectForKey:@"top_friends"]);
+                                    [defaults synchronize];
 
-                                    NSLog(@"updated user");
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     NSLog(@"error updating user %@", error);
                                 }];

@@ -211,7 +211,6 @@
     {
         cell.responseCount.text = [NSString stringWithFormat:@"%d responses", total];
     }
-    
 }
 
 - (void) displayAsAnon:(FeedObjectCell *) cell: (BOOL) anon

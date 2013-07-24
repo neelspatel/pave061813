@@ -44,7 +44,7 @@
     
     //sets the current number
     self.currentNumber = 0;
-    
+    [self reloadData];
 }
 
 - (void) setUpStatusBar
@@ -64,12 +64,18 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     //first reload the data
-    [self reloadData];
+    NSLog(@"View did appear in training");
+    //[self reloadData];
 }
 
 -(void) viewWillDisappear:(BOOL) animated
 {
+    NSLog(@"Leaving and cancelling");
     [[NSNotificationCenter defaultCenter] removeObserver: self name:@"insightReady" object:nil];
+    [self.profilePicture cancelCurrentImageLoad];
+    [self.rightProduct cancelCurrentImageLoad];
+    [self.leftProduct cancelCurrentImageLoad];
+    [super viewDidDisappear:animated];
 }
 
 
@@ -102,7 +108,6 @@
     NotificationPopupView *notificationPopup = [NotificationPopupView notificationPopupCreateWithData:data];
     [self.view addSubview:notificationPopup];
 }
-
 
 
 //skips to the next one
@@ -221,13 +226,18 @@
                             }                            
                             
                             @try {
+                                // Try something
                                 [self.check removeFromSuperview];
                             }
                             @catch (NSException * e) {
                                 NSLog(@"Exception: %@", e);
-                            }                           
+                            }
 
-                            [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+                            
+                            //self.leftProduct.userInteractionEnabled = NO;
+                            [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                                //self.leftProduct.userInteractionEnabled = YES;
+                            }];
                             [self.rightProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image2"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
                         } completion:nil];
         
