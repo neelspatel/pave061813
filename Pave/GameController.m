@@ -20,6 +20,7 @@
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
 #import "WalkthroughViewController.h"
+#import "Flurry.h"
 
 @interface GameController ()
 
@@ -87,10 +88,10 @@
     NSString *path = @"/data/updateuser/";
     path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
     path = [path stringByAppendingString:@"/"];
-
+    
     [[PaveAPIClient sharedClient] postPath:path
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                    NSLog(@"updated user: %@", JSON);
+                                    //NSLog(@"updated user: %@", JSON);
                                     NSDictionary *results = JSON;
                                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                     [defaults setObject:[results objectForKey:@"friends"] forKey:@"friends"];
@@ -111,7 +112,6 @@
     [self getFeedObjectsFromPull];
 }
 
-
 - (void) setUpStatusBar
 {
     self.sbar = [StatusBar statusBarCreate];
@@ -126,11 +126,14 @@
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [super viewWillAppear:animated];
 }
 
 -(void) viewWillDisappear:(BOOL) animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self name:@"insightReady" object:nil];
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"Game Time" withParameters:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -148,6 +151,7 @@
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     NSLog(@"Session right now is %@", session);
+    
     if (session.state == FBSessionStateClosed)
     {
         NSLog(@"Session is closed");
@@ -155,8 +159,8 @@
         [self presentViewController: loginViewController animated: NO completion: nil];
 
     }
-    
-    else if (session.state == FBSessionStateCreatedTokenLoaded) {
+    else if (session.state == FBSessionStateCreatedTokenLoaded)
+    {
         NSLog(@"Session right now is %@", session);
 
         NSLog(@"Already in");
@@ -212,6 +216,8 @@
                                 NSLog(@"Going to get feed objects after login now");
                                 [self getFeedObjects];
                                 
+                                [Flurry setUserID:facebookID];
+                                [Flurry setGender:userData[@"gender"]];
                                 
                             } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
                                         isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
@@ -224,7 +230,11 @@
                     else
                     {
                         NSLog(@"Going to get feed objects after login now since id was not nil");
+                        // set Flurry id and gender
                         [self getFeedObjects];
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                        [Flurry setUserID:[defaults objectForKey:@"id"]];
+                        [Flurry setGender: [defaults objectForKey:@"gender"]];
                     }
                 }
                 else
@@ -250,6 +260,8 @@
         LoginViewController *loginViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"loginViewController"];
         [self presentViewController: loginViewController animated: NO completion: nil];
     }
+    [super viewDidAppear:animated];
+    [Flurry logEvent:@"Game Time" withParameters:nil timed:YES];
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -340,19 +352,24 @@
     
     NSLog(@"Session in post to fb is %@", session);
     
+    NSMutableDictionary *eventsDict = [NSMutableDictionary dictionaryWithDictionary:paramsForFB];
+    [Flurry logEvent:@"Facebook Share Game" withParameters:eventsDict timed:YES];
     
     [FBWebDialogs presentRequestsDialogModallyWithSession:session
                                                   message:@"Ever wondered what people think about you? I'll tell you if you download Side!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                       if (error) {
                                                           NSLog(@"Error");
-                                                          // Case A: Error launching the dialog or sending request.
+                                                          [eventsDict setObject:@"True" forKey:@"Error"];
+                                                          [Flurry endTimedEvent:@"Facebook Share Game" withParameters:eventsDict];
                                                       } else {
                                                           if (result == FBWebDialogResultDialogNotCompleted) {
-                                                              //Case B: User clicked the "x" icon
-                                                              NSLog(@"closed");                          
+                                                            [eventsDict setObject:@"True" forKey:@"Closed"];
+                                                            [Flurry endTimedEvent:@"Facebook Share Game" withParameters:eventsDict];
+                                                              NSLog(@"closed");
                                                           } else {
                                                               NSLog(@"Sent");
-                                                              //Case C: Dialog shown and the user clicks Cancel or Send
+                                                              [eventsDict setObject:@"True" forKey:@"Sent"];
+                                                              [Flurry endTimedEvent:@"Facebook Share Game" withParameters:eventsDict];
                                                           }
                                                       }
                                                   }];
@@ -607,7 +624,7 @@
             //path = [path stringByAppendingString:@"1"];
             path = [path stringByAppendingString:@"/"];
             NSLog(@"Path is %@", path);
-            
+            [Flurry logEvent:@"Game Pull Refresh" withParameters:nil timed:YES];
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 
@@ -631,10 +648,12 @@
                     [self.tableView reloadData];
                     
                     [self.refreshControl endRefreshing];
-                    
+                    [Flurry endTimedEvent:@"Game Pull Refresh" withParameters:nil];
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                NSLog(@"error getting feed objects from database %@", error);
+                                               [Flurry endTimedEvent:@"Game Pull Refresh" withParameters:[NSDictionary dictionaryWithObject:error forKey:@"Error"]];
+
                                            }];
         }
     });
@@ -887,7 +906,8 @@
      */
 }
 
-- (IBAction)sendEmail:(id)sender {
+- (IBAction)sendEmail:(id)sender
+{
     NSLog(@"Calledemail");
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     mailer.mailComposeDelegate = self;

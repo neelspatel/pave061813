@@ -23,6 +23,7 @@
 #import "MKNumberBadgeView.h"
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
+#import "Flurry.h"
 
 @interface PersonalFeedController ()
 
@@ -156,6 +157,7 @@
 {
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -167,7 +169,8 @@
     [[NSUserDefaults standardUserDefaults] setObject:self.answerReadStatus forKey:@"answerReadStatus"];
     [[NSUserDefaults standardUserDefaults] setObject:self.recReadStatus forKey:@"recReadStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"Profile Time" withParameters:nil];
 }
 
 -(void) requestInsight:(NSNotification *) notification
@@ -435,6 +438,9 @@
 //logic for switching in the buttons and tables
 - (IBAction)viewAnswers:(id)sender
 {
+    NSString *current_time = [NSString stringWithFormat:@"%.0f",  [[NSDate date] timeIntervalSince1970] * 1000];
+    [Flurry logEvent: @"Profile Answers View" withParameters:[NSDictionary dictionaryWithObject:current_time forKey:@"time"]];
+    
     self.reloadingFeedObject = YES;
     self.reloadingAnswers = YES;
     [self setBadgeForIndex:1 withCount:0];
@@ -451,6 +457,9 @@
 
 - (IBAction)viewInsights:(id)sender
 {
+    NSString *current_time = [NSString stringWithFormat:@"%.0f",  [[NSDate date] timeIntervalSince1970] * 1000];
+    [Flurry logEvent: @"Profile Insights View" withParameters:[NSDictionary dictionaryWithObject:current_time forKey:@"time"]];
+
     self.reloadingFeedObject = YES;
     self.reloadingInsights = YES;
     [self setBadgeForIndex:2 withCount:0];
@@ -468,6 +477,9 @@
 
 - (IBAction)viewQuestions:(id)sender
 {
+    NSString *current_time = [NSString stringWithFormat:@"%.0f",  [[NSDate date] timeIntervalSince1970] * 1000];
+    [Flurry logEvent: @"Profile Questions View" withParameters:[NSDictionary dictionaryWithObject:current_time forKey:@"time"]];
+
     self.reloadingFeedObject = YES;
     self.reloadingUGAnswerObjects = YES;
     [self setBadgeForIndex:3 withCount:0];
@@ -536,7 +548,6 @@
     //self.feedObjects = [NSArray array];
     NSLog(@"reloading personal data");
     [self getFeedObjects];
-        
 }
 
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
@@ -575,6 +586,8 @@
     NSMutableDictionary* params =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
      [topFriends componentsJoinedByString:@","], @"suggestions", nil];
     
+    [Flurry logEvent:@"Profle Invite Friends" withParameters:nil timed:YES];
+    
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
       message:[NSString stringWithFormat:@"Get Side, the hottest new social discovery app!"]
         title:nil
@@ -582,12 +595,17 @@
       handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
           if (error) {
               // Case A: Error launching the dialog or sending request.
+              [Flurry endTimedEvent:@"Profile Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Error"]];
               NSLog(@"Error sending request.");
           } else {
               if (result == FBWebDialogResultDialogNotCompleted) {
                   // Case B: User clicked the "x" icon
+                  [Flurry endTimedEvent:@"Profile Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Cancelled"]];
+
                   NSLog(@"User canceled request.");
               } else {
+                  [Flurry endTimedEvent:@"Profile Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Completed"]];
+
                   NSLog(@"Request Sent.");
               }
           }}];
@@ -909,6 +927,8 @@
     UITabBar *tabBar = (UITabBar *)self.tabBarController.tabBar;
     
     [[tabBar.items objectAtIndex:0] setBadgeValue:nil];
+    [super viewDidDisappear:animated];
+    [Flurry logEvent:@"Profile Time" withParameters:nil timed:YES];
 }
 
 - (void)didReceiveMemoryWarning

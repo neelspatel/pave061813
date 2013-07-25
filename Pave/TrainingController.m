@@ -13,6 +13,7 @@
 #import "MBProgressHUD.h"
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
+#import "Flurry.h"
 
 @interface TrainingController ()
 
@@ -59,6 +60,7 @@
 {
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -66,6 +68,10 @@
     //first reload the data
     NSLog(@"View did appear in training");
     //[self reloadData];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[defaults objectForKey:@"id"] , @"user_id", nil];
+    [Flurry logEvent:@"Sprint Time" withParameters:params timed:YES];
+    [super viewDidDisappear:animated];
 }
 
 -(void) viewWillDisappear:(BOOL) animated
@@ -75,7 +81,8 @@
     [self.profilePicture cancelCurrentImageLoad];
     [self.rightProduct cancelCurrentImageLoad];
     [self.leftProduct cancelCurrentImageLoad];
-    [super viewDidDisappear:animated];
+    [Flurry endTimedEvent:@"Sprint Time" withParameters:nil];
+    [super viewWillDisappear:animated];
 }
 
 
@@ -100,7 +107,7 @@
                                        NSLog(@"Failure while getting rec");
                                    }
      ];
-    
+    [Flurry logEvent: @"Notification requested"];
 }
 
 -(void)createNotificationPopup:(NSDictionary *) data
@@ -113,6 +120,8 @@
 //skips to the next one
 - (IBAction)skip:(id)sender
 {
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:self.questionId], @"question_id", nil];
+    [Flurry logEvent:@"Sprint Skipped" withParameters:params];
     //cancels any requests if they are still out
     [self.profilePicture cancelCurrentImageLoad];
     [self.rightProduct cancelCurrentImageLoad];
@@ -155,21 +164,26 @@
     if([side isEqualToString:@"left"])
     {
         //displays an image
+        /*
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(40, 240, 100, 50)];
         imgView.image = [UIImage imageNamed:@"BLUE_CREATE.png"];
         self.check = imgView;
         [self.view addSubview: self.check];
-        
+        */
+        self.rightCheck.hidden = NO;
         
         params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookID", [NSString stringWithFormat:@"%d", self.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", self.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", self.questionId], @"id_question", @"true", @"is_training", nil];
     }
     else
     {
         //displays an image
+        /*
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(195, 240, 100, 50)];
         imgView.image = [UIImage imageNamed:@"BLUE_CREATE.png"];
         self.check = imgView;
         [self.view addSubview: self.check];        
+        */
+        self.leftCheck.hidden = NO;
         
         params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookID", [NSString stringWithFormat:@"%d", self.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", self.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", self.questionId], @"id_question", @"true", @"is_training", nil];
     }
@@ -217,28 +231,33 @@
                           duration:0.2f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            @try {
-                                // Try something
-                                [self.check removeFromSuperview];
-                            }
-                            @catch (NSException * e) {
-                                NSLog(@"Exception: %@", e);
-                            }                            
-                            
-                            @try {
-                                // Try something
-                                [self.check removeFromSuperview];
-                            }
-                            @catch (NSException * e) {
-                                NSLog(@"Exception: %@", e);
-                            }
 
+                            self.rightCheck.hidden = YES;
+                            self.leftCheck.hidden = YES;
+/*
+                            @try {
+                                // Try something
+                                [self.check removeFromSuperview];
+                            }
+                            @catch (NSException * e) {
+                                NSLog(@"Exception: %@", e);
+                            }
+*/
                             
-                            //self.leftProduct.userInteractionEnabled = NO;
+                            self.leftProduct.userInteractionEnabled = NO;
+                            self.rightProduct.userInteractionEnabled = YES;
+                            [self.leftActivityIndicator startAnimating];
+                            [self.rightActivityIndicator startAnimating];
+
                             [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                                //self.leftProduct.userInteractionEnabled = YES;
+                                self.leftProduct.userInteractionEnabled = YES;
+                                [self.leftActivityIndicator stopAnimating];
+
                             }];
-                            [self.rightProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image2"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+                            [self.rightProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image2"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                                self.rightProduct.userInteractionEnabled = YES;
+                                [self.rightActivityIndicator stopAnimating];
+                            }];
                         } completion:nil];
         
         

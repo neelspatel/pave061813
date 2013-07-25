@@ -12,6 +12,7 @@
 #import "AFJSONRequestOperation.h"
 #import "JSONAPIClient.h"
 #import "UIImageView+WebCache.h"
+#import "Flurry.h"
 
 @interface WebSearchViewController ()
 
@@ -39,7 +40,18 @@
     CGRect frame = self.searchBar.frame;
     frame.size.height = 30;
     self.searchBar.frame = frame;
-        
+}
+
+-(void) viewDidAppear:(BOOL)animated
+{
+    [Flurry logEvent:@"Web Search Time" withParameters:nil timed:YES];
+    
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [Flurry endTimedEvent:@"Web Search Time" withParameters:nil];
+
 }
 
 - (IBAction)search:(id)sender
@@ -83,17 +95,22 @@
     NSString *path = @"/data/imagesearch/";
     
     NSDictionary *params  = [NSDictionary dictionaryWithObjectsAndKeys: self.searchBar.text, @"query", [NSString stringWithFormat:@"%d", 0], @"index", nil];
+    NSMutableDictionary *eventDict = [NSMutableDictionary dictionaryWithDictionary:params];
+    [Flurry logEvent:@"Web Image Seaerch" withParameters:eventDict timed:YES];
     
     [[JSONAPIClient sharedClient] postPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id results) {
         if (results) {
             NSLog(@"Got image results: %@", results);
             self.results = results;
-            [self.collection reloadData];            
+            [self.collection reloadData];
+            [Flurry endTimedEvent:@"Web Image Search" withParameters:eventDict];
         }
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"error getting image: %@", error);
+        [eventDict setValue: @"True" forKey:@"Failed"];
+        [Flurry endTimedEvent:@"Web Image Search" withParameters:eventDict];
     }];
+    
 }
 
 - (void)didReceiveMemoryWarning

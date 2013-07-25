@@ -13,6 +13,7 @@
 #import "PaveAPIClient.h"
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
+#import "Flurry.h"
 
 @interface AskViewController ()
 
@@ -91,7 +92,13 @@
 {
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+    [super viewWillAppear:animated];
+}
 
+-(void)viewDidAppear:(BOOL) animated
+{
+    [super viewDidAppear:animated];
+    [Flurry logEvent:@"Ask UGQuestion Time" timed:YES];
 }
 
 -(void) requestInsight:(NSNotification *) notification
@@ -127,6 +134,8 @@
 -(void) viewWillDisappear:(BOOL) animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self name:@"insightReady" object:nil];
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"Ask UGQuestion Time" withParameters:nil];
 }
 
 - (void) setUpStatusBar
@@ -135,9 +144,7 @@
     self.sbar.frame = CGRectMake(0, 37, self.sbar.frame.size.width, self.sbar.frame.size.height);
     [self.sbar redrawBar];
     [self.view addSubview:self.sbar];
-    
 }
-
 
 - (IBAction)create:(id)sender
 {
@@ -151,13 +158,16 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.leftURL, @"product1_url", self.rightURL, @"product2_url", @"product1", @"product1_description", @"product2", @"product2_description", @"QUESTION GOES HERE", @"question_text",  nil];
     NSLog(@"Sent with params %@", params);
     
+    [Flurry logEvent: @"UG Upload Time" withParameters:params timed:YES];
+    
     [[PaveAPIClient sharedClient] postPath:path
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
                                     NSLog(@"successfully created question");
-                                
+                                    [Flurry endTimedEvent:@"UG Upload Time" withParameters:nil];
                                     [self performSegueWithIdentifier:@"finishedSubmitting" sender:self];
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     NSLog(@"error saving answer %@", error);
+                                    [Flurry endTimedEvent:@"UG Upload Time" withParameters:[NSDictionary dictionaryWithObjectsAndKeys: @"true", @"failed", nil]];
                                 }];
     
     
@@ -289,14 +299,16 @@
 }
 
 - (IBAction)choosePicture:(id)sender {
+    
+    [Flurry logEvent:@"Choose Picture"];
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
     imagePicker.allowsEditing = YES;
-    
     [self presentModalViewController:imagePicker animated:YES];
 }
 
-- (IBAction)takePicture:(id)sender {    
+- (IBAction)takePicture:(id)sender {
+    [Flurry logEvent:@"Take Picture"];
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
@@ -479,6 +491,7 @@
 //prepares to get an image
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if([segue.identifier isEqualToString:@"askToWeb"]) {
+        [Flurry logEvent:@"Search Picture"];
         if ([self.currentSide isEqualToString:@"Left"]) {
             WebSearchViewController *destViewController = segue.destinationViewController;
             

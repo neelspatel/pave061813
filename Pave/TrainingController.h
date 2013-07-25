@@ -22,9 +22,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
 
 @property (assign, nonatomic) UIImageView *check;
-@property (weak, nonatomic) IBOutlet UIImageView *leftX;
-@property (weak, nonatomic) IBOutlet UIImageView *rightCheck;
-@property (weak, nonatomic) IBOutlet UIImageView *rightX;
 
 @property(nonatomic, assign) NSInteger leftProductId;
 @property(nonatomic, assign) NSInteger rightProductId;
@@ -49,5 +46,9 @@
 
 @property (nonatomic, retain) StatusBar *sbar;
 
+@property (weak, nonatomic) IBOutlet UIImageView *rightCheck;
+@property (weak, nonatomic) IBOutlet UIImageView *leftCheck;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *leftActivityIndicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *rightActivityIndicator;
 
 @end

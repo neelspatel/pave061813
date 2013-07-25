@@ -81,12 +81,12 @@
 
     [self.tableView deselectRowAtIndexPath:[self.tableView  indexPathForSelectedRow] animated:animated];
     [self.tableView reloadData];
-    [super viewWillAppear:animated];
     
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(groupCreatedHandler:) name:@"groupCreated" object:nil];
+    [super viewWillAppear:animated];
 
 }
 
@@ -94,6 +94,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"insightReady" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"groupCreated" object:nil];
+    [super viewWillDisappear:animated];
 }
 
 -(void) groupCreatedHandler: (NSNotification *) notification

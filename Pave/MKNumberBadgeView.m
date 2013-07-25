@@ -93,7 +93,7 @@
 	self.shadow = NO;
 	self.shadowOffset = CGSizeMake(0, 3);
 	self.shadowColor = [UIColor clearColor];
-	self.shine = YES;
+	self.shine = NO;
 	self.alignment = NSTextAlignmentCenter;
 	self.fillColor = [UIColor redColor];
 	self.strokeColor = [UIColor whiteColor];

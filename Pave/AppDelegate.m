@@ -28,7 +28,7 @@
     UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
     UITabBarItem *tabBarItem5 = [tabBar.items objectAtIndex:4];
     
-    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"profile_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"profile_unselected.png"]];
+    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"profile_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"RIGHT_TEST_PROFILE_UNSELECTED.png"]];
     [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"group_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"group_unselected.png"]];
     [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"home_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"home_unselected.png"]];
     [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"ugc_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"ugc_unselected.png"]];
@@ -55,7 +55,9 @@
     tabBarController.selectedIndex = 2;
     
     self.tabBarController = tabBarController;
-    
+
+    // log all page views on the tab bar 
+    [Flurry logAllPageViews:self.tabBarController];
     // FB Login
     NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
     
@@ -74,10 +76,11 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
     {
         // dummy variable so we don't have an error
-        self.firstLaunch;
+        self.firstLaunch = NO;
     }
     else
     {
+        [Flurry logEvent:@"New User"];
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         self.firstLaunch = YES;
