@@ -10,10 +10,10 @@
 
 @interface WalkthroughChildViewController : UIViewController
 @property (assign, nonatomic) NSInteger index;
-@property (strong, nonatomic) IBOutlet UILabel *screenNumber;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 - (IBAction)doneButtonPushed:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImage;
 
+@property (weak, nonatomic) IBOutlet UIButton *startSidingButton;
 @end

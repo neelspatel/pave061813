@@ -72,6 +72,8 @@
     
     //ability to call load from somewhere else
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFeedObjects) name:@"getFeedObjects" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initializeAfterWalkthrough) name:@"walkthroughComplete" object:nil];
+
     
     //pull to reload
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
@@ -127,6 +129,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [super viewWillAppear:animated];
+}
+
+-(void) initializeAfterWalkthrough
+{
+    [self setUpStatusBar];
 }
 
 -(void) viewWillDisappear:(BOOL) animated
@@ -411,7 +418,7 @@
         {
             params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
-
+        
     }
     
     //now stores the isUG attribute
@@ -420,17 +427,16 @@
     {
         NSLog(@"Is User Generated");
         [params setObject:@"True" forKey:@"isUG"];
+        NSLog(@"UGC Params: %@", params);
     }
     
     [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSLog(@"Result: %@", JSON);
                                     ////NSLog(@"successfully saved answer");
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    ////NSLog(@"error saving answer %@", error);
+                                    NSLog(@"error saving answer %@", error);
                                 }];
-
-    
-    
 }
 
 -(void)changeSavedAnswer:(FeedObjectCell *) cell: (BOOL) left

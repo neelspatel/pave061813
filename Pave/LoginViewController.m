@@ -49,7 +49,9 @@
     if (self.tutorialComplete && self.createdUser)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"walkthroughComplete" object:self];
+        }];
 
     }
 }
