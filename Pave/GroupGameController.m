@@ -58,7 +58,6 @@
     
     //loads image cache
     self.myImageCache = [SDImageCache.alloc initWithNamespace:@"FeedObjects"];
-    self.tableView.layer.cornerRadius=5;
     
     self.feedObjects = [NSMutableArray array];
     self.readStatus = [[NSMutableDictionary alloc] init];

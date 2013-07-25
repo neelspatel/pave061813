@@ -41,6 +41,7 @@
 @property(nonatomic, assign) NSInteger questionId;
 @property(nonatomic, copy) NSString *questionText;
 @property(nonatomic, copy) NSString * currentId;
-@property(nonatomic, assign) BOOL anonymous;
+@property(nonatomic, assign) BOOL isUG;
+@property(nonatomic, assign) NSString * anonymous;
 
 @end

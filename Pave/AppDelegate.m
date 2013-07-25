@@ -31,7 +31,7 @@
     [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"profile_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"RIGHT_TEST_PROFILE_UNSELECTED.png"]];
     [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"group_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"group_unselected.png"]];
     [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"home_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"home_unselected.png"]];
-    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"ugc_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"ugc_unselected.png"]];
+    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"UGC_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"UGC_unselected.png"]];
     [tabBarItem5 setFinishedSelectedImage:[UIImage imageNamed:@"training_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"training_unselected.png"]];
             
     UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar.png"];

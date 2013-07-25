@@ -383,7 +383,7 @@
     NSLog(@"right id: %d", cell.rightProductId);
     NSLog(@"question id: %d", cell.questionId);
     
-    NSDictionary *params;
+    NSMutableDictionary *params;
     NSIndexPath* path = [self.tableView indexPathForCell:cell];
     NSInteger row = [path row];
 
@@ -393,11 +393,11 @@
         if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])
         {
             NSLog(@"Anon!");
-            params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+            params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
         else
         {
-            params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+            params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
         
     }
@@ -405,13 +405,20 @@
     {        
         if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])        {
             NSLog(@"Anon!");
-            params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+            params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
         else
         {
-            params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+            params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
 
+    }
+    
+    //now stores the isUG attribute
+    NSLog(@"Cell isug is %@", (cell.isUG ? @"Yes" : @"No"));
+    if(cell.isUG == YES)
+    {
+        [params setObject:@"True" forKey:@"isUG"];
     }
     
     [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
@@ -421,6 +428,65 @@
                                     NSLog(@"error saving answer %@", error);
                                 }];
 
+    
+    
+}
+
+-(void)changeSavedAnswer:(FeedObjectCell *) cell: (BOOL) left
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSLog(@"cur id: %@", cell.currentId);
+    NSLog(@"left id: %d", cell.leftProductId);
+    NSLog(@"right id: %d", cell.rightProductId);
+    NSLog(@"question id: %d", cell.questionId);
+    
+    NSMutableDictionary *params;
+    NSIndexPath* path = [self.tableView indexPathForCell:cell];
+    NSInteger row = [path row];
+    
+    
+    if(left == true)
+    {
+        if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])
+        {
+            NSLog(@"Anon!");
+            params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        }
+        else
+        {
+            params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        }
+        
+    }
+    else
+    {
+        if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])        {
+            NSLog(@"Anon!");
+            params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        }
+        else
+        {
+            params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
+        }
+        
+    }
+    
+    //now stores the isUG attribute
+    NSLog(@"Cell isug is %@", (cell.isUG ? @"Yes" : @"No"));
+    if(cell.isUG)
+    {
+        [params setObject:@"True" forKey:@"isUG"];
+    }
+    
+    NSString *url = @"/data/changeanswer/";
+    
+    [[PaveAPIClient sharedClient] postPath:url
+                                parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSLog(@"successfully saved answer");
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    NSLog(@"error saving answer %@", error);
+                                }];
+    
     
     
 }
@@ -461,6 +527,8 @@
                 //saves it as read - true means left
                 [self.readStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
                 
+                [self changeSavedAnswer:cell :TRUE];
+                
                 //refreshes                
                 [self.tableView beginUpdates];
                 [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -488,6 +556,8 @@
                 NSLog(@"Already answered...");
                 //saves it as read - false means right
                 [self.readStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                
+                [self changeSavedAnswer:cell :FALSE];
                 
                 //refreshes
                 [self.tableView beginUpdates];
@@ -598,6 +668,11 @@
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                NSLog(@"error getting feed objects from database %@", error);
+                                               self.reloadingFeedObject = NO;
+                                               //shows the alert
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                               [alert show];
+                                               
                                            }];
         }
     });
@@ -646,22 +721,39 @@
                     self.reloadingFeedObject = NO;
                     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     [self.tableView reloadData];
-                    
-                    [self.refreshControl endRefreshing];
+                                        [self.refreshControl endRefreshing];
                     [Flurry endTimedEvent:@"Game Pull Refresh" withParameters:nil];
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                NSLog(@"error getting feed objects from database %@", error);
                                                [Flurry endTimedEvent:@"Game Pull Refresh" withParameters:[NSDictionary dictionaryWithObject:error forKey:@"Error"]];
+                                               self.reloadingFeedObject = NO;
+                                               //shows the alert
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                               [alert show];
+
 
                                            }];
         }
     });
 }
 
+//alert messages
+//This medthod Controls the actions that the UIAlertView's buttons carry out
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex == 0) {
+        [self.refreshControl endRefreshing];
+    }
+    if (buttonIndex == 1){
+        [self.refreshControl beginRefreshing];
+        [self getFeedObjectsFromPull];
+    }    
+}
+
+
 - (void)didReceiveMemoryWarning
 {
-    // reset the array 
+    // reset the array
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -823,6 +915,19 @@
         }
             
         cell.anonymous = @"No";
+        
+        //sets the isUG attribute
+        NSLog(@"In current object isug is %@", currentObject[@"isUG"]);
+        if([[NSString stringWithFormat:@"%@", currentObject[@"isUG"]] isEqualToString:@"0"])
+        {
+            NSLog(@"Setting isug to no");
+            cell.isUG = NO;
+        }
+        else
+        {
+            NSLog(@"Setting isug to yes");            
+            cell.isUG = YES;
+        }
         
         //changes the state of the cell
         return cell;

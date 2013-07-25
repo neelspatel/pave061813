@@ -37,7 +37,7 @@
     
     [self setUpStatusBar];
         
-    self.title = @"Ask away!";
+    self.title = @"";
     
     //creates S3 logic in the background
     dispatch_async(dispatch_get_main_queue(), ^{

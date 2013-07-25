@@ -37,7 +37,10 @@
     if(self)
     {
         NSLog(@"Just created");
-        self.data = data;        
+        self.data = data;
+        
+        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+
     }
 
     //NSLog(@"NSUser: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
@@ -52,6 +55,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.question.text = [self.data objectForKey:@"question_text"];
+    
+    [self.leftImage setImageWithURL:[NSURL URLWithString: self.data[@"product_1_url"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+        
+    [self.rightImage setImageWithURL:[NSURL URLWithString: self.data[@"product_2_url"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
 }
 
 - (void)didReceiveMemoryWarning
