@@ -365,6 +365,10 @@
 		B0861DAB17A1C9FB00A0E40A /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0861DA717A1C9FB00A0E40A /* Lato-Light.ttf */; };
 		B0861DAC17A1C9FB00A0E40A /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B0861DA817A1C9FB00A0E40A /* Lato-Regular.ttf */; };
 		B0861DAD17A1C9FB00A0E40A /* Chunkfive.otf in Resources */ = {isa = PBXBuildFile; fileRef = B0861DA917A1C9FB00A0E40A /* Chunkfive.otf */; };
+		B0861DB417A1EF7300A0E40A /* LatoRegularTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0861DB317A1EF7300A0E40A /* LatoRegularTextView.m */; };
+		B0861DB717A1EF8C00A0E40A /* LatoLightTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0861DB617A1EF8C00A0E40A /* LatoLightTextView.m */; };
+		B0861DBD17A1EFD100A0E40A /* LatoRegularTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B0861DBC17A1EFD100A0E40A /* LatoRegularTextField.m */; };
+		B0861DC017A1F04500A0E40A /* LatoBoldTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0861DBF17A1F04500A0E40A /* LatoBoldTextView.m */; };
 		B0C8CE17179B472500117306 /* MKNumberBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C8CE16179B472500117306 /* MKNumberBadgeView.m */; };
 		B0C8CE18179B485000117306 /* MKNumberBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C8CE16179B472500117306 /* MKNumberBadgeView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B0C8CE23179B6D3D00117306 /* blue_circle.png in Resources */ = {isa = PBXBuildFile; fileRef = B0C8CE19179B6D3C00117306 /* blue_circle.png */; };
@@ -838,6 +842,14 @@
 		B0861DA717A1C9FB00A0E40A /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		B0861DA817A1C9FB00A0E40A /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
 		B0861DA917A1C9FB00A0E40A /* Chunkfive.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Chunkfive.otf; sourceTree = "<group>"; };
+		B0861DB217A1EF7300A0E40A /* LatoRegularTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatoRegularTextView.h; sourceTree = "<group>"; };
+		B0861DB317A1EF7300A0E40A /* LatoRegularTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatoRegularTextView.m; sourceTree = "<group>"; };
+		B0861DB517A1EF8C00A0E40A /* LatoLightTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatoLightTextView.h; sourceTree = "<group>"; };
+		B0861DB617A1EF8C00A0E40A /* LatoLightTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatoLightTextView.m; sourceTree = "<group>"; };
+		B0861DBB17A1EFD000A0E40A /* LatoRegularTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatoRegularTextField.h; sourceTree = "<group>"; };
+		B0861DBC17A1EFD100A0E40A /* LatoRegularTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatoRegularTextField.m; sourceTree = "<group>"; };
+		B0861DBE17A1F04500A0E40A /* LatoBoldTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LatoBoldTextView.h; sourceTree = "<group>"; };
+		B0861DBF17A1F04500A0E40A /* LatoBoldTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LatoBoldTextView.m; sourceTree = "<group>"; };
 		B0C8CE15179B472500117306 /* MKNumberBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MKNumberBadgeView.h; sourceTree = "<group>"; };
 		B0C8CE16179B472500117306 /* MKNumberBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKNumberBadgeView.m; sourceTree = "<group>"; };
 		B0C8CE19179B6D3C00117306 /* blue_circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue_circle.png; sourceTree = "<group>"; };
@@ -971,6 +983,7 @@
 		185D853C17707D46007733FA /* Pave */ = {
 			isa = PBXGroup;
 			children = (
+				B0861DAE17A1EF3000A0E40A /* TextViewSubclass */,
 				B0861DA517A1C95000A0E40A /* Resources */,
 				B0861D9417A1C87000A0E40A /* LabelSubclass */,
 				185C39D51798BC2B00AC555C /* Training */,
@@ -1528,6 +1541,21 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		B0861DAE17A1EF3000A0E40A /* TextViewSubclass */ = {
+			isa = PBXGroup;
+			children = (
+				B0861DB217A1EF7300A0E40A /* LatoRegularTextView.h */,
+				B0861DB317A1EF7300A0E40A /* LatoRegularTextView.m */,
+				B0861DB517A1EF8C00A0E40A /* LatoLightTextView.h */,
+				B0861DB617A1EF8C00A0E40A /* LatoLightTextView.m */,
+				B0861DBB17A1EFD000A0E40A /* LatoRegularTextField.h */,
+				B0861DBC17A1EFD100A0E40A /* LatoRegularTextField.m */,
+				B0861DBE17A1F04500A0E40A /* LatoBoldTextView.h */,
+				B0861DBF17A1F04500A0E40A /* LatoBoldTextView.m */,
+			);
+			name = TextViewSubclass;
+			sourceTree = "<group>";
+		};
 		B0C8CE14179B454F00117306 /* StatusBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2060,6 +2088,10 @@
 				B0861D9D17A1C8DC00A0E40A /* LatoRegularLabel.m in Sources */,
 				B0861DA017A1C8E700A0E40A /* LatoBoldLabel.m in Sources */,
 				B0861DA317A1C90600A0E40A /* ChunkFiveLabel.m in Sources */,
+				B0861DB417A1EF7300A0E40A /* LatoRegularTextView.m in Sources */,
+				B0861DB717A1EF8C00A0E40A /* LatoLightTextView.m in Sources */,
+				B0861DBD17A1EFD100A0E40A /* LatoRegularTextField.m in Sources */,
+				B0861DC017A1F04500A0E40A /* LatoBoldTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

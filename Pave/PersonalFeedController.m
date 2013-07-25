@@ -1205,11 +1205,17 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults valueForKey:@"profile_answer_count"]!= nil)
     {
-        self.votesTextField.text = [defaults objectForKey:@"profile_vote_count"];
-        self.answersTextField.text = [defaults objectForKey:@"profile_answer_count"];
-        self.questionsTextField.text = [defaults objectForKey:@"profile_question_count"];
-        NSLog(@"Getting level");
-        self.levelTextField.text = [@"level " stringByAppendingString:[defaults objectForKey:@"level"]];
+        if (self.votesTextField.text != [defaults objectForKey:@"profile_vote_count"])
+            self.votesTextField.text = [defaults objectForKey:@"profile_vote_count"];
+        
+        if (self.answersTextField.text != [defaults objectForKey:@"profile_answer_count"])
+            self.answersTextField.text = [defaults objectForKey:@"profile_answer_count"];
+        
+        if (self.questionsTextField.text != [defaults objectForKey:@"profile_question_count"])
+            self.questionsTextField.text = [defaults objectForKey:@"profile_question_count"];
+        
+        if (self.levelTextField.text != [@"level " stringByAppendingString:[defaults objectForKey:@"level"]])
+            self.levelTextField.text = [@"level " stringByAppendingString:[defaults objectForKey:@"level"]];
     }
     
 
@@ -1224,24 +1230,30 @@
             NSString *ug_question_count = [[results objectForKey:@"ug_question_count"] stringValue];
             NSString *vote_count = [[results objectForKey:@"vote_count"] stringValue];
             NSString *level = [[results objectForKey: @"level" ]  stringValue];
-            self.votesTextField.text = vote_count;
-            self.answersTextField.text = answer_count;
-            self.questionsTextField.text = ug_question_count;
-            self.levelTextField.text = [@"level " stringByAppendingString:level];
+            if (self.votesTextField.text != vote_count)
+                self.votesTextField.text = vote_count;
+            
+            if(self.answersTextField.text != answer_count)
+                self.answersTextField.text = answer_count;
+            
+            if (self.questionsTextField.text != ug_question_count)
+                self.questionsTextField.text = ug_question_count;
+            
+            NSString *levelText =[@"level " stringByAppendingString:level];
+            if (self.levelTextField.text != levelText)
+                self.levelTextField.text = [@"level " stringByAppendingString:level];
             
             [defaults setObject:answer_count forKey:@"profile_answer_count"];
             [defaults setObject:ug_question_count forKey:@"profile_ug_answer_count"];
             [defaults setObject:vote_count forKey:@"profile_vote_count"];
             [defaults setObject:level forKey:@"level"];
-            [defaults synchronize];
-            NSLog(@"Profile Stats: %d, %d, %d", answer_count, ug_question_count, vote_count);
-            
+            [defaults synchronize];            
         }
     }
      
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                        NSLog(@"error while updating profile stats: %@", error);
-                                   }];
+        }];
     
 }
 
