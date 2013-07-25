@@ -216,7 +216,6 @@
     return YES;
 }
 
-// Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
             NSLog(@"Tryna delete");
@@ -252,7 +251,15 @@
 }
 
 - (IBAction)editTableView:(id)sender {
-    NSLog(@"What is up?");
-    self.tableView.editing = YES;
+    NSLog(@"Clicked edit");
+    if(self.tableView.editing)
+    {
+        [self.tableView setEditing:FALSE animated:TRUE];
+    }
+    else
+    {
+        [self.tableView setEditing:TRUE animated:TRUE];
+    }
+
 }
 @end

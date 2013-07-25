@@ -70,7 +70,9 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     //sets your name and profile picture
-    
+    self.name.text = [[defaults objectForKey:@"profile"] objectForKey:@"name"];
+    [self.profile setImageWithURL:[NSURL URLWithString:[[defaults objectForKey:@"profile"] objectForKey:@"pictureURL"]]
+                        placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
     
     //allocates the list of ids as strings
     self.idStrings = [[NSMutableArray alloc] init];

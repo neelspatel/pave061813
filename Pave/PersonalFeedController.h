@@ -16,6 +16,9 @@
 @interface PersonalFeedController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UINavigationBar *topBar;
 
+@property (weak, nonatomic) IBOutlet UITextView *name;
+@property (weak, nonatomic) IBOutlet UIImageView *profile;
+
 @property (weak, nonatomic) IBOutlet UITableView *answers;
 @property (weak, nonatomic) IBOutlet UITableView *ugQuestions;
 @property (weak, nonatomic) IBOutlet UITableView *recs;
@@ -84,9 +87,6 @@
 - (IBAction)refresh:(id)sender;
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl;
 - (IBAction)inviteFriends:(id)sender;
-
-@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
-- (IBAction)logout:(id)sender;
 
 @property (nonatomic, retain) StatusBar *sbar;
 
