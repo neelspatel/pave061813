@@ -64,12 +64,12 @@
     self.session = [[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil];
     
     //timer to check for notifications
-    NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
+    NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 15.0 target: self
                                                       selector: @selector(refreshNotifications:) userInfo: nil repeats: YES];
     
     // read in the current status score from NSUserDefaults
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    self.currentStatusScore = [defaults objectForKey: @"status_score"];
+    self.currentStatusScore = [defaults integerForKey: @"status_score"];
     if (!self.currentStatusScore)
         self.currentStatusScore = 0;
     
@@ -89,7 +89,7 @@
     
     self.notificationPopupIsOpen = NO;
     
-    NSLog(@"APP DELEGATE: %d", self.currentStatusScore);
+    //NSLog(@"APP DELEGATE: %d", self.currentStatusScore);
     
     // Override point for customization after application launch.
     return YES;
@@ -113,11 +113,11 @@
         int polltime = 0;
         if([defaults integerForKey:@"lastpolled"] != nil)
         {
-            NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
+            //NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
             polltime = [defaults integerForKey:@"lastpolled"];
             
         }
-        NSLog(@"Trying to get the polls");
+        //NSLog(@"Trying to get the polls");
         
         // checks if the the user is first timer         
         NSString *path = @"/data/getnotification/";
@@ -125,33 +125,40 @@
         
         path = [path stringByAppendingString:@"/"];
         
-        NSLog(@"Path is %@", path);
+        //NSLog(@"Path is %@", path);
         
         [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
                     NSLog(@"Results %@", results);
                     NSInteger new_inc = [[results objectForKey:@"recs"] intValue] + [[results objectForKey:@"answers"] intValue] + [[results objectForKey:@"ug_answers"] intValue];
-                    NSLog(@"%d", new_inc);
+                    //NSLog(@"%d", new_inc);
                     
                     NSInteger status_score = [[results objectForKey:@"status_score"] intValue];
                     if (!status_score)
+                    {
+                        NSLog(@"Status score is null");
                         status_score = 0;
-                    
+                    }
                     if (self.currentStatusScore != status_score)
                     {
-                        NSLog(@"ABOUT TO UPDATE STATUS SCORE");
-                        //self.currentStatusScore = status_score;
+                        //NSLog(@"ABOUT TO UPDATE STATUS SCORE");
+                        self.currentStatusScore = status_score;
                         NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
                     }
                     
+                    
                     // broadcast notification to everyone
                     if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen))
                     {
+                        NSLog(@"Notification is coming up!");
                         self.notificationPopupIsOpen = YES;
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
+                        [self performSelector:@selector(sendInsightReady) withObject:nil afterDelay:0.5];
+                    } else
+                    {
+                        NSLog(@"Notification is not ready");
                     }
-                    
+
                     NSInteger old_recs = [defaults integerForKey:@"num_recs"];
                     if (!old_recs)
                         old_recs = 0;
@@ -176,7 +183,7 @@
                     
                     [defaults synchronize];
                     
-                    NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
+                    //NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
                     NSLog(@"New Numbers: %d, %d, %d, %d", new_recs, new_answer, new_ug_answer, status_score);
                     
                     //[defaults setObject:[results objectForKey:@"answers"] forKey:@"num_answers"];
@@ -184,18 +191,24 @@
                     
                     if(new_inc != 0)
                     {
-                        NSLog(@"Incremented by %d!", new_inc);
+                        //NSLog(@"Incremented by %d!", new_inc);
                         [[self.tabBarController.tabBar.items objectAtIndex:0] setBadgeValue:[self incrementString:oldvalue : new_inc]];
                     }
                     //changes the old value
                     [defaults setInteger:[[results objectForKey:@"last"] intValue] forKey:@"lastpolled"];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"updateProfileBadgeCounts" object:nil userInfo:nil];
+                    //[self performSelector:@() withObject:nil afterDelay:0.5];
                 }
             }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                NSLog(@"error getting notifications from database %@", error);
+                //NSLog(@"error getting notifications from database %@", error);
             }];    
     }
+}
+
+-(void)sendInsightReady
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
 }
 
 -(NSString*) incrementString:(NSString*) oldvalue: (int) amount

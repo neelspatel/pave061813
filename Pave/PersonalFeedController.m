@@ -172,7 +172,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    NSLog(@"Getting called request insight");
+    NSLog(@"Getting called request insight in personal feed");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
@@ -761,7 +761,8 @@
 
 - (void) getFeedObjects
 {
-    
+    [self updateProfileStats];
+
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){        
@@ -894,7 +895,8 @@
 }
 
 - (void) getFeedObjectsFromPull
-{    
+{
+    [self updateProfileStats];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         

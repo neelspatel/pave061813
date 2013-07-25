@@ -12,5 +12,6 @@
 
 @property (strong, nonatomic) UIPageViewController *pageController;
 
+@property (strong, nonatomic) NSDictionary *flurryDict;
 @end
 

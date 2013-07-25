@@ -88,7 +88,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    NSLog(@"Getting called request insight");
+    NSLog(@"Getting called request insight in training");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
@@ -226,6 +226,12 @@
         self.rightProductId = [(currentObject[@"product2"]) integerValue];
         self.questionId = [(currentObject[@"currentQuestion"]) integerValue];
         
+        self.leftProduct.userInteractionEnabled = NO;
+        self.rightProduct.userInteractionEnabled = YES;
+        [self.leftActivityIndicator startAnimating];
+        [self.rightActivityIndicator startAnimating];
+
+        
         //sets images
         [UIView transitionWithView:self.view
                           duration:0.2f
@@ -244,11 +250,6 @@
                             }
 */
                             
-                            self.leftProduct.userInteractionEnabled = NO;
-                            self.rightProduct.userInteractionEnabled = YES;
-                            [self.leftActivityIndicator startAnimating];
-                            [self.rightActivityIndicator startAnimating];
-
                             [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
                                 self.leftProduct.userInteractionEnabled = YES;
                                 [self.leftActivityIndicator stopAnimating];

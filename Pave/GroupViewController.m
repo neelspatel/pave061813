@@ -14,6 +14,7 @@
 #import "MBProgressHUD.h"
 #import "GroupListCell.h"
 #import "NotificationPopupView.h"
+#import "Flurry.h"
 
 @interface GroupViewController ()
 
@@ -35,10 +36,9 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     //self.tableView.editing = YES;
-
+    [Flurry logEvent: @"Group List Time" withParameters:nil timed:YES];
     [super viewDidAppear:animated];
 }
-
 
 - (void)viewDidLoad
 {
@@ -95,6 +95,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"insightReady" object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"groupCreated" object:nil];
     [super viewWillDisappear:animated];
+    [Flurry endTimedEvent: @"Group List Time" withParameters:nil];
+
 }
 
 -(void) groupCreatedHandler: (NSNotification *) notification
@@ -106,7 +108,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    NSLog(@"Getting called request insight");
+    NSLog(@"Getting called request insight in Group View");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";

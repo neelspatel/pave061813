@@ -9,6 +9,7 @@
 #import "NotificationPopupView.h"
 #import "AppDelegate.h"
 #import "UIImageView+WebCache.h"
+#import "Flurry.h"
 
 @implementation NotificationPopupView
 
@@ -65,6 +66,8 @@
 */
 
 - (IBAction)viewDetailsPushed:(id)sender {
+    
+    [Flurry logEvent:@"Recommendation Accessed" withParameters:nil];
     // figure out how to segue
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [delegate.tabBarController setSelectedIndex:0];
@@ -77,9 +80,11 @@
 }
 
 - (IBAction)keepPlayingPushed:(id)sender {
+    [Flurry logEvent:@"Recommendation Dismissed" withParameters:nil];
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     delegate.currentStatusScore = 0;
-    
+    delegate.notificationPopupIsOpen = NO;
+
     // first post a Notification to reset the bar
     [[NSNotificationCenter defaultCenter] postNotificationName:@"resetStatusScore"  object:nil userInfo:nil];
     [self removeFromSuperview];

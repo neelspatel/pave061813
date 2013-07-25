@@ -21,6 +21,7 @@
 #import <MessageUI/MessageUI.h>
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
+#import "Flurry.h"
 
 @interface GroupGameController ()
 
@@ -113,17 +114,20 @@
 
     //first reload the data
     [self.tableView reloadData];
+    [super viewDidAppear:animated];
+    [Flurry logEvent:@"Group Game Time" withParameters:nil timed:YES];
 }
 
 -(void) viewWillDisappear:(BOOL) animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self name:@"insightReady" object:nil];
+    [super viewWillDisappear:animated];
+    [Flurry endTimedEvent:@"Group Game Time" withParameters:nil];
 }
-
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    NSLog(@"Getting called request insight");
+    NSLog(@"Getting called request insight in Group Game");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";

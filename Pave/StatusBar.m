@@ -8,6 +8,7 @@
 
 #import "StatusBar.h"
 #import "AppDelegate.h"
+#import "PaveAPIClient.h"
 
 @implementation StatusBar
 
@@ -132,24 +133,43 @@
         num_bars = 10;
     
     NSInteger num_tags = (2 * num_bars) - 1;
-    for (int i = 1; i <= num_tags; i++)
+    
+    for (int i = 1; i <= 19; i++)
     {
-        if ((i % 2) == 0)
-            [self viewWithTag: i].hidden= NO;
+        if (i <= num_tags)
+        {
+            if ((i % 2) == 0)
+                [self viewWithTag: i].hidden= NO;
+            else
+            {
+                if (i == 19)
+                    [(UIImageView *)[self viewWithTag: i] setImage: self.onBulb];
+                else
+                    [(UIImageView *)[self viewWithTag: i] setImage: self.onCircle];
+            }
+        
+        }
         else
         {
-            if (i == 19)
-                [(UIImageView *)[self viewWithTag: i] setImage: self.onBulb];
+            if ((i % 2) == 0)
+                [self viewWithTag: i].hidden = YES;
             else
-                [(UIImageView *)[self viewWithTag: i] setImage: self.onCircle];
+            {
+                if (i == 19)
+                     [(UIImageView *)[self viewWithTag: i] setImage: self.offBulb];
+                else
+                    [(UIImageView *)[self viewWithTag: i] setImage: self.offCircle];
+            }
         }
+    
     }
+/*
     if (num_bars == 10)
     {
         // display Notification
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
     }
-        
+*/
 }
 
 -(void) doneLoading

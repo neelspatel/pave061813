@@ -8,6 +8,7 @@
 
 #import "WalkthroughViewController.h"
 #import "WalkthroughChildViewController.h"
+#import "Flurry.h"
 
 @interface WalkthroughViewController ()
 
@@ -47,6 +48,19 @@
 
 }
 
+-(void) viewDidAppear:(BOOL)animated
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    self.flurryDict = [NSDictionary dictionaryWithObject:[defaults objectForKey:@"id"] forKey:@"user_ud"];
+    [Flurry logEvent:@"Walkthrough Time" withParameters:self.flurryDict timed:YES];
+    [super viewDidAppear:animated];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    [Flurry endTimedEvent:@"Walkthrough Time" withParameters:self.flurryDict];
+    [super viewWillDisappear:animated];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

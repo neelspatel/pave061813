@@ -103,7 +103,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    NSLog(@"Getting called request insight");
+    NSLog(@"Getting called request insight in ask view");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
@@ -127,6 +127,7 @@
 
 -(void)createNotificationPopup:(NSDictionary *) data
 {
+    NSLog(@"Creating notification popup from ask view controller");
     NotificationPopupView *notificationPopup = [NotificationPopupView notificationPopupCreateWithData:data];
     [self.view addSubview:notificationPopup];
 }
