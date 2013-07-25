@@ -124,7 +124,7 @@
 
 - (IBAction)ratePushed:(id)sender {
     // REPLACE WITH OUR URL
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/side"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"]];
 }
 
 - (IBAction)logoutPushed:(id)sender {
