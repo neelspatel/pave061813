@@ -37,7 +37,7 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     self.friendNames = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"names"] copy]];
     self.friendIds = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"friends"] copy]];
-    NSLog(@"Friend ids: %@", self.friendIds);
+    //NSLog(@"Friend ids: %@", self.friendIds);
     // if no friends, reload friend data from server
     
     self.filteredNames = [[NSMutableArray alloc] init];
@@ -299,14 +299,14 @@
             [groupFriendIds addObject:[friendIds objectAtIndex:index]];
         }
         
-        NSLog(@"Group Friend IDS: %@", groupFriendIds);
+        //NSLog(@"Group Friend IDS: %@", groupFriendIds);
         
         NSMutableDictionary *currentGroup = [[NSMutableDictionary alloc] initWithObjects:@[self.currentGroupName, groupFriendIds, self.currentGroup] forKeys:@[@"name", @"friend_ids", @"friend_names"]];
         
-        NSLog(@"Current Group: %@", currentGroup);
+        //NSLog(@"Current Group: %@", currentGroup);
 
         NSMutableArray *groups = [[NSMutableArray alloc] initWithArray:[prefs objectForKey:@"groups"]];
-        NSLog(@"User defaults group: %@", groups);
+        //NSLog(@"User defaults group: %@", groups);
     
         if (!groups)
         {

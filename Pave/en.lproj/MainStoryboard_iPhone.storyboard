@@ -2142,7 +2142,13 @@
                                     <constraint firstAttribute="height" constant="73" id="MWx-8S-ZsW"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="nithin.png" translatesAutoresizingMaskIntoConstraints="NO" id="8wT-DA-kf4"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="nithin.png" translatesAutoresizingMaskIntoConstraints="NO" id="8wT-DA-kf4">
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="63" type="user" id="8ap-La-iqd"/>
+                                    <constraint firstAttribute="width" constant="63" type="user" id="hTK-99-wjP"/>
+                                    <constraint firstAttribute="height" constant="66" type="user" id="ukN-ZY-Dda"/>
+                                </constraints>
+                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="James R asks:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VpJ-2k-XMA">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="232" id="0xP-oP-8jO"/>
@@ -2327,11 +2333,11 @@
                                     <constraint firstItem="lz2-ee-tFm" firstAttribute="leading" secondItem="IN6-NS-YoL" secondAttribute="leading" type="default" id="Ifh-r6-h5c"/>
                                     <constraint firstAttribute="height" constant="347" type="user" id="P49-UN-LMJ"/>
                                     <constraint firstItem="NkH-a3-uGt" firstAttribute="leading" secondItem="IN6-NS-YoL" secondAttribute="leading" type="default" id="QBd-lp-DIl"/>
+                                    <constraint firstItem="yxO-k4-xHd" firstAttribute="leading" secondItem="2E3-EL-Y1F" secondAttribute="leading" constant="300" id="TMj-80-qFO"/>
                                     <constraint firstItem="NkH-a3-uGt" firstAttribute="top" secondItem="2E3-EL-Y1F" secondAttribute="top" constant="68" id="UX7-Os-iJD"/>
                                     <constraint firstAttribute="bottom" secondItem="lz2-ee-tFm" secondAttribute="bottom" constant="88" id="VdL-qS-jci"/>
                                     <constraint firstItem="NkH-a3-uGt" firstAttribute="leading" secondItem="2E3-EL-Y1F" secondAttribute="leading" constant="49" id="aUa-6Q-fqL"/>
                                     <constraint firstItem="UKN-dC-pao" firstAttribute="leading" secondItem="2E3-EL-Y1F" secondAttribute="leading" constant="10" id="gKy-XH-3H8"/>
-                                    <constraint firstItem="yxO-k4-xHd" firstAttribute="leading" secondItem="2E3-EL-Y1F" secondAttribute="leading" type="default" id="jsc-RP-NXB"/>
                                     <constraint firstItem="yxO-k4-xHd" firstAttribute="top" secondItem="2E3-EL-Y1F" secondAttribute="top" type="default" id="r1u-OC-hB3"/>
                                 </constraints>
                             </view>
@@ -2345,6 +2351,7 @@
                             <constraint firstAttribute="trailing" secondItem="Shw-UT-aHb" secondAttribute="trailing" constant="4" id="6uN-mO-5lQ"/>
                             <constraint firstItem="k1P-Df-swF" firstAttribute="leading" secondItem="h1b-wa-kIp" secondAttribute="leading" constant="6" id="84s-hN-xQM"/>
                             <constraint firstItem="cHB-Gw-dkK" firstAttribute="leading" secondItem="VpJ-2k-XMA" secondAttribute="leading" type="default" id="9aL-RH-29H"/>
+                            <constraint firstItem="2E3-EL-Y1F" firstAttribute="leading" secondItem="h1b-wa-kIp" secondAttribute="leading" constant="300" id="Chy-dS-dom"/>
                             <constraint firstItem="ZzR-nF-NSh" firstAttribute="top" secondItem="k1P-Df-swF" secondAttribute="top" type="default" id="Eon-bn-jhR"/>
                             <constraint firstItem="VpJ-2k-XMA" firstAttribute="leading" secondItem="h1b-wa-kIp" secondAttribute="leading" constant="76" id="Gwm-tJ-1Q6"/>
                             <constraint firstItem="YIP-sP-zQK" firstAttribute="centerY" secondItem="ZzR-nF-NSh" secondAttribute="centerY" type="user" id="IzZ-ft-vNH"/>
@@ -2354,9 +2361,9 @@
                             <constraint firstItem="hUG-uv-RbM" firstAttribute="top" secondItem="h1b-wa-kIp" secondAttribute="top" constant="334" type="user" id="UMF-Uh-2DK"/>
                             <constraint firstItem="cHB-Gw-dkK" firstAttribute="trailing" secondItem="VpJ-2k-XMA" secondAttribute="trailing" type="default" id="VU1-uc-FrQ"/>
                             <constraint firstItem="k1P-Df-swF" firstAttribute="top" secondItem="h1b-wa-kIp" secondAttribute="top" constant="169" id="X8P-ku-fIL"/>
-                            <constraint firstItem="2E3-EL-Y1F" firstAttribute="leading" secondItem="h1b-wa-kIp" secondAttribute="leading" type="default" id="Z9F-5z-SvA"/>
                             <constraint firstItem="u3J-qW-N3s" firstAttribute="top" secondItem="h1b-wa-kIp" secondAttribute="top" constant="94" id="Zuf-tJ-Bis"/>
                             <constraint firstItem="ZzR-nF-NSh" firstAttribute="leading" secondItem="h1b-wa-kIp" secondAttribute="leading" constant="8" id="bIv-uI-tTP"/>
+                            <constraint firstAttribute="trailing" secondItem="2E3-EL-Y1F" secondAttribute="trailing" constant="-300" id="cD8-GV-luu"/>
                             <constraint firstItem="Oin-UY-lFb" firstAttribute="bottom" secondItem="k1P-Df-swF" secondAttribute="bottom" type="default" id="fe1-0c-MvQ"/>
                             <constraint firstItem="gBX-tm-EIp" firstAttribute="centerX" secondItem="lte-Pe-nic" secondAttribute="centerX" type="default" id="grI-YW-0Da"/>
                             <constraint firstItem="8wT-DA-kf4" firstAttribute="top" secondItem="h1b-wa-kIp" secondAttribute="top" constant="98" id="iB8-09-MO7"/>
@@ -2366,7 +2373,6 @@
                             <constraint firstItem="2E3-EL-Y1F" firstAttribute="top" secondItem="h1b-wa-kIp" secondAttribute="top" constant="67" type="user" id="qF4-wj-87D"/>
                             <constraint firstItem="lte-Pe-nic" firstAttribute="trailing" secondItem="h1b-wa-kIp" secondAttribute="trailing" type="user" id="rai-E1-b18"/>
                             <constraint firstItem="YIP-sP-zQK" firstAttribute="bottom" secondItem="03U-ZR-spq" secondAttribute="bottom" type="default" id="uIL-WQ-mbB"/>
-                            <constraint firstItem="2E3-EL-Y1F" firstAttribute="trailing" secondItem="h1b-wa-kIp" secondAttribute="trailing" type="default" id="x27-NZ-2sQ"/>
                             <constraint firstItem="lte-Pe-nic" firstAttribute="centerX" secondItem="u3J-qW-N3s" secondAttribute="centerX" type="user" id="xYF-wv-BcY"/>
                             <constraint firstItem="lte-Pe-nic" firstAttribute="top" secondItem="h1b-wa-kIp" secondAttribute="top" type="default" id="z1V-xq-sJF"/>
                             <constraint firstItem="8wT-DA-kf4" firstAttribute="leading" secondItem="h1b-wa-kIp" secondAttribute="leading" constant="10" id="z9x-KU-tyh"/>
@@ -2379,6 +2385,8 @@
                         <outlet property="leftAddButton" destination="YIP-sP-zQK" id="uah-f2-zyw"/>
                         <outlet property="leftCancelButton" destination="k1P-Df-swF" id="JLK-0j-SJS"/>
                         <outlet property="leftImage" destination="ZzR-nF-NSh" id="VuL-Ih-evk"/>
+                        <outlet property="name" destination="VpJ-2k-XMA" id="95C-yh-BnA"/>
+                        <outlet property="profilePicture" destination="8wT-DA-kf4" id="jti-cz-BHa"/>
                         <outlet property="question" destination="cHB-Gw-dkK" id="BIQ-AX-Gdc"/>
                         <outlet property="rightAddButton" destination="03U-ZR-spq" id="onF-1k-rbP"/>
                         <outlet property="rightCancelButton" destination="Oin-UY-lFb" id="0cO-zH-xhm"/>
@@ -3652,6 +3660,8 @@
                 <relationship kind="outlet" name="leftImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftSpinner" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="leftURLView" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="name" candidateClass="UIImage"/>
+                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="question" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="rightAddButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="rightCancelButton" candidateClass="UIButton"/>
@@ -3887,7 +3897,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="DIQ-Ig-64G"/>
+        <segue reference="dVu-9J-WCR"/>
         <segue reference="l43-7u-TdC"/>
         <segue reference="8LF-7I-z0V"/>
         <segue reference="cwa-Zk-iI5"/>

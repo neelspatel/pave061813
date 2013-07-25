@@ -23,6 +23,10 @@
 - (IBAction)takePicture:(id)sender;
 
 - (IBAction)create:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UILabel * name;
+@property (weak, nonatomic) IBOutlet UIImageView * profilePicture;
+
 @property (weak, nonatomic) IBOutlet UIButton * createButton;
 @property (nonatomic, retain) AmazonS3Client *s3;
 

@@ -73,6 +73,7 @@
     self.name.text = [[defaults objectForKey:@"profile"] objectForKey:@"name"];
     [self.profile setImageWithURL:[NSURL URLWithString:[[defaults objectForKey:@"profile"] objectForKey:@"pictureURL"]]
                         placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    self.profile.clipsToBounds = YES;
     
     //allocates the list of ids as strings
     self.idStrings = [[NSMutableArray alloc] init];
@@ -798,7 +799,13 @@
 
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){        
-        
+        //starts by hiding and stopping everything
+        self.answersLoading.hidden = TRUE;
+        [self.answersLoading stopAnimating];
+        self.insightsLoading.hidden = TRUE;
+        [self.insightsLoading stopAnimating];
+        self.questionsLoading.hidden = TRUE;
+        [self.questionsLoading stopAnimating];
 
         if([self.currentTable isEqualToString:@"answers"])
         {
@@ -954,6 +961,14 @@
 
 - (void) getFeedObjectsFromPull
 {
+    //turns off feed object
+    self.answersLoading.hidden = TRUE;
+    [self.answersLoading stopAnimating];
+    self.insightsLoading.hidden = TRUE;
+    [self.insightsLoading stopAnimating];
+    self.questionsLoading.hidden = TRUE;
+    [self.questionsLoading stopAnimating];
+    
     [self updateProfileStats];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
