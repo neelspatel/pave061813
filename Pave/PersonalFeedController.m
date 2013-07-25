@@ -70,23 +70,20 @@
     
     //allocates the list of ids as strings
     self.idStrings = [[NSMutableArray alloc] init];
-    if([[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"] == nil)
-    {
-        NSArray *ids = [defaults objectForKey:@"friends"];
-        for(int i = 0; i < ids.count; i++)
-        {
-            [self.idStrings addObject:[[ids objectAtIndex: i] stringValue]];
-        }
-        NSLog(@"ID strings is now %@", self.idStrings);
+    //perform no matter what
+    //if([[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"] == nil)
 
-        //saves in nsuserdefaults
-        [[NSUserDefaults standardUserDefaults] setObject:self.idStrings forKey:@"friendsStrings"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-    }
-    else
+    NSArray *ids = [defaults objectForKey:@"friends"];
+    for(int i = 0; i < ids.count; i++)
     {
-        NSLog(@"Already had friendsStrings saved");
+        [self.idStrings addObject:[[ids objectAtIndex: i] stringValue]];
     }
+    NSLog(@"ID strings is now %@", self.idStrings);
+
+    //saves in nsuserdefaults
+    [[NSUserDefaults standardUserDefaults] setObject:self.idStrings forKey:@"friendsStrings"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
         
     self.answerReadStatus = [[NSMutableDictionary alloc] init];
     if([defaults objectForKey:@"answerReadStatus"])
@@ -267,8 +264,12 @@
     [self viewInsights:self];
 }
 
+//to future nithin and neel - sorry for how convulted this code is. tryna submit in an hour, yknow?
 - (void)handleTap:(id)sender event:(id)event
 {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *params;
+    
     NSLog(@"Tapped");
     if ([self.currentTable isEqualToString:@"answers"]) {
         UITableView *tableView = self.answers;
@@ -293,7 +294,7 @@
         if (CGRectContainsPoint(cell.agree.frame, pointInCell)) {
             NSLog(@"In the left image!");
             //checks if this one has been answered yet
-            if([self.answerReadStatus valueForKey:key]  == nil)
+            if(![[self.answerReadStatus valueForKey:key] isEqualToString:@"Left"]) //if we haven't given this answer yet
             {
                 //saves it as read - true means left
                 [self.answerReadStatus setObject:@"Left" forKey:key];
@@ -301,20 +302,46 @@
                 [self displayAnswerAsRead:cell side:@"Left"];
                 
                 //now saves the cell in the database
-                //[self saveAnswer:cell :TRUE];
-            }
-            else
-            {
-                NSLog(@"Already answered but changing anyway");
-                //saves it as read - true means left
-                [self.answerReadStatus setObject:@"Left" forKey:key];
+                params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookId", currentObject[@"chosenProductID"], @"id_chosenProduct", currentObject[@"otherProductID"], @"id_wrongProduct", currentObject[@"questionID"], @"id_question", currentObject[@"friend"], @"in_response_to", nil];
                 
-                [self displayAnswerAsRead:cell side:@"Left"];                                
+                NSString *url = [@"/data/agreewithanswer/" stringByAppendingString:[defaults objectForKey:@"id"]];
+                url = [url stringByAppendingString:@"/"];
+                
+                
+                [[PaveAPIClient sharedClient] postPath:url
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"successfully agreed with answer");
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error agreeing with answer %@", error);
+                                            }];
+
+            }            
+            else //otherwise, remove the answer
+            {
+                [self.answerReadStatus removeObjectForKey:key];
+
+                NSLog(@"Removing the answer");
+                [self displayAnswerAsRead:cell side:@""];
+
+                //now saves the cell in the database
+                params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookId", currentObject[@"chosenProductID"], @"id_chosenProduct", currentObject[@"otherProductID"], @"id_wrongProduct", currentObject[@"questionID"], @"id_question", currentObject[@"friend"], @"in_response_to", @"true", @"removing", nil];
+                
+                NSString *url = [@"/data/agreewithanswer/" stringByAppendingString:[defaults objectForKey:@"id"]];
+                url = [url stringByAppendingString:@"/"];
+                
+                [[PaveAPIClient sharedClient] postPath:url
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"successfully agreed with answer");
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error agreeing with answer %@", error);
+                                            }];
+                
             }
             
         } else if (CGRectContainsPoint(cell.disagree.frame, pointInCell)) {
             NSLog(@"In the right image!");
-            if([self.answerReadStatus valueForKey:key]  == nil)
+            //checks if this one has been answered yet
+            if(![[self.answerReadStatus valueForKey:key] isEqualToString:@"Right"]) //if we haven't given this answer yet
             {
                 //saves it as read - true means left
                 [self.answerReadStatus setObject:@"Right" forKey:key];
@@ -322,15 +349,40 @@
                 [self displayAnswerAsRead:cell side:@"Right"];
                 
                 //now saves the cell in the database
-                //[self saveAnswer:cell :TRUE];
-            }
-            else
-            {
-                NSLog(@"Already answered but changing anyway");
-                //saves it as read - true means left
-                [self.answerReadStatus setObject:@"Right" forKey:key];
+                params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookId", currentObject[@"otherProductID"], @"id_chosenProduct", currentObject[@"chosenProductID"], @"id_wrongProduct", currentObject[@"questionID"], @"id_question", currentObject[@"friend"], @"in_response_to", nil];                                
                 
-                [self displayAnswerAsRead:cell side:@"Right"];
+                NSString *url = [@"/data/agreewithanswer/" stringByAppendingString:[defaults objectForKey:@"id"]];
+                url = [url stringByAppendingString:@"/"];
+                
+                
+                [[PaveAPIClient sharedClient] postPath:url
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"successfully agreed with answer");
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error agreeing with answer %@", error);
+                                            }];
+                
+            }
+            else //otherwise, remove the answer
+            {
+                [self.answerReadStatus removeObjectForKey:key];
+                
+                NSLog(@"Removing the answer");
+                [self displayAnswerAsRead:cell side:@""];
+                
+                //now saves the cell in the database
+                params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookId", currentObject[@"otherProductID"], @"id_chosenProduct", currentObject[@"chosenProductID"], @"id_wrongProduct", currentObject[@"questionID"], @"id_question", currentObject[@"friend"], @"in_response_to", @"true", @"removing", nil];
+                
+                NSString *url = [@"/data/agreewithanswer/" stringByAppendingString:[defaults objectForKey:@"id"]];
+                url = [url stringByAppendingString:@"/"];
+                
+                [[PaveAPIClient sharedClient] postPath:url
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"successfully agreed with answer");
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error agreeing with answer %@", error);
+                                            }];
+                
             }
             
         }
@@ -359,30 +411,60 @@
         NSString *key = [NSString stringWithFormat:@"%@", currentObject[@"id"], nil];
         
         if (CGRectContainsPoint(cell.agree.frame, pointInCell)) {
-            NSLog(@"In the left image!");
-            //checks if this one has been answered yet
-            if([self.recReadStatus valueForKey:key]  == nil)
+            NSLog(@"In the left image!");            
+            
+            if(![[self.recReadStatus valueForKey:key] isEqualToString:@"Left"]) //if we haven't given this answer yet
             {
                 //saves it as read - true means left
                 [self.recReadStatus setObject:@"Left" forKey:key];
+                NSLog(@"Setting %@ for rec for %d", [self.recReadStatus valueForKey:key], indexPath.row );
                 
                 [self displayRecAsRead:cell side:@"Left"];
                 
                 //now saves the cell in the database
-                //[self saveAnswer:cell :TRUE];
-            }
-            else
-            {
-                NSLog(@"Already answered but changing anyway");
-                //saves it as read - true means left
-                [self.recReadStatus setObject:@"Left" forKey:key];
+                params = [NSDictionary dictionaryWithObjectsAndKeys: currentObject[@"id"], @"rec_id", @"true", @"agree", nil];
                 
-                [self displayRecAsRead:cell side:@"Left"];
+                NSString *url = [@"/data/agreewithrec/" stringByAppendingString:[defaults objectForKey:@"id"]];
+                url = [url stringByAppendingString:@"/"];
+                
+                
+                [[PaveAPIClient sharedClient] postPath:url
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"successfully agreed with rec");
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error agreeing with rec %@", error);
+                                            }];
+                
             }
+            else //otherwise, remove the answer
+            {
+                [self.recReadStatus removeObjectForKey:key];
+                
+                NSLog(@"Removing the rec");
+                NSLog(@"Setting %@ for rec for %d", [self.recReadStatus valueForKey:key], indexPath.row );
+                [self displayRecAsRead:cell side:@""];
+                
+                //now saves the cell in the database
+                params = [NSDictionary dictionaryWithObjectsAndKeys: currentObject[@"id"], @"rec_id", @"true", @"remove", nil];
+                
+                NSString *url = [@"/data/agreewithrec/" stringByAppendingString:[defaults objectForKey:@"id"]];
+                url = [url stringByAppendingString:@"/"];
+                
+                
+                [[PaveAPIClient sharedClient] postPath:url
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"successfully removed agree with rec");
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error removing agreeing with rec %@", error);
+                                            }];
+                
+            }
+            
             
         } else if (CGRectContainsPoint(cell.disagree.frame, pointInCell)) {
             NSLog(@"In the right image!");
-            if([self.recReadStatus valueForKey:key]  == nil)
+            
+            if(![[self.recReadStatus valueForKey:key] isEqualToString:@"Right"]) //if we haven't given this answer yet
             {
                 //saves it as read - true means left
                 [self.recReadStatus setObject:@"Right" forKey:key];
@@ -390,17 +472,42 @@
                 [self displayRecAsRead:cell side:@"Right"];
                 
                 //now saves the cell in the database
-                //[self saveAnswer:cell :TRUE];
-            }
-            else
-            {
-                NSLog(@"Already answered but changing anyway");
-                //saves it as read - true means left
-                [self.recReadStatus setObject:@"Right" forKey:key];
+                params = [NSDictionary dictionaryWithObjectsAndKeys: currentObject[@"id"], @"rec_id", nil];
                 
-                [self displayRecAsRead:cell side:@"Right"];
+                NSString *url = [@"/data/agreewithrec/" stringByAppendingString:[defaults objectForKey:@"id"]];
+                url = [url stringByAppendingString:@"/"];
+                
+                
+                [[PaveAPIClient sharedClient] postPath:url
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"successfully agreed with rec");
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error agreeing with rec %@", error);
+                                            }];
+                
             }
-            
+            else //otherwise, remove the answer
+            {
+                [self.recReadStatus removeObjectForKey:key];
+                
+                NSLog(@"Removing the rec");
+                [self displayRecAsRead:cell side:@""];
+                
+                //now saves the cell in the database
+                params = [NSDictionary dictionaryWithObjectsAndKeys: currentObject[@"id"], @"rec_id", @"true", @"remove", nil];
+                
+                NSString *url = [@"/data/agreewithrec/" stringByAppendingString:[defaults objectForKey:@"id"]];
+                url = [url stringByAppendingString:@"/"];
+                
+                
+                [[PaveAPIClient sharedClient] postPath:url
+                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                                NSLog(@"successfully removed agree with rec");
+                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                                NSLog(@"error removing agreeing with rec %@", error);
+                                            }];
+                
+            }
         }
         else {
             NSLog(@"Not in the image...");
@@ -949,10 +1056,15 @@
         [cell.agree setImage:[UIImage imageNamed:@"SELECTED_BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
         [cell.disagree setImage:[UIImage imageNamed:@"aboutyouBIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
     }
-    else
+    else if([side isEqualToString:@"Right"])
     {
         [cell.agree setImage:[UIImage imageNamed:@"aboutyouBIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
         [cell.disagree setImage:[UIImage imageNamed:@"SELECTED_BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
+    }
+    else 
+    {
+        [cell.agree setImage:[UIImage imageNamed:@"aboutyouBIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+        [cell.disagree setImage:[UIImage imageNamed:@"aboutyouBIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
     }
     return cell;
 }
@@ -964,10 +1076,15 @@
         [cell.agree setImage:[UIImage imageNamed:@"SELECTED_BIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
         [cell.disagree setImage:[UIImage imageNamed:@"aboutyouBIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
     }
-    else
+    else if([side isEqualToString:@"Right"])
     {
         [cell.agree setImage:[UIImage imageNamed:@"aboutyouBIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
         [cell.disagree setImage:[UIImage imageNamed:@"SELECTED_BIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [cell.agree setImage:[UIImage imageNamed:@"aboutyouBIG_AGREE_BUTTON.png"] forState:UIControlStateNormal];
+        [cell.disagree setImage:[UIImage imageNamed:@"aboutyouBIG_DISAGREE_BUTTON.png"] forState:UIControlStateNormal];
     }
     return cell;
 }
@@ -1338,6 +1455,7 @@
                 if([self.recReadStatus objectForKey:key])
                 {
                     NSLog(@"Was read at position %d", indexPath.row);
+                    NSLog(@"Displaying rec as '%@'", [self.recReadStatus objectForKey:key]);
                     return [ self displayRecAsRead:cell side:[self.recReadStatus objectForKey:key]];
                 }
                 else

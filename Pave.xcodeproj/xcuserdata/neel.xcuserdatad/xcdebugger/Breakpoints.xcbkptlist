@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/PersonalFeedController.m"
-         timestampString = "396359516.749694"
+         timestampString = "396407999.93657"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "326"
-         endingLineNumber = "326"
+         startingLineNumber = "340"
+         endingLineNumber = "340"
          landmarkName = "-handleTap:event:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -26,7 +26,7 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "241"
          endingLineNumber = "241"
-         landmarkName = "-loginButtonTouch:"
+         landmarkName = "-finishIntro"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -39,8 +39,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "242"
          endingLineNumber = "242"
-         landmarkName = "-loginButtonTouch:"
-         landmarkType = "5">
+         landmarkName = "@implementation LoginViewController"
+         landmarkType = "3">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -106,6 +106,19 @@
          endingLineNumber = "20"
          landmarkName = "@interface MembersView"
          landmarkType = "2">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Pave/AboutUGQuestion.h"
+         timestampString = "396406935.553686"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "16"
+         endingLineNumber = "16"
+         landmarkName = "question"
+         landmarkType = "19">
       </FileBreakpoint>
    </FileBreakpoints>
    <SymbolicBreakpoints>
