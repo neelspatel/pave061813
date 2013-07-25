@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E2068" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -3660,6 +3660,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedObjectCell.h"/>
             <relationships>
                 <relationship kind="action" name="facebookNotify:"/>
+                <relationship kind="action" name="submitLeft:"/>
                 <relationship kind="action" name="switched:"/>
                 <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftCheck" candidateClass="UIImageView"/>
@@ -3691,6 +3692,7 @@
         <class className="GroupGameController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupGameController.h"/>
             <relationships>
+                <relationship kind="action" name="refresh:"/>
                 <relationship kind="action" name="viewMembers:"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
@@ -3747,7 +3749,6 @@
                 <relationship kind="outlet" name="insightsButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="insightsLoading" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="levelTextField" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="loading" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="logoutButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="questionsButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="questionsLoading" candidateClass="UIActivityIndicatorView"/>
@@ -3773,6 +3774,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="dismiss:"/>
+                <relationship kind="action" name="dismissSettingsPushed:"/>
                 <relationship kind="action" name="feedbackPushed:"/>
                 <relationship kind="action" name="invitePushed:"/>
                 <relationship kind="action" name="logoutPushed:"/>
@@ -3788,13 +3790,11 @@
                 <relationship kind="outlet" name="leftActivityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="leftCheck" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="question" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="rightActivityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="rightCheck" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightX" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="TrendingController" superclassName="UIViewController">
@@ -3860,6 +3860,9 @@
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
         </class>
+        <class className="UICollectionViewLayout" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
+        </class>
         <class className="WebImageCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/WebImageCell.h"/>
             <relationships>
@@ -3882,10 +3885,10 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="8LF-7I-z0V"/>
-        <segue reference="cwa-Zk-iI5"/>
         <segue reference="ynT-c2-fcI"/>
-        <segue reference="dVu-9J-WCR"/>
+        <segue reference="cwa-Zk-iI5"/>
+        <segue reference="DIQ-Ig-64G"/>
         <segue reference="l43-7u-TdC"/>
+        <segue reference="8LF-7I-z0V"/>
     </inferredMetricsTieBreakers>
 </document>
