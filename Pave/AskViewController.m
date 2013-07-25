@@ -149,6 +149,11 @@
 
 - (IBAction)create:(id)sender
 {
+    [self createAction];
+}
+
+- (void) createAction
+{
     NSLog(@"About to submit now");
     
     NSString *path = @"createugquestion/";
@@ -156,7 +161,7 @@
     path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
     path = [path stringByAppendingString:@"/"];
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.leftURL, @"product1_url", self.rightURL, @"product2_url", @"product1", @"product1_description", @"product2", @"product2_description", @"QUESTION GOES HERE", @"question_text",  nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.leftURL, @"product1_url", self.rightURL, @"product2_url", @"product1", @"product1_description", @"product2", @"product2_description", self.question.text, @"question_text",  nil];
     NSLog(@"Sent with params %@", params);
     
     [Flurry logEvent: @"UG Upload Time" withParameters:params timed:YES];
@@ -169,9 +174,19 @@
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     NSLog(@"error saving answer %@", error);
                                     [Flurry endTimedEvent:@"UG Upload Time" withParameters:[NSDictionary dictionaryWithObjectsAndKeys: @"true", @"failed", nil]];
+                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Well, this is awkward..." message:@"There was an error in saving your question. Sorry, our fault!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                    [alert show];
                                 }];
-    
-    
+}
+
+//alert messages
+//This medthod Controls the actions that the UIAlertView's buttons carry out
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex == 0) {
+    }
+    if (buttonIndex == 1){
+        [self createAction];
+    }
 }
 
 //exit text field on enter
@@ -179,10 +194,34 @@
     
     if([text isEqualToString:@"\n"]) {
         [textView resignFirstResponder];
+        [self updateCreateButton];
         return NO;
     }
     
     return YES;
+}
+
+- (BOOL) textViewShouldBeginEditing:(UITextView *)textView
+{
+    NSLog(@"About to start editing");
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"(tap here to ask your question!)";
+    }
+    else if ([textView.text isEqualToString:@"(tap here to ask your question!)"]) {
+        textView.text = @"";        
+    }
+    
+    return YES;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self.view endEditing:TRUE];
+    
+    if ([self.question.text isEqualToString:@""]) {
+        self.question.text = @"(tap here to ask your question!)";
+        [self updateCreateButton];
+
+    }
 }
 
 //listen for the notification
@@ -238,7 +277,9 @@
 
 - (void) updateCreateButton
 {
-    if(self.leftURL && self.rightURL && !([self.leftURL isEqualToString:@""]) && !([self.rightURL isEqualToString:@""]) )
+    if(self.leftURL && self.rightURL &&
+       !([self.leftURL isEqualToString:@""]) && !([self.rightURL isEqualToString:@""]) &&
+       !([self.question.text isEqualToString:@""] || [self.question.text isEqualToString:@"(tap here to ask your question!)"]))
     {
         NSLog(@"Ready to create if you want to");
         [self.createButton setImage:[UIImage imageNamed:@"create_selected.png"] forState:UIControlStateNormal];
