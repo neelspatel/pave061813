@@ -3660,7 +3660,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedObjectCell.h"/>
             <relationships>
                 <relationship kind="action" name="facebookNotify:"/>
-                <relationship kind="action" name="submitLeft:"/>
                 <relationship kind="action" name="switched:"/>
                 <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftCheck" candidateClass="UIImageView"/>
@@ -3692,7 +3691,6 @@
         <class className="GroupGameController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupGameController.h"/>
             <relationships>
-                <relationship kind="action" name="refresh:"/>
                 <relationship kind="action" name="viewMembers:"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
@@ -3774,7 +3772,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
             <relationships>
                 <relationship kind="action" name="dismiss:"/>
-                <relationship kind="action" name="dismissSettingsPushed:"/>
                 <relationship kind="action" name="feedbackPushed:"/>
                 <relationship kind="action" name="invitePushed:"/>
                 <relationship kind="action" name="logoutPushed:"/>
@@ -3859,9 +3856,6 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
         <class className="WebImageCell" superclassName="UICollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/WebImageCell.h"/>

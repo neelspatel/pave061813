@@ -10,14 +10,35 @@
 
 @implementation LatoRegularLabel
 
+-(void) setup
+{
+    self.font = [UIFont fontWithName:@"Lato-Regular" size: self.font.pointSize];
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self setup];
     }
     return self;
 }
+
+-(id) initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setup];
+    }
+    return self;
+}
+
+-(id)init {
+    if (self = [super init]) {
+        [self setup];
+    }
+    return self;
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.
