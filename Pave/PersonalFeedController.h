@@ -44,7 +44,10 @@
 @property (nonatomic, retain)NSString *dataPath;
 @property (nonatomic, retain)NSMutableDictionary *imageRequests;
 @property (nonatomic,assign) BOOL reloadingFeedObject;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loading;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *answersLoading;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *insightsLoading;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *questionsLoading;
 
 //stores and changes the current table
 @property (nonatomic, retain)NSString *currentTable;

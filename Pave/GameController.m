@@ -635,7 +635,12 @@
 - (void) getFeedObjects
 {
     ////NSLog(@"Getting feed objects now");
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    //[MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    ai.center = CGPointMake(300, 15);
+    [ai startAnimating];
+    [self.view addSubview:ai];
+    
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         // Do something...
@@ -656,7 +661,7 @@
             ////NSLog(@"Path is %@", path);
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                //[MBProgressHUD hideHUDForView:self.view animated:YES];
                 
                 if (results) {
                     //NSMutableArray *ids = [[NSMutableArray alloc] init];
@@ -672,6 +677,7 @@
                     [self.tableView reloadData];
                     
                     //[self.refreshControl endRefreshing];
+                    [ai stopAnimating];
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -680,6 +686,7 @@
                                                //shows the alert
                                                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
                                                [alert show];
+                                               [ai stopAnimating];
                                                
                                            }];
         }
@@ -687,7 +694,7 @@
 }
 
 - (void) getFeedObjectsFromPull
-{
+{        
     ////NSLog(@"Getting feed objects now");
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -709,16 +716,8 @@
             ////NSLog(@"Path is %@", path);
             [Flurry logEvent:@"Game Pull Refresh" withParameters:nil timed:YES];
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 
                 if (results) {
-                    //NSMutableArray *ids = [[NSMutableArray alloc] init];
-                    //for(NSDictionary *current in results)
-                    //{
-                    //    [ids addObject:current[@"id"]];
-                    //}
-                    ////NSLog(@"Just finished getting results: %@", results);
-                    
                     //clears data
                     self.feedObjects = [NSMutableArray array];
                     self.readStatus = [[NSMutableDictionary alloc] init];
