@@ -69,6 +69,9 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
+    //sets your name and profile picture
+    
+    
     //allocates the list of ids as strings
     self.idStrings = [[NSMutableArray alloc] init];
     //perform no matter what
@@ -120,20 +123,44 @@
     [self getFeedObjects];
     NSLog(@"Answer objects are %@", self.answerObjects);
 
-    self.badge_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
+    self.badge_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(-5, -15, 40, 40)];
     [self.badge_answers setValue:[self getAnswerCount]];
     self.badge_answers.hideWhenZero = YES;
     [self.answersButton addSubview: self.badge_answers];
     
-    self.badge_recs= [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
+    self.badge_recs= [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(-5, -15, 40, 40)];
     [self.badge_recs setValue:[self getRecCount]];
     self.badge_recs.hideWhenZero = YES;
     [self.insightsButton addSubview: self.badge_recs];
     
-    self.badge_ug_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(60, -25, 40, 40)];
+    self.badge_ug_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(-5, -15, 40, 40)];
     [self.badge_ug_answers  setValue:[self getUGCount]];
     self.badge_ug_answers.hideWhenZero = YES;
     [self.questionsButton addSubview: self.badge_ug_answers];
+    
+    //sets up the loading indicators
+    /**
+    self.answersLoading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.answersLoading.center = CGPointMake(91, 159);
+    [self.view addSubview:self.answersLoading];
+    self.answersLoading.hidden = TRUE;
+    
+    self.insightsLoading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.insightsLoading.center = CGPointMake(198, 159);
+    [self.view addSubview:self.insightsLoading];
+    self.insightsLoading.hidden = TRUE;
+    
+    self.questionsLoading = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    self.questionsLoading.center = CGPointMake(91, 159);
+    [self.view addSubview:self.questionsLoading];
+    self.questionsLoading.hidden = TRUE;
+    */
+    
+    self.answersLoading.hidden = TRUE;
+    self.insightsLoading.hidden = TRUE;
+    self.questionsLoading.hidden = TRUE;
+    
+
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeCounts) name:@"updateProfileBadgeCounts" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -664,12 +691,12 @@
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
 {
     self.feedObjects = [NSArray array];
-    if (self.currentTable == @"answers")
+    if ([self.currentTable isEqualToString: @"answers"])
     {
         self.reloadingAnswers = YES;
         self.answerObjects =[NSArray array];
     }
-    else if (self.currentTable == @"recs")
+    else if ([self.currentTable isEqualToString: @"recs"])
     {
         self.insightObjects = [NSArray array];
         self.reloadingInsights = YES;
@@ -767,13 +794,15 @@
 {
     [self updateProfileStats];
 
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){        
         
 
         if([self.currentTable isEqualToString:@"answers"])
         {
+            self.answersLoading.hidden = FALSE;
+            [self.answersLoading startAnimating];
+            
             //self.answerObjects = [NSMutableArray array];
             NSLog(@"About to get feed objects for answers");
             
@@ -784,7 +813,6 @@
             path = [path stringByAppendingString:@"/"];
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 if (results) {
                     
                     [self hideLoadingBar];
@@ -803,9 +831,11 @@
                     
                     self.reloadingFeedObject = NO;
                     self.reloadingAnswers = NO;
-
                     
                     [self.answers performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
+                    
+                    [self.answersLoading stopAnimating];
+                    self.answersLoading.hidden = TRUE;                    
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -828,8 +858,10 @@
             //path = [path stringByAppendingString:@"1"];
             path = [path stringByAppendingString:@"/"];
             
+            self.insightsLoading.hidden = FALSE;
+            [self.insightsLoading startAnimating];
+            
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 if (results) {
                     [self hideLoadingBar];
                     
@@ -852,6 +884,9 @@
                     
                     [self.recs performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     
+                    self.insightsLoading.hidden = TRUE;
+                    [self.insightsLoading stopAnimating];
+                    
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
@@ -873,8 +908,10 @@
             //path = [path stringByAppendingString:@"1"];
             path = [path stringByAppendingString:@"/"];
             
+            self.questionsLoading.hidden = FALSE;
+            [self.questionsLoading startAnimating];
+            
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 if (results) {
                     NSLog(@"Question Results: %@", results);
                     self.questionObjects = [NSArray arrayWithArray:results];
@@ -894,6 +931,9 @@
                     NSLog(@"Just finished getting results: %@ for path %@", results, path);
                     //self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
                     //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    
+                    self.questionsLoading.hidden = TRUE;
+                    [self.questionsLoading stopAnimating];
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -1063,6 +1103,13 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex == 0) {
         [self.refreshControl endRefreshing];
+        
+        self.insightsLoading.hidden = TRUE;
+        [self.insightsLoading stopAnimating];
+        self.answersLoading.hidden = TRUE;
+        [self.answersLoading stopAnimating];
+        self.questionsLoading.hidden = TRUE;
+        [self.questionsLoading stopAnimating];
     }
     if (buttonIndex == 1){
         [self.refreshControl beginRefreshing];

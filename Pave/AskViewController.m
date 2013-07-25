@@ -14,6 +14,7 @@
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
 #import "Flurry.h"
+#import "MBProgressHUD.h"
 
 @interface AskViewController ()
 
@@ -166,16 +167,31 @@
     
     [Flurry logEvent: @"UG Upload Time" withParameters:params timed:YES];
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+    [self.createButton setImage:[UIImage imageNamed:@"create_unselected.png"] forState:UIControlStateNormal];
+    [self.createButton setEnabled:NO];
+    
     [[PaveAPIClient sharedClient] postPath:path
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    //hides
+                                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                    
                                     NSLog(@"successfully created question");
                                     [Flurry endTimedEvent:@"UG Upload Time" withParameters:nil];
                                     [self performSegueWithIdentifier:@"finishedSubmitting" sender:self];
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    //hides
+                                    [MBProgressHUD hideHUDForView:self.view animated:YES];
+                                    
                                     NSLog(@"error saving answer %@", error);
                                     [Flurry endTimedEvent:@"UG Upload Time" withParameters:[NSDictionary dictionaryWithObjectsAndKeys: @"true", @"failed", nil]];
                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Well, this is awkward..." message:@"There was an error in saving your question. Sorry, our fault!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
                                     [alert show];
+                                    
+                                    //reenables create button since there was an error
+                                    [self.createButton setImage:[UIImage imageNamed:@"create_selected.png"] forState:UIControlStateNormal];
+                                    [self.createButton setEnabled:YES];
                                 }];
 }
 
