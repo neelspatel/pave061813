@@ -61,6 +61,9 @@
 //for the popup
 @property (nonatomic, retain)AboutUGQuestion *popup;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) UIRefreshControl *answersRefreshControl;
+@property (strong, nonatomic) UIRefreshControl *recsRefreshControl;
+@property (strong, nonatomic) UIRefreshControl *ugRefreshControl;
 
 //for the read status of recs and answers
 @property (nonatomic, retain)NSMutableDictionary *answerReadStatus;

@@ -81,7 +81,6 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<int key="IBUIButtonType">1</int>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="713668527">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -93,6 +92,10 @@
 						<object class="NSColor" key="IBUINormalTitleShadowColor" id="340240137">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
+						</object>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">keep_playing.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="885851916">
 							<int key="type">2</int>
@@ -853,7 +856,7 @@
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.CustomClassName">NotificationPopupView</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<array key="4.IBViewMetadataConstraints">
+				<array class="NSMutableArray" key="4.IBViewMetadataConstraints">
 					<reference ref="847049229"/>
 					<reference ref="770510897"/>
 					<reference ref="173201982"/>
@@ -933,7 +936,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">97</int>
+			<int key="maxID">98</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1000,6 +1003,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="_0001_NEW_insight_background@2x.png">{639, 936}</string>
 			<string key="doctor.png">{174, 152}</string>
+			<string key="keep_playing.png">{133, 44}</string>
 			<string key="viewinsight_details.png">{133, 44}</string>
 		</dictionary>
 		<bool key="IBDocument.UseAutolayout">YES</bool>

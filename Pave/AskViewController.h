@@ -47,6 +47,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *rightURLView;
 
+@property (weak, nonatomic) IBOutlet UITextView *question;
+
 @property (nonatomic, retain) StatusBar *sbar;
 
 - (UIImage*)smaller:(UIImage*)image;

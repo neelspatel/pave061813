@@ -721,7 +721,7 @@
                     self.reloadingFeedObject = NO;
                     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     [self.tableView reloadData];
-                                        [self.refreshControl endRefreshing];
+                    [self.refreshControl endRefreshing];
                     [Flurry endTimedEvent:@"Game Pull Refresh" withParameters:nil];
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -776,7 +776,7 @@
     if(self.reloadingFeedObject)
     {
         NSLog(@"Still reloading");
-        UITableView *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+        FeedObjectCell *cell = [[FeedObjectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
         return cell;
     }
     else

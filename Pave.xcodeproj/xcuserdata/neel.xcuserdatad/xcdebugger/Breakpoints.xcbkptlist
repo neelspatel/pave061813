@@ -82,7 +82,7 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/AskViewController.h"
@@ -119,6 +119,45 @@
          endingLineNumber = "16"
          landmarkName = "question"
          landmarkType = "19">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Pave/GameController.m"
+         timestampString = "396421615.907936"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "662"
+         endingLineNumber = "662"
+         landmarkName = "-getFeedObjects"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Pave/GameController.m"
+         timestampString = "396421617.325332"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "664"
+         endingLineNumber = "664"
+         landmarkName = "-getFeedObjects"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Pave/PersonalFeedController.m"
+         timestampString = "396423345.114789"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1012"
+         endingLineNumber = "1012"
+         landmarkName = "-getFeedObjectsFromPull"
+         landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
    <SymbolicBreakpoints>

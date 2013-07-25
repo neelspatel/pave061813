@@ -102,17 +102,17 @@
     self.reloadingFeedObject = YES;
     
     //sets up the pull to refresh controller
-    UIRefreshControl *answersRefreshControl = [[UIRefreshControl alloc] init];
-    [answersRefreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
-    [self.answers addSubview:answersRefreshControl];
+    self.answersRefreshControl = [[UIRefreshControl alloc] init];
+    [self.answersRefreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
+    [self.answers addSubview:self.answersRefreshControl];
     
-    UIRefreshControl *recsRefreshControl = [[UIRefreshControl alloc] init];
-    [recsRefreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
-    [self.recs addSubview:recsRefreshControl];
+    self.recsRefreshControl = [[UIRefreshControl alloc] init];
+    [self.recsRefreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
+    [self.recs addSubview:self.recsRefreshControl];
     
-    UIRefreshControl *ugRefreshControl = [[UIRefreshControl alloc] init];
-    [ugRefreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
-    [self.ugQuestions addSubview:ugRefreshControl];
+    self.ugRefreshControl = [[UIRefreshControl alloc] init];
+    [self.ugRefreshControl addTarget:self action:@selector(refreshWithPull:) forControlEvents:UIControlEventValueChanged];
+    [self.ugQuestions addSubview:self.ugRefreshControl];
     
     //sets the handler to listen for taps    
     [self updateProfileStats];
@@ -597,6 +597,10 @@
     [self.questionsButton setImage:[UIImage imageNamed:@"selected_questions_by_me.png"] forState:UIControlStateNormal];
     
     self.currentTable = @"ugQuestions";
+    
+    //scrolls to the top
+    //[self.ugQuestions scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
+    
     [self changeTable];    
 }
 
@@ -611,7 +615,7 @@
         self.answers.hidden = NO;
         self.ugQuestions.hidden = YES;
         self.recs.hidden = YES;
-
+        
         //now reloads the data
         self.feedObjects = [NSArray array];
         self.answerObjects = [NSArray array];
@@ -640,7 +644,7 @@
 
         self.answers.hidden = YES;
         self.ugQuestions.hidden = YES;
-        self.recs.hidden = NO;
+        self.recs.hidden = NO;                
 
         //now reloads the data        
         [self getFeedObjects];
@@ -665,7 +669,7 @@
         self.reloadingAnswers = YES;
         self.answerObjects =[NSArray array];
     }
-    else if (self.currentTable = @"recs")
+    else if (self.currentTable == @"recs")
     {
         self.insightObjects = [NSArray array];
         self.reloadingInsights = YES;
@@ -675,14 +679,14 @@
         self.questionObjects = [NSArray array];
         self.reloadingUGAnswerObjects = YES;
     }
-    self.reloadingFeedObject = YES;
+    //self.reloadingFeedObject = YES;
     
     NSLog(@"reloading personal datapre");
     
     NSLog(@"reloading personal data");
     [self getFeedObjectsFromPull];
     
-    [refreshControl endRefreshing];
+    //[refreshControl endRefreshing];
     
 }
 
@@ -806,6 +810,10 @@
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
                                                NSLog(@"error logging in user to Django %@", error);
+                                               self.reloadingFeedObject = NO;
+                                               //shows the alert
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                               [alert show];
                                            }];
         }
         else if([self.currentTable isEqualToString:@"recs"])
@@ -847,6 +855,10 @@
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
                                                NSLog(@"error logging in user to Django %@", error);
+                                               self.reloadingFeedObject = NO;
+                                               //shows the alert
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                               [alert show];
                                            }];
         }
         else
@@ -887,6 +899,10 @@
                                                [self hideLoadingBar];
 
                                                NSLog(@"error logging in user to Django %@", error);
+                                               self.reloadingFeedObject = NO;
+                                               //shows the alert
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                               [alert show];
                                            }];
         }
         
@@ -902,7 +918,7 @@
         if([self.currentTable isEqualToString:@"answers"])
         {
             //self.answerObjects = [NSMutableArray array];
-            NSLog(@"About to get feed objects for answers");
+            NSLog(@"About to get feed objects for answers via pull");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/getallfeedobjects/";
@@ -933,12 +949,16 @@
                     
                     [self.answers performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     
-                    [self.refreshControl endRefreshing];                    
+                    [self.answersRefreshControl endRefreshing];
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
-                                               NSLog(@"error logging in user to Django %@", error);
+                                               NSLog(@"error getting feed objects %@", error);
+                                               self.reloadingFeedObject = NO;
+                                               //shows the alert
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                               [alert show];
                                            }];
         }
         else if([self.currentTable isEqualToString:@"recs"])
@@ -975,16 +995,21 @@
                     
                     [self.recs performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     
-                    [self.refreshControl endRefreshing];                    
+                    [self.recsRefreshControl endRefreshing];
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
                                                NSLog(@"error logging in user to Django %@", error);
+                                               self.reloadingFeedObject = NO;
+                                               //shows the alert
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                               [alert show];
                                            }];
         }
         else
         {
+            self.questionObjects = [NSMutableArray array];
             //self.questionObjects = [NSMutableArray array];
             NSLog(@"About to get feed objects for ugquestions");
             
@@ -1014,19 +1039,34 @@
                     NSLog(@"Just finished getting results: %@ for path %@", results, path);
                     //self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
                     //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
-                    [self.refreshControl endRefreshing];                    
+                    [self.ugRefreshControl endRefreshing];
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
                                                
                                                NSLog(@"error logging in user to Django %@", error);
+                                               self.reloadingFeedObject = NO;
+                                               //shows the alert
+                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                               [alert show];
                                            }];
         }
         
     });
 }
 
+//alert messages
+//This medthod Controls the actions that the UIAlertView's buttons carry out
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex == 0) {
+        [self.refreshControl endRefreshing];
+    }
+    if (buttonIndex == 1){
+        [self.refreshControl beginRefreshing];
+        [self getFeedObjectsFromPull];
+    }
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
