@@ -1411,7 +1411,6 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="440" id="e0Z-co-Pi0"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="390" type="user" id="ibm-q2-dmV"/>
-                                    <constraint firstAttribute="width" constant="320" id="uKo-X0-oQN"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UGQuestionsCell" rowHeight="210" id="SEU-YD-00M" customClass="UGQuestionsCell">
@@ -1575,6 +1574,7 @@
                             <constraint firstItem="hOY-wT-A8L" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="8" id="HzY-ka-UgZ"/>
                             <constraint firstItem="hWm-no-EuD" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="99" id="IJk-bp-gIj"/>
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="Ioo-Q7-B1l"/>
+                            <constraint firstItem="p1D-tk-aq2" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="JX3-ZV-NVR"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="top" secondItem="mEU-D9-l1J" secondAttribute="top" type="default" id="KNS-mV-0bL"/>
                             <constraint firstItem="mEU-D9-l1J" firstAttribute="bottom" secondItem="fzw-ua-DSv" secondAttribute="bottom" type="default" id="KPU-Be-Orh"/>
                             <constraint firstItem="FhT-Na-l8g" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="Kxj-Pk-Hup"/>
@@ -1587,7 +1587,6 @@
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" type="default" id="Tm1-eC-5MK"/>
                             <constraint firstItem="iR7-SC-sRN" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="UcE-Eq-8L7"/>
                             <constraint firstAttribute="trailing" secondItem="wl3-15-fGN" secondAttribute="trailing" constant="10" id="Wq7-y2-8dW"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="300" id="Z49-gc-QlK"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="top" secondItem="hXL-vU-ovF" secondAttribute="top" type="default" id="b1x-Gr-6g2"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="trailing" secondItem="6pg-Ep-aV0" secondAttribute="trailing" type="default" id="bOv-TT-3VZ"/>
                             <constraint firstAttribute="trailing" secondItem="aE7-au-WHw" secondAttribute="trailing" constant="112" id="bSd-3U-6Q4"/>
@@ -1599,6 +1598,7 @@
                             <constraint firstItem="hWm-no-EuD" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="10" id="gcN-N7-fAC"/>
                             <constraint firstItem="d0s-5T-RAp" firstAttribute="top" secondItem="aE7-au-WHw" secondAttribute="top" type="default" id="hBi-N3-y9g"/>
                             <constraint firstItem="wl3-15-fGN" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="62" id="j25-uu-yha"/>
+                            <constraint firstItem="p1D-tk-aq2" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="k7k-y7-3nF"/>
                             <constraint firstItem="cX2-pm-whI" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="-3" id="krG-dN-Y0n"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="bottom" secondItem="mEU-D9-l1J" secondAttribute="bottom" type="default" id="nCI-2w-N0c"/>
                             <constraint firstItem="iR7-SC-sRN" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="nK9-Ub-nf2"/>

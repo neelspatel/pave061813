@@ -28,11 +28,11 @@
     UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
     UITabBarItem *tabBarItem5 = [tabBar.items objectAtIndex:4];
     
-    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"430profile_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"prof3.png"]];
-    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"430group_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"430group_unselected.png"]];
-    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"430home_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"430home_unselected.png"]];
-    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"430UGC_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"430UGC_unselected.png"]];
-    [tabBarItem5 setFinishedSelectedImage:[UIImage imageNamed:@"430training_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"430training_unselected.png"]];
+    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"final_profile_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"final_profile_unselected.png.png"]];
+    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"final_groups_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"final_groups_unselected.png"]];
+    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"final_home_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"final_home_unselected.png"]];
+    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"final_UGC_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"final_UGC_unselected.png"]];
+    [tabBarItem5 setFinishedSelectedImage:[UIImage imageNamed:@"final_sprint_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"final_sprint_unselected.png"]];
             
     UIImage* tabBarBackground = [UIImage imageNamed:@"test_nav.png"];
     //[[UITabBar appearance] setBackgroundImage:tabBarBackground];
@@ -46,6 +46,14 @@
     tabBarItem4.title = @"";
     tabBarItem5.title = @"";
 
+    
+    tabBarItem1.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    tabBarItem2.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    tabBarItem3.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    tabBarItem4.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+    tabBarItem5.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+
+    
     /**
     tabBarItem1.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
     tabBarItem2.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);

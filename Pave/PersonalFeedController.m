@@ -1323,12 +1323,26 @@
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                         // More initializations if needed.
                     }
+                    
+                    for (UIView *view in [cell subviews]) {
+                        view.hidden = YES;
+                    }
+                    
+                    cell.question.hidden = NO;                                                          
+                    
                     cell.question.text = @"OH hey, at bottom";
                     return cell;
                 }
+                                
 
                 static NSString *CellIdentifier = @"AnswersCell";
-                AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];            
+                AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+                
+                //unhides everything
+                for (UIView *view in [cell subviews]) {
+                    view.hidden = NO;
+                }
+                
                 NSLog(@"IndexPath is %d", indexPath.row);
                 //NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
                 NSDictionary *currentObject = [self.answerObjects objectAtIndex:(indexPath.row)];
