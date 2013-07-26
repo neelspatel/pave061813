@@ -19,8 +19,11 @@
     NotificationPopupView *notificationPopup = [[[NSBundle mainBundle] loadNibNamed:@"NotificationPopup" owner:nil options:nil] lastObject];
     
     notificationPopup.label.text = [data objectForKey:@"rec_text"];
-    [notificationPopup.recImage setImageWithURL:[NSURL URLWithString:@"http://iteigo.net/wp/wp-content/uploads/2013/04/sample.jpg"]
+    [notificationPopup.recImage setImageWithURL:[NSURL URLWithString:[data objectForKey:@"url"]]
                       placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    
+    notificationPopup.recImage.clipsToBounds = TRUE;
+
     
     [notificationPopup baseInit];
     if ([notificationPopup isKindOfClass:[NotificationPopupView class]])
@@ -34,7 +37,8 @@
     // set up background
     NSLog(@"This is called");
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iphone4popup_translucent_layer_wbackground.png"]];
-    backgroundImage.frame = CGRectMake(0, 0, 320, 327);
+    backgroundImage.frame = CGRectMake(0, 0, 320, 327);        
+    
     [self addSubview:backgroundImage];
     [self sendSubviewToBack:backgroundImage];
 }

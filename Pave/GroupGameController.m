@@ -138,7 +138,7 @@
         if (results)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[[results objectForKey:@"text"] stringValue], @"rec_text", nil]];
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[results objectForKey:@"text"] , @"rec_text", [results objectForKey:@"url"], @"url", nil]];
             });
         }
     }
@@ -472,7 +472,7 @@
 
     //activity indicator
     UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-    ai.center = CGPointMake(260, 15);
+    ai.center = CGPointMake(225, 15);
     [ai startAnimating];
     [self.view addSubview:ai];
     
@@ -522,12 +522,14 @@
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                NSLog(@"error getting feed objects from database %@", error);
-                                               self.reloadingFeedObject = NO;
-                                               //shows the alert
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
-                                               [alert show];
-                                               [ai stopAnimating];
-
+                                               if(error.code != -999)
+                                               {                                                   
+                                                   self.reloadingFeedObject = NO;
+                                                   //shows the alert
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                                   [alert show];
+                                                   [ai stopAnimating];
+                                               }
                                            }];
         }
     });
@@ -881,6 +883,13 @@
 }
 
 - (IBAction)backButtonPushed:(id)sender {
+    //cancels request
+    NSString *path = @"/data/groupgetlistquestions/";
+    path = [path stringByAppendingString:[[NSUserDefaults standardUserDefaults] objectForKey:@"id"]];
+    path = [path stringByAppendingString:@"/"];
+    
+    [[PaveAPIClient sharedClient] cancelAllHTTPOperationsWithMethod:@"POST" path:path];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 @end

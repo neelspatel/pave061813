@@ -44,7 +44,8 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     //sets your name and profile picture
-    self.name.text = [[defaults objectForKey:@"profile"] objectForKey:@"name"];
+    NSString *name = [[defaults objectForKey:@"profile"] objectForKey:@"name"];
+    self.name.text = [name stringByAppendingString:@" asks:"];
     [self.profilePicture setImageWithURL:[NSURL URLWithString:[[defaults objectForKey:@"profile"] objectForKey:@"pictureURL"]]
                  placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
     self.profilePicture.clipsToBounds = YES;
@@ -126,7 +127,7 @@
         if (results)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[[results objectForKey:@"text"] stringValue], @"rec_text", nil]];
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[results objectForKey:@"text"] , @"rec_text", [results objectForKey:@"url"], @"url", nil]];
             });
         }
     }
@@ -441,8 +442,6 @@
         //hides the button
         self.leftAddButton.hidden = YES;
         
-        //shows the x button
-        self.leftCancelButton.hidden = NO;
     }
     else if( [self.currentSide isEqualToString: @"Right"])
     {
@@ -450,10 +449,7 @@
         [self.rightImage setImage:image];
         
         //hides the button
-        self.rightAddButton.hidden = YES;
-        
-        //shows the x button
-        self.rightCancelButton.hidden = NO;
+        self.rightAddButton.hidden = YES;                
     }
     
     image = [self smaller:image];
@@ -525,6 +521,7 @@
         
         // Upload image data.  Remember to set the content type.
         S3PutObjectRequest *por = [[S3PutObjectRequest alloc] initWithKey:name inBucket:@"preparsedugproductimages"];
+        //S3PutObjectRequest *por = [[S3PutObjectRequest alloc] initWithKey:name inBucket:@"preparsedugproductimages"];
         por.contentType = @"image/jpeg";
         por.data        = imageData;
         por.cannedACL   = [S3CannedACL publicRead];
@@ -537,7 +534,40 @@
             if(putObjectResponse.error != nil)
             {
                 NSLog(@"Error: %@", putObjectResponse.error);
-                [self showAlertMessage:[putObjectResponse.error.userInfo objectForKey:@"message"] withTitle:@"Upload Error"];
+                
+                [spinner stopAnimating];
+                [gray removeFromSuperview];
+                
+                //cancels the upload
+                if( [self.currentSide isEqualToString: @"Left"])
+                {
+                    NSLog(@"Cancelling left");
+                    
+                    self.leftCancelButton.hidden = TRUE;
+                    self.leftAddButton.hidden = FALSE;
+                    [self.leftImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
+                    
+                    self.leftURL = @"";
+                    self.leftURLView.text = @"";
+                    
+                    [self updateCreateButton];
+                }
+                else
+                {
+                    NSLog(@"Cancelling right");
+                    
+                    self.rightCancelButton.hidden = TRUE;
+                    self.rightAddButton.hidden = FALSE;
+                    [self.rightImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
+                    
+                    self.rightURL = @"";
+                    self.rightURLView.text = @"";
+                    
+                    [self updateCreateButton];
+                }
+                
+                
+                [self showAlertMessage:[putObjectResponse.error.userInfo objectForKey:@"message"] withTitle:@"Sorry about that - there was an error in uploading your picture. Please try again!"];
             }
             else
             {
@@ -546,6 +576,15 @@
                 [self updateCreateButton];
                 [spinner stopAnimating];
                 [gray removeFromSuperview];
+                
+                //shows the x button
+                if( [self.currentSide isEqualToString: @"Right"])
+                {
+                    self.rightCancelButton.hidden = NO;
+                }
+                else {
+                    self.leftCancelButton.hidden = NO;
+                }
             }
             
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];

@@ -119,7 +119,7 @@
         if (results)
         {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[[results objectForKey:@"text"] stringValue], @"rec_text", nil]];
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[results objectForKey:@"text"] , @"rec_text", [results objectForKey:@"url"], @"url", nil]];
             });
         }
     }
@@ -174,15 +174,23 @@
     NSMutableArray *names = [[NSMutableArray alloc] initWithCapacity: [[currentObject objectForKey:@"friend_names"] count]];
                              
     for (NSString *full_name in [currentObject objectForKey:@"friend_names"])
-    {
+    {                
         NSLog(@"Full Name: %@", full_name);
-        NSArray *first_last = [full_name componentsSeparatedByString:@" "];
-        NSString *name = [first_last objectAtIndex:0];
-        name = [name stringByAppendingString:@" "];
-        NSString *last_name = [first_last objectAtIndex:1];
-        name =  [name stringByAppendingString:[last_name substringToIndex:1]];
+        
+        NSString *name = currentObject[@"name"];
+        NSArray *wordsAndEmptyStrings = [full_name componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        NSArray *words = [wordsAndEmptyStrings filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+        
+        NSLog(@"WOrds is %@", words);
+                
+        NSString *newName = words[0];
+        NSString * last_name = words[1];
+        newName =  [newName stringByAppendingString:@" "];
+        newName =  [newName stringByAppendingString:[last_name substringToIndex:1]];        
+               
         NSLog(@"Name: %@", full_name);
-        [names addObject: name];
+        [names addObject: newName
+         ];
     }
     
     NSLog(@"Current names: %@", names);

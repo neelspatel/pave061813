@@ -103,8 +103,9 @@
     [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
         if (results)
         {
+            NSLog(@"Got rec results as %@", results);
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[[results objectForKey:@"text"] stringValue], @"rec_text", nil]];
+                [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[results objectForKey:@"text"], @"rec_text", [results objectForKey:@"url"], @"url", nil]];
             });
         }
     }
@@ -236,15 +237,63 @@
         [self.leftActivityIndicator startAnimating];
         [self.rightActivityIndicator startAnimating];
 
+        /**
+        [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:currentObject[@"image1"] options:0
+         progress:^(NSUInteger receivedSize, long long expectedSize)
+         {
+             // progression tracking code
+         }
+          completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
+         {
+             if (image && finished)
+             {
+                 self.leftCheck.hidden = YES;
+                 
+                 //animates in the image
+                 [UIView transitionWithView:self.view
+                                   duration:0.2f
+                                    options:UIViewAnimationOptionTransitionCrossDissolve
+                                 animations:^{
+                                     self.leftProduct.userInteractionEnabled = YES;
+                                     self.leftProduct.image = image;
+                                 } completion:nil];
+                 
+                 [self.leftActivityIndicator stopAnimating];
+             }
+         }];
+                 
+         [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:currentObject[@"image1"] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
+          {
+              // progression tracking code
+          }
+                    completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
+          {
+              if (image && finished)
+              {
+                  self.leftCheck.hidden = YES;
+                  
+                  //animates in the image
+                  [UIView transitionWithView:self.view
+                                    duration:0.2f
+                                     options:UIViewAnimationOptionTransitionCrossDissolve
+                                  animations:^{
+                                      self.leftProduct.userInteractionEnabled = YES;
+                                      self.leftProduct.image = image;
+                                  } completion:nil];
+                   
+                   [self.leftActivityIndicator stopAnimating];
+                   }
+            }];
+         */
+        
         
         //sets images
         [UIView transitionWithView:self.view
                           duration:0.2f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-
-                            self.rightCheck.hidden = YES;
                             self.leftCheck.hidden = YES;
+                            self.rightCheck.hidden = YES;
 /*
                             @try {
                                 // Try something
@@ -257,14 +306,17 @@
                             
                             [self.leftProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image1"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
                                 self.leftProduct.userInteractionEnabled = YES;
-                                [self.leftActivityIndicator stopAnimating];
+                                
 
                             }];
                             [self.rightProduct setImageWithURL:[NSURL URLWithString:currentObject[@"image2"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
                                 self.rightProduct.userInteractionEnabled = YES;
-                                [self.rightActivityIndicator stopAnimating];
                             }];
-                        } completion:nil];
+                        } completion:^(BOOL finished){
+                            [self.leftActivityIndicator stopAnimating];
+                            [self.rightActivityIndicator stopAnimating];
+                        }
+         ];
         
         
         self.currentNumber += 1;

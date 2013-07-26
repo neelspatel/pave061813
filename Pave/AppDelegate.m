@@ -76,7 +76,7 @@
     self.session = [[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil];
     
     //timer to check for notifications
-    NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 15.0 target: self
+    NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
                                                       selector: @selector(refreshNotifications:) userInfo: nil repeats: YES];
     
     // read in the current status score from NSUserDefaults
