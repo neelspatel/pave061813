@@ -164,9 +164,7 @@
     
     self.answersLoading.hidden = TRUE;
     self.insightsLoading.hidden = TRUE;
-    self.questionsLoading.hidden = TRUE;
-    
-
+    self.questionsLoading.hidden = TRUE;        
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateBadgeCounts) name:@"updateProfileBadgeCounts" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -647,8 +645,8 @@
     [self setBadgeForIndex:1 withCount:0];
 
     //change the button
-    [self.answersButton setImage:[UIImage imageNamed:@"selected_answers_about_me@2x.png"] forState:UIControlStateNormal];
-    [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me@2x.png"] forState:UIControlStateNormal];
+    [self.answersButton setImage:[UIImage imageNamed:@"selected_answers_about_me.png"] forState:UIControlStateNormal];
+    [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me.png"] forState:UIControlStateNormal];
     [self.questionsButton setImage:[UIImage imageNamed:@"unselected_questions_by_me.png"] forState:UIControlStateNormal];
 
     
@@ -666,8 +664,8 @@
     [self setBadgeForIndex:2 withCount:0];
 
     //change the button
-    [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me@2x.png"] forState:UIControlStateNormal];
-    [self.insightsButton setImage:[UIImage imageNamed:@"selected_insights_for_me@2x.png"] forState:UIControlStateNormal];
+    [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me.png"] forState:UIControlStateNormal];
+    [self.insightsButton setImage:[UIImage imageNamed:@"selected_insights_for_me.png"] forState:UIControlStateNormal];
     [self.questionsButton setImage:[UIImage imageNamed:@"unselected_questions_by_me.png"] forState:UIControlStateNormal];
 
     self.currentTable = @"recs";
@@ -686,8 +684,8 @@
     [self setBadgeForIndex:3 withCount:0];
 
     //change the button
-    [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me@2x.png"] forState:UIControlStateNormal];
-    [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me@2x.png"] forState:UIControlStateNormal];
+    [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me.png"] forState:UIControlStateNormal];
+    [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me.png"] forState:UIControlStateNormal];
     [self.questionsButton setImage:[UIImage imageNamed:@"selected_questions_by_me.png"] forState:UIControlStateNormal];
     
     self.currentTable = @"ugQuestions";
@@ -1622,6 +1620,7 @@
                 cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recommendation_for_you.png"]];
                 
                 cell.text.text = newtext;
+                cell.level.text = [NSString stringWithFormat:@"level %@", currentObject[@"level"] ];
                 
                 //now downloads and saves the images
                 

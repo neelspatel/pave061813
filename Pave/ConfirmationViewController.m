@@ -89,8 +89,6 @@
 
 }
 
-- (IBAction)sendToSide:(id)sender {
-}
 
 - (IBAction)shareQuestion:(id)sender {
     
@@ -104,7 +102,7 @@
     shareParams.caption= @"Friend-powered recommendations.";
     shareParams.picture= [NSURL URLWithString:@"http://getsideapp.com/icon.png"];
     
-    shareParams.description = [NSString stringWithFormat:@"I just asked \"%@\" on Side. What do you think?", currentObject[@"question_text"]];;
+    shareParams.description = [NSString stringWithFormat:@"I just asked \"%@\" on Side. What do you think?", self.questionText];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.questionText forKey:@"text"];
     [Flurry logEvent:@"Question Facebook Timeline" withParameters:dict timed:YES];
@@ -136,8 +134,8 @@
                                  @"name" : shareParams.name,
                                  @"caption" : shareParams.caption,
                                  @"description" : shareParams.description,
-                                 @"picture" : shareParams.picture,
-                                 @"link" : shareParams.link;
+                                 @"picture" : @"http://getsideapp.com/icon.png",
+                                 @"link" : @"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"
                                  };
         
         // Invoke the dialog
@@ -202,10 +200,5 @@
     [mailer setMessageBody:emailBody isHTML:YES];
     [self presentModalViewController:mailer animated:YES];
     
-}
-- (IBAction)shareOnFacebook:(id)sender {
-}
-
-- (IBAction)inviteFriends:(id)sender {
 }
 @end

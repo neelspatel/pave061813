@@ -10,6 +10,7 @@
 #import <AWSRuntime/AWSRuntime.h>
 #import "UIImageView+WebCache.h"
 #import "WebSearchViewController.h"
+#import "ConfirmationViewController.h"
 #import "PaveAPIClient.h"
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
@@ -616,6 +617,11 @@
             
             destViewController.side = @"Right";
         }
+    }
+    else if([segue.identifier isEqualToString:@"finishedSubmitting"]) {
+        ConfirmationViewController *destViewController = segue.destinationViewController;
+        destViewController.questionText = self.question.text;
+
     }
 }
 
