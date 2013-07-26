@@ -28,15 +28,16 @@
     UITabBarItem *tabBarItem4 = [tabBar.items objectAtIndex:3];
     UITabBarItem *tabBarItem5 = [tabBar.items objectAtIndex:4];
     
-    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"profile_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"RIGHT_TEST_PROFILE_UNSELECTED.png"]];
-    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"group_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"group_unselected.png"]];
-    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"home_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"home_unselected.png"]];
-    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"UGC_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"UGC_unselected.png"]];
-    [tabBarItem5 setFinishedSelectedImage:[UIImage imageNamed:@"training_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"training_unselected.png"]];
+    [tabBarItem1 setFinishedSelectedImage:[UIImage imageNamed:@"430profile_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"prof3.png"]];
+    [tabBarItem2 setFinishedSelectedImage:[UIImage imageNamed:@"430group_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"430group_unselected.png"]];
+    [tabBarItem3 setFinishedSelectedImage:[UIImage imageNamed:@"430home_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"430home_unselected.png"]];
+    [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"430UGC_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"430UGC_unselected.png"]];
+    [tabBarItem5 setFinishedSelectedImage:[UIImage imageNamed:@"430training_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"430training_unselected.png"]];
             
-    UIImage* tabBarBackground = [UIImage imageNamed:@"nav_bar.png"];
-    [[UITabBar appearance] setBackgroundImage:tabBarBackground];
+    UIImage* tabBarBackground = [UIImage imageNamed:@"test_nav.png"];
+    //[[UITabBar appearance] setBackgroundImage:tabBarBackground];
     //gets rid of translucent
+    [[UITabBar appearance] setBackgroundImage:[[UIImage alloc] init]];
     [[UITabBar appearance] setSelectionIndicatorImage:[[UIImage alloc] init]];
     
     tabBarItem1.title = @"";
@@ -45,12 +46,16 @@
     tabBarItem4.title = @"";
     tabBarItem5.title = @"";
 
+    /**
+    tabBarItem1.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
+    tabBarItem2.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
+    tabBarItem3.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
+    tabBarItem4.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
+    tabBarItem5.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
+    */
+     
     
-    tabBarItem1.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
-    tabBarItem2.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
-    tabBarItem3.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
-    tabBarItem4.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
-    tabBarItem5.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0);
+
 
     tabBarController.selectedIndex = 2;
     

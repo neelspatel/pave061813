@@ -29,7 +29,6 @@
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl;
 @property (nonatomic, retain) UIRefreshControl *refreshControl;
 
-
 @property (nonatomic, retain)NSArray *paths;
 @property (nonatomic, retain)NSString *dataPath;
 @property (nonatomic, retain)NSMutableDictionary *imageRequests;

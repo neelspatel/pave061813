@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E2068" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11E53" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="4">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
@@ -1345,6 +1345,7 @@
                                             <outlet property="agree" destination="LIq-Lo-FCn" id="U8n-0n-Mb2"/>
                                             <outlet property="disagree" destination="BF5-l1-5RR" id="9L6-4m-49H"/>
                                             <outlet property="leftProduct" destination="cBX-pN-DAx" id="dNc-Nl-ylh"/>
+                                            <outlet property="name" destination="QYN-xG-wEw" id="3rG-gM-kAa"/>
                                             <outlet property="profilePicture" destination="vvV-z9-hLA" id="xdE-sD-1bP"/>
                                             <outlet property="question" destination="nuT-aI-dPm" id="e9J-u3-eaj"/>
                                             <outlet property="rightProduct" destination="v1e-Ek-pL9" id="OTL-g6-7Px"/>
@@ -1410,6 +1411,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="440" id="e0Z-co-Pi0"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="390" type="user" id="ibm-q2-dmV"/>
+                                    <constraint firstAttribute="width" constant="320" id="uKo-X0-oQN"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="UGQuestionsCell" rowHeight="210" id="SEU-YD-00M" customClass="UGQuestionsCell">
@@ -1585,7 +1587,7 @@
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" type="default" id="Tm1-eC-5MK"/>
                             <constraint firstItem="iR7-SC-sRN" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="UcE-Eq-8L7"/>
                             <constraint firstAttribute="trailing" secondItem="wl3-15-fGN" secondAttribute="trailing" constant="10" id="Wq7-y2-8dW"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="a8h-Mw-U7X"/>
+                            <constraint firstItem="p1D-tk-aq2" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="300" id="Z49-gc-QlK"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="top" secondItem="hXL-vU-ovF" secondAttribute="top" type="default" id="b1x-Gr-6g2"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="trailing" secondItem="6pg-Ep-aV0" secondAttribute="trailing" type="default" id="bOv-TT-3VZ"/>
                             <constraint firstAttribute="trailing" secondItem="aE7-au-WHw" secondAttribute="trailing" constant="112" id="bSd-3U-6Q4"/>
@@ -1603,7 +1605,6 @@
                             <constraint firstItem="FhT-Na-l8g" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="oNN-Yz-6gM"/>
                             <constraint firstItem="vif-Og-X60" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="1" id="p0d-va-nuP"/>
                             <constraint firstItem="QVF-Fr-tpq" firstAttribute="bottom" secondItem="vif-Og-X60" secondAttribute="bottom" type="user" id="qUK-5U-EIY"/>
-                            <constraint firstItem="p1D-tk-aq2" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="rEJ-o7-KAT"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="13" id="rg0-hk-SaX"/>
                             <constraint firstItem="Ht9-zW-oln" firstAttribute="top" secondItem="QVF-Fr-tpq" secondAttribute="top" type="default" id="t9o-hB-Wif"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="15" id="uWr-rg-NKt"/>
@@ -3640,6 +3641,7 @@
                 <relationship kind="outlet" name="agree" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="disagree" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="question" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
@@ -3708,7 +3710,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupGameController.h"/>
             <relationships>
                 <relationship kind="action" name="backButtonPushed:"/>
-                <relationship kind="action" name="refresh:"/>
                 <relationship kind="action" name="viewMembers:"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
@@ -3753,6 +3754,7 @@
             <relationships>
                 <relationship kind="action" name="changeTable:"/>
                 <relationship kind="action" name="inviteFriends:"/>
+                <relationship kind="action" name="logout:"/>
                 <relationship kind="action" name="refresh:"/>
                 <relationship kind="action" name="viewAnswers:"/>
                 <relationship kind="action" name="viewInsights:"/>
@@ -3764,6 +3766,8 @@
                 <relationship kind="outlet" name="insightsButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="insightsLoading" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="levelTextField" candidateClass="UITextView"/>
+                <relationship kind="outlet" name="loading" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="logoutButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="name" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="profile" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="questionsButton" candidateClass="UIButton"/>
@@ -3805,11 +3809,13 @@
                 <relationship kind="outlet" name="leftActivityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="leftCheck" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="question" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="rightActivityIndicator" candidateClass="UIActivityIndicatorView"/>
                 <relationship kind="outlet" name="rightCheck" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="rightX" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="TrendingController" superclassName="UIViewController">
@@ -3899,8 +3905,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="dVu-9J-WCR"/>
         <segue reference="ynT-c2-fcI"/>
-        <segue reference="DIQ-Ig-64G"/>
-        <segue reference="l43-7u-TdC"/>
         <segue reference="8LF-7I-z0V"/>
+        <segue reference="l43-7u-TdC"/>
     </inferredMetricsTieBreakers>
 </document>

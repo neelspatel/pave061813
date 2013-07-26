@@ -43,9 +43,14 @@
     self.imageRequests = [[NSMutableDictionary alloc] init];
     self.reloadingFeedObject = NO;
     
+    //clips to bounds
+    self.leftProduct.clipsToBounds = YES;
+    self.rightProduct.clipsToBounds = YES;
+    
     //sets the current number
     self.currentNumber = 0;
     [self reloadData];
+    
 }
 
 - (void) setUpStatusBar

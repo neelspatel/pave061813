@@ -1166,11 +1166,17 @@
     //extra for profile and invite cells
     NSInteger num;
     if(tableView == self.answers)
+    {
         num =  self.answerObjects.count + 1;
+    }
     else if(tableView == self.recs)
+    {
         num =  self.insightObjects.count + 1;
+    }
     else
+    {
         num = self.questionObjects.count + 1;
+    }
     NSLog(@"Number of cells: %d", num);
     return num;
 }
@@ -1311,12 +1317,13 @@
             {
                 if (self.reloadingAnswers || indexPath.row == self.answerObjects.count)
                 {
-                    static NSString *CellIdentifier = @"InviteFriends";
-                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+                    static NSString *CellIdentifier = @"AnswersCell";
+                    AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
                     if (!cell) {
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
                         // More initializations if needed.
                     }
+                    cell.question.text = @"OH hey, at bottom";
                     return cell;
                 }
 
