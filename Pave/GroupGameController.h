@@ -44,5 +44,6 @@
 
 @property (nonatomic, retain) StatusBar *sbar;
 
+- (IBAction)backButtonPushed:(id)sender;
 
 @end

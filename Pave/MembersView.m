@@ -99,6 +99,7 @@
     profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
     [cell.friendProfilePicture setImageWithURL:[NSURL URLWithString:profileURL]
                               placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    cell.friendProfilePicture.clipsToBounds = TRUE;
         
     return cell;
 }
@@ -108,5 +109,7 @@
     GroupMemberCell *current = (GroupMemberCell *) cell;
     [current.friendProfilePicture cancelCurrentImageLoad];
 }
+
+
 
 @end

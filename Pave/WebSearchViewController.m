@@ -100,7 +100,7 @@
     
     [[JSONAPIClient sharedClient] postPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id results) {
         if (results) {
-            NSLog(@"Got image results: %@", results);
+            //NSLog(@"Got image results: %@", results);
             self.results = results;
             [self.collection reloadData];
             [Flurry endTimedEvent:@"Web Image Search" withParameters:eventDict];
@@ -132,15 +132,13 @@
     WebImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"WebImageCell" forIndexPath:indexPath];
     
     [cell.image setImageWithURL:[NSURL URLWithString:[self.results[indexPath.row] objectForKey: @"thumbnailurl"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-    NSLog(@"Current: %@", self.results[indexPath.row]);
+    //NSLog(@"Current: %@", self.results[indexPath.row]);
     
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{       
-    NSLog(@"hello, selected %d", indexPath.row);
-    
+{
      NSString *url = [self.results[indexPath.row] objectForKey: @"thumbnailurl"];
     
     //sets url

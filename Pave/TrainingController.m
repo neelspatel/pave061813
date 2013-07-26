@@ -300,9 +300,9 @@
             //{
             //    [ids addObject:current[@"id"]];
             //}
-            NSLog(@"Just finished getting results: %@", results);
+            //NSLog(@"Just finished getting results: %@", results);
             self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-            NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+            //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
             self.reloadingFeedObject = NO;
 
             [self refreshScreen];

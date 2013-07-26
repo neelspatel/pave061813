@@ -40,6 +40,15 @@
         
     self.title = @"";
     
+    //sets up the name and image
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    //sets your name and profile picture
+    self.name.text = [[defaults objectForKey:@"profile"] objectForKey:@"name"];
+    [self.profilePicture setImageWithURL:[NSURL URLWithString:[[defaults objectForKey:@"profile"] objectForKey:@"pictureURL"]]
+                 placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    self.profilePicture.clipsToBounds = YES;
+    
     //creates S3 logic in the background
     dispatch_async(dispatch_get_main_queue(), ^{
         // Initial the S3 Client.
@@ -68,6 +77,8 @@
         }
     });
     
+    self.leftImage.clipsToBounds = YES;
+    self.rightImage.clipsToBounds = YES;
     
     
     //adds the notification listener
@@ -235,9 +246,8 @@
     
     if ([self.question.text isEqualToString:@""]) {
         self.question.text = @"(tap here to ask your question!)";
-        [self updateCreateButton];
-
     }
+    [self updateCreateButton];
 }
 
 //listen for the notification
@@ -313,6 +323,9 @@
     //sets the current side
     self.currentSide = @"Left";
     
+    //hides keyboard
+    [self.view endEditing:TRUE];
+    
     //now shows the 'add' dialog
     self.addOptions.hidden = FALSE;    
 }
@@ -321,9 +334,13 @@
 - (IBAction)rightAdd:(id)sender {
     //sets the current side
     self.currentSide = @"Right";
+
+    //hides keyboard
+    [self.view endEditing:TRUE];
     
     //now shows the 'add' dialog
-    self.addOptions.hidden = FALSE;    
+    self.addOptions.hidden = FALSE;
+
 }
 
 //cancels from the left side
@@ -361,7 +378,7 @@
     [Flurry logEvent:@"Choose Picture"];
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
+    //imagePicker.allowsEditing = YES;
     [self presentModalViewController:imagePicker animated:YES];
 }
 
@@ -370,7 +387,7 @@
     UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
     imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
     imagePicker.delegate = self;
-    imagePicker.allowsEditing = YES;
+    //imagePicker.allowsEditing = YES;
     
     [self presentModalViewController:imagePicker animated:YES];
 }

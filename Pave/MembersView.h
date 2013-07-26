@@ -15,6 +15,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 -(id) initWithData:(NSDictionary *)data;
-
+- (IBAction)close:(id)sender;
 
 @end
