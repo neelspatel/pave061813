@@ -17,6 +17,7 @@
 - (IBAction)rightTap:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UILabel *question;
+@property (weak, nonatomic) IBOutlet UILabel *level;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet UIImageView *leftProduct;
 @property (weak, nonatomic) IBOutlet UIImageView *rightProduct;
@@ -50,5 +51,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *leftCheck;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *leftActivityIndicator;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *rightActivityIndicator;
+
+- (IBAction)inviteFriends:(id)sender;
+
 
 @end

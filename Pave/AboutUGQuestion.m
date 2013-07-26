@@ -107,6 +107,9 @@
     NSArray * leftFriends = [self.data objectForKey:@"fbFriend1"];
     NSArray * rightFriends = [self.data objectForKey:@"fbFriend2"];
     
+    cell.leftImage.clipsToBounds = YES;
+    cell.rightImage.clipsToBounds = YES;
+    
     NSArray *ids = [[NSUserDefaults standardUserDefaults] objectForKey:@"friends"];
     NSArray *names = [[NSUserDefaults standardUserDefaults] objectForKey:@"names"];
     

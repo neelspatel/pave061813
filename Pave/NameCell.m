@@ -15,6 +15,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        self.leftImage.clipsToBounds = YES;
+        self.rightImage.clipsToBounds = YES;
+        
     }
     return self;
 }

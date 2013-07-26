@@ -25,6 +25,9 @@
 #import "NotificationPopupView.h"
 #import "Flurry.h"
 
+#import <objc/runtime.h>
+
+
 @interface PersonalFeedController ()
 
 @end
@@ -548,6 +551,8 @@
     }        
     else if([self.currentTable isEqualToString:@"ugQuestions"]) {
         UITableView *tableView = self.ugQuestions;
+       
+        NSLog(@"CLicked in ugquestions");
         
         NSSet *touches = [event allTouches];
         UITouch *touch = [touches anyObject];
@@ -562,11 +567,70 @@
         CGPoint pointInCell = [touch locationInView:cell];
         
         NSDictionary *currentObject = [self.questionObjects objectAtIndex:indexPath.row];
-        NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);                
+        NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
         
         if (CGRectContainsPoint(cell.detail.frame, pointInCell)) {
             self.popup = [[AboutUGQuestion alloc] initWithData:currentObject];
             [self.view addSubview:[self.popup view]];            
+        }
+        else if (CGRectContainsPoint(cell.share.frame, pointInCell)) {
+            //share on timeline
+           
+            AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+            FBSession* session = delegate.session;
+            
+            NSLog(@"Session in post to fb is %@", session);
+            
+            // Prepare the native share dialog parameters
+            FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
+            shareParams.link = [NSURL URLWithString:@"https://getsideapp.com"];
+            shareParams.name = @"Side";
+            shareParams.caption= @"Friend-powered recommendations.";
+            shareParams.picture= [NSURL URLWithString:@"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"];
+            shareParams.description = [NSString stringWithFormat:@"I just asked \"%@\" on Side. What do you think?", currentObject[@"question_text"]];
+            
+            if ([FBDialogs canPresentShareDialogWithParams:shareParams]){
+                
+                [FBDialogs presentShareDialogWithParams:shareParams
+                                            clientState:nil
+                                                handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
+                                                    if(error) {
+                                                        NSLog(@"Error publishing story.");
+                                                    } else if (results[@"completionGesture"] && [results[@"completionGesture"] isEqualToString:@"cancel"]) {
+                                                        NSLog(@"User canceled story publishing.");
+                                                    } else {
+                                                        NSLog(@"Story published.");
+                                                    }
+                                                }];
+                
+            }else {
+                
+                // Prepare the web dialog parameters
+                NSDictionary *params = @{
+                                         @"name" : shareParams.name,
+                                         @"caption" : shareParams.caption,
+                                         @"description" : shareParams.description,
+                                         @"picture" : @"https://getsideapp.com/icon.png",
+                                         @"link" : @"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"
+                                         };
+                
+                // Invoke the dialog
+                [FBWebDialogs presentFeedDialogModallyWithSession:nil
+                                                       parameters:params
+                                                          handler:
+                 ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                     if (error) {
+                         NSLog(@"Error publishing story.");
+                     } else {
+                         if (result == FBWebDialogResultDialogNotCompleted) {
+                             NSLog(@"User canceled story publishing.");
+                         } else {
+                             NSLog(@"Story published.");
+                         }
+                     }}];
+            }
+
+            
         }
         
     }
@@ -727,7 +791,7 @@
     NSMutableDictionary* params =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
      [topFriends componentsJoinedByString:@","], @"suggestions", nil];
     
-    [Flurry logEvent:@"Profle Invite Friends" withParameters:nil timed:YES];
+    [Flurry logEvent:@"Profile Invite Friends" withParameters:nil timed:YES];
     
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
       message:[NSString stringWithFormat:@"Get Side, the hottest new social discovery app!"]
@@ -1728,8 +1792,30 @@
                  }];
                 cell.rightProduct.clipsToBounds = YES;
                 
+                //shows and hides the labels depending on count
+                if([currentObject[@"product_1_count"] integerValue]== 0 && [currentObject[@"product_2_count"] integerValue]== 0)
+                {
+                    NSLog(@"Hiding");
+                    cell.leftDetail.hidden = YES;
+                    cell.rightDetail.hidden = YES;
+                    cell.leftNumber.hidden = YES;
+                    cell.rightNumber.hidden = YES;                                        
+                }
+                else
+                {
+                    cell.leftDetail.hidden = NO;
+                    cell.rightDetail.hidden = NO;
+                    cell.leftNumber.hidden = NO;
+                    cell.rightNumber.hidden = NO;
+                    
+                    cell.leftNumber.text = [currentObject[@"product_1_count"] stringValue];
+                    cell.rightNumber.text = [currentObject[@"product_2_count"] stringValue];
+                    
+                }                
+                
                 //touch listener
                 [cell.detail addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];
+                [cell.share addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];
                 
                 return cell;
             }

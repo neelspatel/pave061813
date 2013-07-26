@@ -41,4 +41,7 @@
 @property (nonatomic, retain) StatusBar *sbar;
 
 @property (nonatomic, retain) UIRefreshControl *refreshControl;
+
+- (IBAction)inviteFriends:(id)sender;
+
 @end

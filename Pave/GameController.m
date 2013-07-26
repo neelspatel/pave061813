@@ -1063,4 +1063,37 @@
     [self dismissModalViewControllerAnimated:YES];
 }
 
+- (IBAction)inviteFriends:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *topFriends = [[defaults objectForKey:@"friends"]subarrayWithRange:NSMakeRange(0, 10)];
+    
+    NSMutableDictionary* params =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                     [topFriends componentsJoinedByString:@","], @"suggestions", nil];
+    
+    [Flurry logEvent:@"Game Invite Friends" withParameters:nil timed:YES];
+    
+    [FBWebDialogs presentRequestsDialogModallyWithSession:nil
+                                                  message:[NSString stringWithFormat:@"Get Side, the hottest new social discovery app!"]
+                                                    title:nil
+                                               parameters:params
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      if (error) {
+                                                          // Case A: Error launching the dialog or sending request.
+                                                          [Flurry endTimedEvent:@"Game Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Error"]];
+                                                          NSLog(@"Error sending request.");
+                                                      } else {
+                                                          if (result == FBWebDialogResultDialogNotCompleted) {
+                                                              // Case B: User clicked the "x" icon
+                                                              [Flurry endTimedEvent:@"Game Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Cancelled"]];
+                                                              
+                                                              NSLog(@"User canceled request.");
+                                                          } else {
+                                                              [Flurry endTimedEvent:@"Game Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Completed"]];
+                                                              
+                                                              NSLog(@"Request Sent.");
+                                                          }
+                                                      }}];
+    
+}
+
 @end

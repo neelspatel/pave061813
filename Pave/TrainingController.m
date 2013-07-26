@@ -14,6 +14,8 @@
 #import "StatusBar.h"
 #import "NotificationPopupView.h"
 #import "Flurry.h"
+#import <FacebookSDK/FacebookSDK.h>
+
 
 @interface TrainingController ()
 
@@ -46,6 +48,7 @@
     //clips to bounds
     self.leftProduct.clipsToBounds = YES;
     self.rightProduct.clipsToBounds = YES;
+    self.profilePicture.clipsToBounds = YES;
     
     //sets the current number
     self.currentNumber = 0;
@@ -74,6 +77,9 @@
     NSLog(@"View did appear in training");
     //[self reloadData];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    [self.profilePicture setImageWithURL:[NSURL URLWithString:[[defaults objectForKey:@"profile"] objectForKey:@"pictureURL"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"] completed:nil]; 
+    
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[defaults objectForKey:@"id"] , @"user_id", nil];
     [Flurry logEvent:@"Sprint Time" withParameters:params timed:YES];
     [super viewDidDisappear:animated];
@@ -226,6 +232,17 @@
         NSLog(@"We have the data");
         NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:self.currentNumber];
         
+        //updates the levels
+        //the reason i do the 'getting objects from nsuserdefaults' twice is so that we don't have to assign it to a specific type of object (like NSNumber or NSString, so the format is more flexible)
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"level"])
+        {
+            self.level.text = [NSString stringWithFormat:@"level %@", [[NSUserDefaults standardUserDefaults] objectForKey:@"level"]];
+        }
+        else
+        {
+            self.level.text = @"level 1";
+        }
+        
         self.question.text = currentObject[@"questionText"];
         //self.question.text = [NSString stringWithFormat:@"%d out of %d", self.currentNumber, self.feedObjects.count];
         self.leftProductId = [(currentObject[@"product1"]) integerValue];
@@ -376,6 +393,39 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)inviteFriends:(id)sender {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *topFriends = [[defaults objectForKey:@"friends"]subarrayWithRange:NSMakeRange(0, 10)];
+    
+    NSMutableDictionary* params =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                     [topFriends componentsJoinedByString:@","], @"suggestions", nil];
+    
+    [Flurry logEvent:@"Training Invite Friends" withParameters:nil timed:YES];
+    
+    [FBWebDialogs presentRequestsDialogModallyWithSession:nil
+                                                  message:[NSString stringWithFormat:@"Get Side, the hottest new social discovery app!"]
+                                                    title:nil
+                                               parameters:params
+                                                  handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                      if (error) {
+                                                          // Case A: Error launching the dialog or sending request.
+                                                          [Flurry endTimedEvent:@"Training Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Error"]];
+                                                          NSLog(@"Error sending request.");
+                                                      } else {
+                                                          if (result == FBWebDialogResultDialogNotCompleted) {
+                                                              // Case B: User clicked the "x" icon
+                                                              [Flurry endTimedEvent:@"Training Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Cancelled"]];
+                                                              
+                                                              NSLog(@"User canceled request.");
+                                                          } else {
+                                                              [Flurry endTimedEvent:@"Training Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Completed"]];
+                                                              
+                                                              NSLog(@"Request Sent.");
+                                                          }
+                                                      }}];
+    
 }
 
 @end
