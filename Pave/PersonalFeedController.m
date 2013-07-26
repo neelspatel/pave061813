@@ -583,10 +583,10 @@
             
             // Prepare the native share dialog parameters
             FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
-            shareParams.link = [NSURL URLWithString:@"https://getsideapp.com"];
+            shareParams.link = [NSURL URLWithString:@"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"];
             shareParams.name = @"Side";
             shareParams.caption= @"Friend-powered recommendations.";
-            shareParams.picture= [NSURL URLWithString:@"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"];
+            shareParams.picture= [NSURL URLWithString:@"http://getsideapp.com/icon.png"];
             shareParams.description = [NSString stringWithFormat:@"I just asked \"%@\" on Side. What do you think?", currentObject[@"question_text"]];
             
             if ([FBDialogs canPresentShareDialogWithParams:shareParams]){
