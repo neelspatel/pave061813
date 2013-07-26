@@ -34,7 +34,6 @@
     [tabBarItem4 setFinishedSelectedImage:[UIImage imageNamed:@"final_UGC_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"final_UGC_unselected.png"]];
     [tabBarItem5 setFinishedSelectedImage:[UIImage imageNamed:@"final_sprint_selected.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"final_sprint_unselected.png"]];
             
-    UIImage* tabBarBackground = [UIImage imageNamed:@"test_nav.png"];
     //[[UITabBar appearance] setBackgroundImage:tabBarBackground];
     //gets rid of translucent
     [[UITabBar appearance] setBackgroundImage:[[UIImage alloc] init]];

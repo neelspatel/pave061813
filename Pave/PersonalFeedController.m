@@ -1178,6 +1178,7 @@
         num = self.questionObjects.count + 1;
     }
     NSLog(@"Number of cells: %d", num);
+
     return num;
 }
 
@@ -1317,6 +1318,8 @@
             {
                 if (self.reloadingAnswers || indexPath.row == self.answerObjects.count)
                 {
+                    NSLog(@"Putting something in for bototm cell");
+                    
                     static NSString *CellIdentifier = @"AnswersCell";
                     AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
                     if (!cell) {
@@ -1324,9 +1327,7 @@
                         // More initializations if needed.
                     }
                     
-                    for (UIView *view in [cell subviews]) {
-                        view.hidden = YES;
-                    }
+                    
                     
                     cell.question.hidden = NO;                                                          
                     
@@ -1349,7 +1350,7 @@
                 NSString *newtext = currentObject[@"question"];                
                 
                 //sets the background
-                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"about_you_background@2x.png"]];
+                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"about_you_background.png"]];
                 
                 cell.question.text = newtext;
                 
@@ -1554,7 +1555,7 @@
                 NSString *newtext = currentObject[@"text"];
                 
                 //sets the background
-                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recommendation_for_you@2x.png"]];
+                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recommendation_for_you.png"]];
                 
                 cell.text.text = newtext;
                 
@@ -1646,7 +1647,7 @@
                 NSString *newtext = currentObject[@"question_text"];
                 
                 //sets the background
-                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UGC_profile_background@2x.png"]];
+                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"UGC_profile_background.png"]];
                 
                 cell.question.text = newtext;
                 
