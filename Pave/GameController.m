@@ -284,7 +284,7 @@
 - (void) displayAsRead:(FeedObjectCell *) cell: (BOOL) left
 {    
     
-    [cell.facebookButton setHidden:FALSE];
+    [cell.facebookButton setHidden:FALSE];    
     
     if(left == TRUE)
     {
@@ -333,9 +333,7 @@
 }
 
 - (void) displayAsAnon:(FeedObjectCell *) cell: (BOOL) anon
-{
-    
-    
+{    
     if(anon == TRUE)
     {
         cell.onOffButton.image = [UIImage imageNamed:@"make_public.png"];
@@ -574,24 +572,28 @@
             
         }
         else if (CGRectContainsPoint(cell.onOffButton.frame, pointInCell)) {
-            ////NSLog(@"Selected to switch anonymous");
-            if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])//if we're anonymous
-            {
-                ////NSLog(@"Turning anon off for %d", indexPath.row);
-                //saves it as public - false means public
-                [self.anonStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
-                
-                [self displayAsAnon:cell :FALSE];
-                                
-            }
-            else
-            {
-                ////NSLog(@"Turning anon on for %d", indexPath.row);
-                //saves it as anon - true means anon
-                [self.anonStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
-                
-                [self displayAsAnon:cell :TRUE];
-                
+            //only if it hasn't been answered yet
+            if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] == nil)
+            {                
+                ////NSLog(@"Selected to switch anonymous");
+                if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])//if we're anonymous
+                {
+                    ////NSLog(@"Turning anon off for %d", indexPath.row);
+                    //saves it as public - false means public
+                    [self.anonStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                    
+                    [self displayAsAnon:cell :FALSE];
+                                    
+                }
+                else
+                {
+                    ////NSLog(@"Turning anon on for %d", indexPath.row);
+                    //saves it as anon - true means anon
+                    [self.anonStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
+                    
+                    [self displayAsAnon:cell :TRUE];
+                    
+                }
             }
             
         }
@@ -779,7 +781,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{    
     if(self.reloadingFeedObject)
     {
        NSLog(@"Still reloading");
@@ -793,7 +795,7 @@
         static NSString *CellIdentifier = @"Cell";
         FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
-
+        
         ////NSLog(@"***REQUESTED %@ ***", currentObject);
         
         // Configure the cell...
@@ -814,7 +816,13 @@
         //shows the option to post a notification
         [cell.facebookButton setHidden:TRUE];
         
-        
+        //sets the name
+        NSString *name = currentObject[@"name"];
+        NSArray *wordsAndEmptyStrings = [name componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        NSArray *words = [wordsAndEmptyStrings filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
+        NSString * notificationTitle = [@"send notification to " stringByAppendingString:words[0]];
+        notificationTitle = [notificationTitle stringByAppendingString:@"  "];
+        [cell.facebookButton setTitle:notificationTitle forState:UIControlStateNormal];
         
         cell.question.text = currentObject[@"questionText"];
         cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1Count"]];
