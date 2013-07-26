@@ -33,7 +33,7 @@
     self.offCircle = [UIImage imageNamed: @"gray_circle.png"];
     self.line = [UIImage imageNamed:@"progress_line.png"];
     self.offBulb = [UIImage imageNamed:@"lightbulb_off.png"];
-    self.onBulb = [UIImage imageNamed:@"lightbulb_on.png"];
+    self.onBulb = [UIImage imageNamed:@"lightbulb_selected_yellow.png"];
     
     [self resetBar];
     

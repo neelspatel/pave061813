@@ -1416,6 +1416,15 @@
                 
                 cell.question.text = newtext;
                 
+                if(currentObject[@"name"])
+                {
+                    cell.name.text = [NSString stringWithFormat:@"%@ answered:", currentObject[@"name"]];
+                }
+                else
+                {
+                    cell.name.text = [NSString stringWithFormat:@"%@ answered:", @"Your friend"];
+                }
+                
                 //now downloads and saves the images
                 NSString *currentID = [NSString stringWithFormat:@"%@", currentObject[@"friend"]];
                 //NSString *currentID = @"4";

@@ -59,6 +59,29 @@
     [self.leftImage setImageWithURL:[NSURL URLWithString: self.data[@"product_1_url"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
         
     [self.rightImage setImageWithURL:[NSURL URLWithString: self.data[@"product_2_url"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
+    
+    //shows and hides the details and numbers
+    //shows and hides the labels depending on count
+    if([self.data[@"product_1_count"] integerValue]== 0 && [self.data[@"product_2_count"] integerValue]== 0)
+    {
+        NSLog(@"Hiding");
+        self.leftDetail.hidden = YES;
+        self.rightDetail.hidden = YES;
+        self.leftNumber.hidden = YES;
+        self.rightNumber.hidden = YES;
+    }
+    else
+    {
+        self.leftDetail.hidden = NO;
+        self.rightDetail.hidden = NO;
+        self.leftNumber.hidden = NO;
+        self.rightNumber.hidden = NO;
+        
+        self.leftNumber.text = [self.data[@"product_1_count"] stringValue];
+        self.rightNumber.text = [self.data[@"product_2_count"] stringValue];
+        
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning

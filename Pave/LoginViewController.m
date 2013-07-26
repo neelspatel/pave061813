@@ -349,6 +349,55 @@
     });
 }
 
+-(void)createUser:(FBSession *)session
+{
+    
+    self.currentSession = session;
+    NSString* accessToken = session.accessTokenData.accessToken;
+    NSLog(@"Finished login");
+    
+    NSLog(@"Accesstoken: %@", accessToken);
+    
+    //saves and updates data
+    [self setupFacebookInformation];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: accessToken, @"access_token", nil];
+    
+    NSString *path = @"/data/createuser";
+    [[PaveAPIClient sharedClient] postPath:path
+                                parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
+                                    NSLog(@"created user");
+                                    // NSLog(@"JSON for create user: %@", JSON);
+                                    NSDictionary *results = JSON;
+                                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                                    [defaults setObject:[results objectForKey:@"friends"] forKey:@"friends"];
+                                    [defaults setObject:[results objectForKey:@"genders"] forKey:@"genders"];
+                                    [defaults setObject:[results objectForKey:@"names"] forKey:@"names"];
+                                    [defaults setObject:[results objectForKey:@"top_friends"] forKey:@"top_friends"];
+                                    
+                                    [defaults synchronize];
+                                    
+                                    self.createdUser = YES;
+                                    
+                                    [self checkToContinueToGameFeed];
+                                    
+                                    //self.instructionButton1.hidden = FALSE;
+                                    
+                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    NSLog(@"error creating user %@", error);
+                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Well, this is awkward..." message:@"There was an error logging you in" delegate:self cancelButtonTitle:@"Try Again" otherButtonTitles:nil];
+                                    [alert show];
+                                    
+                                }];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex == 0) {
+        [self createUser:self.currentSession];
+    }
+}
+
+
 
 - (IBAction)loginButtonTouch:(id)sender {
     
@@ -385,38 +434,12 @@
             NSLog(@"Session is in loginButtonTouch: %@", session);
             if (status == FBSessionStateOpen) {
                 [FBSession setActiveSession:session];
-                NSString* accessToken = session.accessTokenData.accessToken;
-                NSLog(@"Finished login");
-                
-                NSLog(@"Accesstoken: %@", accessToken);
-                                
+                NSString* accessToken = session.accessTokenData.accessToken;                                
                 //saves and updates data
                 [self setupFacebookInformation];
-                NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: accessToken, @"access_token", nil];
-
-                [[PaveAPIClient sharedClient] postPath:@"/data/createuser"
-                                            parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"created user");
-                                               // NSLog(@"JSON for create user: %@", JSON);
-                                                NSDictionary *results = JSON;
-                                                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                                [defaults setObject:[results objectForKey:@"friends"] forKey:@"friends"];
-                                                [defaults setObject:[results objectForKey:@"genders"] forKey:@"genders"];
-                                                [defaults setObject:[results objectForKey:@"names"] forKey:@"names"];
-                                                [defaults setObject:[results objectForKey:@"top_friends"] forKey:@"top_friends"];
-
-                                                [defaults synchronize];
-                                                
-                                                self.createdUser = YES;
-                                                
-                                                [self checkToContinueToGameFeed];
-
-                                                //self.instructionButton1.hidden = FALSE;
-                                                
-                                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error creating user %@", error);
-                                            }];
-
+                
+                [self createUser: session];
+                
                 //hides elements on screen
                 self.loginButton.hidden = TRUE;
                 self.dividingBar.hidden = TRUE;

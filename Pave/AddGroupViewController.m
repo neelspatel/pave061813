@@ -314,7 +314,7 @@
             groups = [[NSMutableArray alloc] init];
         }
         
-        [groups addObject:currentGroup];
+        [groups insertObject:currentGroup atIndex:0];
         NSLog(@"Groups %@", groups);
         [prefs setObject:groups forKey:@"groups"];
         [prefs synchronize];

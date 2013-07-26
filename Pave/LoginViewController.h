@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <FacebookSDK/FacebookSDK.h>
 
 @interface LoginViewController : UIViewController
 - (IBAction)loginButtonTouch:(id)sender;
@@ -28,5 +29,8 @@
 
 @property (nonatomic, assign) BOOL tutorialComplete;
 @property (nonatomic, assign) BOOL createdUser;
+
+@property FBSession *currentSession;
+
 
 @end

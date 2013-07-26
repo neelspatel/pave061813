@@ -192,6 +192,26 @@
                                     
                                     NSLog(@"successfully created question");
                                     [Flurry endTimedEvent:@"UG Upload Time" withParameters:nil];
+                                    
+                                    //clears old info
+                                    self.leftCancelButton.hidden = TRUE;
+                                    self.leftAddButton.hidden = FALSE;
+                                    [self.leftImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
+                                    
+                                    self.leftURL = @"";
+                                    self.leftURLView.text = @"";
+                                    
+                                    self.rightCancelButton.hidden = TRUE;
+                                    self.rightAddButton.hidden = FALSE;
+                                    [self.rightImage setImage:[UIImage imageNamed: @"unselected_pic.png"]];
+                                    
+                                    self.rightURL = @"";
+                                    self.rightURLView.text = @"";
+                                    
+                                    self.question.text = @"(tap here to ask your question!)";
+                                    
+                                    [self updateCreateButton];
+                                    
                                     [self performSegueWithIdentifier:@"finishedSubmitting" sender:self];
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     //hides

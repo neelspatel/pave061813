@@ -589,10 +589,13 @@
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                NSLog(@"error getting feed objects from database %@", error);
-                                               self.reloadingFeedObject = NO;
-                                               //shows the alert
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
-                                               [alert show];
+                                               if(error.code != -999)
+                                               {
+                                                   self.reloadingFeedObject = NO;
+                                                   //shows the alert
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                                   [alert show];
+                                               }
                                            }];
         }
     });

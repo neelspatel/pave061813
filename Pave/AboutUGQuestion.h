@@ -13,6 +13,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 @property (weak, nonatomic) IBOutlet UIImageView *leftImage;
 @property (weak, nonatomic) IBOutlet UIImageView *rightImage;
+@property (weak, nonatomic) IBOutlet UIImageView *leftDetail;
+@property (weak, nonatomic) IBOutlet UIImageView *rightDetail;
+@property (weak, nonatomic) IBOutlet UILabel *leftNumber;
+@property (weak, nonatomic) IBOutlet UILabel *rightNumber;
 @property (weak, nonatomic) IBOutlet UILabel *question;
 @property (nonatomic, retain) NSDictionary *data; 
 

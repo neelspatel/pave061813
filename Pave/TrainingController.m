@@ -250,7 +250,7 @@
         self.questionId = [(currentObject[@"currentQuestion"]) integerValue];
         
         self.leftProduct.userInteractionEnabled = NO;
-        self.rightProduct.userInteractionEnabled = YES;
+        self.rightProduct.userInteractionEnabled = NO;
         [self.leftActivityIndicator startAnimating];
         [self.rightActivityIndicator startAnimating];
 
