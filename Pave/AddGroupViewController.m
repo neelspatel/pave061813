@@ -10,7 +10,6 @@
 #import "AddFriendCell.h"
 #import "UIImageView+WebCache.h"
 #import "GroupGameController.h"
-#import "AppDelegate.h"
 
 @interface AddGroupViewController ()
 
@@ -71,6 +70,7 @@
 
 }
 
+<<<<<<< HEAD
 -(void) viewWillAppear:(BOOL)animated
 {
     //
@@ -86,6 +86,8 @@
     [super viewDidDisappear:animated];
 }
 
+=======
+>>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

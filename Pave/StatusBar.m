@@ -122,7 +122,10 @@
 // function to call to draw the status bar to the correct
 -(void) redrawBar
 {
+<<<<<<< HEAD
     //NSLog(@"About to redraw the bar");
+=======
+>>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.statusScore = delegate.currentStatusScore;
     
@@ -171,7 +174,6 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
     }
 */
-    
 }
 
 -(void) doneLoading

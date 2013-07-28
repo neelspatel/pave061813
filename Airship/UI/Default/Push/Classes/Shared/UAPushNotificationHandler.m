@@ -125,9 +125,11 @@
 
 -(void)refreshLocalNotifications
 {
+<<<<<<< HEAD
     //NSLog(@"Refreshing from remote");
+=======
+>>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    // reload all of the notifications
-    [delegate refreshNotificationsFromPushNotification];
+    // reload all of hte notifications
 }
 @end

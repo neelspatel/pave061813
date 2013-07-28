@@ -22,14 +22,8 @@
 
 @property (nonatomic, assign) BOOL notificationPopupIsOpen;
 @property (nonatomic, assign) BOOL firstLaunch;
-@property (nonatomic, assign) BOOL inGroup;
-
 
 -(void) handleNotification:(NSDictionary *) notification;
 -(BOOL)updatePushNotifiactionAlias;
-
--(void)nowInGroup;
--(void)leavingGroup;
--(void) refreshNotificationsFromPushNotification;
 
 @end

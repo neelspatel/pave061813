@@ -440,8 +440,13 @@
                 [self setupFacebookInformation];
                 
                 // facebook ID should be stored at this point
+<<<<<<< HEAD
                 AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication];
                 [self updatePushNotifiactionAlias];
+=======
+                AppDelegate *delegate = [UIApplication sharedApplication];
+                [delegate updatePushNotifiactionAlias];
+>>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
                 
                 [self createUser: session];
                 

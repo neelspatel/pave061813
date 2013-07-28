@@ -273,15 +273,15 @@
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     switch (index) {
-        case 0:
+        case 1:
             [defaults setInteger:count forKey:@"num_answers"];
             [self.badge_answers setValue: count];
             break;
-        case 1:
+        case 2:
             [defaults setInteger:count forKey:@"num_recs"];
             [self.badge_recs setValue: count];
             break;
-        case 2:
+        case 3:
             [defaults setInteger:count forKey:@"num_ug_answers"];
             [self.badge_ug_answers setValue: count];
             break;
@@ -664,7 +664,7 @@
 
 - (void) clearOldRequests
 {
-    
+ 
     if([self.currentTable isEqualToString:@"answers"])
     {
         NSString *path = @"/data/getallfeedobjects/";
@@ -702,7 +702,7 @@
     
     self.reloadingFeedObject = YES;
     self.reloadingAnswers = YES;
-    [self setBadgeForIndex:0 withCount:0];
+    [self setBadgeForIndex:1 withCount:0];
 
     //change the button
     [self.answersButton setImage:[UIImage imageNamed:@"selected_answers_about_me.png"] forState:UIControlStateNormal];
@@ -722,7 +722,7 @@
 
     self.reloadingFeedObject = YES;
     self.reloadingInsights = YES;
-    [self setBadgeForIndex:1 withCount:0];
+    [self setBadgeForIndex:2 withCount:0];
 
     //change the button
     [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me.png"] forState:UIControlStateNormal];
@@ -744,7 +744,7 @@
 
     self.reloadingFeedObject = YES;
     self.reloadingUGAnswerObjects = YES;
-    [self setBadgeForIndex:2 withCount:0];
+    [self setBadgeForIndex:3 withCount:0];
 
     //change the button
     [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me.png"] forState:UIControlStateNormal];

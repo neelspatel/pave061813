@@ -39,8 +39,6 @@
         [self handleNotification:tmpDic];
     }
     
-    self.inGroup = NO;
-    
     //self.didCompleteProfileInformation = YES;
     // Assign tab bar item with titles
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
@@ -114,11 +112,12 @@
     
     // Override point for customization after application launch.
     
+<<<<<<< HEAD
     ////NSLog(@"About to switch to group");
+=======
+    NSLog(@"About to switch to group");
+>>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
     //[self switchToProfileWithActive:@"questions"];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nowInGroup) name:@"enteringGroup" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(leavingGroup) name:@"leavingGroup" object:nil];
     return YES;
     
 }
@@ -145,7 +144,7 @@
 -(void)switchToGameFeed
 {
     [self.tabBarController setSelectedIndex:2];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getfeedObject" object:nil];
 }
 
 -(void)switchToGroups
@@ -225,19 +224,25 @@
                         //NSLog(@"Status score is null");
                         status_score = 0;
                     }
-                    
                     if (self.currentStatusScore != status_score)
                     {
                         ////NSLog(@"ABOUT TO UPDATE STATUS SCORE");
                         self.currentStatusScore = status_score;
                         NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
+<<<<<<< HEAD
 
                         if (!self.inGroup)
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
+=======
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
+>>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
                     }
                     
+                    self.currentStatusScore = 30;
+                    
+                    
                     // broadcast notification to everyone
-                    if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen) && (!self.inGroup))
+                    if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen))
                     {
                         //NSLog(@"Notification is coming up!");
                         self.notificationPopupIsOpen = YES;
@@ -246,7 +251,7 @@
                     {
                         //NSLog(@"Notification is not ready");
                     }
-                    
+
                     NSInteger old_recs = [defaults integerForKey:@"num_recs"];
                     if (!old_recs)
                         old_recs = 0;
@@ -294,6 +299,7 @@
     }
 }
 
+<<<<<<< HEAD
 -(void)nowInGroup
 {
     //NSLog(@"now in group");
@@ -304,6 +310,8 @@
     //NSLog(@"Leaving group");
     self.inGroup = NO;
 }
+=======
+>>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
 
 -(void) handleNotification:(NSDictionary *) notification
 {
@@ -401,6 +409,7 @@
 }
 
 
+<<<<<<< HEAD
 -(void) refreshNotificationsFromPushNotification
 {
     if(self.session.state == FBSessionStateOpen)
@@ -509,4 +518,6 @@
 
 }
 
+=======
+>>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
 @end
