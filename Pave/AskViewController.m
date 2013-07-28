@@ -93,6 +93,7 @@
     self.addOptions.hidden = YES;
     
     //updates create button
+    self.currentlyCreating = NO;
     [self updateCreateButton];
 }
 
@@ -106,6 +107,7 @@
 {
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];
+    self.currentlyCreating = NO;
     [super viewWillAppear:animated];
 }
 
@@ -170,6 +172,8 @@
 {
     NSLog(@"About to submit now");
     
+    self.currentlyCreating = YES;
+    
     NSString *path = @"createugquestion/";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
@@ -210,9 +214,10 @@
                                     
                                     self.question.text = @"(tap here to ask your question!)";
                                     
+                                    self.currentlyCreating = NO;
                                     [self updateCreateButton];
                                     
-                                    [self performSegueWithIdentifier:@"finishedSubmitting" sender:self];
+                                    [self performSegueWithIdentifier:@"finishedSubmitting" sender:self];                                    
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     //hides
                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -223,6 +228,7 @@
                                     [alert show];
                                     
                                     //reenables create button since there was an error
+                                    self.currentlyCreating = NO;                                    
                                     [self.createButton setImage:[UIImage imageNamed:@"create_selected.png"] forState:UIControlStateNormal];
                                     [self.createButton setEnabled:YES];
                                 }];
@@ -325,18 +331,21 @@
 
 - (void) updateCreateButton
 {
-    if(self.leftURL && self.rightURL &&
-       !([self.leftURL isEqualToString:@""]) && !([self.rightURL isEqualToString:@""]) &&
-       !([self.question.text isEqualToString:@""] || [self.question.text isEqualToString:@"(tap here to ask your question!)"]))
-    {
-        NSLog(@"Ready to create if you want to");
-        [self.createButton setImage:[UIImage imageNamed:@"create_selected.png"] forState:UIControlStateNormal];
-        [self.createButton setEnabled:YES];
-    }
-    else
-    {
-        [self.createButton setImage:[UIImage imageNamed:@"create_unselected.png"] forState:UIControlStateNormal];
-        [self.createButton setEnabled:NO];
+    if(!self.currentlyCreating)
+    {        
+        if(self.leftURL && self.rightURL &&
+           !([self.leftURL isEqualToString:@""]) && !([self.rightURL isEqualToString:@""]) &&
+           !([self.question.text isEqualToString:@""] || [self.question.text isEqualToString:@"(tap here to ask your question!)"]))
+        {
+            NSLog(@"Ready to create if you want to");
+            [self.createButton setImage:[UIImage imageNamed:@"create_selected.png"] forState:UIControlStateNormal];
+            [self.createButton setEnabled:YES];
+        }
+        else
+        {
+            [self.createButton setImage:[UIImage imageNamed:@"create_unselected.png"] forState:UIControlStateNormal];
+            [self.createButton setEnabled:NO];
+        }
     }
 }
 

@@ -39,8 +39,8 @@
          endingColumnNumber = "9223372036854775807"
          startingLineNumber = "242"
          endingLineNumber = "242"
-         landmarkName = "@implementation LoginViewController"
-         landmarkType = "3">
+         landmarkName = "-finishIntro"
+         landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Pave/PersonalFeedController.m"
-         timestampString = "396483950.390672"
+         timestampString = "396695937.37911"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1069"
-         endingLineNumber = "1069"
+         startingLineNumber = "1144"
+         endingLineNumber = "1144"
          landmarkName = "-getFeedObjectsFromPull"
          landmarkType = "5">
       </FileBreakpoint>

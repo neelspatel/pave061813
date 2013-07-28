@@ -51,6 +51,7 @@
 -(void) viewWillDisappear:(BOOL)animated
 {
     [Flurry endTimedEvent:@"Web Search Time" withParameters:nil];
+    [super viewWillDisappear:animated];
 
 }
 

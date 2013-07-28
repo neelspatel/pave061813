@@ -418,7 +418,7 @@
         [FBSession.activeSession close];
         [FBSession setActiveSession:nil];
         
-        [delegate setSession:[[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil]];
+        [delegate setSession:[[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:@"app" tokenCacheStrategy:nil]];
         session = [delegate session];        
     }
     
@@ -427,7 +427,7 @@
     
     NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
 
-    [delegate setSession:[[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil]];
+    [delegate setSession:[[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:@"app" tokenCacheStrategy:nil]];
     session = [delegate session];
 
         [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {

@@ -52,7 +52,10 @@
     
     //sets the current number
     self.currentNumber = 0;
-    [self reloadData];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self reloadData];
+    });
     
 }
 
@@ -82,7 +85,7 @@
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:[defaults objectForKey:@"id"] , @"user_id", nil];
     [Flurry logEvent:@"Sprint Time" withParameters:params timed:YES];
-    [super viewDidDisappear:animated];
+    [super viewDidAppear:animated];
 }
 
 -(void) viewWillDisappear:(BOOL) animated

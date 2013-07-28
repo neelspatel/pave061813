@@ -60,4 +60,6 @@
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *leftSpinner;
 @property (nonatomic, retain) UIActivityIndicatorView *rightSpinner;
 
+@property (nonatomic, assign) BOOL currentlyCreating;
+
 @end
