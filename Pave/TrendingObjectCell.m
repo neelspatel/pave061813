@@ -38,7 +38,7 @@
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     
-    NSLog(@"Session in post to fb is %@", session);
+    //NSLog(@"Session in post to fb is %@", session);
         
     // Prepare the native share dialog parameters
     FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
@@ -55,11 +55,11 @@
                                     clientState:nil
                                         handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                             if(error) {
-                                                NSLog(@"Error publishing story.");
+                                                //NSLog(@"Error publishing story.");
                                             } else if (results[@"completionGesture"] && [results[@"completionGesture"] isEqualToString:@"cancel"]) {
-                                                NSLog(@"User canceled story publishing.");
+                                                //NSLog(@"User canceled story publishing.");
                                             } else {
-                                                NSLog(@"Story published.");
+                                                //NSLog(@"Story published.");
                                             }
                                         }];
         
@@ -80,12 +80,12 @@
                                                   handler:
          ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
              if (error) {
-                 NSLog(@"Error publishing story.");
+                 //NSLog(@"Error publishing story.");
              } else {
                  if (result == FBWebDialogResultDialogNotCompleted) {
-                     NSLog(@"User canceled story publishing.");
+                     //NSLog(@"User canceled story publishing.");
                  } else {
-                     NSLog(@"Story published.");
+                     //NSLog(@"Story published.");
                  }
              }}];
     }
@@ -107,12 +107,12 @@
                                               handler:
      ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
          if (error) {
-             NSLog(@"Error publishing story.");
+             //NSLog(@"Error publishing story.");
          } else {
              if (result == FBWebDialogResultDialogNotCompleted) {
-                 NSLog(@"User canceled story publishing.");
+                 //NSLog(@"User canceled story publishing.");
              } else {
-                 NSLog(@"Story published.");
+                 //NSLog(@"Story published.");
              }
          }}];
     

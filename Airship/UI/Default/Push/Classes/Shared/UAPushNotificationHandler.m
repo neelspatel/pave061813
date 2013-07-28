@@ -34,7 +34,7 @@
 - (void)displayNotificationAlert:(NSString *)alertMessage {
 
     UA_LDEBUG(@"Received an alert in the foreground.");
-    NSLog(@"Recieved an alert in the foreground");
+    //NSLog(@"Recieved an alert in the foreground");
     /*
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle: UA_PU_TR(@"UA_Notification_Title")
                                                     message: alertMessage
@@ -98,7 +98,7 @@
 
 - (void)handleBadgeUpdate:(NSInteger)badgeNumber {
 	UA_LDEBUG(@"Received an alert in the foreground with a new badge");
-    NSLog(@"Received an alert in the foreground with a new badge");
+    //NSLog(@"Received an alert in the foreground with a new badge");
     
     // Sets the application badge to the value in the notification
 	//[[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeNumber];
@@ -106,7 +106,7 @@
 
 - (void)receivedForegroundNotification:(NSDictionary *)notification {
     UA_LDEBUG(@"Received a notification while the app was already in the foreground");
-    NSLog(@"Foreground Notification is: %@", notification);
+    //NSLog(@"Foreground Notification is: %@", notification);
 
 	// Do something with your customData JSON, then entire notification is also available
     [self refreshLocalNotifications];
@@ -116,7 +116,7 @@
 
 - (void)launchedFromNotification:(NSDictionary *)notification {
     UA_LDEBUG(@"The application was launched or resumed from a notification");
-    NSLog(@"Notification is: %@", notification);
+    //NSLog(@"Notification is: %@", notification);
 	// Do something when launched via a notification
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [delegate handleNotification:notification];
@@ -125,7 +125,7 @@
 
 -(void)refreshLocalNotifications
 {
-    NSLog(@"Refreshing from remote");
+    //NSLog(@"Refreshing from remote");
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     // reload all of the notifications
     [delegate refreshNotificationsFromPushNotification];

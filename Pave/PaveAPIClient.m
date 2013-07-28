@@ -16,7 +16,7 @@ static NSString * const kPaveAPIBaseURLString = @"http://54.214.234.140/data/";
 @implementation PaveAPIClient
 
 + (PaveAPIClient *)sharedClient {
-    NSLog(@"got sharedClient");
+    //NSLog(@"got sharedClient");
     static PaveAPIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -28,7 +28,7 @@ static NSString * const kPaveAPIBaseURLString = @"http://54.214.234.140/data/";
 
 // might need to deal with the SSL Pinning
 - (id)initWithBaseURL:(NSURL *)url {
-    NSLog(@"initialized sharedClient");
+    //NSLog(@"initialized sharedClient");
     self = [super initWithBaseURL:url];
     if (!self) {
         return nil;

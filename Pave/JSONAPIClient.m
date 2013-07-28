@@ -17,7 +17,7 @@ static NSString * const kPaveAPIBaseURLString = @"http://54.244.251.104/data/";
 @implementation JSONAPIClient
 
 + (JSONAPIClient *)sharedClient {
-    NSLog(@"got sharedClient");
+    //NSLog(@"got sharedClient");
     static JSONAPIClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -29,7 +29,7 @@ static NSString * const kPaveAPIBaseURLString = @"http://54.244.251.104/data/";
 
 // might need to deal with the SSL Pinning
 - (id)initWithBaseURL:(NSURL *)url {
-    NSLog(@"initialized sharedClient");
+    //NSLog(@"initialized sharedClient");
     self = [super initWithBaseURL:url];
     if (!self) {
         return nil;

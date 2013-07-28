@@ -42,7 +42,7 @@
     // setup status bar
     [self setUpStatusBar];
 
-    NSLog(@"VIEW DID LOAD");
+    //NSLog(@"VIEW DID LOAD");
     //sets the active table
     self.currentTable = @"answers";
     self.answers.hidden = NO;
@@ -88,7 +88,7 @@
     {
         [self.idStrings addObject:[[ids objectAtIndex: i] stringValue]];
     }
-    NSLog(@"ID strings is now %@", self.idStrings);
+    //NSLog(@"ID strings is now %@", self.idStrings);
 
     //saves in nsuserdefaults
     [[NSUserDefaults standardUserDefaults] setObject:self.idStrings forKey:@"friendsStrings"];
@@ -127,7 +127,7 @@
     [self updateProfileStats];
     
     [self getFeedObjects];
-    NSLog(@"Answer objects are %@", self.answerObjects);
+    //NSLog(@"Answer objects are %@", self.answerObjects);
 
     self.badge_answers = [[MKNumberBadgeView alloc] initWithFrame:CGRectMake(-5, -15, 40, 40)];
     [self.badge_answers setValue:[self getAnswerCount]];
@@ -203,7 +203,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    NSLog(@"Getting called request insight in personal feed");
+    //NSLog(@"Getting called request insight in personal feed");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
@@ -219,7 +219,7 @@
         }
     }
                                    failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Failure while getting rec");
+                                       //NSLog(@"Failure while getting rec");
                                    }
      ];
     
@@ -294,7 +294,7 @@
 
 -(void)switchToInsights:(NSNotification *) notification
 {
-    NSLog(@"Getting called after notif");
+    //NSLog(@"Getting called after notif");
     [self viewInsights:self];
 }
 
@@ -304,7 +304,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *params;
     
-    NSLog(@"Tapped");
+    //NSLog(@"Tapped");
     if ([self.currentTable isEqualToString:@"answers"]) {
         UITableView *tableView = self.answers;
         
@@ -321,12 +321,12 @@
         CGPoint pointInCell = [touch locationInView:cell];
         
         NSMutableDictionary *currentObject = [self.answerObjects objectAtIndex:indexPath.row];
-        NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
+        //NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
         
         NSString *key = [NSString stringWithFormat:@"%@%@%@%@", [NSString stringWithFormat:@"%@", currentObject[@"friend"]], currentObject[@"question"], currentObject[@"chosenProduct"], currentObject[@"otherProduct"], nil];
         
         if (CGRectContainsPoint(cell.agree.frame, pointInCell)) {
-            NSLog(@"In the left image!");
+            //NSLog(@"In the left image!");
             //checks if this one has been answered yet
             if(![[self.answerReadStatus valueForKey:key] isEqualToString:@"Left"]) //if we haven't given this answer yet
             {
@@ -344,9 +344,9 @@
                 
                 [[PaveAPIClient sharedClient] postPath:url
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"successfully agreed with answer");
+                                                //NSLog(@"successfully agreed with answer");
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error agreeing with answer %@", error);
+                                                //NSLog(@"error agreeing with answer %@", error);
                                             }];
 
             }            
@@ -354,7 +354,7 @@
             {
                 [self.answerReadStatus removeObjectForKey:key];
 
-                NSLog(@"Removing the answer");
+                //NSLog(@"Removing the answer");
                 [self displayAnswerAsRead:cell side:@""];
 
                 //now saves the cell in the database
@@ -365,15 +365,15 @@
                 
                 [[PaveAPIClient sharedClient] postPath:url
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"successfully agreed with answer");
+                                                //NSLog(@"successfully agreed with answer");
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error agreeing with answer %@", error);
+                                                //NSLog(@"error agreeing with answer %@", error);
                                             }];
                 
             }
             
         } else if (CGRectContainsPoint(cell.disagree.frame, pointInCell)) {
-            NSLog(@"In the right image!");
+            //NSLog(@"In the right image!");
             //checks if this one has been answered yet
             if(![[self.answerReadStatus valueForKey:key] isEqualToString:@"Right"]) //if we haven't given this answer yet
             {
@@ -391,9 +391,9 @@
                 
                 [[PaveAPIClient sharedClient] postPath:url
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"successfully agreed with answer");
+                                                //NSLog(@"successfully agreed with answer");
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error agreeing with answer %@", error);
+                                                //NSLog(@"error agreeing with answer %@", error);
                                             }];
                 
             }
@@ -401,7 +401,7 @@
             {
                 [self.answerReadStatus removeObjectForKey:key];
                 
-                NSLog(@"Removing the answer");
+                //NSLog(@"Removing the answer");
                 [self displayAnswerAsRead:cell side:@""];
                 
                 //now saves the cell in the database
@@ -412,16 +412,16 @@
                 
                 [[PaveAPIClient sharedClient] postPath:url
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"successfully agreed with answer");
+                                                //NSLog(@"successfully agreed with answer");
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error agreeing with answer %@", error);
+                                                //NSLog(@"error agreeing with answer %@", error);
                                             }];
                 
             }
             
         }
         else {
-            NSLog(@"Not in the image...");
+            //NSLog(@"Not in the image...");
         }
     }
     else if ([self.currentTable isEqualToString:@"recs"]) {
@@ -440,18 +440,18 @@
         CGPoint pointInCell = [touch locationInView:cell];
         
         NSMutableDictionary *currentObject = [self.insightObjects objectAtIndex:indexPath.row];
-        NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
+        //NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
         
         NSString *key = [NSString stringWithFormat:@"%@", currentObject[@"id"], nil];
         
         if (CGRectContainsPoint(cell.agree.frame, pointInCell)) {
-            NSLog(@"In the left image!");            
+            //NSLog(@"In the left image!");            
             
             if(![[self.recReadStatus valueForKey:key] isEqualToString:@"Left"]) //if we haven't given this answer yet
             {
                 //saves it as read - true means left
                 [self.recReadStatus setObject:@"Left" forKey:key];
-                NSLog(@"Setting %@ for rec for %d", [self.recReadStatus valueForKey:key], indexPath.row );
+                //NSLog(@"Setting %@ for rec for %d", [self.recReadStatus valueForKey:key], indexPath.row );
                 
                 [self displayRecAsRead:cell side:@"Left"];
                 
@@ -464,9 +464,9 @@
                 
                 [[PaveAPIClient sharedClient] postPath:url
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"successfully agreed with rec");
+                                                //NSLog(@"successfully agreed with rec");
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error agreeing with rec %@", error);
+                                                //NSLog(@"error agreeing with rec %@", error);
                                             }];
                 
             }
@@ -474,8 +474,8 @@
             {
                 [self.recReadStatus removeObjectForKey:key];
                 
-                NSLog(@"Removing the rec");
-                NSLog(@"Setting %@ for rec for %d", [self.recReadStatus valueForKey:key], indexPath.row );
+                //NSLog(@"Removing the rec");
+                //NSLog(@"Setting %@ for rec for %d", [self.recReadStatus valueForKey:key], indexPath.row );
                 [self displayRecAsRead:cell side:@""];
                 
                 //now saves the cell in the database
@@ -487,16 +487,16 @@
                 
                 [[PaveAPIClient sharedClient] postPath:url
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"successfully removed agree with rec");
+                                                //NSLog(@"successfully removed agree with rec");
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error removing agreeing with rec %@", error);
+                                                //NSLog(@"error removing agreeing with rec %@", error);
                                             }];
                 
             }
             
             
         } else if (CGRectContainsPoint(cell.disagree.frame, pointInCell)) {
-            NSLog(@"In the right image!");
+            //NSLog(@"In the right image!");
             
             if(![[self.recReadStatus valueForKey:key] isEqualToString:@"Right"]) //if we haven't given this answer yet
             {
@@ -514,9 +514,9 @@
                 
                 [[PaveAPIClient sharedClient] postPath:url
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"successfully agreed with rec");
+                                                //NSLog(@"successfully agreed with rec");
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error agreeing with rec %@", error);
+                                                //NSLog(@"error agreeing with rec %@", error);
                                             }];
                 
             }
@@ -524,7 +524,7 @@
             {
                 [self.recReadStatus removeObjectForKey:key];
                 
-                NSLog(@"Removing the rec");
+                //NSLog(@"Removing the rec");
                 [self displayRecAsRead:cell side:@""];
                 
                 //now saves the cell in the database
@@ -536,21 +536,21 @@
                 
                 [[PaveAPIClient sharedClient] postPath:url
                                             parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                                NSLog(@"successfully removed agree with rec");
+                                                //NSLog(@"successfully removed agree with rec");
                                             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                NSLog(@"error removing agreeing with rec %@", error);
+                                                //NSLog(@"error removing agreeing with rec %@", error);
                                             }];
                 
             }
         }
         else {
-            NSLog(@"Not in the image...");
+            //NSLog(@"Not in the image...");
         }
     }        
     else if([self.currentTable isEqualToString:@"ugQuestions"]) {
         UITableView *tableView = self.ugQuestions;
        
-        NSLog(@"CLicked in ugquestions");
+        //NSLog(@"CLicked in ugquestions");
         
         NSSet *touches = [event allTouches];
         UITouch *touch = [touches anyObject];
@@ -565,7 +565,7 @@
         CGPoint pointInCell = [touch locationInView:cell];
         
         NSDictionary *currentObject = [self.questionObjects objectAtIndex:indexPath.row];
-        NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
+        //NSLog(@"Current object is at %d: %@", indexPath.row, currentObject);
         
         if (CGRectContainsPoint(cell.detail.frame, pointInCell)) {
             self.popup = [[AboutUGQuestion alloc] initWithData:currentObject];
@@ -577,7 +577,7 @@
             AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
             FBSession* session = delegate.session;
             
-            NSLog(@"Session in post to fb is %@", session);
+            //NSLog(@"Session in post to fb is %@", session);
             
             // Prepare the native share dialog parameters
             FBShareDialogParams *shareParams = [[FBShareDialogParams alloc] init];
@@ -594,11 +594,11 @@
                                             clientState:nil
                                                 handler:^(FBAppCall *call, NSDictionary *results, NSError *error) {
                                                     if(error) {
-                                                        NSLog(@"Error publishing story.");
+                                                        //NSLog(@"Error publishing story.");
                                                     } else if (results[@"completionGesture"] && [results[@"completionGesture"] isEqualToString:@"cancel"]) {
-                                                        NSLog(@"User canceled story publishing.");
+                                                        //NSLog(@"User canceled story publishing.");
                                                     } else {
-                                                        NSLog(@"Story published.");
+                                                        //NSLog(@"Story published.");
                                                     }
                                                 }];
                 
@@ -619,12 +619,12 @@
                                                           handler:
                  ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                      if (error) {
-                         NSLog(@"Error publishing story.");
+                         //NSLog(@"Error publishing story.");
                      } else {
                          if (result == FBWebDialogResultDialogNotCompleted) {
-                             NSLog(@"User canceled story publishing.");
+                             //NSLog(@"User canceled story publishing.");
                          } else {
-                             NSLog(@"Story published.");
+                             //NSLog(@"Story published.");
                          }
                      }}];
             }
@@ -640,19 +640,19 @@
                                      };
             
             // Invoke the dialog
-            NSLog(@"Forcing web dialog");
+            //NSLog(@"Forcing web dialog");
             
             [FBWebDialogs presentFeedDialogModallyWithSession:session
                                                    parameters:params
                                                       handler:
              ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                  if (error) {
-                     NSLog(@"Error publishing story.");
+                     //NSLog(@"Error publishing story.");
                  } else {
                      if (result == FBWebDialogResultDialogNotCompleted) {
-                         NSLog(@"User canceled story publishing.");
+                         //NSLog(@"User canceled story publishing.");
                      } else {
-                         NSLog(@"Story published.");
+                         //NSLog(@"Story published.");
                      }
                  }}];
 
@@ -732,9 +732,9 @@
     [self clearOldRequests];    
     
     self.currentTable = @"recs";
-    NSLog(@"About to change table");
+    //NSLog(@"About to change table");
     [self changeTable];
-    NSLog(@"Changed table");
+    //NSLog(@"Changed table");
 }
 
 - (IBAction)viewQuestions:(id)sender
@@ -812,9 +812,9 @@
 - (void)refresh
 {
     self.reloadingFeedObject = YES;
-    NSLog(@"reloading personal datapre");
+    //NSLog(@"reloading personal datapre");
     //self.feedObjects = [NSArray array];
-    NSLog(@"reloading personal data");
+    //NSLog(@"reloading personal data");
     [self getFeedObjects];
 }
 
@@ -838,9 +838,9 @@
     }
     //self.reloadingFeedObject = YES;
     
-    NSLog(@"reloading personal datapre");
+    //NSLog(@"reloading personal datapre");
     
-    NSLog(@"reloading personal data");
+    //NSLog(@"reloading personal data");
     [self getFeedObjectsFromPull];
     
     //[refreshControl endRefreshing];
@@ -864,17 +864,17 @@
           if (error) {
               // Case A: Error launching the dialog or sending request.
               [Flurry endTimedEvent:@"Profile Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Error"]];
-              NSLog(@"Error sending request.");
+              //NSLog(@"Error sending request.");
           } else {
               if (result == FBWebDialogResultDialogNotCompleted) {
                   // Case B: User clicked the "x" icon
                   [Flurry endTimedEvent:@"Profile Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Cancelled"]];
 
-                  NSLog(@"User canceled request.");
+                  //NSLog(@"User canceled request.");
               } else {
                   [Flurry endTimedEvent:@"Profile Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Completed"]];
 
-                  NSLog(@"Request Sent.");
+                  //NSLog(@"Request Sent.");
               }
           }}];
 
@@ -884,10 +884,10 @@
 /**
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(ProfileObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"At row %d with feed objects %d", indexPath.row, [self.feedObjects count]);
+    //NSLog(@"At row %d with feed objects %d", indexPath.row, [self.feedObjects count]);
     if(indexPath.row != 0 && indexPath.row != ([self.feedObjects count] + 1))
     {
-        NSLog(@"About to cancel cell");
+        //NSLog(@"About to cancel cell");
         // free up the requests for each ImageView
         [cell.profilePicture cancelCurrentImageLoad];
         [cell.rightProduct cancelCurrentImageLoad];
@@ -899,7 +899,7 @@
 
 - (IBAction)logout:(id)sender;
 {
-    NSLog(@"in logout");
+    //NSLog(@"in logout");
     
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
@@ -916,7 +916,7 @@
 
 -(void) hideLoadingBar
 {
-    NSLog(@"Getting called");
+    //NSLog(@"Getting called");
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
@@ -940,7 +940,7 @@
             [self.answersLoading startAnimating];
             
             //self.answerObjects = [NSMutableArray array];
-            NSLog(@"About to get feed objects for answers");
+            //NSLog(@"About to get feed objects for answers");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/getallfeedobjects/";
@@ -957,12 +957,12 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    NSLog(@"Just finished getting results: %@", results);
+                    //NSLog(@"Just finished getting results: %@", results);
                     //self.answerObjects = [self.answerObjects arrayByAddingObjectsFromArray:results];
                     
                     self.answerObjects = [NSArray arrayWithArray:results];
                     
-                    NSLog(@"Just finished getting feed ids: %@", self.answerObjects);
+                    //NSLog(@"Just finished getting feed ids: %@", self.answerObjects);
                     self.doneLoadingFeed = YES;
                     
                     self.reloadingFeedObject = NO;
@@ -978,7 +978,7 @@
                                                [self hideLoadingBar];
                                                if(error.code != -999)
                                                {
-                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   //NSLog(@"error logging in user to Django %@", error);
                                                    self.reloadingFeedObject = NO;
                                                    //shows the alert
                                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your current answers." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
@@ -989,7 +989,7 @@
         else if([self.currentTable isEqualToString:@"recs"])
         {
             self.insightObjects = [NSMutableArray array];
-            NSLog(@"About to get feed objects for recs");
+            //NSLog(@"About to get feed objects for recs");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/getreclist/";
@@ -1010,11 +1010,11 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    //NSLog(@"Just finished getting results: %@", results);
-                    NSLog(@"Insight Results: %@", results);
+                    ////NSLog(@"Just finished getting results: %@", results);
+                    //NSLog(@"Insight Results: %@", results);
                    // self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
                     self.insightObjects = [NSArray arrayWithArray: results];
-                    NSLog(@"Just finished getting recs ids: %@", self.insightObjects);
+                    //NSLog(@"Just finished getting recs ids: %@", self.insightObjects);
                     
                     self.doneLoadingFeed = YES;
                     
@@ -1032,7 +1032,7 @@
                                                
                                                if(error.code != -999)
                                                {
-                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   //NSLog(@"error logging in user to Django %@", error);
                                                    self.reloadingFeedObject = NO;
                                                    //shows the alert
                                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your current recommendations." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
@@ -1043,7 +1043,7 @@
         else
         {
             //self.questionObjects = [NSMutableArray array];
-            NSLog(@"About to get feed objects for ugquestions");
+            //NSLog(@"About to get feed objects for ugquestions");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/getugquestionslist/";
@@ -1056,7 +1056,7 @@
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
-                    NSLog(@"Question Results: %@", results);
+                    //NSLog(@"Question Results: %@", results);
                     self.questionObjects = [NSArray arrayWithArray:results];
                     self.doneLoadingFeed = YES;
                     
@@ -1071,9 +1071,9 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    NSLog(@"Just finished getting results: %@ for path %@", results, path);
+                    //NSLog(@"Just finished getting results: %@ for path %@", results, path);
                     //self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                    //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    ////NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
                     
                     self.questionsLoading.hidden = TRUE;
                     [self.questionsLoading stopAnimating];
@@ -1084,7 +1084,7 @@
 
                                                if(error.code != -999)
                                                {
-                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   //NSLog(@"error logging in user to Django %@", error);
                                                    self.reloadingFeedObject = NO;
                                                    //shows the alert
                                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your current questions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
@@ -1114,7 +1114,7 @@
         if([self.currentTable isEqualToString:@"answers"])
         {
             //self.answerObjects = [NSMutableArray array];
-            NSLog(@"About to get feed objects for answers via pull");
+            //NSLog(@"About to get feed objects for answers via pull");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/getallfeedobjects/";
@@ -1131,12 +1131,12 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    NSLog(@"Just finished getting results: %@", results);
+                    //NSLog(@"Just finished getting results: %@", results);
                     //self.answerObjects = [self.answerObjects arrayByAddingObjectsFromArray:results];
                     
                     self.answerObjects = [NSArray arrayWithArray:results];
                     
-                    NSLog(@"Just finished getting feed ids: %@", self.answerObjects);
+                    //NSLog(@"Just finished getting feed ids: %@", self.answerObjects);
                     self.doneLoadingFeed = YES;
                     
                     self.reloadingFeedObject = NO;
@@ -1150,7 +1150,7 @@
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
-                                               NSLog(@"error getting feed objects %@", error);
+                                               //NSLog(@"error getting feed objects %@", error);
                                                
                                                if(error.code != -999)
                                                {
@@ -1164,7 +1164,7 @@
         else if([self.currentTable isEqualToString:@"recs"])
         {
             self.insightObjects = [NSMutableArray array];
-            NSLog(@"About to get feed objects for recs");
+            //NSLog(@"About to get feed objects for recs");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/getreclist/";
@@ -1182,11 +1182,11 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    //NSLog(@"Just finished getting results: %@", results);
-                    NSLog(@"Insight Results: %@", results);
+                    ////NSLog(@"Just finished getting results: %@", results);
+                    //NSLog(@"Insight Results: %@", results);
                     // self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
                     self.insightObjects = [NSArray arrayWithArray: results];
-                    NSLog(@"Just finished getting recs ids: %@", self.insightObjects);
+                    //NSLog(@"Just finished getting recs ids: %@", self.insightObjects);
                     
                     self.doneLoadingFeed = YES;
                     
@@ -1204,7 +1204,7 @@
                                                
                                                if(error.code != -999)
                                                {
-                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   //NSLog(@"error logging in user to Django %@", error);
                                                    self.reloadingFeedObject = NO;
                                                    //shows the alert
                                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your recs." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
@@ -1216,7 +1216,7 @@
         {
             self.questionObjects = [NSMutableArray array];
             //self.questionObjects = [NSMutableArray array];
-            NSLog(@"About to get feed objects for ugquestions");
+            //NSLog(@"About to get feed objects for ugquestions");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/getugquestionslist/";
@@ -1226,7 +1226,7 @@
             
             [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
-                    NSLog(@"Question Results: %@", results);
+                    //NSLog(@"Question Results: %@", results);
                     self.questionObjects = [NSArray arrayWithArray:results];
                     self.doneLoadingFeed = YES;
                     
@@ -1241,9 +1241,9 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    NSLog(@"Just finished getting results: %@ for path %@", results, path);
+                    //NSLog(@"Just finished getting results: %@ for path %@", results, path);
                     //self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                    //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+                    ////NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
                     [self.ugRefreshControl endRefreshing];
                     
                 } }
@@ -1252,7 +1252,7 @@
                                                
                                                if(error.code != -999)
                                                {
-                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   //NSLog(@"error logging in user to Django %@", error);
                                                    self.reloadingFeedObject = NO;
                                                    //shows the alert
                                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your questions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
@@ -1329,7 +1329,7 @@
     {
         num = self.questionObjects.count + 1;
     }
-    NSLog(@"Number of cells: %d", num);
+    //NSLog(@"Number of cells: %d", num);
 
     return num;
 }
@@ -1398,7 +1398,7 @@
     NSString *path = @"/data/getprofilestats/";
     path = [path stringByAppendingString:[defaults objectForKey:@"profile"][@"facebookId"]];
     path = [path stringByAppendingString:@"/"];
-    NSLog(@"updateProfileStats");
+    //NSLog(@"updateProfileStats");
     [[PaveAPIClient sharedClient] postPath:path parameters:nil
                                    success:^(AFHTTPRequestOperation *operation, id results) {
         if (results) {
@@ -1428,7 +1428,7 @@
     }
      
         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"error while updating profile stats: %@", error);
+                                       //NSLog(@"error while updating profile stats: %@", error);
         }];
     
 }
@@ -1437,7 +1437,7 @@
 {
     if(self.reloadingFeedObject)
     {
-        NSLog(@"Still reloading WHAT'S UP");
+        //NSLog(@"Still reloading WHAT'S UP");
         /*UITableView *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"InviteFriends"];
         return cell; */
         
@@ -1470,7 +1470,7 @@
             {
                 if (self.reloadingAnswers || indexPath.row == self.answerObjects.count)
                 {
-                    NSLog(@"Putting something in for bototm cell");
+                    //NSLog(@"Putting something in for bototm cell");
                     
                     static NSString *CellIdentifier = @"AnswersCell";
                     AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -1496,7 +1496,7 @@
                     view.hidden = NO;
                 }
                 
-                NSLog(@"IndexPath is %d", indexPath.row);
+                //NSLog(@"IndexPath is %d", indexPath.row);
                 //NSDictionary *currentObject = [self.feedObjects objectAtIndex:(indexPath.row)];
                 NSDictionary *currentObject = [self.answerObjects objectAtIndex:(indexPath.row)];
                 NSString *newtext = currentObject[@"question"];                
@@ -1541,7 +1541,7 @@
                          [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:profileURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
                           {
                               // progression tracking code
-                              //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
+                              ////NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
                           }
                                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
                           {
@@ -1589,14 +1589,14 @@
                          [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:leftImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
                           {
                               // progression tracking code
-                              // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
+                              // //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
                           }
                                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
                           {
                               if (image && finished)
                               {
                                   // do something with image
-                                  NSLog(@"Finished getting left product image");
+                                  //NSLog(@"Finished getting left product image");
                                   cell.leftProduct.image = image;
                                   
                                   //and now save it
@@ -1637,14 +1637,14 @@
                          [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:rightImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
                           {
                               // progression tracking code
-                              //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
+                              ////NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
                           }
                                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
                           {
                               if (image && finished)
                               {
                                   // do something with image
-                                  NSLog(@"Finished getting image");
+                                  //NSLog(@"Finished getting image");
                                   cell.rightProduct.image = image;
                                   
                                   //and now save it
@@ -1681,7 +1681,7 @@
                 
                 if([self.answerReadStatus objectForKey:key])
                 {
-                    NSLog(@"Was read at position %d", indexPath.row);
+                    //NSLog(@"Was read at position %d", indexPath.row);
                     return [ self displayAnswerAsRead:cell side:[self.answerReadStatus objectForKey:key]];
                 }
                 else
@@ -1705,12 +1705,12 @@
                     return cell;
                 }
 
-                NSLog(@"Getting insight");
+                //NSLog(@"Getting insight");
                 static NSString *CellIdentifier = @"RecsCell";
                 //static NSString *CellIdentifier = @"UGQuestionsCell";
                 RecsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
                 
-                NSLog(@"IndexPath is %d", indexPath.row);
+                //NSLog(@"IndexPath is %d", indexPath.row);
                 NSDictionary *currentObject = [self.insightObjects objectAtIndex:(indexPath.row)];
                 
                 NSString *newtext = currentObject[@"text"];
@@ -1738,14 +1738,14 @@
                          [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:leftImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
                           {
                               // progression tracking code
-                              // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
+                              // //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
                           }
                                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
                           {
                               if (image && finished)
                               {
                                   // do something with image
-                                  NSLog(@"Finished getting left product image");
+                                  //NSLog(@"Finished getting left product image");
                                   cell.image.image = image;
                                   
                                   //and now save it
@@ -1776,8 +1776,8 @@
                 
                 if([self.recReadStatus objectForKey:key])
                 {
-                    NSLog(@"Was read at position %d", indexPath.row);
-                    NSLog(@"Displaying rec as '%@'", [self.recReadStatus objectForKey:key]);
+                    //NSLog(@"Was read at position %d", indexPath.row);
+                    //NSLog(@"Displaying rec as '%@'", [self.recReadStatus objectForKey:key]);
                     return [ self displayRecAsRead:cell side:[self.recReadStatus objectForKey:key]];
                 }
                 else
@@ -1802,8 +1802,8 @@
                 
                 static NSString *CellIdentifier = @"UGQuestionsCell";
                 UGQuestionsCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-                NSLog(@"IndexPath is %d", indexPath.row);
-                NSLog(@"Question objects is: %@", self.questionObjects);
+                //NSLog(@"IndexPath is %d", indexPath.row);
+                //NSLog(@"Question objects is: %@", self.questionObjects);
                 NSDictionary *currentObject = [self.questionObjects objectAtIndex:(indexPath.row)];
                 
                 NSString *newtext = currentObject[@"question_text"];
@@ -1828,14 +1828,14 @@
                          [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:leftImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
                           {
                               // progression tracking code
-                              // NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
+                              // //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
                           }
                                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
                           {
                               if (image && finished)
                               {
                                   // do something with image
-                                  NSLog(@"Finished getting left product image");
+                                  //NSLog(@"Finished getting left product image");
                                   cell.leftProduct.image = image;
                                   
                                   //and now save it
@@ -1866,14 +1866,14 @@
                          [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:rightImageURL] options:0 progress:^(NSUInteger receivedSize, long long expectedSize)
                           {
                               // progression tracking code
-                              //NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
+                              ////NSLog(@"At progress point %u out of %lld", receivedSize, expectedSize);
                           }
                                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished)
                           {
                               if (image && finished)
                               {
                                   // do something with image
-                                  NSLog(@"Finished getting image");
+                                  //NSLog(@"Finished getting image");
                                   cell.rightProduct.image = image;
                                   
                                   //and now save it
@@ -1893,7 +1893,7 @@
                 //shows and hides the labels depending on count
                 if([currentObject[@"product_1_count"] integerValue]== 0 && [currentObject[@"product_2_count"] integerValue]== 0)
                 {
-                    NSLog(@"Hiding");
+                    //NSLog(@"Hiding");
                     cell.leftDetail.hidden = YES;
                     cell.rightDetail.hidden = YES;
                     cell.leftNumber.hidden = YES;
@@ -1981,7 +1981,7 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {    
-    NSLog(@"About to cancel cell");
+    //NSLog(@"About to cancel cell");
     // free up the requests for each ImageView    
     if(tableView == self.answers) //if it's a rec
     {
@@ -1990,10 +1990,10 @@
             [current.profilePicture cancelCurrentImageLoad];
             [current.leftProduct cancelCurrentImageLoad];
             [current.rightProduct cancelCurrentImageLoad];
-            NSLog(@"Cancelled AnswersCell for %d", indexPath.row);
+            //NSLog(@"Cancelled AnswersCell for %d", indexPath.row);
         }
         @catch (NSException * e) {
-            NSLog(@"Got an exception: %@", e);
+            //NSLog(@"Got an exception: %@", e);
         }
     }
     else if(tableView == self.recs) //if it's a rec
@@ -2001,10 +2001,10 @@
         RecsCell *current = (RecsCell *)cell;
         @try{
             [current.image cancelCurrentImageLoad];
-            NSLog(@"Cancelled RecsCell for %d", indexPath.row);            
+            //NSLog(@"Cancelled RecsCell for %d", indexPath.row);            
         }
         @catch (NSException * e) {
-            NSLog(@"Got an exception: %@", e);
+            //NSLog(@"Got an exception: %@", e);
         }
     }
     else if(tableView == self.ugQuestions) //if it's a rec
@@ -2013,10 +2013,10 @@
         @try{
             [current.leftProduct cancelCurrentImageLoad];
             [current.rightProduct cancelCurrentImageLoad];
-            NSLog(@"Cancelled UGQuestionsCell for %d", indexPath.row);            
+            //NSLog(@"Cancelled UGQuestionsCell for %d", indexPath.row);            
         }
         @catch (NSException * e) {
-            NSLog(@"Got an exception: %@", e);
+            //NSLog(@"Got an exception: %@", e);
         }
     }
 }

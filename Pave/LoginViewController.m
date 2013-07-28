@@ -46,7 +46,7 @@
 
 -(void)checkToContinueToGameFeed
 {
-    NSLog(@"Trying to continue to game feed");
+    //NSLog(@"Trying to continue to game feed");
     if (self.tutorialComplete && self.createdUser)
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
@@ -76,7 +76,7 @@
 -(void)saveUserFacebookInformation
 {
 
-        NSLog(@"about to request user");
+        //NSLog(@"about to request user");
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [defaults setObject:self.userProfile forKey:@"profile"];
         [defaults setObject:self.userProfile[@"facebookId"] forKey:@"id"];
@@ -99,7 +99,7 @@
             // Do something...
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         // use the singleton APIClient
-            NSLog(@"about to request user");
+            //NSLog(@"about to request user");
             
             //splits the friends into id, name, and gender
             NSMutableArray *genders = [[NSMutableArray alloc] init];
@@ -139,20 +139,20 @@
             
             //[self performSegueWithIdentifier:@"loginToHomeScreen" sender:self];
 
-            //NSLog(@"%@", self.userProfile);
-            //NSLog(@"%@",  jsonString);
-            NSLog(@"Initialized friends as %@", self.friendIds);
-            //NSLog(@"%@", [NSJSONSerialization dataWithJSONObject:self.friendIds options:nil error:nil]);
+            ////NSLog(@"%@", self.userProfile);
+            ////NSLog(@"%@",  jsonString);
+            //NSLog(@"Initialized friends as %@", self.friendIds);
+            ////NSLog(@"%@", [NSJSONSerialization dataWithJSONObject:self.friendIds options:nil error:nil]);
             [[PaveAPIClient sharedClient] postPath:@"/data/newuser"
                                         parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                            NSLog(@"successfully logged in user to Django");
+                                            //NSLog(@"successfully logged in user to Django");
                                             //now fetches the feed objects
                                             [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects"  object:nil userInfo:nil];
 
                                             self.instructionButton1.hidden = FALSE;
                                             
                                         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                            NSLog(@"error logging in user to Django %@", error);
+                                            //NSLog(@"error logging in user to Django %@", error);
                                         }];
         });
     }
@@ -161,7 +161,7 @@
 
 -(void) setupFacebookInformation
 {
-    NSLog(@"Setting up Facebook Information");
+    //NSLog(@"Setting up Facebook Information");
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
@@ -178,7 +178,7 @@
                 
                 // Parse the data received
                 NSDictionary *userData = (NSDictionary *)result;
-                NSLog(@"Result of profile: %@", result);
+                //NSLog(@"Result of profile: %@", result);
 
                 NSString *facebookID = userData[@"id"];
                 NSURL *pictureURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?type=large&return_ssl_resources=1", facebookID]];
@@ -228,9 +228,9 @@
             } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
                         isEqualToString: @"OAuthException"]) {
                     // Since the request failed, we can check if it was due to an invalid session
-                NSLog(@"The facebook session was invalidated");
+                //NSLog(@"The facebook session was invalidated");
             } else {
-                NSLog(@"Some other error: %@", error);
+                //NSLog(@"Some other error: %@", error);
             }
         }];
     
@@ -273,7 +273,7 @@
                                                   id result,
                                                   NSError *error) {
                                   if (error) {
-                                      NSLog(@"Error while getting facebook friends, retry");
+                                      //NSLog(@"Error while getting facebook friends, retry");
                                   } else {
                                       self.friendIds = [[NSMutableArray alloc] initWithCapacity: [result count]];
                                       
@@ -291,7 +291,7 @@
                                       /*
                                        [[KCSUser activeUser] setValue: ids forAttribute: @"friends"];
                                        [[KCSUser activeUser] saveWithCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-                                       NSLog(@"shit happens");
+                                       //NSLog(@"shit happens");
                                        }]; */
                                       
                                   }
@@ -342,9 +342,9 @@
                 
             } else if ([[[[error userInfo] objectForKey:@"error"] objectForKey:@"type"]
                         isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
-                NSLog(@"The facebook session was invalidated");
+                //NSLog(@"The facebook session was invalidated");
             } else {
-                NSLog(@"Some other error: %@", error);
+                //NSLog(@"Some other error: %@", error);
             }
         }];
     });
@@ -355,9 +355,9 @@
     
     self.currentSession = session;
     NSString* accessToken = session.accessTokenData.accessToken;
-    NSLog(@"Finished login");
+    //NSLog(@"Finished login");
     
-    NSLog(@"Accesstoken: %@", accessToken);
+    //NSLog(@"Accesstoken: %@", accessToken);
     
     //saves and updates data
     [self setupFacebookInformation];
@@ -366,8 +366,8 @@
     NSString *path = @"/data/createuser";
     [[PaveAPIClient sharedClient] postPath:path
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                    NSLog(@"created user");
-                                    // NSLog(@"JSON for create user: %@", JSON);
+                                    //NSLog(@"created user");
+                                    // //NSLog(@"JSON for create user: %@", JSON);
                                     NSDictionary *results = JSON;
                                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                     [defaults setObject:[results objectForKey:@"friends"] forKey:@"friends"];
@@ -384,7 +384,7 @@
                                     //self.instructionButton1.hidden = FALSE;
                                     
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    NSLog(@"error creating user %@", error);
+                                    //NSLog(@"error creating user %@", error);
                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Well, this is awkward..." message:@"There was an error logging you in" delegate:self cancelButtonTitle:@"Try Again" otherButtonTitles:nil];
                                     [alert show];
                                     
@@ -406,12 +406,12 @@
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = [delegate session];
     
-    NSLog(@"About to login");
+    //NSLog(@"About to login");
     // login Facebook User
     
     if(session.state == 513 || session.state == 258 || session.state == 257)
     {
-        NSLog(@"In session.state comparison view login");
+        //NSLog(@"In session.state comparison view login");
         NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
         
         // might be crashing here
@@ -423,8 +423,8 @@
         session = [delegate session];        
     }
     
-    NSLog(@"in login controller Session is %@", session);
-    NSLog(@"in login controller Status is %u", session.state);
+    //NSLog(@"in login controller Session is %@", session);
+    //NSLog(@"in login controller Status is %u", session.state);
     
     NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
 
@@ -432,7 +432,7 @@
     session = [delegate session];
 
         [session openWithCompletionHandler:^(FBSession *session, FBSessionState status, NSError *error) {
-            NSLog(@"Session is in loginButtonTouch: %@", session);
+            //NSLog(@"Session is in loginButtonTouch: %@", session);
             if (status == FBSessionStateOpen) {
                 [FBSession setActiveSession:session];
                 NSString* accessToken = session.accessTokenData.accessToken;                                
@@ -453,12 +453,12 @@
             }
             else
             {
-                NSLog(@"In Login Block");
-                NSLog(@"Session: %@", session);
-                NSLog(@"Status in login block is: %u", status);
+                //NSLog(@"In Login Block");
+                //NSLog(@"Session: %@", session);
+                //NSLog(@"Status in login block is: %u", status);
             }
         }];
-        NSLog(@"Exited block");
+        //NSLog(@"Exited block");
 }
 
 -(BOOL)updatePushNotifiactionAlias
@@ -468,9 +468,9 @@
     NSString *userID = [defaults objectForKey:@"id"];
     if (userID)
     {
-        NSLog(@"In user id block: %@", userID);
+        //NSLog(@"In user id block: %@", userID);
         [UAPush shared].alias = userID;
-        NSLog(@"UA Push alias: %@", [UAPush shared].alias);
+        //NSLog(@"UA Push alias: %@", [UAPush shared].alias);
         [[UAPush shared] updateRegistration];
         return YES;
     }

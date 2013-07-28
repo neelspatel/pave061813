@@ -29,7 +29,7 @@
 {
 //    self = [super init];
     if ([[UIScreen mainScreen] bounds].size.height == 568) {
-        NSLog(@"Trying to create for iPhone size 5");
+        //NSLog(@"Trying to create for iPhone size 5");
         self = [super initWithNibName:@"5_MembersView" bundle: nil];
     } else {
         self = [super initWithNibName:@"MembersView" bundle: nil];
@@ -37,7 +37,7 @@
     
     if(self)
     {
-        NSLog(@"Just created");
+        //NSLog(@"Just created");
         self.data = data;
     }
     
@@ -81,7 +81,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Trying to get the addfriend cell");
+    //NSLog(@"Trying to get the addfriend cell");
     GroupMemberCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     if (!cell) {
         NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"GroupMemberCell" owner:self options:nil];

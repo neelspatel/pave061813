@@ -58,21 +58,21 @@
         
         // Create the picture bucket.
         S3CreateBucketRequest *createBucketRequest = [[S3CreateBucketRequest alloc] initWithName:@"preparsedugproductimages"] ;
-        NSLog(@"About to create...");
+        ////NSLog(@"About to create...");
         @try {
             S3CreateBucketResponse *createBucketResponse = [self.s3 createBucket:createBucketRequest];
             
             if(createBucketResponse.error != nil)
             {
-                NSLog(@"Error: %@", createBucketResponse.error);
+                ////NSLog(@"Error: %@", createBucketResponse.error);
             }
             else
             {
-                NSLog(@"Bucket created!");
+                ////NSLog(@"Bucket created!");
             }
         }
         @catch (AmazonServiceException *exception) {
-            NSLog(@"Exception: %@", exception);
+            ////NSLog(@"Exception: %@", exception);
         }
         @finally {
             
@@ -119,7 +119,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    NSLog(@"Getting called request insight in ask view");
+    ////NSLog(@"Getting called request insight in ask view");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
@@ -135,7 +135,7 @@
         }
     }
                                    failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Failure while getting rec");
+                                       ////NSLog(@"Failure while getting rec");
                                    }
      ];
     
@@ -143,7 +143,7 @@
 
 -(void)createNotificationPopup:(NSDictionary *) data
 {
-    NSLog(@"Creating notification popup from ask view controller");
+    ////NSLog(@"Creating notification popup from ask view controller");
     NotificationPopupView *notificationPopup = [NotificationPopupView notificationPopupCreateWithData:data];
     [self.view addSubview:notificationPopup];
 }
@@ -170,7 +170,7 @@
 
 - (void) createAction
 {
-    NSLog(@"About to submit now");
+    ////NSLog(@"About to submit now");
     
     self.currentlyCreating = YES;
     
@@ -180,7 +180,7 @@
     path = [path stringByAppendingString:@"/"];
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: self.leftURL, @"product1_url", self.rightURL, @"product2_url", @"product1", @"product1_description", @"product2", @"product2_description", self.question.text, @"question_text",  nil];
-    NSLog(@"Sent with params %@", params);
+    ////NSLog(@"Sent with params %@", params);
     
     [Flurry logEvent: @"UG Upload Time" withParameters:params timed:YES];
     
@@ -194,7 +194,7 @@
                                     //hides
                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                                     
-                                    NSLog(@"successfully created question");
+                                    ////NSLog(@"successfully created question");
                                     [Flurry endTimedEvent:@"UG Upload Time" withParameters:nil];
                                     
                                     //clears old info
@@ -223,7 +223,7 @@
                                     //hides
                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
                                     
-                                    NSLog(@"error saving answer %@", error);
+                                    ////NSLog(@"error saving answer %@", error);
                                     [Flurry endTimedEvent:@"UG Upload Time" withParameters:[NSDictionary dictionaryWithObjectsAndKeys: @"true", @"failed", nil]];
                                     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Well, this is awkward..." message:@"There was an error in saving your question. Sorry, our fault!" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
                                     [alert show];
@@ -259,7 +259,7 @@
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
-    NSLog(@"About to start editing");
+    ////NSLog(@"About to start editing");
     if ([textView.text isEqualToString:@""]) {
         textView.text = @"(tap here to ask your question!)";
     }
@@ -288,7 +288,7 @@
     if ([[notification name] isEqualToString:@"refreshAskImages"])
     {
 
-        NSLog(@"Got the notification...");
+        ////NSLog(@"Got the notification...");
         NSDictionary *data = [notification userInfo];
         NSString *side = [data objectForKey:@"side"];
         NSString *url = [data objectForKey:@"url"];
@@ -297,7 +297,7 @@
         {
             self.leftURL = url;
             self.leftURLView.text = url;
-            NSLog(@"Left Url is %@", self.leftURL);
+            ////NSLog(@"Left Url is %@", self.leftURL);
             [self.leftImage setImageWithURL:[NSURL URLWithString:self.leftURL] ];
             
             //hides the button
@@ -310,7 +310,7 @@
         {
             self.rightURL = url;
             self.rightURLView.text = url;
-            NSLog(@"Right Url is %@", self.rightURL);
+            ////NSLog(@"Right Url is %@", self.rightURL);
             [self.rightImage setImageWithURL:[NSURL URLWithString:self.rightURL] ];
             
             //hides the button
@@ -338,7 +338,7 @@
            !([self.leftURL isEqualToString:@""]) && !([self.rightURL isEqualToString:@""]) &&
            !([self.question.text isEqualToString:@""] || [self.question.text isEqualToString:@"(tap here to ask your question!)"]))
         {
-            NSLog(@"Ready to create if you want to");
+            ////NSLog(@"Ready to create if you want to");
             [self.createButton setImage:[UIImage imageNamed:@"create_selected.png"] forState:UIControlStateNormal];
             [self.createButton setEnabled:YES];
         }
@@ -378,7 +378,7 @@
 //cancels from the left side
 - (IBAction)leftCancel:(id)sender
 {
-    NSLog(@"Cancelling left");
+    ////NSLog(@"Cancelling left");
     
     self.leftCancelButton.hidden = TRUE;
     self.leftAddButton.hidden = FALSE;
@@ -393,7 +393,7 @@
 //cancels from the left side
 - (IBAction)rightCancel:(id)sender
 {
-    NSLog(@"Cancelling right");
+    ////NSLog(@"Cancelling right");
     
     self.rightCancelButton.hidden = TRUE;
     self.rightAddButton.hidden = FALSE;
@@ -445,7 +445,7 @@
         newW = 160;
         newH = h * 160 /w;
     }
-    NSLog(@"Image went from %d by %d to %d by %d", w, h, newW, newH);
+    ////NSLog(@"Image went from %d by %d to %d by %d", w, h, newW, newH);
 
     CGSize newSize = CGSizeMake(newW, newH);
     UIGraphicsBeginImageContext( newSize );
@@ -467,7 +467,7 @@
     //sets the image
     if( [self.currentSide isEqualToString: @"Left"])
     {
-        NSLog(@"Setting left image");
+        ////NSLog(@"Setting left image");
         [self.leftImage setImage:image];
         
         //hides the button
@@ -476,7 +476,7 @@
     }
     else if( [self.currentSide isEqualToString: @"Right"])
     {
-        NSLog(@"Setting right image");
+        ////NSLog(@"Setting right image");
         [self.rightImage setImage:image];
         
         //hides the button
@@ -564,7 +564,7 @@
             
             if(putObjectResponse.error != nil)
             {
-                NSLog(@"Error: %@", putObjectResponse.error);
+                ////NSLog(@"Error: %@", putObjectResponse.error);
                 
                 [spinner stopAnimating];
                 [gray removeFromSuperview];
@@ -572,7 +572,7 @@
                 //cancels the upload
                 if( [self.currentSide isEqualToString: @"Left"])
                 {
-                    NSLog(@"Cancelling left");
+                    ////NSLog(@"Cancelling left");
                     
                     self.leftCancelButton.hidden = TRUE;
                     self.leftAddButton.hidden = FALSE;
@@ -585,7 +585,7 @@
                 }
                 else
                 {
-                    NSLog(@"Cancelling right");
+                    ////NSLog(@"Cancelling right");
                     
                     self.rightCancelButton.hidden = TRUE;
                     self.rightAddButton.hidden = FALSE;

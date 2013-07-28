@@ -82,11 +82,11 @@
     
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         
-        NSLog(@"JSON: %@", JSON);
+        //NSLog(@"JSON: %@", JSON);
         self.results = JSON;
         [self.collection reloadData];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-        NSLog(@"%@", [error userInfo]);
+        //NSLog(@"%@", [error userInfo]);
     }];
      */
     
@@ -106,7 +106,7 @@
         if (results) {
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            NSLog(@"Got image results: %@", results);
+            //NSLog(@"Got image results: %@", results);
             self.results = results;
             [self.collection reloadData];
             [Flurry endTimedEvent:@"Web Image Search" withParameters:eventDict];
@@ -115,7 +115,7 @@
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideHUDForView:self.view animated:YES];
         
-        NSLog(@"No results");
+        //NSLog(@"No results");
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No results found" message:@"Sorry, there were no results found for your search. Please try again!" delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles: nil];
         [alert show];
         
@@ -149,7 +149,7 @@
     WebImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"WebImageCell" forIndexPath:indexPath];
     
     [cell.image setImageWithURL:[NSURL URLWithString:[self.results[indexPath.row] objectForKey: @"thumbnailurl"]] placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
-    //NSLog(@"Current: %@", self.results[indexPath.row]);
+    ////NSLog(@"Current: %@", self.results[indexPath.row]);
     
     return cell;
 }

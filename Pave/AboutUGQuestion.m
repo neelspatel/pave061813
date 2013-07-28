@@ -29,21 +29,21 @@
 -(id) initWithData:(NSDictionary *)data
 {
     if ([[UIScreen mainScreen] bounds].size.height == 568) {
-        NSLog(@"Trying to create for iPhone size 5");
+        //NSLog(@"Trying to create for iPhone size 5");
         self = [super initWithNibName:@"5_AboutUGQuestionView" bundle: nil];
     } else {
         self = [super initWithNibName:@"AboutUGQuestion" bundle: nil];
     }
     if(self)
     {
-        NSLog(@"Just created");
+        //NSLog(@"Just created");
         self.data = data;
         
-        NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+        //NSLog(@"%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 
     }
 
-    //NSLog(@"NSUser: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+    ////NSLog(@"NSUser: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
 
     
     return self;
@@ -64,7 +64,7 @@
     //shows and hides the labels depending on count
     if([self.data[@"product_1_count"] integerValue]== 0 && [self.data[@"product_2_count"] integerValue]== 0)
     {
-        NSLog(@"Hiding");
+        //NSLog(@"Hiding");
         self.leftDetail.hidden = YES;
         self.rightDetail.hidden = YES;
         self.leftNumber.hidden = YES;
@@ -183,7 +183,7 @@
         cell.rightName.text = @"";
     }
         
-    NSLog(@"Just set the stuff");
+    //NSLog(@"Just set the stuff");
     
     return cell;
 }

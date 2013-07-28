@@ -44,11 +44,11 @@
 - (void)viewDidLoad
 {
     
-    NSLog(@"Table list loaded");
+    //NSLog(@"Table list loaded");
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     self.groups = [prefs objectForKey:@"groups"];
-    NSLog(@"Groups: %@", self.groups);
+    //NSLog(@"Groups: %@", self.groups);
 
     // instantiate the status bar and set it to the right location
     [self setUpStatusBar];
@@ -112,7 +112,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    NSLog(@"Getting called request insight in Group View");
+    //NSLog(@"Getting called request insight in Group View");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
@@ -128,7 +128,7 @@
         }
     }
                                    failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       NSLog(@"Failure while getting rec");
+                                       //NSLog(@"Failure while getting rec");
                                    }
      ];
     
@@ -151,16 +151,16 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSLog(@"Getting length");
+    //NSLog(@"Getting length");
     // Return the number of rows in the section.
-    NSLog(@"%@", self.groups);
+    //NSLog(@"%@", self.groups);
     return self.groups.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSLog(@"Load cell");
+    //NSLog(@"Load cell");
     static NSString *CellIdentifier = @"Cell";
     
     GroupListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -179,25 +179,25 @@
                              
     for (NSString *full_name in [currentObject objectForKey:@"friend_names"])
     {                
-        NSLog(@"Full Name: %@", full_name);
+        //NSLog(@"Full Name: %@", full_name);
         
         NSString *name = currentObject[@"name"];
         NSArray *wordsAndEmptyStrings = [full_name componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         NSArray *words = [wordsAndEmptyStrings filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"length > 0"]];
         
-        NSLog(@"WOrds is %@", words);
+        //NSLog(@"WOrds is %@", words);
                 
         NSString *newName = words[0];
         NSString * last_name = words[1];
         newName =  [newName stringByAppendingString:@" "];
         newName =  [newName stringByAppendingString:[last_name substringToIndex:1]];        
                
-        NSLog(@"Name: %@", full_name);
+        //NSLog(@"Name: %@", full_name);
         [names addObject: newName
          ];
     }
     
-    NSLog(@"Current names: %@", names);
+    //NSLog(@"Current names: %@", names);
    // NSString *names = [[currentObject objectForKey:@"friend_names"] componentsJoinedByString:@", "];
     NSString *prefix = nil;
     NSString *joined_names = [names componentsJoinedByString:@", "];
@@ -211,7 +211,7 @@
         prefix = joined_names;
         
     }
-    NSLog(@"Prefix: %@", prefix );
+    //NSLog(@"Prefix: %@", prefix );
     cell.groupMembers.text = prefix;
     
     return cell;
@@ -230,7 +230,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-            NSLog(@"Tryna delete");
+            //NSLog(@"Tryna delete");
         
         //first removes and resets array
         NSMutableArray *newArray = [NSMutableArray arrayWithArray:self.groups];
@@ -257,13 +257,13 @@
 }
 
 - (IBAction)addGroup:(id)sender {
-    NSLog(@"Clicked add group");
+    //NSLog(@"Clicked add group");
     [self performSegueWithIdentifier:@"groupListToAddGroup" sender:self];
     // display popover 
 }
 
 - (IBAction)editTableView:(id)sender {
-    NSLog(@"Clicked edit");
+    //NSLog(@"Clicked edit");
     if(self.tableView.editing)
     {
         [self.tableView setEditing:FALSE animated:TRUE];

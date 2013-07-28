@@ -40,14 +40,14 @@ typedef enum _UALogLevel {
     do { \
         if (uaLoggingEnabled && uaLogLevel >= level) { \
             NSString *thread = ([[NSThread currentThread] isMainThread]) ? @"M" : @"B"; \
-            NSLog((@"[%@] [%@] => %s [Line %d] " fmt), levelString, thread, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            //NSLog((@"[%@] [%@] => %s [Line %d] " fmt), levelString, thread, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__); \
         } \
     } while(0)
 
 #define UA_LEVEL_LOG_NO_THREAD(level, levelString, fmt, ...) \
     do { \
         if (uaLoggingEnabled && uaLogLevel >= level) { \
-            NSLog((@"[%@] %s [Line %d] " fmt), levelString, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__); \
+            //NSLog((@"[%@] %s [Line %d] " fmt), levelString, __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__); \
         } \
     } while(0)
 

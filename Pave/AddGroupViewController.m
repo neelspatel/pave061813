@@ -31,14 +31,14 @@
 {
     [super viewDidLoad];
     
-    //NSLog(@"NSUSER %@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
+    ////NSLog(@"NSUSER %@", [[[NSUserDefaults standardUserDefaults] dictionaryRepresentation] allKeys]);
 
-    NSLog(@"Called view did load when adding a group");
+    //NSLog(@"Called view did load when adding a group");
     // initing the arrays
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     self.friendNames = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"names"] copy]];
     self.friendIds = [[NSMutableArray alloc] initWithArray:[[prefs objectForKey:@"friends"] copy]];
-    //NSLog(@"Friend ids: %@", self.friendIds);
+    ////NSLog(@"Friend ids: %@", self.friendIds);
     // if no friends, reload friend data from server
     
     self.filteredNames = [[NSMutableArray alloc] init];
@@ -74,14 +74,14 @@
 -(void) viewWillAppear:(BOOL)animated
 {
     //
-    NSLog(@"Entering groups");
+    //NSLog(@"Entering groups");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"enteringGroup" object:nil];
     [super viewWillAppear:animated];
 }
 
 -(void) viewWillDisappear:(BOOL)animated
 {
-    NSLog(@"Leaving Groups");
+    //NSLog(@"Leaving Groups");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"leavingGroup" object:nil];
     [super viewDidDisappear:animated];
 }
@@ -150,7 +150,7 @@
     
     [self.tableView deselectRowAtIndexPath:[self.tableView  indexPathForSelectedRow] animated:YES];
     
-    NSLog(@"Selected %d", indexPath.row);
+    //NSLog(@"Selected %d", indexPath.row);
     //[self.view endEditing:YES];
     
     NSString *selectedName;
@@ -168,7 +168,7 @@
     
     // add the seleced name to the current group
     [self.currentGroup addObject:selectedName];
-    NSLog(@"%@", self.currentGroup);
+    //NSLog(@"%@", self.currentGroup);
     NSString *curText = self.addedFriendsTextField.text;
     NSString *newText;
     if ([curText isEqual: @"add some friends below!"])
@@ -183,7 +183,7 @@
         self.createButton.enabled = YES;
     }
     
-    NSLog(@"%@", newText);
+    //NSLog(@"%@", newText);
     self.addedFriendsTextField.text = newText;
     
     //now scrolls to the bottom
@@ -194,7 +194,7 @@
     
     
     
-    NSLog(@"Removing object at %d", indexPath.row);
+    //NSLog(@"Removing object at %d", indexPath.row);
     
     // delete the friend from the friends array and from the autocomplete array
     if (self.isFiltered) //get the relevant index from the filtered list
@@ -225,14 +225,14 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(AddFriendCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"About to cancel cell");
+    //NSLog(@"About to cancel cell");
     // free up the requests for each ImageView
     [cell.friendProfilePicture cancelCurrentImageLoad];    
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
-    NSLog(@"Search button cancelled");
+    //NSLog(@"Search button cancelled");
     [searchBar resignFirstResponder];
 }
 
@@ -291,7 +291,7 @@
 
 - (void) createGroupAction
 {
-    NSLog(@"About to create a group");
+    //NSLog(@"About to create a group");
     // check if everything is in line
     if (self.currentGroup.count > 0)
     {
@@ -301,13 +301,13 @@
         if (!self.currentGroupName)
             self.currentGroupName = @"Default Name";
 
-        NSLog(@"Before accessing groups");
+        //NSLog(@"Before accessing groups");
         
         NSMutableArray *friendIds = [prefs objectForKey:@"friends"];
         NSMutableArray *friendNames = [prefs objectForKey:@"names"];
         NSMutableArray *groupFriendIds = [[NSMutableArray alloc] initWithCapacity: self.currentGroup.count];
         
-       // NSLog(@"%@", friendNames);
+       // //NSLog(@"%@", friendNames);
         
         for (NSString *curName in self.currentGroup) {
             NSInteger index = [friendNames indexOfObject:curName];
@@ -315,26 +315,26 @@
             [groupFriendIds addObject:[friendIds objectAtIndex:index]];
         }
         
-        //NSLog(@"Group Friend IDS: %@", groupFriendIds);
+        ////NSLog(@"Group Friend IDS: %@", groupFriendIds);
         
         NSMutableDictionary *currentGroup = [[NSMutableDictionary alloc] initWithObjects:@[self.currentGroupName, groupFriendIds, self.currentGroup] forKeys:@[@"name", @"friend_ids", @"friend_names"]];
         
-        //NSLog(@"Current Group: %@", currentGroup);
+        ////NSLog(@"Current Group: %@", currentGroup);
 
         NSMutableArray *groups = [[NSMutableArray alloc] initWithArray:[prefs objectForKey:@"groups"]];
-        //NSLog(@"User defaults group: %@", groups);
+        ////NSLog(@"User defaults group: %@", groups);
     
         if (!groups)
         {
-            NSLog(@"Not groups");
+            //NSLog(@"Not groups");
             groups = [[NSMutableArray alloc] init];
         }
         
         [groups insertObject:currentGroup atIndex:0];
-        NSLog(@"Groups %@", groups);
+        //NSLog(@"Groups %@", groups);
         [prefs setObject:groups forKey:@"groups"];
         [prefs synchronize];
-        NSLog(@"Succesfully created group %@", self.currentGroupName);
+        //NSLog(@"Succesfully created group %@", self.currentGroupName);
 
         [self dismissViewControllerAnimated:NO completion:
          ^{
@@ -344,7 +344,7 @@
         // You succesfully created this group!
     }
     else{
-        NSLog(@"Empty group cannot complete");
+        //NSLog(@"Empty group cannot complete");
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please add group members" delegate:self cancelButtonTitle:@"Go Back" otherButtonTitles:nil];
         [alertView show];
     }
