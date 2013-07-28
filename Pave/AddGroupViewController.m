@@ -10,6 +10,7 @@
 #import "AddFriendCell.h"
 #import "UIImageView+WebCache.h"
 #import "GroupGameController.h"
+#import "AppDelegate.h"
 
 @interface AddGroupViewController ()
 
@@ -68,6 +69,21 @@
     [self.addedFriendsTextField addGestureRecognizer:singleTap];
     
 
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+    //
+    NSLog(@"Entering groups");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"enteringGroup" object:nil];
+    [super viewWillAppear:animated];
+}
+
+-(void) viewWillDisappear:(BOOL)animated
+{
+    NSLog(@"Leaving Groups");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"leavingGroup" object:nil];
+    [super viewDidDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning

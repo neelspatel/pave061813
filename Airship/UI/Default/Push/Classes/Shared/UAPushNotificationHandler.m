@@ -125,7 +125,9 @@
 
 -(void)refreshLocalNotifications
 {
+    NSLog(@"Refreshing from remote");
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-    // reload all of hte notifications
+    // reload all of the notifications
+    [delegate refreshNotificationsFromPushNotification];
 }
 @end

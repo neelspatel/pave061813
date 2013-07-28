@@ -122,6 +122,7 @@
 // function to call to draw the status bar to the correct
 -(void) redrawBar
 {
+    NSLog(@"About to redraw the bar");
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.statusScore = delegate.currentStatusScore;
     
@@ -170,6 +171,7 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
     }
 */
+    
 }
 
 -(void) doneLoading

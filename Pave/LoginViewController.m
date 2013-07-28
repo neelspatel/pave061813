@@ -439,7 +439,7 @@
                 [self setupFacebookInformation];
                 
                 // facebook ID should be stored at this point
-                AppDelegate *delegate = [UIApplication sharedApplication];
+                AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication];
                 [delegate updatePushNotifiactionAlias];
                 
                 [self createUser: session];
