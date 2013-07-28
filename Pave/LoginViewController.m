@@ -14,7 +14,8 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "MBProgressHUD.h"
 #import "WalkthroughViewController.h"
-
+#import "UAPush.h"
+ 
 @interface LoginViewController ()
 
 @end
@@ -438,6 +439,10 @@
                 //saves and updates data
                 [self setupFacebookInformation];
                 
+                // facebook ID should be stored at this point
+                AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication];
+                [self updatePushNotifiactionAlias];
+                
                 [self createUser: session];
                 
                 //hides elements on screen
@@ -454,7 +459,25 @@
             }
         }];
         NSLog(@"Exited block");
+}
+
+-(BOOL)updatePushNotifiactionAlias
+{
     
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userID = [defaults objectForKey:@"id"];
+    if (userID)
+    {
+        NSLog(@"In user id block: %@", userID);
+        [UAPush shared].alias = userID;
+        NSLog(@"UA Push alias: %@", [UAPush shared].alias);
+        [[UAPush shared] updateRegistration];
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
 }
 
 - (IBAction)instructionButtonTouch:(id)sender {
@@ -464,8 +487,6 @@
         [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateNormal];
         [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateSelected];
         [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateHighlighted];
-        
-        
     } else {
 
         [self dismissViewControllerAnimated:NO completion:nil];

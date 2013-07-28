@@ -10,6 +10,11 @@
 #import "PaveAPIClient.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "Flurry.h"
+#import "UAirship.h"
+#import "UAConfig.h"
+#import "UAPush.h"
+#import "PersonalFeedController.h"
+#import "GameController.h"
 
 @implementation AppDelegate
 
@@ -17,6 +22,24 @@
 {
     // flurry analytics 
     [Flurry startSession: @"N49JNZBNHFZ6PJ4Y9PSM"];
+    
+    UAConfig *config = [UAConfig defaultConfig];
+    [UAirship takeOff:config];
+    
+    [self updatePushNotifiactionAlias];
+    
+    [[UAPush shared] setAutobadgeEnabled:YES];
+    [[UAPush shared] resetBadge];
+
+    
+    if (launchOptions != nil)
+    {
+        NSDictionary *tmpDic = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        NSLog(@"Notification: %@", tmpDic);
+        [self handleNotification:tmpDic];
+    }
+    
+    self.inGroup = NO;
     
     //self.didCompleteProfileInformation = YES;
     // Assign tab bar item with titles
@@ -50,7 +73,6 @@
     tabBarItem3.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     tabBarItem4.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     tabBarItem5.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-        
     tabBarController.selectedIndex = 2;
     
     self.tabBarController = tabBarController;
@@ -91,8 +113,73 @@
     //NSLog(@"APP DELEGATE: %d", self.currentStatusScore);
     
     // Override point for customization after application launch.
+    
+    //NSLog(@"About to switch to group");
+    //[self switchToProfileWithActive:@"questions"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nowInGroup) name:@"enteringGroup" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(leavingGroup) name:@"leavingGroup" object:nil];
     return YES;
     
+}
+
+-(BOOL)updatePushNotifiactionAlias
+{
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *userID = [defaults objectForKey:@"id"];
+    if (userID)
+    {
+        NSLog(@"In user id block: %@", userID);
+        [UAPush shared].alias = userID;
+        NSLog(@"UA Push alias: %@", [UAPush shared].alias);
+        [[UAPush shared] updateRegistration];
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+-(void)switchToGameFeed
+{
+    [self.tabBarController setSelectedIndex:2];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects" object:nil];
+}
+
+-(void)switchToGroups
+{
+    [self.tabBarController setSelectedIndex:1];
+}
+
+-(void)switchToProfileWithActive: (NSString*) activeTab
+{
+    PersonalFeedController *profileController = [self.tabBarController.viewControllers objectAtIndex:0];
+    [self.tabBarController setSelectedViewController: profileController];
+    if ([activeTab isEqualToString:@"insights"])
+    {
+        [profileController viewInsights:self];
+    }
+    else if ([activeTab isEqualToString:@"questions"])
+    {
+        [profileController viewQuestions:self];
+    }
+    else
+    {
+        // active tab is "answers"
+        [profileController viewAnswers:self];
+    }
+}
+
+-(void)switchToTraining
+{
+    [self.tabBarController setSelectedIndex:4];
+}
+
+-(void)switchToAsk
+{
+    [self.tabBarController setSelectedIndex:3];
 }
 
 -(void) refreshNotifications:(NSTimer*) t
@@ -138,16 +225,19 @@
                         NSLog(@"Status score is null");
                         status_score = 0;
                     }
+                    
                     if (self.currentStatusScore != status_score)
                     {
                         //NSLog(@"ABOUT TO UPDATE STATUS SCORE");
                         self.currentStatusScore = status_score;
                         NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
-                    }                    
+
+                        if (!self.inGroup)
+                            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
+                    }
                     
                     // broadcast notification to everyone
-                    if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen))
+                    if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen) && (!self.inGroup))
                     {
                         NSLog(@"Notification is coming up!");
                         self.notificationPopupIsOpen = YES;
@@ -156,7 +246,7 @@
                     {
                         NSLog(@"Notification is not ready");
                     }
-
+                    
                     NSInteger old_recs = [defaults integerForKey:@"num_recs"];
                     if (!old_recs)
                         old_recs = 0;
@@ -204,6 +294,51 @@
     }
 }
 
+-(void)nowInGroup
+{
+    NSLog(@"now in group");
+    self.inGroup = YES;
+}
+-(void)leavingGroup
+{
+    NSLog(@"Leaving group");
+    self.inGroup = NO;
+}
+
+-(void) handleNotification:(NSDictionary *) notification
+{
+    NSLog(@"Trying to handle notification: ");
+    NSString *action = [[notification objectForKey:@"data"] objectForKey:@"action"];
+    if ([action isEqualToString:@"switchToGroups"])
+    {
+        [self switchToGroups];
+    }
+    else if ([action isEqualToString:@"switchToAnswers"])
+    {
+        [self switchToProfileWithActive: @"answers"];
+    }
+    else if ([action isEqualToString:@"switchToQuestions"])
+    {
+        [self switchToProfileWithActive:@"questions"];
+    }
+    else if ([action isEqualToString:@"switchToInsights"])
+    {
+        [self switchToProfileWithActive:@"insights"];
+    }
+    else if ([action isEqualToString:@"switchToSprint"])
+    {
+        [self switchToTraining];
+    }
+    else if ([action isEqualToString:@"switchToAsk"])
+    {
+        [self switchToAsk];
+    }
+    else if ([action isEqualToString:@"switchToHome"])
+    {
+        [self switchToGameFeed];
+    }
+}
+
 -(void)sendInsightReady
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"insightReady" object:nil userInfo:nil];
@@ -235,6 +370,10 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    // change the push notifications to 0
+    [[UAPush shared] setAutobadgeEnabled:YES];
+    [[UAPush shared] resetBadge];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -261,5 +400,113 @@
     return 0;
 }
 
+
+-(void) refreshNotificationsFromPushNotification
+{
+    if(self.session.state == FBSessionStateOpen)
+    {
+        UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:0];
+        NSString *oldvalue = item.badgeValue;
+        
+        int seconds = (int)[[NSDate date] timeIntervalSince1970];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        
+        //either checks the last time that we polled the server, or polls based on that previous time. then stores the current value
+        int polltime = 0;
+        if([defaults integerForKey:@"lastpolled"] != nil)
+        {
+            //NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
+            polltime = [defaults integerForKey:@"lastpolled"];
+            
+        }
+        //NSLog(@"Trying to get the polls");
+        
+        // checks if the the user is first timer
+        NSString *path = @"/data/getnotification/";
+        path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
+        
+        path = [path stringByAppendingString:@"/"];
+        
+        //NSLog(@"Path is %@", path);
+        
+        [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
+            if (results) {
+                NSLog(@"Results %@", results);
+                NSInteger new_inc = [[results objectForKey:@"recs"] intValue] + [[results objectForKey:@"answers"] intValue] + [[results objectForKey:@"ug_answers"] intValue];
+                //NSLog(@"%d", new_inc);
+                
+                NSInteger status_score = [[results objectForKey:@"status_score"] intValue];
+                if (!status_score)
+                {
+                    NSLog(@"Status score is null");
+                    status_score = 0;
+                }
+                
+                if (self.currentStatusScore != status_score)
+                {
+                    //NSLog(@"ABOUT TO UPDATE STATUS SCORE");
+                    self.currentStatusScore = status_score;
+                    NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
+                    if (!self.inGroup)
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
+                }
+                
+                // broadcast notification to everyone
+                if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen) && (!self.inGroup))
+                {
+                    NSLog(@"Notification is coming up!");
+                    self.notificationPopupIsOpen = YES;
+                    [self performSelector:@selector(sendInsightReady) withObject:nil afterDelay:0.5];
+                } else
+                {
+                    NSLog(@"Notification is not ready");
+                }
+                
+                NSInteger old_recs = [defaults integerForKey:@"num_recs"];
+                if (!old_recs)
+                    old_recs = 0;
+                NSInteger old_answers = [defaults integerForKey:@"num_answers"];
+                if (!old_answers)
+                    old_answers = 0;
+                NSInteger old_ug_answers = [defaults integerForKey:@"num_ug_answers"];
+                if (!old_ug_answers)
+                    old_ug_answers = 0;
+                
+                // set the status score and the rest of the properties
+                [defaults setInteger: status_score forKey:@"status_score"];
+                
+                NSInteger new_recs = [[results objectForKey:@"recs"] intValue] + old_recs;
+                [defaults setInteger: new_recs forKey:@"num_recs"];
+                
+                NSInteger new_answer = [[results objectForKey:@"answers"] intValue] + old_answers;
+                [defaults setInteger:new_answer forKey:@"num_answers"];
+                
+                NSInteger new_ug_answer = [[results objectForKey:@"ug_answers"] intValue] + old_ug_answers;
+                [defaults setInteger:new_ug_answer forKey:@"num_ug_answers"];
+                
+                [defaults synchronize];
+                
+                //NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
+                NSLog(@"New Numbers: %d, %d, %d, %d", new_recs, new_answer, new_ug_answer, status_score);
+                
+                //[defaults setObject:[results objectForKey:@"answers"] forKey:@"num_answers"];
+                //[defaults setObject:[results objectForKey:@"ug_answers"] forKey:@"num_ug_answers"];
+                
+                if(new_inc != 0)
+                {
+                    //NSLog(@"Incremented by %d!", new_inc);
+                    [[self.tabBarController.tabBar.items objectAtIndex:0] setBadgeValue:[self incrementString:oldvalue : new_inc]];
+                }
+                //changes the old value
+                [defaults setInteger:[[results objectForKey:@"last"] intValue] forKey:@"lastpolled"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"updateProfileBadgeCounts" object:nil userInfo:nil];
+            }
+        }
+                                       failure:nil];
+    }
+
+}
 
 @end

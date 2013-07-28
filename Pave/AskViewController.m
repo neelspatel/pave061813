@@ -211,13 +211,14 @@
                                     
                                     self.rightURL = @"";
                                     self.rightURLView.text = @"";
-                                    
+
+                                    NSString *question = [NSString stringWithString: self.question.text];
                                     self.question.text = @"(tap here to ask your question!)";
                                     
                                     self.currentlyCreating = NO;
                                     [self updateCreateButton];
                                     
-                                    [self performSegueWithIdentifier:@"finishedSubmitting" sender:self];                                    
+                                    [self performSegueWithIdentifier:@"finishedSubmitting" sender:question];
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                     //hides
                                     [MBProgressHUD hideHUDForView:self.view animated:YES];
@@ -649,8 +650,7 @@
     }
     else if([segue.identifier isEqualToString:@"finishedSubmitting"]) {
         ConfirmationViewController *destViewController = segue.destinationViewController;
-        destViewController.questionText = self.question.text;
-
+        destViewController.questionText = sender;
     }
 }
 
