@@ -438,6 +438,10 @@
                 //saves and updates data
                 [self setupFacebookInformation];
                 
+                // facebook ID should be stored at this point
+                AppDelegate *delegate = [UIApplication sharedApplication];
+                [delegate updatePushNotifiactionAlias];
+                
                 [self createUser: session];
                 
                 //hides elements on screen
@@ -454,7 +458,6 @@
             }
         }];
         NSLog(@"Exited block");
-    
 }
 
 - (IBAction)instructionButtonTouch:(id)sender {
@@ -464,8 +467,6 @@
         [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateNormal];
         [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateSelected];
         [self.instructionButton1 setBackgroundImage:[UIImage imageNamed:@"instruction2Large.png"] forState: UIControlStateHighlighted];
-        
-        
     } else {
 
         [self dismissViewControllerAnimated:NO completion:nil];

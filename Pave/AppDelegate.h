@@ -23,4 +23,7 @@
 @property (nonatomic, assign) BOOL notificationPopupIsOpen;
 @property (nonatomic, assign) BOOL firstLaunch;
 
+-(void) handleNotification:(NSDictionary *) notification;
+-(BOOL)updatePushNotifiactionAlias;
+
 @end
