@@ -32,21 +32,21 @@
 
 -(void) viewDidAppear:(BOOL)animated
 {
-    //NSLog(@"Dictionary is %@", self.typeDictionary);
+    NSLog(@"Dictionary is %@", self.typeDictionary);
     NSString *key = [[self.typeDictionary allKeys] objectAtIndex:0];
-    //NSLog(@"Key is %@", key);
+    NSLog(@"Key is %@", key);
     self.header.text = key;
     
-    //NSLog(@"Loaded the view ");
+    NSLog(@"Loaded the view ");
     [super viewDidAppear:animated];
 }
 
 - (void)viewDidLoad
 {
-    //NSLog(@"Hello loaded");
+    NSLog(@"Hello loaded");
     [super viewDidLoad];
     
-    //NSLog(@"Dictionary is %@", self.typeDictionary);
+    NSLog(@"Dictionary is %@", self.typeDictionary);
     
     
     // Uncomment the following line to preserve selection between presentations.
@@ -195,12 +195,12 @@
 
 -(void)saveAnswer:(TrendingObjectCell *) cell: (BOOL) left
 {
-    //NSLog(@"Saving!");
+    NSLog(@"Saving!");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //NSLog(@"cur id: %@", cell.currentId);
-    //NSLog(@"left id: %d", cell.leftProductId);
-    //NSLog(@"right id: %d", cell.rightProductId);
-    //NSLog(@"question id: %d", cell.questionId);
+    NSLog(@"cur id: %@", cell.currentId);
+    NSLog(@"left id: %d", cell.leftProductId);
+    NSLog(@"right id: %d", cell.rightProductId);
+    NSLog(@"question id: %d", cell.questionId);
     
     if(left == true)
     {
@@ -209,9 +209,9 @@
         
         [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
                                     parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                        //NSLog(@"successfully saved answer");
+                                        NSLog(@"successfully saved answer");
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        //NSLog(@"error saving answer %@", error);
+                                        NSLog(@"error saving answer %@", error);
                                     }];
         
     }
@@ -222,9 +222,9 @@
         
         [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
                                     parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                        //NSLog(@"successfully saved answer");
+                                        NSLog(@"successfully saved answer");
                                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                        //NSLog(@"error saving answer %@", error);
+                                        NSLog(@"error saving answer %@", error);
                                     }];
         
     }
@@ -243,10 +243,10 @@
         CGPoint pointInCell = [tap locationInView:cell];
         
         NSMutableDictionary *currentObject = [[[self.typeDictionary allValues] objectAtIndex:0] objectAtIndex:indexPath.row];
-        //NSLog(@"Current object is (old): %@", currentObject);
+        NSLog(@"Current object is (old): %@", currentObject);
         
         if (CGRectContainsPoint(cell.leftProduct.frame, pointInCell)) {
-            //NSLog(@"In the left image!");
+            NSLog(@"In the left image!");
             //checks if this one has been answered yet
             if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
             {
@@ -261,11 +261,11 @@
             }
             else
             {
-                //NSLog(@"Already answered...");
+                NSLog(@"Already answered...");
             }
             
         } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
-            //NSLog(@"In the right image!");
+            NSLog(@"In the right image!");
             if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
             {
                 //saves it as read - false means right
@@ -279,12 +279,12 @@
             }
             else
             {
-                //NSLog(@"Already answered...");
+                NSLog(@"Already answered...");
             }
             
         }
         else {
-            //NSLog(@"Not in the image...");
+            NSLog(@"Not in the image...");
         }
     }
 }
@@ -306,7 +306,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"***REQUESTED %d ***", indexPath.row);
+    NSLog(@"***REQUESTED %d ***", indexPath.row);
     
     static NSString *CellIdentifier = @"Cell";
     TrendingObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -329,7 +329,7 @@
     
     cell.question.text = currentObject[@"question_text"];
     cell.leftNum.text = [NSString stringWithFormat:@"%@", currentObject[@"product1_count"]];
-    //NSLog(@"about to get rightNum");
+    NSLog(@"about to get rightNum");
     cell.rightNum.text = [NSString stringWithFormat:@"%@",currentObject[@"product2_count"]];
     
     //shows the number of responses so far
@@ -364,7 +364,7 @@
     
     @try
     {
-        //NSLog(@"leftFriendId");
+        NSLog(@"leftFriendId");
         cell.leftFriendId = [(currentObject[@"fbFriend1"][0]) integerValue];
     }
     @catch (NSException *e)
@@ -374,7 +374,7 @@
     
     @try
     {
-        //NSLog(@"rightFriendId");
+        NSLog(@"rightFriendId");
         //cell.rightFriendId = (int) [NSString stringWithFormat:@"%@", (currentObject[@"fbFriend2"][0])];
         cell.rightFriendId = [(currentObject[@"fbFriend2"][0]) integerValue];
     }
@@ -396,7 +396,7 @@
     //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
     profileURL = [profileURL stringByAppendingString:cell.currentId];
     profileURL = [profileURL stringByAppendingString:@"/picture"];
-    //NSLog(@"Before loading profile picture");
+    NSLog(@"Before loading profile picture");
     [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
                         placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
             
@@ -432,7 +432,7 @@
     cell.rightProduct.layer.cornerRadius = 2;
     cell.rightProduct.clipsToBounds = YES;
     
-    //NSLog(@"Read status is %@", [self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]);
+    NSLog(@"Read status is %@", [self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]);
     //sets it as read if not set yet
     if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
     {
@@ -444,7 +444,7 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(TrendingObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"About to cancel cell");
+    NSLog(@"About to cancel cell");
     // free up the requests for each ImageView
     [cell.profilePicture cancelCurrentImageLoad];
     [cell.rightProduct cancelCurrentImageLoad];
@@ -507,7 +507,7 @@
 
 
 - (IBAction)back:(id)sender {
-    //NSLog(@"Clicked");
+    NSLog(@"Clicked");
     [self performSegueWithIdentifier:@"trendingItemBackToList" sender:nil];
 }
 @end

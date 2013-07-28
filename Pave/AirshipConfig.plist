@@ -5,7 +5,7 @@
 	<key>analyticsEnabled</key>
 	<true/>
 	<key>inProduction</key>
-	<false/>
+	<true/>
 	<key>developmentAppKey</key>
 	<string>kiYbVYRvS_a39TWEkLBZsA</string>
 	<key>developmentAppSecret</key>

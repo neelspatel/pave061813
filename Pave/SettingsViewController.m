@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //NSLog(@"Created the settings page");
+    NSLog(@"Created the settings page");
 	// Do any additional setup after loading the view.
 }
 
@@ -40,18 +40,18 @@
 }
 
 - (IBAction)dismissSettingsPushed:(id)sender {
-    //NSLog(@"Trying to dismiss");
+    NSLog(@"Trying to dismiss");
     [self dismissViewControllerAnimated:NO completion:nil];
 }
 
 - (IBAction)dismiss:(id)sender {
-    //NSLog(@"Trying to dismiss");
+    NSLog(@"Trying to dismiss");
     [self dismissViewControllerAnimated:YES completion:nil];
 
 }
 
 - (IBAction)feedbackPushed:(id)sender {
-    //NSLog(@"Calledemail");
+    NSLog(@"Calledemail");
     MFMailComposeViewController *mailer = [[MFMailComposeViewController alloc] init];
     mailer.mailComposeDelegate = self;
     [mailer setSubject:@"Side, we need to talk..."];
@@ -68,19 +68,19 @@
     switch (result)
     {
         case MFMailComposeResultCancelled:
-            //NSLog(@"Mail cancelled: you cancelled the operation and no email message was queued.");
+            NSLog(@"Mail cancelled: you cancelled the operation and no email message was queued.");
             break;
         case MFMailComposeResultSaved:
-            //NSLog(@"Mail saved: you saved the email message in the drafts folder.");
+            NSLog(@"Mail saved: you saved the email message in the drafts folder.");
             break;
         case MFMailComposeResultSent:
-            //NSLog(@"Mail send: the email message is queued in the outbox. It is ready to send.");
+            NSLog(@"Mail send: the email message is queued in the outbox. It is ready to send.");
             break;
         case MFMailComposeResultFailed:
-            //NSLog(@"Mail failed: the email message was not saved or queued, possibly due to an error.");
+            NSLog(@"Mail failed: the email message was not saved or queued, possibly due to an error.");
             break;
         default:
-            //NSLog(@"Mail not sent.");
+            NSLog(@"Mail not sent.");
             break;
     }
     // Remove the mail view
@@ -94,14 +94,14 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     NSArray *topFriends = [[defaults objectForKey:@"top_friends"]subarrayWithRange:NSMakeRange(0, 10)];
-    //NSLog(@"Top Friends in facebook: %@", topFriends);
+    NSLog(@"Top Friends in facebook: %@", topFriends);
     // for current users I guess
     if (!topFriends)
          topFriends = [[defaults objectForKey:@"friends"]subarrayWithRange:NSMakeRange(0, 10)];
     
     NSMutableDictionary* params =   [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                      [topFriends componentsJoinedByString:@","], @"suggestions", nil];
-    //NSLog(@"Active session: %@", [FBSession activeSession]);
+    NSLog(@"Active session: %@", [FBSession activeSession]);
     [FBWebDialogs presentRequestsDialogModallyWithSession:[FBSession activeSession]
                                                   message:[NSString stringWithFormat:@"Get Side, the hottest new social discovery app!"]
                                                     title:nil
@@ -109,13 +109,13 @@
                                                   handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                       if (error) {
                                                           // Case A: Error launching the dialog or sending request.
-                                                          //NSLog(@"Error sending request.");
+                                                          NSLog(@"Error sending request.");
                                                       } else {
                                                           if (result == FBWebDialogResultDialogNotCompleted) {
                                                               // Case B: User clicked the "x" icon
-                                                              //NSLog(@"User canceled request.");
+                                                              NSLog(@"User canceled request.");
                                                           } else {
-                                                              //NSLog(@"Request Sent.");
+                                                              NSLog(@"Request Sent.");
                                                           }
                                                       }}];
     
@@ -129,7 +129,7 @@
 
 - (IBAction)logoutPushed:(id)sender {
   
-    //NSLog(@"About to logout");
+    NSLog(@"About to logout");
     
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
@@ -152,7 +152,7 @@
     
     [self dismissViewControllerAnimated:NO completion:
         ^(void){
-            //NSLog(@"Trying to present main feed");
+            NSLog(@"Trying to present main feed");
             delegate.tabBarController.selectedViewController = [delegate.tabBarController.viewControllers objectAtIndex:2];
         
         }];

@@ -15,7 +15,7 @@
 
 + (id) notificationPopupCreateWithData: (NSDictionary *) data
 {
-    //NSLog(@"Dataforrec: %@", data);
+    NSLog(@"Dataforrec: %@", data);
     NotificationPopupView *notificationPopup = [[[NSBundle mainBundle] loadNibNamed:@"NotificationPopup" owner:nil options:nil] lastObject];
     
     notificationPopup.label.text = [data objectForKey:@"rec_text"];
@@ -35,7 +35,7 @@
 -(void) baseInit
 {
     // set up background
-    //NSLog(@"This is called");
+    NSLog(@"This is called");
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"iphone4popup_translucent_layer_wbackground.png"]];
     backgroundImage.frame = CGRectMake(0, 0, 320, 327);        
     

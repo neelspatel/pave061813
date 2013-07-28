@@ -35,9 +35,11 @@
     if (launchOptions != nil)
     {
         NSDictionary *tmpDic = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        //NSLog(@"Notification: %@", tmpDic);
+        NSLog(@"Notification: %@", tmpDic);
         [self handleNotification:tmpDic];
     }
+    
+    self.inGroup = NO;
     
     //self.didCompleteProfileInformation = YES;
     // Assign tab bar item with titles
@@ -108,16 +110,15 @@
     
     self.notificationPopupIsOpen = NO;
     
-    ////NSLog(@"APP DELEGATE: %d", self.currentStatusScore);
+    //NSLog(@"APP DELEGATE: %d", self.currentStatusScore);
     
     // Override point for customization after application launch.
     
-<<<<<<< HEAD
-    ////NSLog(@"About to switch to group");
-=======
-    NSLog(@"About to switch to group");
->>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
+    //NSLog(@"About to switch to group");
     //[self switchToProfileWithActive:@"questions"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(nowInGroup) name:@"enteringGroup" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(leavingGroup) name:@"leavingGroup" object:nil];
     return YES;
     
 }
@@ -129,9 +130,9 @@
     NSString *userID = [defaults objectForKey:@"id"];
     if (userID)
     {
-        //NSLog(@"In user id block: %@", userID);
+        NSLog(@"In user id block: %@", userID);
         [UAPush shared].alias = userID;
-        //NSLog(@"UA Push alias: %@", [UAPush shared].alias);
+        NSLog(@"UA Push alias: %@", [UAPush shared].alias);
         [[UAPush shared] updateRegistration];
         return YES;
     }
@@ -144,7 +145,7 @@
 -(void)switchToGameFeed
 {
     [self.tabBarController setSelectedIndex:2];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"getfeedObject" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"getFeedObjects" object:nil];
 }
 
 -(void)switchToGroups
@@ -198,11 +199,11 @@
         int polltime = 0;
         if([defaults integerForKey:@"lastpolled"] != nil)
         {
-            ////NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
+            //NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
             polltime = [defaults integerForKey:@"lastpolled"];
             
         }
-        ////NSLog(@"Trying to get the polls");
+        //NSLog(@"Trying to get the polls");
         
         // checks if the the user is first timer         
         NSString *path = @"/data/getnotification/";
@@ -210,48 +211,42 @@
         
         path = [path stringByAppendingString:@"/"];
         
-        ////NSLog(@"Path is %@", path);
+        //NSLog(@"Path is %@", path);
         
         [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
                 if (results) {
-                    //NSLog(@"Results %@", results);
+                    NSLog(@"Results %@", results);
                     NSInteger new_inc = [[results objectForKey:@"recs"] intValue] + [[results objectForKey:@"answers"] intValue] + [[results objectForKey:@"ug_answers"] intValue];
-                    ////NSLog(@"%d", new_inc);
+                    //NSLog(@"%d", new_inc);
                     
                     NSInteger status_score = [[results objectForKey:@"status_score"] intValue];
                     if (!status_score)
                     {
-                        //NSLog(@"Status score is null");
+                        NSLog(@"Status score is null");
                         status_score = 0;
                     }
+                    
                     if (self.currentStatusScore != status_score)
                     {
-                        ////NSLog(@"ABOUT TO UPDATE STATUS SCORE");
+                        //NSLog(@"ABOUT TO UPDATE STATUS SCORE");
                         self.currentStatusScore = status_score;
                         NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
-<<<<<<< HEAD
 
                         if (!self.inGroup)
                             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
-=======
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
->>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
                     }
                     
-                    self.currentStatusScore = 30;
-                    
-                    
                     // broadcast notification to everyone
-                    if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen))
+                    if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen) && (!self.inGroup))
                     {
-                        //NSLog(@"Notification is coming up!");
+                        NSLog(@"Notification is coming up!");
                         self.notificationPopupIsOpen = YES;
                         [self performSelector:@selector(sendInsightReady) withObject:nil afterDelay:0.5];
                     } else
                     {
-                        //NSLog(@"Notification is not ready");
+                        NSLog(@"Notification is not ready");
                     }
-
+                    
                     NSInteger old_recs = [defaults integerForKey:@"num_recs"];
                     if (!old_recs)
                         old_recs = 0;
@@ -276,15 +271,15 @@
                     
                     [defaults synchronize];
                     
-                    ////NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
-                    //NSLog(@"New Numbers: %d, %d, %d, %d", new_recs, new_answer, new_ug_answer, status_score);
+                    //NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
+                    NSLog(@"New Numbers: %d, %d, %d, %d", new_recs, new_answer, new_ug_answer, status_score);
                     
                     //[defaults setObject:[results objectForKey:@"answers"] forKey:@"num_answers"];
                     //[defaults setObject:[results objectForKey:@"ug_answers"] forKey:@"num_ug_answers"];
                     
                     if(new_inc != 0)
                     {
-                        ////NSLog(@"Incremented by %d!", new_inc);
+                        //NSLog(@"Incremented by %d!", new_inc);
                         [[self.tabBarController.tabBar.items objectAtIndex:0] setBadgeValue:[self incrementString:oldvalue : new_inc]];
                     }
                     //changes the old value
@@ -294,28 +289,25 @@
                 }
             }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                ////NSLog(@"error getting notifications from database %@", error);
+                //NSLog(@"error getting notifications from database %@", error);
             }];    
     }
 }
 
-<<<<<<< HEAD
 -(void)nowInGroup
 {
-    //NSLog(@"now in group");
+    NSLog(@"now in group");
     self.inGroup = YES;
 }
 -(void)leavingGroup
 {
-    //NSLog(@"Leaving group");
+    NSLog(@"Leaving group");
     self.inGroup = NO;
 }
-=======
->>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
 
 -(void) handleNotification:(NSDictionary *) notification
 {
-    //NSLog(@"Trying to handle notification: ");
+    NSLog(@"Trying to handle notification: ");
     NSString *action = [[notification objectForKey:@"data"] objectForKey:@"action"];
     if ([action isEqualToString:@"switchToGroups"])
     {
@@ -409,7 +401,6 @@
 }
 
 
-<<<<<<< HEAD
 -(void) refreshNotificationsFromPushNotification
 {
     if(self.session.state == FBSessionStateOpen)
@@ -426,11 +417,11 @@
         int polltime = 0;
         if([defaults integerForKey:@"lastpolled"] != nil)
         {
-            ////NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
+            //NSLog(@"(old time was %d", [defaults integerForKey:@"lastpolled"]);
             polltime = [defaults integerForKey:@"lastpolled"];
             
         }
-        ////NSLog(@"Trying to get the polls");
+        //NSLog(@"Trying to get the polls");
         
         // checks if the the user is first timer
         NSString *path = @"/data/getnotification/";
@@ -438,24 +429,24 @@
         
         path = [path stringByAppendingString:@"/"];
         
-        ////NSLog(@"Path is %@", path);
+        //NSLog(@"Path is %@", path);
         
         [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
             if (results) {
-                //NSLog(@"Results %@", results);
+                NSLog(@"Results %@", results);
                 NSInteger new_inc = [[results objectForKey:@"recs"] intValue] + [[results objectForKey:@"answers"] intValue] + [[results objectForKey:@"ug_answers"] intValue];
-                ////NSLog(@"%d", new_inc);
+                //NSLog(@"%d", new_inc);
                 
                 NSInteger status_score = [[results objectForKey:@"status_score"] intValue];
                 if (!status_score)
                 {
-                    //NSLog(@"Status score is null");
+                    NSLog(@"Status score is null");
                     status_score = 0;
                 }
                 
                 if (self.currentStatusScore != status_score)
                 {
-                    ////NSLog(@"ABOUT TO UPDATE STATUS SCORE");
+                    //NSLog(@"ABOUT TO UPDATE STATUS SCORE");
                     self.currentStatusScore = status_score;
                     NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
                     if (!self.inGroup)
@@ -465,12 +456,12 @@
                 // broadcast notification to everyone
                 if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen) && (!self.inGroup))
                 {
-                    //NSLog(@"Notification is coming up!");
+                    NSLog(@"Notification is coming up!");
                     self.notificationPopupIsOpen = YES;
                     [self performSelector:@selector(sendInsightReady) withObject:nil afterDelay:0.5];
                 } else
                 {
-                    //NSLog(@"Notification is not ready");
+                    NSLog(@"Notification is not ready");
                 }
                 
                 NSInteger old_recs = [defaults integerForKey:@"num_recs"];
@@ -497,15 +488,15 @@
                 
                 [defaults synchronize];
                 
-                ////NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
-                //NSLog(@"New Numbers: %d, %d, %d, %d", new_recs, new_answer, new_ug_answer, status_score);
+                //NSLog(@"Numbers: %d, %d, %d, %d", old_recs, old_answers, old_ug_answers, status_score);
+                NSLog(@"New Numbers: %d, %d, %d, %d", new_recs, new_answer, new_ug_answer, status_score);
                 
                 //[defaults setObject:[results objectForKey:@"answers"] forKey:@"num_answers"];
                 //[defaults setObject:[results objectForKey:@"ug_answers"] forKey:@"num_ug_answers"];
                 
                 if(new_inc != 0)
                 {
-                    ////NSLog(@"Incremented by %d!", new_inc);
+                    //NSLog(@"Incremented by %d!", new_inc);
                     [[self.tabBarController.tabBar.items objectAtIndex:0] setBadgeValue:[self incrementString:oldvalue : new_inc]];
                 }
                 //changes the old value
@@ -518,6 +509,4 @@
 
 }
 
-=======
->>>>>>> parent of 207cd8e... before final merge with Neel on Sunday morning
 @end

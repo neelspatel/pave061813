@@ -31,7 +31,7 @@
 
 - (void) viewDidAppear:(BOOL)animated
 {
-    //NSLog(@"Table list appeared");    
+    NSLog(@"Table list appeared");    
     CGRect windowFrame = [UIScreen mainScreen].applicationFrame;
     
     [self.navigationController.navigationBar setFrame:CGRectMake(0,16, windowFrame.size.width, 42)];
@@ -44,7 +44,7 @@
 
 - (void)viewDidLoad
 {
-    //NSLog(@"Table list loaded");
+    NSLog(@"Table list loaded");
     [super viewDidLoad];
 	// refresh data from here 
     // Do any additional setup after loading the view.    
@@ -76,7 +76,7 @@
 
 - (void) getFeedObjects
 {
-    //NSLog(@"About to get feed objects in trending list view controller");
+    NSLog(@"About to get feed objects in trending list view controller");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *path = @"/data/gettrendingobjects/";
@@ -86,14 +86,14 @@
     [[PaveAPIClient sharedClient] postPath:path parameters:nil
         success:^(AFHTTPRequestOperation *operation, id results) {
         if (results) {
-            //NSLog(@"Just finished getting results: %@", results);
+            NSLog(@"Just finished getting results: %@", results);
             self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-            //NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+            NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
             self.doneLoadingFeed = YES;
             [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
         } }
             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       //NSLog(@"error logging in user to Django %@", error);
+                                       NSLog(@"error logging in user to Django %@", error);
         }];
 }
 
@@ -126,7 +126,7 @@
     NSDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
 
     
-    //NSLog(@"Changing cell style in view controller..");
+    NSLog(@"Changing cell style in view controller..");
     UIImageView *av = [[UIImageView alloc] initWithFrame:CGRectMake(20, 20, 277, 58)];
     
     av.backgroundColor = [UIColor clearColor];
@@ -139,7 +139,7 @@
     cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected_trending_topic_box.png"]];
     
     cell.label.text = [[currentObject allKeys] objectAtIndex:0];
-    //NSLog(@"Set text to %@", [[currentObject allKeys] objectAtIndex:0]);
+    NSLog(@"Set text to %@", [[currentObject allKeys] objectAtIndex:0]);
     
     return cell;        
 }
@@ -198,7 +198,7 @@
 
 
 - (IBAction)refresh:(id)sender {
-    //NSLog(@"Refreshing frmo button click");
+    NSLog(@"Refreshing frmo button click");
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){

@@ -41,7 +41,7 @@
 - (void)viewDidLoad
 {
     
-    //NSLog(@"View loaded. group is: %@", self.group);
+    NSLog(@"View loaded. group is: %@", self.group);
     [super viewDidLoad];
     
     [self setUpStatusBar];
@@ -97,12 +97,12 @@
 
 - (void)refreshWithPull:(UIRefreshControl *)refreshControl
 {
-    //NSLog(@"reloading personal datapre");
+    NSLog(@"reloading personal datapre");
     /**
     self.feedObjects = [NSMutableArray array];
     self.readStatus = [[NSMutableDictionary alloc] init];
     self.anonStatus = [[NSMutableDictionary alloc] init];
-    //NSLog(@"reloading personal data"); */
+    NSLog(@"reloading personal data"); */
     
     [self getFeedObjectsFromPull];
 }
@@ -127,7 +127,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    //NSLog(@"Getting called request insight in Group Game");
+    NSLog(@"Getting called request insight in Group Game");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
@@ -143,7 +143,7 @@
         }
     }
                                    failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       //NSLog(@"Failure while getting rec");
+                                       NSLog(@"Failure while getting rec");
                                    }
      ];
     
@@ -241,20 +241,20 @@
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     
-    //NSLog(@"Session in post to fb is %@", session);
+    NSLog(@"Session in post to fb is %@", session);
     
     
     [FBWebDialogs presentRequestsDialogModallyWithSession:session
                                                   message:@"I just answered a question about you. Check out what I said on Side!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
                                                       if (error) {
-                                                          //NSLog(@"Error");
+                                                          NSLog(@"Error");
                                                           // Case A: Error launching the dialog or sending request.
                                                       } else {
                                                           if (result == FBWebDialogResultDialogNotCompleted) {
                                                               //Case B: User clicked the "x" icon
-                                                              //NSLog(@"closed");
+                                                              NSLog(@"closed");
                                                           } else {
-                                                              //NSLog(@"Sent");
+                                                              NSLog(@"Sent");
                                                               //Case C: Dialog shown and the user clicks Cancel or Send
                                                           }
                                                       }
@@ -264,10 +264,10 @@
 -(void)saveAnswer:(FeedObjectCell *) cell: (BOOL) left
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    ////NSLog(@"cur id: %@", cell.currentId);
-    ////NSLog(@"left id: %d", cell.leftProductId);
-    ////NSLog(@"right id: %d", cell.rightProductId);
-    ////NSLog(@"question id: %d", cell.questionId);
+    //NSLog(@"cur id: %@", cell.currentId);
+    //NSLog(@"left id: %d", cell.leftProductId);
+    //NSLog(@"right id: %d", cell.rightProductId);
+    //NSLog(@"question id: %d", cell.questionId);
     
     NSDictionary *params;
     NSIndexPath* path = [self.tableView indexPathForCell:cell];
@@ -278,7 +278,7 @@
     {
         if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])
         {
-            //NSLog(@"Anon!");
+            NSLog(@"Anon!");
             params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
         else
@@ -293,7 +293,7 @@
     else
     {
         if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])        {
-            //NSLog(@"Anon!");
+            NSLog(@"Anon!");
             params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
         else
@@ -305,19 +305,19 @@
     
     [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                    //NSLog(@"successfully saved answer");
+                                    NSLog(@"successfully saved answer");
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    //NSLog(@"error saving answer %@", error);
+                                    NSLog(@"error saving answer %@", error);
                                 }];
 }
 
 -(void)changeSavedAnswer:(FeedObjectCell *) cell: (BOOL) left
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    //////NSLog(@"cur id: %@", cell.currentId);
-    //////NSLog(@"left id: %d", cell.leftProductId);
-    //////NSLog(@"right id: %d", cell.rightProductId);
-    //////NSLog(@"question id: %d", cell.questionId);
+    ////NSLog(@"cur id: %@", cell.currentId);
+    ////NSLog(@"left id: %d", cell.leftProductId);
+    ////NSLog(@"right id: %d", cell.rightProductId);
+    ////NSLog(@"question id: %d", cell.questionId);
     
     NSMutableDictionary *params;
     NSIndexPath* path = [self.tableView indexPathForCell:cell];
@@ -328,7 +328,7 @@
     {
         if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])
         {
-            //////NSLog(@"Anon!");
+            ////NSLog(@"Anon!");
             params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_anonymous", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
         else
@@ -340,7 +340,7 @@
     else
     {
         if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])        {
-            //////NSLog(@"Anon!");
+            ////NSLog(@"Anon!");
             params = [NSMutableDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"is_", @"100006184542452", @"id_facebookID", cell.currentId, @"id_forFacebookID", [NSString stringWithFormat:@"%d", cell.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", cell.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", cell.questionId], @"id_question", nil];
         }
         else
@@ -354,9 +354,9 @@
     
     [[PaveAPIClient sharedClient] postPath:url
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                    //////NSLog(@"successfully saved answer");
+                                    ////NSLog(@"successfully saved answer");
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    //////NSLog(@"error saving answer %@", error);
+                                    ////NSLog(@"error saving answer %@", error);
                                 }];            
 }
 
@@ -371,10 +371,10 @@
         CGPoint pointInCell = [tap locationInView:cell];
         
         NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
-        //NSLog(@"Current object is (old): %@", currentObject);
+        NSLog(@"Current object is (old): %@", currentObject);
         
         if (CGRectContainsPoint(cell.leftProduct.frame, pointInCell)) {
-            //NSLog(@"In the left image!");
+            NSLog(@"In the left image!");
             //checks if this one has been answered yet
             if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  == nil)
             {
@@ -392,7 +392,7 @@
             }
             else //in the future we will hit a different endpoint
             {
-                //NSLog(@"Already answered...");
+                NSLog(@"Already answered...");
                 //saves it as read - true means left
                 [self.readStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
                
@@ -406,7 +406,7 @@
             }
             
         } else if (CGRectContainsPoint(cell.rightProduct.frame, pointInCell)) {
-            //NSLog(@"In the right image!");
+            NSLog(@"In the right image!");
             if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] == nil)
             {
                 //saves it as read - false means right
@@ -422,7 +422,7 @@
             }
             else
             {
-                //NSLog(@"Already answered...");
+                NSLog(@"Already answered...");
                 //saves it as read - false means right
                 [self.readStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
                 
@@ -438,10 +438,10 @@
         else if (CGRectContainsPoint(cell.onOffButton.frame, pointInCell)) {
             if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] == nil)
             {
-                //NSLog(@"Selected to switch anonymous");
+                NSLog(@"Selected to switch anonymous");
                 if([[self.anonStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] isEqualToNumber:[NSNumber numberWithBool:TRUE]])//if we're anonymous
                 {
-                    //NSLog(@"Turning anon off for %d", indexPath.row);
+                    NSLog(@"Turning anon off for %d", indexPath.row);
                     //saves it as public - false means public
                     [self.anonStatus setObject:[NSNumber numberWithBool:FALSE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
                     
@@ -450,7 +450,7 @@
                 }
                 else
                 {
-                    //NSLog(@"Turning anon on for %d", indexPath.row);
+                    NSLog(@"Turning anon on for %d", indexPath.row);
                     //saves it as anon - true means anon
                     [self.anonStatus setObject:[NSNumber numberWithBool:TRUE] forKey:[NSString stringWithFormat:@"%d", indexPath.row]];
                     
@@ -461,14 +461,14 @@
             
         }
         else {
-            //NSLog(@"Not in the image...");
+            NSLog(@"Not in the image...");
         }
     }
 }
 
 - (void) getFeedObjects
 {
-    //NSLog(@"Getting feed objects now");
+    NSLog(@"Getting feed objects now");
 
     //activity indicator
     UIActivityIndicatorView *ai = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -484,16 +484,16 @@
         FBSession* session = delegate.session;
         
         if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
-            //NSLog(@"About to get feed objects");
+            NSLog(@"About to get feed objects");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/groupgetlistquestions/";
             path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
             //path = [path stringByAppendingString:@"1"];
             path = [path stringByAppendingString:@"/"];
-            //NSLog(@"Path is %@", path);
+            NSLog(@"Path is %@", path);
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [self.group objectForKey:@"friend_ids"], @"group", nil];
-            //NSLog(@"Params are %@", params);
+            NSLog(@"Params are %@", params);
             
             NSData *jsonData2 = [NSJSONSerialization dataWithJSONObject:[self.group objectForKey:@"friend_ids"] options:NSJSONWritingPrettyPrinted error:nil];
             NSString *jsonString = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
@@ -509,9 +509,9 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    //NSLog(@"Just finished getting group results: %@", results);
+                    NSLog(@"Just finished getting group results: %@", results);
                     self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                    //NSLog(@"Just finished getting group feed ids: %@", self.feedObjects);
+                    NSLog(@"Just finished getting group feed ids: %@", self.feedObjects);
                     self.reloadingFeedObject = NO;
                     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     [self.tableView reloadData];
@@ -521,7 +521,7 @@
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                               //NSLog(@"error getting feed objects from database %@", error);
+                                               NSLog(@"error getting feed objects from database %@", error);
                                                if(error.code != -999)
                                                {                                                   
                                                    self.reloadingFeedObject = NO;
@@ -537,7 +537,7 @@
 
 - (void) getFeedObjectsFromPull
 {
-    //NSLog(@"Getting feed objects now");
+    NSLog(@"Getting feed objects now");
     //[MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC);
@@ -547,16 +547,16 @@
         FBSession* session = delegate.session;
         
         if (session.state == FBSessionStateCreatedTokenLoaded || session.state == FBSessionStateOpen) {
-            //NSLog(@"About to get feed objects");
+            NSLog(@"About to get feed objects");
             
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             NSString *path = @"/data/groupgetlistquestions/";
             path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
             //path = [path stringByAppendingString:@"1"];
             path = [path stringByAppendingString:@"/"];
-            //NSLog(@"Path is %@", path);
+            NSLog(@"Path is %@", path);
             NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys: [self.group objectForKey:@"friend_ids"], @"group", nil];
-            //NSLog(@"Params are %@", params);
+            NSLog(@"Params are %@", params);
             
             NSData *jsonData2 = [NSJSONSerialization dataWithJSONObject:[self.group objectForKey:@"friend_ids"] options:NSJSONWritingPrettyPrinted error:nil];
             NSString *jsonString = [[NSString alloc] initWithData:jsonData2 encoding:NSUTF8StringEncoding];
@@ -571,7 +571,7 @@
                     //{
                     //    [ids addObject:current[@"id"]];
                     //}
-                    //NSLog(@"Just finished getting group results: %@", results);
+                    NSLog(@"Just finished getting group results: %@", results);
                     
                     //clears data
                     self.feedObjects = [NSMutableArray array];
@@ -579,7 +579,7 @@
                     self.anonStatus = [[NSMutableDictionary alloc] init];
                     
                     self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-                    //NSLog(@"Just finished getting group feed ids: %@", self.feedObjects);
+                    NSLog(@"Just finished getting group feed ids: %@", self.feedObjects);
                     self.reloadingFeedObject = NO;
                     [self.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:NO];
                     [self.tableView reloadData];
@@ -588,7 +588,7 @@
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                               //NSLog(@"error getting feed objects from database %@", error);
+                                               NSLog(@"error getting feed objects from database %@", error);
                                                if(error.code != -999)
                                                {
                                                    self.reloadingFeedObject = NO;
@@ -630,7 +630,7 @@
 {
     if(self.reloadingFeedObject)
     {
-        //NSLog(@"Still reloading");
+        NSLog(@"Still reloading");
         FeedObjectCell *cell = [[FeedObjectCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
         return cell;
 
@@ -638,12 +638,12 @@
     else
     {
         
-        //NSLog(@"***REQUESTED %d ***", indexPath.row);
+        NSLog(@"***REQUESTED %d ***", indexPath.row);
         static NSString *CellIdentifier = @"Cell";
         FeedObjectCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:indexPath.row];
         
-        //NSLog(@"***REQUESTED %@ ***", currentObject);
+        NSLog(@"***REQUESTED %@ ***", currentObject);
         
         // Configure the cell...
         cell.profilePicture.clipsToBounds = YES;
@@ -683,7 +683,7 @@
         }
         else if(total ==0)
         {
-            //NSLog(@"Total was 0");
+            NSLog(@"Total was 0");
             cell.responseCount.text = @"Be the first to answer!";
         }
         else
@@ -699,7 +699,7 @@
         
         @try
         {
-            //NSLog(@"leftFriendId");
+            NSLog(@"leftFriendId");
             cell.leftFriendId = [(currentObject[@"fbFriend1"][0]) integerValue];
         }
         @catch (NSException *e)
@@ -709,7 +709,7 @@
         
         @try
         {
-            //NSLog(@"rightFriendId");
+            NSLog(@"rightFriendId");
             cell.rightFriendId = [(currentObject[@"fbFriend2"][0]) integerValue];
         }
         @catch (NSException *e)
@@ -730,7 +730,7 @@
         //profileURL = [profileURL stringByAppendingString:[NSString stringWithFormat:@"%d",cell.currentId] ];
         profileURL = [profileURL stringByAppendingString:cell.currentId];
         profileURL = [profileURL stringByAppendingString:@"/picture?type=normal"];
-        //NSLog(@"Before loading profile picture");
+        NSLog(@"Before loading profile picture");
         [cell.profilePicture setImageWithURL:[NSURL URLWithString:profileURL]
                             placeholderImage:[UIImage imageNamed:@"profile_icon.png"]];
         
@@ -762,7 +762,7 @@
         //sets it as read if not set yet
         if([self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]]  != nil)
         {
-            //NSLog(@"Displaying %d as read", indexPath.row);
+            NSLog(@"Displaying %d as read", indexPath.row);
             [self displayAsRead:cell :[[self.readStatus valueForKey:[NSString stringWithFormat:@"%d", indexPath.row]] boolValue]];
         }
         
@@ -786,7 +786,7 @@
 
 - (void)tableView:(UITableView *)tableView didEndDisplayingCell:(FeedObjectCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //NSLog(@"About to cancel group cell");
+    NSLog(@"About to cancel group cell");
     // free up the requests for each ImageView
     [cell.profilePicture cancelCurrentImageLoad];
     [cell.rightProduct cancelCurrentImageLoad];
@@ -797,9 +797,9 @@
 - (void)scrollViewDidEndDecelerating:(UITableView *)tableView {
     float bottomEdge = self.tableView.contentOffset.y + self.tableView.frame.size.height;
     if (bottomEdge >= self.tableView.contentSize.height - 50)  {
-        //NSLog(@"at the very end");
+        NSLog(@"at the very end");
         // what to do here
-        //NSLog(@"Getting new feed objects: ");
+        NSLog(@"Getting new feed objects: ");
         if (!self.reloadingFeedObject) {
             self.reloadingFeedObject = YES;
             [self getFeedObjects];
@@ -861,7 +861,7 @@
 }
 
 - (IBAction)refresh:(id)sender {
-    //NSLog(@"In refresh!");
+    NSLog(@"In refresh!");
     self.feedObjects = [NSMutableArray array];
     self.readStatus = [[NSMutableDictionary alloc] init];
     [self getFeedObjects];
@@ -877,7 +877,7 @@
 //to view the members of a group
 - (IBAction)viewMembers:(id)sender
 {
-    //NSLog(@"Viewing the members of the group");
+    NSLog(@"Viewing the members of the group");
     
     //loads the popup
     self.popup = [[MembersView alloc] initWithData:self.group];

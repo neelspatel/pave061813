@@ -489,7 +489,7 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
             }
 
             if (error) {
-                //NSLog(@"%@ %@: %@", [self class], NSStringFromSelector(_cmd), error);
+                NSLog(@"%@ %@: %@", [self class], NSStringFromSelector(_cmd), error);
             }
         }
     }

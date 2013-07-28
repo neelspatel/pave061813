@@ -32,7 +32,7 @@
 
 -(IBAction) submitLeft:(id)sender
 {
-    //NSLog(@"Just submitted left");
+    NSLog(@"Just submitted left");
 }
 
 
@@ -47,20 +47,20 @@
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     FBSession* session = delegate.session;
     
-    //NSLog(@"Session in post to fb is %@", session);
+    NSLog(@"Session in post to fb is %@", session);
     
     
     [FBWebDialogs presentRequestsDialogModallyWithSession:session
                                                   message:@"I just answered a question about you. Check out what I said on Side!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
               if (error) {
-                  //NSLog(@"Error");
+                  NSLog(@"Error");
                   // Case A: Error launching the dialog or sending request.
               } else {
                   if (result == FBWebDialogResultDialogNotCompleted) {
                       //Case B: User clicked the "x" icon
-                      //NSLog(@"closed");
+                      NSLog(@"closed");
                   } else {
-                      //NSLog(@"Sent");
+                      NSLog(@"Sent");
                       //Case C: Dialog shown and the user clicks Cancel or Send
                   }
               }

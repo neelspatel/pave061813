@@ -14,7 +14,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        //NSLog(@"Changing cell style..");
+        NSLog(@"Changing cell style..");
         self.imageView.image = [UIImage imageNamed:@"unselected_one_trending_topic_box.png"];
         self.imageView.highlightedImage = [UIImage imageNamed:@"selected_trending_topic_box.png"];
     }
