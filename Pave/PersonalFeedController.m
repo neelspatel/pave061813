@@ -587,6 +587,7 @@
             shareParams.picture= [NSURL URLWithString:@"http://getsideapp.com/icon.png"];
             shareParams.description = [NSString stringWithFormat:@"I just asked \"%@\" on Side. What do you think?", currentObject[@"question_text"]];
             
+            /**
             if ([FBDialogs canPresentShareDialogWithParams:shareParams]){
                 
                 [FBDialogs presentShareDialogWithParams:shareParams
@@ -627,6 +628,33 @@
                          }
                      }}];
             }
+             */
+            
+            // Prepare the web dialog parameters
+            NSDictionary *params = @{
+                                     @"name" : shareParams.name,
+                                     @"caption" : shareParams.caption,
+                                     @"description" : shareParams.description,
+                                     @"picture" : @"https://getsideapp.com/icon.png",
+                                     @"link" : @"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"
+                                     };
+            
+            // Invoke the dialog
+            NSLog(@"Forcing web dialog");
+            
+            [FBWebDialogs presentFeedDialogModallyWithSession:session
+                                                   parameters:params
+                                                      handler:
+             ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                 if (error) {
+                     NSLog(@"Error publishing story.");
+                 } else {
+                     if (result == FBWebDialogResultDialogNotCompleted) {
+                         NSLog(@"User canceled story publishing.");
+                     } else {
+                         NSLog(@"Story published.");
+                     }
+                 }}];
 
             
         }
@@ -634,9 +662,41 @@
     }
 }
 
+- (void) clearOldRequests
+{
+ 
+    if([self.currentTable isEqualToString:@"answers"])
+    {
+        NSString *path = @"/data/getallfeedobjects/";
+        path = [path stringByAppendingString:[[NSUserDefaults standardUserDefaults] objectForKey:@"id"]];
+        path = [path stringByAppendingString:@"/"];
+        
+        [[PaveAPIClient sharedClient] cancelAllHTTPOperationsWithMethod:@"POST" path:path];
+    }
+    else if([self.currentTable isEqualToString:@"ugQuestions"])
+    {
+        NSString *path = @"/data/getugquestionslist/";
+        path = [path stringByAppendingString:[[NSUserDefaults standardUserDefaults] objectForKey:@"id"]];
+        path = [path stringByAppendingString:@"/"];
+        
+        [[PaveAPIClient sharedClient] cancelAllHTTPOperationsWithMethod:@"POST" path:path];
+    }
+    else if([self.currentTable isEqualToString:@"recs"])
+    {
+        NSString *path = @"/data/getreclist/";
+        path = [path stringByAppendingString:[[NSUserDefaults standardUserDefaults] objectForKey:@"id"]];
+        path = [path stringByAppendingString:@"/"];
+        
+        [[PaveAPIClient sharedClient] cancelAllHTTPOperationsWithMethod:@"POST" path:path];
+    }
+     
+    
+}
+
 //logic for switching in the buttons and tables
 - (IBAction)viewAnswers:(id)sender
-{
+{    
+    
     NSString *current_time = [NSString stringWithFormat:@"%.0f",  [[NSDate date] timeIntervalSince1970] * 1000];
     [Flurry logEvent: @"Profile Answers View" withParameters:[NSDictionary dictionaryWithObject:current_time forKey:@"time"]];
     
@@ -646,9 +706,10 @@
 
     //change the button
     [self.answersButton setImage:[UIImage imageNamed:@"selected_answers_about_me.png"] forState:UIControlStateNormal];
-    [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me.png"] forState:UIControlStateNormal];
+    [self.insightsButton setImage:[UIImage imageNamed:@"1.01_insights_for_me2.png"] forState:UIControlStateNormal];
     [self.questionsButton setImage:[UIImage imageNamed:@"unselected_questions_by_me.png"] forState:UIControlStateNormal];
 
+    [self clearOldRequests];
     
     self.currentTable = @"answers";
     [self changeTable];
@@ -668,6 +729,8 @@
     [self.insightsButton setImage:[UIImage imageNamed:@"selected_insights_for_me.png"] forState:UIControlStateNormal];
     [self.questionsButton setImage:[UIImage imageNamed:@"unselected_questions_by_me.png"] forState:UIControlStateNormal];
 
+    [self clearOldRequests];    
+    
     self.currentTable = @"recs";
     NSLog(@"About to change table");
     [self changeTable];
@@ -685,8 +748,10 @@
 
     //change the button
     [self.answersButton setImage:[UIImage imageNamed:@"unselected_answers_about_me.png"] forState:UIControlStateNormal];
-    [self.insightsButton setImage:[UIImage imageNamed:@"unselected_insights_for_me.png"] forState:UIControlStateNormal];
+    [self.insightsButton setImage:[UIImage imageNamed:@"1.01_insights_for_me2.png"] forState:UIControlStateNormal];
     [self.questionsButton setImage:[UIImage imageNamed:@"selected_questions_by_me.png"] forState:UIControlStateNormal];
+    
+    [self clearOldRequests];    
     
     self.currentTable = @"ugQuestions";
     
@@ -911,11 +976,14 @@
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
-                                               NSLog(@"error logging in user to Django %@", error);
-                                               self.reloadingFeedObject = NO;
-                                               //shows the alert
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
-                                               [alert show];
+                                               if(error.code != -999)
+                                               {
+                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   self.reloadingFeedObject = NO;
+                                                   //shows the alert
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your current answers." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                                   [alert show];
+                                               }
                                            }];
         }
         else if([self.currentTable isEqualToString:@"recs"])
@@ -961,11 +1029,15 @@
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
-                                               NSLog(@"error logging in user to Django %@", error);
-                                               self.reloadingFeedObject = NO;
-                                               //shows the alert
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
-                                               [alert show];
+                                               
+                                               if(error.code != -999)
+                                               {
+                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   self.reloadingFeedObject = NO;
+                                                   //shows the alert
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your current recommendations." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                                   [alert show];
+                                               }
                                            }];
         }
         else
@@ -1010,11 +1082,14 @@
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
 
-                                               NSLog(@"error logging in user to Django %@", error);
-                                               self.reloadingFeedObject = NO;
-                                               //shows the alert
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
-                                               [alert show];
+                                               if(error.code != -999)
+                                               {
+                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   self.reloadingFeedObject = NO;
+                                                   //shows the alert
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your current questions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                                   [alert show];
+                                               }
                                            }];
         }
         
@@ -1076,10 +1151,14 @@
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
                                                NSLog(@"error getting feed objects %@", error);
-                                               self.reloadingFeedObject = NO;
-                                               //shows the alert
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
-                                               [alert show];
+                                               
+                                               if(error.code != -999)
+                                               {
+                                                   self.reloadingFeedObject = NO;
+                                                   //shows the alert
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your current answers." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                                   [alert show];
+                                               }
                                            }];
         }
         else if([self.currentTable isEqualToString:@"recs"])
@@ -1120,12 +1199,17 @@
                     
                 } }
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                               
                                                [self hideLoadingBar];
-                                               NSLog(@"error logging in user to Django %@", error);
-                                               self.reloadingFeedObject = NO;
-                                               //shows the alert
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
-                                               [alert show];
+                                               
+                                               if(error.code != -999)
+                                               {
+                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   self.reloadingFeedObject = NO;
+                                                   //shows the alert
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your recs." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                                   [alert show];
+                                               }
                                            }];
         }
         else
@@ -1166,11 +1250,14 @@
                                            failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                                [self hideLoadingBar];
                                                
-                                               NSLog(@"error logging in user to Django %@", error);
-                                               self.reloadingFeedObject = NO;
-                                               //shows the alert
-                                               UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your feed results." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
-                                               [alert show];
+                                               if(error.code != -999)
+                                               {
+                                                   NSLog(@"error logging in user to Django %@", error);
+                                                   self.reloadingFeedObject = NO;
+                                                   //shows the alert
+                                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error getting feed" message:@"Sorry, there was an error getting your questions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Try Again", nil];
+                                                   [alert show];
+                                               }
                                            }];
         }
         
@@ -1202,7 +1289,7 @@
     UITabBar *tabBar = (UITabBar *)self.tabBarController.tabBar;
     
     [[tabBar.items objectAtIndex:0] setBadgeValue:nil];
-    [super viewDidDisappear:animated];
+    [super viewDidAppear:animated];
     [Flurry logEvent:@"Profile Time" withParameters:nil timed:YES];
 }
 
@@ -1626,7 +1713,7 @@
                 NSString *newtext = currentObject[@"text"];
                 
                 //sets the background
-                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"recommendation_for_you.png"]];
+                cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"profile_insight_background.png"]];
                 
                 cell.text.text = newtext;
                 cell.level.text = [NSString stringWithFormat:@"level %@", currentObject[@"level"] ];

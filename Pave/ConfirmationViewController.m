@@ -106,6 +106,7 @@
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.questionText forKey:@"text"];
     [Flurry logEvent:@"Question Facebook Timeline" withParameters:dict timed:YES];
+    /**
     if ([FBDialogs canPresentShareDialogWithParams:shareParams]){
         
         [FBDialogs presentShareDialogWithParams:shareParams
@@ -159,6 +160,39 @@
                  }
              }}];
     }
+     */
+    
+    NSLog(@"Forced On web dialog");
+    
+    // Prepare the web dialog parameters
+    NSDictionary *params = @{
+                             @"name" : shareParams.name,
+                             @"caption" : shareParams.caption,
+                             @"description" : shareParams.description,
+                             @"picture" : @"http://getsideapp.com/icon.png",
+                             @"link" : @"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"
+                             };
+    
+    // Invoke the dialog
+    [FBWebDialogs presentFeedDialogModallyWithSession:session
+                                           parameters:params
+                                              handler:
+     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+         if (error) {
+             [dict setObject:@"True" forKey:@"Failed"];
+             [Flurry endTimedEvent:@"Question Facebook Timeline" withParameters:dict];
+             NSLog(@"Error publishing story.");
+         } else {
+             if (result == FBWebDialogResultDialogNotCompleted) {
+                 NSLog(@"User canceled story publishing.");
+                 [dict setObject:@"True" forKey:@"Cancelled"];
+                 [Flurry endTimedEvent:@"Question Facebook Timeline" withParameters:dict];
+             } else {
+                 NSLog(@"Story published.");
+                 [dict setObject:@"True" forKey:@"Completed"];
+                 [Flurry endTimedEvent:@"Question Facebook Timeline" withParameters:dict];
+             }
+         }}];
 
 }
 

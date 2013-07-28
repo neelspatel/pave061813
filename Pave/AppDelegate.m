@@ -65,23 +65,12 @@
     tabBarItem3.title = @"";
     tabBarItem4.title = @"";
     tabBarItem5.title = @"";
-
     
     tabBarItem1.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     tabBarItem2.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     tabBarItem3.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     tabBarItem4.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     tabBarItem5.imageInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-
-    
-    /**
-    tabBarItem1.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
-    tabBarItem2.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
-    tabBarItem3.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
-    tabBarItem4.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
-    tabBarItem5.imageInsets = UIEdgeInsetsMake(0, 0, -8, 0);
-    */
-     
     tabBarController.selectedIndex = 2;
     
     self.tabBarController = tabBarController;
@@ -91,7 +80,7 @@
     // FB Login
     NSArray *permissionsArray = @[ @"email", @"user_likes", @"user_interests", @"user_about_me", @"user_birthday", @"friends_about_me", @"friends_interests", @"read_stream"];
     
-    self.session = [[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:nil tokenCacheStrategy:nil];
+    self.session = [[FBSession alloc] initWithAppID:@"545929018807731" permissions:permissionsArray defaultAudience:nil urlSchemeSuffix:@"app" tokenCacheStrategy:nil];
     
     //timer to check for notifications
     NSTimer* myTimer = [NSTimer scheduledTimerWithTimeInterval: 30.0 target: self
@@ -238,6 +227,8 @@
                         NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
                     }
+                    
+                    self.currentStatusScore = 30;
                     
                     
                     // broadcast notification to everyone

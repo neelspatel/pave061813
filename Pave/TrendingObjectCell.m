@@ -48,6 +48,7 @@
     shareParams.picture= [NSURL URLWithString:@"https://getsideapp.com/icon.png"];
     shareParams.description = @"Answer quick, 2-choice questions about your closest Facebook friends and see all of their answers about you. Get answers, give feedback, and learn about yourself. Plus, it’s fun!";
     
+    /**
     if ([FBDialogs canPresentShareDialogWithParams:shareParams]){
         
         [FBDialogs presentShareDialogWithParams:shareParams
@@ -88,6 +89,32 @@
                  }
              }}];
     }
+    */
+    
+    //force web dialog
+    // Prepare the web dialog parameters
+    NSDictionary *params = @{
+                             @"name" : shareParams.name,
+                             @"caption" : shareParams.caption,
+                             @"description" : shareParams.description,
+                             @"picture" : @"https://getsideapp.com/icon.png",
+                             @"link" : @"https://itunes.apple.com/us/app/side/id665955920?ls=1&mt=8"
+                             };
+    
+    // Invoke the dialog
+    [FBWebDialogs presentFeedDialogModallyWithSession:session
+                                           parameters:params
+                                              handler:
+     ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+         if (error) {
+             NSLog(@"Error publishing story.");
+         } else {
+             if (result == FBWebDialogResultDialogNotCompleted) {
+                 NSLog(@"User canceled story publishing.");
+             } else {
+                 NSLog(@"Story published.");
+             }
+         }}];
     
     
 }
