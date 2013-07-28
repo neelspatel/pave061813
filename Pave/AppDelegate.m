@@ -144,10 +144,7 @@
                         self.currentStatusScore = status_score;
                         NSDictionary *data = [NSDictionary dictionaryWithObjectsAndKeys: @(status_score), @"status_score", nil];
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshStatusScore" object:nil userInfo: data];
-                    }
-                    
-                    self.currentStatusScore = 30;
-                    
+                    }                    
                     
                     // broadcast notification to everyone
                     if ((self.currentStatusScore >= 100) && (!self.notificationPopupIsOpen))

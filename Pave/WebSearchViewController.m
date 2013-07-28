@@ -13,6 +13,7 @@
 #import "JSONAPIClient.h"
 #import "UIImageView+WebCache.h"
 #import "Flurry.h"
+#import "MBProgressHUD.h"
 
 @interface WebSearchViewController ()
 
@@ -99,19 +100,34 @@
     NSMutableDictionary *eventDict = [NSMutableDictionary dictionaryWithDictionary:params];
     [Flurry logEvent:@"Web Image Seaerch" withParameters:eventDict timed:YES];
     
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
     [[JSONAPIClient sharedClient] postPath:path parameters:params success:^(AFHTTPRequestOperation *operation, id results) {
         if (results) {
-            //NSLog(@"Got image results: %@", results);
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            NSLog(@"Got image results: %@", results);
             self.results = results;
             [self.collection reloadData];
             [Flurry endTimedEvent:@"Web Image Search" withParameters:eventDict];
-        }
+        }        
     }
     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        
+        NSLog(@"No results");
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No results found" message:@"Sorry, there were no results found for your search. Please try again!" delegate:self cancelButtonTitle:@"Thanks" otherButtonTitles: nil];
+        [alert show];
+        
         [eventDict setValue: @"True" forKey:@"Failed"];
         [Flurry endTimedEvent:@"Web Image Search" withParameters:eventDict];
     }];
     
+}
+
+//alert messages
+//This medthod Controls the actions that the UIAlertView's buttons carry out
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{    
 }
 
 - (void)didReceiveMemoryWarning

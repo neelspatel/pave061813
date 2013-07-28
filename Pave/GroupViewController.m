@@ -36,7 +36,8 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     //self.tableView.editing = YES;
-    [Flurry logEvent: @"Group List Time" withParameters:nil timed:YES];
+    [Flurry logEvent: @"Group List Time" withParameters:nil timed:YES];        
+    
     [super viewDidAppear:animated];
 }
 
@@ -81,6 +82,9 @@
 
     [self.tableView deselectRowAtIndexPath:[self.tableView  indexPathForSelectedRow] animated:animated];
     [self.tableView reloadData];
+    
+    //turns off editing
+    [self.tableView setEditing:FALSE animated:FALSE];
     
     [self.sbar redrawBar];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(requestInsight:) name:@"insightReady" object:nil];

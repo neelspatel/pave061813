@@ -857,7 +857,7 @@
     [Flurry logEvent:@"Profile Invite Friends" withParameters:nil timed:YES];
     
     [FBWebDialogs presentRequestsDialogModallyWithSession:nil
-      message:[NSString stringWithFormat:@"Get Side, the hottest new social discovery app!"]
+      message:[NSString stringWithFormat:@"Download Side to see personal recommendations based on questions your friends are answering about you!"]
         title:nil
    parameters:params
       handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
@@ -1289,6 +1289,9 @@
     UITabBar *tabBar = (UITabBar *)self.tabBarController.tabBar;
     
     [[tabBar.items objectAtIndex:0] setBadgeValue:nil];
+    
+    [self changeTable];
+    
     [super viewDidAppear:animated];
     [Flurry logEvent:@"Profile Time" withParameters:nil timed:YES];
 }
@@ -1906,7 +1909,18 @@
                     cell.leftNumber.text = [currentObject[@"product_1_count"] stringValue];
                     cell.rightNumber.text = [currentObject[@"product_2_count"] stringValue];
                     
-                }                
+                }
+                
+                
+                //shows the tie case if necessary
+                if([currentObject[@"product_1_count"] integerValue]== [currentObject[@"product_2_count"] integerValue])
+                {
+                    [cell.rightDetail setImage:[UIImage imageNamed: @"GREEN_COUNT_UGC_BUTTON.png"]];
+                }
+                else
+                {
+                    [cell.rightDetail setImage:[UIImage imageNamed: @"RED_COUNT_UGC_BUTTON.png"]];
+                }
                 
                 //touch listener
                 [cell.detail addTarget:self action:@selector(handleTap:event:) forControlEvents:UIControlEventTouchUpInside];

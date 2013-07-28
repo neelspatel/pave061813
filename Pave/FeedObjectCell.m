@@ -51,7 +51,7 @@
     
     
     [FBWebDialogs presentRequestsDialogModallyWithSession:session
-          message:@"Ever wondered what people think about you? I'll tell you if you download Side!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
+                                                  message:@"I just answered a question about you. Check out what I said on Side!" title:nil parameters:paramsForFB handler:^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
               if (error) {
                   NSLog(@"Error");
                   // Case A: Error launching the dialog or sending request.
