@@ -77,7 +77,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     //first reload the data
-    //NSLog(@"View did appear in training");
+    ////NSLog(@"View did appear in training");
     //[self reloadData];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -90,7 +90,7 @@
 
 -(void) viewWillDisappear:(BOOL) animated
 {
-    //NSLog(@"Leaving and cancelling");
+    ////NSLog(@"Leaving and cancelling");
     [[NSNotificationCenter defaultCenter] removeObserver: self name:@"insightReady" object:nil];
     [self.profilePicture cancelCurrentImageLoad];
     [self.rightProduct cancelCurrentImageLoad];
@@ -102,7 +102,7 @@
 
 -(void) requestInsight:(NSNotification *) notification
 {
-    //NSLog(@"Getting called request insight in training");
+    ////NSLog(@"Getting called request insight in training");
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     // hit the endpoint
     NSString *path = @"/data/getnewrec/";
@@ -112,14 +112,14 @@
     [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
         if (results)
         {
-            //NSLog(@"Got rec results as %@", results);
+            ////NSLog(@"Got rec results as %@", results);
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self createNotificationPopup:[NSDictionary dictionaryWithObjectsAndKeys:[results objectForKey:@"text"], @"rec_text", [results objectForKey:@"url"], @"url", nil]];
             });
         }
     }
                                    failure: ^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       //NSLog(@"Failure while getting rec");
+                                       ////NSLog(@"Failure while getting rec");
                                    }
      ];
     [Flurry logEvent: @"Notification requested"];
@@ -142,7 +142,7 @@
     [self.rightProduct cancelCurrentImageLoad];
     [self.leftProduct cancelCurrentImageLoad];
     
-    //NSLog(@"About to clear all vars");
+    ////NSLog(@"About to clear all vars");
     
     //clears the data on screen (just in case...)
     self.question.text = @"";
@@ -153,21 +153,21 @@
     //increments the count
     self.currentNumber += 1;
 
-    //NSLog(@"About to refresh");
+    ////NSLog(@"About to refresh");
     [self refreshScreen];
 }
 
 //detects taps
 - (IBAction)leftTap:(id)sender
 {
-    //NSLog(@"Just tapped the left one...");
+    ////NSLog(@"Just tapped the left one...");
     [self answer:@"left"];
 }
 
 //detects taps
 - (IBAction)rightTap:(id)sender
 {
-    //NSLog(@"Just tapped the right one...");
+    ////NSLog(@"Just tapped the right one...");
     [self answer:@"right"];    
 }
 
@@ -203,16 +203,16 @@
         params = [NSDictionary dictionaryWithObjectsAndKeys: [defaults objectForKey:@"id"], @"id_facebookID", [defaults objectForKey:@"id"], @"id_forFacebookID", [NSString stringWithFormat:@"%d", self.rightProductId], @"id_chosenProduct", [NSString stringWithFormat:@"%d", self.leftProductId], @"id_wrongProduct", [NSString stringWithFormat:@"%d", self.questionId], @"id_question", @"true", @"is_training", nil];
     }
     
-    //NSLog(@"params;%@", params);
+    ////NSLog(@"params;%@", params);
     
     [[PaveAPIClient sharedClient] postPath:@"/data/newanswer"
                                 parameters:params success:^(AFHTTPRequestOperation *operation, id JSON) {
-                                    //NSLog(@"successfully saved answer");
+                                    ////NSLog(@"successfully saved answer");
                                     [self refreshScreen];
                                     
                                     
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    //NSLog(@"error saving answer %@", error);
+                                    ////NSLog(@"error saving answer %@", error);
                                     [self refreshScreen];
                                 }];
     
@@ -223,7 +223,7 @@
     //if we're in the process of reloading, wait 10 sec and try again
     if(self.reloadingFeedObject)
     {
-        //NSLog(@"Refreshing right now");
+        ////NSLog(@"Refreshing right now");
         //[self performSelector:@selector(refreshScreen) withObject:nil afterDelay:0.5];
     }
     else if(self.currentNumber < self.feedObjects.count) //otherwise if we have the data
@@ -232,7 +232,7 @@
         [self.leftProduct cancelCurrentImageLoad];
         [self.rightProduct cancelCurrentImageLoad];
         
-        //NSLog(@"We have the data");
+        ////NSLog(@"We have the data");
         NSMutableDictionary *currentObject = [self.feedObjects objectAtIndex:self.currentNumber];
         
         //updates the levels
@@ -320,7 +320,7 @@
                                 [self.check removeFromSuperview];
                             }
                             @catch (NSException * e) {
-                                //NSLog(@"Exception: %@", e);
+                                ////NSLog(@"Exception: %@", e);
                             }
 */
                             
@@ -344,14 +344,14 @@
     }
     else //if we ran out of data
     {
-        //NSLog(@"Getting new data - ran out");
+        ////NSLog(@"Getting new data - ran out");
         [self reloadData];
     }
 }
 
 - (void)reloadData
 {
-    //NSLog(@"Getting feed objects now in training");
+    ////NSLog(@"Getting feed objects now in training");
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     self.reloadingFeedObject = YES;
@@ -359,7 +359,7 @@
     [MBProgressHUD hideHUDForView:self.view animated:YES];
     
     
-    //NSLog(@"About to get feed objects");
+    ////NSLog(@"About to get feed objects");
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //NSString *path = @"/data/getlistquestions/";
@@ -368,7 +368,7 @@
     path = [path stringByAppendingString:[defaults objectForKey:@"id"]];
     //path = [path stringByAppendingString:@"1"];
     path = [path stringByAppendingString:@"/"];
-    //NSLog(@"Path is %@", path);
+    ////NSLog(@"Path is %@", path);
     
     [[PaveAPIClient sharedClient] postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id results) {
         if (results) {
@@ -377,16 +377,16 @@
             //{
             //    [ids addObject:current[@"id"]];
             //}
-            ////NSLog(@"Just finished getting results: %@", results);
+            //////NSLog(@"Just finished getting results: %@", results);
             self.feedObjects = [self.feedObjects arrayByAddingObjectsFromArray:results];
-            ////NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
+            //////NSLog(@"Just finished getting feed ids: %@", self.feedObjects);
             self.reloadingFeedObject = NO;
 
             [self refreshScreen];
             
         } }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       //NSLog(@"error getting feed objects from database %@", error);
+                                       ////NSLog(@"error getting feed objects from database %@", error);
                                    }];
 
 
@@ -415,17 +415,17 @@
                                                       if (error) {
                                                           // Case A: Error launching the dialog or sending request.
                                                           [Flurry endTimedEvent:@"Training Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Error"]];
-                                                          //NSLog(@"Error sending request.");
+                                                          ////NSLog(@"Error sending request.");
                                                       } else {
                                                           if (result == FBWebDialogResultDialogNotCompleted) {
                                                               // Case B: User clicked the "x" icon
                                                               [Flurry endTimedEvent:@"Training Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Cancelled"]];
                                                               
-                                                              //NSLog(@"User canceled request.");
+                                                              ////NSLog(@"User canceled request.");
                                                           } else {
                                                               [Flurry endTimedEvent:@"Training Invite Friends" withParameters:[NSDictionary dictionaryWithObject:@"true" forKey:@"Completed"]];
                                                               
-                                                              //NSLog(@"Request Sent.");
+                                                              ////NSLog(@"Request Sent.");
                                                           }
                                                       }}];
     

@@ -79,13 +79,13 @@
 
 -(void) redrawBarFromNotification:(NSNotification *) notification
 {
-    NSLog(@"Notification recieved in status bar");
+    //NSLog(@"Notification recieved in status bar");
     [self redrawBar];
 }
 
 -(void) resetBar
 {
-    NSLog(@"Resetting bar");
+    //NSLog(@"Resetting bar");
     
     for (UIImageView *imageView in self.subviews)
     {
@@ -110,7 +110,7 @@
                     [imageView setImage: self.offBulb];
                 else
                 {
-                    NSLog(@"OFF BULB");
+                    //NSLog(@"OFF BULB");
                     [imageView setImage: self.offCircle];
                 }
             }
@@ -122,12 +122,12 @@
 // function to call to draw the status bar to the correct
 -(void) redrawBar
 {
-    NSLog(@"About to redraw the bar");
+    //NSLog(@"About to redraw the bar");
     AppDelegate* delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     self.statusScore = delegate.currentStatusScore;
     
     NSInteger num_bars = self.statusScore / 10;
-    NSLog(@"Number of bars: %d", delegate.currentStatusScore);
+    //NSLog(@"Number of bars: %d", delegate.currentStatusScore);
     
     // make sure that we never go over
     if (num_bars > 10)
