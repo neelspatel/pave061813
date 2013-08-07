@@ -1472,6 +1472,7 @@
                 {
                     //NSLog(@"Putting something in for bototm cell");
                     
+                    /**
                     static NSString *CellIdentifier = @"AnswersCell";
                     AnswersCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
                     if (!cell) {
@@ -1481,9 +1482,20 @@
                     
                     
                     
-                    cell.question.hidden = NO;                                                          
+                    cell.question.hidden = NO;
                     
-                    cell.question.text = @"OH hey, at bottom";
+                    cell.name.text = @"";
+                    cell.question.text = @"";
+                    cell.leftProduct.image = [[UIImage alloc] init];
+                    cell.rightProduct.image = [[UIImage alloc] init];
+                    return cell;
+                     */
+                    
+                    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+                    if (!cell) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+                        // More initializations if needed.
+                    }
                     return cell;
                 }
                                 

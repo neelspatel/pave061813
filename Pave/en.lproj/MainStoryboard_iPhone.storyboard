@@ -3746,7 +3746,7 @@ we promise.</string>
                 <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="onOffButton" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="onOffButton" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="question" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="responseCount" candidateClass="UITextView"/>
@@ -3990,8 +3990,8 @@ we promise.</string>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="l43-7u-TdC"/>
         <segue reference="dVu-9J-WCR"/>
         <segue reference="ynT-c2-fcI"/>
-        <segue reference="l43-7u-TdC"/>
     </inferredMetricsTieBreakers>
 </document>
