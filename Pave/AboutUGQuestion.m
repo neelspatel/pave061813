@@ -129,22 +129,24 @@
     }
     NSArray * leftFriends = [self.data objectForKey:@"fbFriend1"];
     NSArray * rightFriends = [self.data objectForKey:@"fbFriend2"];
+    NSArray * leftNames = [self.data objectForKey:@"names1"];
+    NSArray * rightNames = [self.data objectForKey:@"names2"];
     
     cell.leftImage.clipsToBounds = YES;
     cell.rightImage.clipsToBounds = YES;
-    
-    NSArray *ids = [[NSUserDefaults standardUserDefaults] objectForKey:@"friends"];
-    NSArray *names = [[NSUserDefaults standardUserDefaults] objectForKey:@"names"];
     
     if (leftFriends.count > indexPath.row) // if we have something
     {
         //gets the id and name as a string
         NSString * currentID = [leftFriends objectAtIndex:indexPath.row];
-        NSArray *ids = [[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"];
+        
+        /**NSArray *ids = [[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"];
         NSArray *names = [[NSUserDefaults standardUserDefaults] objectForKey:@"names"];
         
         int index = [ids indexOfObject:currentID];
         NSString *name = [names objectAtIndex: index];
+         */
+        NSString *name = [leftNames objectAtIndex:indexPath.row];
         
         cell.leftName.text = name;
         
@@ -163,11 +165,14 @@
     {                
         //gets the id and name as a string
         NSString * currentID = [rightFriends objectAtIndex:indexPath.row];
+        /**
         NSArray *ids = [[NSUserDefaults standardUserDefaults] objectForKey:@"friendsStrings"];
         NSArray *names = [[NSUserDefaults standardUserDefaults] objectForKey:@"names"];
         
         int index = [ids indexOfObject:currentID];
         NSString *name = [names objectAtIndex: index];
+         */
+        NSString *name = [rightNames objectAtIndex:indexPath.row];
         
         cell.rightName.text = name;
         

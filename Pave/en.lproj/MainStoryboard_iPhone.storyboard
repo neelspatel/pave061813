@@ -974,6 +974,12 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="top_profilebox@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="hXL-vU-ovF">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="81" id="5ya-FO-K06"/>
+                                    <constraint firstAttribute="width" constant="310" id="7hD-ub-8ES"/>
+                                </constraints>
+                            </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="185" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="FhT-Na-l8g">
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="deviceRGB"/>
                                 <constraints>
@@ -1535,12 +1541,6 @@
                             <activityIndicatorView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="8hJ-dE-CWr">
                                 <color key="color" red="0.25098039220000001" green="0.42745098040000001" blue="0.8862745098" alpha="1" colorSpace="deviceRGB"/>
                             </activityIndicatorView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="top_profilebox@2x.png" translatesAutoresizingMaskIntoConstraints="NO" id="hXL-vU-ovF">
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="81" id="5ya-FO-K06"/>
-                                    <constraint firstAttribute="width" constant="310" id="7hD-ub-8ES"/>
-                                </constraints>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="_0001_james_profile.png" translatesAutoresizingMaskIntoConstraints="NO" id="wl3-15-fGN">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="79" id="314-hU-EU8"/>
@@ -1661,6 +1661,7 @@
                             <constraint firstItem="vrM-3r-wbc" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" type="default" id="Tm1-eC-5MK"/>
                             <constraint firstItem="hWm-no-EuD" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="10" id="Tmb-Vn-7Km"/>
                             <constraint firstItem="Nns-mr-F97" firstAttribute="top" secondItem="3T4-jM-juf" secondAttribute="top" constant="4" id="UZd-kC-L8p"/>
+                            <constraint firstItem="hXL-vU-ovF" firstAttribute="centerX" secondItem="tna-do-WwW" secondAttribute="centerX" type="default" id="Yot-bO-uYZ"/>
                             <constraint firstItem="Ht9-zW-oln" firstAttribute="baseline" secondItem="vif-Og-X60" secondAttribute="baseline" type="default" id="a0H-Ue-Dus"/>
                             <constraint firstItem="8hY-Rc-ceX" firstAttribute="trailing" secondItem="6pg-Ep-aV0" secondAttribute="trailing" type="default" id="bOv-TT-3VZ"/>
                             <constraint firstAttribute="trailing" secondItem="aE7-au-WHw" secondAttribute="trailing" constant="112" id="bSd-3U-6Q4"/>
@@ -1675,7 +1676,6 @@
                             <constraint firstItem="FhT-Na-l8g" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" type="default" id="lfz-Zv-bYP"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="bottom" secondItem="mEU-D9-l1J" secondAttribute="bottom" type="default" id="nCI-2w-N0c"/>
                             <constraint firstItem="Ht9-zW-oln" firstAttribute="trailing" secondItem="3T4-jM-juf" secondAttribute="trailing" type="default" id="oTR-Og-jYm"/>
-                            <constraint firstItem="hXL-vU-ovF" firstAttribute="centerX" secondItem="tna-do-WwW" secondAttribute="centerX" type="default" id="ofn-2e-QDV"/>
                             <constraint firstItem="tna-do-WwW" firstAttribute="centerX" secondItem="vrM-3r-wbc" secondAttribute="centerX" type="default" id="qzV-l0-dxe"/>
                             <constraint firstItem="Lue-7N-5Df" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="13" id="rg0-hk-SaX"/>
                             <constraint firstItem="fzw-ua-DSv" firstAttribute="leading" secondItem="3T4-jM-juf" secondAttribute="leading" constant="132" id="u5k-EU-reg"/>
@@ -2783,14 +2783,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="267"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mmr-zX-f4s">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="sizedplaceholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="Mmr-zX-f4s">
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="154" type="user" id="JsV-y0-bSN"/>
                                                         <constraint firstAttribute="width" constant="154" type="user" id="MfT-3v-xoq"/>
                                                         <constraint firstAttribute="height" constant="138" type="user" id="XbD-b8-ilz"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="jGh-zb-pbY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="sizedplaceholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="jGh-zb-pbY">
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="154" type="user" id="far-1a-OgR"/>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="154" type="user" id="h2O-OS-apy"/>
@@ -3049,6 +3049,7 @@
                                 </constraints>
                             </imageView>
                             <imageView contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="puY-hA-3LF">
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="138" type="user" id="oXf-ji-uZc"/>
@@ -3065,6 +3066,7 @@
                                 </constraints>
                             </imageView>
                             <imageView contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="qe9-Ja-Geq">
+                                <color key="backgroundColor" red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="deviceRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="138" type="user" id="2dE-4J-zpw"/>
@@ -3359,14 +3361,14 @@ we promise.</string>
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="267"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cv5-PU-zEo">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="sizedplaceholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="Cv5-PU-zEo">
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="154" type="user" id="0gI-Pp-9CZ"/>
                                                         <constraint firstAttribute="height" constant="138" type="user" id="QMF-S9-tJl"/>
                                                         <constraint firstAttribute="width" constant="154" type="user" id="hD8-JS-ofX"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Is9-ns-OgY">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="sizedplaceholder.png" translatesAutoresizingMaskIntoConstraints="NO" id="Is9-ns-OgY">
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="154" type="user" id="FPq-xe-qcw"/>
                                                         <constraint firstAttribute="width" constant="154" type="user" id="Ngp-BG-fvg"/>
@@ -3650,6 +3652,7 @@ we promise.</string>
         <image name="send_feedback_unselected.png" width="320" height="55"/>
         <image name="settings_icon@2x.png" width="35" height="35"/>
         <image name="share_timeline.png" width="16" height="16"/>
+        <image name="sizedplaceholder.png" width="450" height="300"/>
         <image name="suggestions_label.png" width="310" height="22"/>
         <image name="take_photo_button.png" width="223" height="55"/>
         <image name="top_bar@2x.png" width="640" height="91"/>
@@ -3661,337 +3664,14 @@ we promise.</string>
         <image name="v1.01_facebook_button.png" width="143" height="143"/>
         <image name="v1.101_launch_dividing_bar.png" width="36" height="2"/>
     </resources>
-    <classes>
-        <class className="AddFriendCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddFriendCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="friendName" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="friendProfilePicture" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="AddGroupViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AddGroupViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="closeNamePopup:"/>
-                <relationship kind="action" name="createGroup:"/>
-                <relationship kind="action" name="showCreate:"/>
-                <relationship kind="outlet" name="addFriendsSearchBar" candidateClass="UISearchBar"/>
-                <relationship kind="outlet" name="addedFriendsTextField" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="createButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="groupName" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="popup" candidateClass="UIView"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="AnswersCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AnswersCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="agree" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="disagree" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="AskViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/AskViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="choosePicture:"/>
-                <relationship kind="action" name="closeOptions:"/>
-                <relationship kind="action" name="create:"/>
-                <relationship kind="action" name="leftAdd:"/>
-                <relationship kind="action" name="leftCancel:"/>
-                <relationship kind="action" name="rightAdd:"/>
-                <relationship kind="action" name="rightCancel:"/>
-                <relationship kind="action" name="takePicture:"/>
-                <relationship kind="outlet" name="addOptions" candidateClass="UIView"/>
-                <relationship kind="outlet" name="createButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftAddButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftCancelButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftSpinner" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="leftURLView" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="name" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="question" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="rightAddButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="rightCancelButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="rightImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightURLView" candidateClass="UITextField"/>
-            </relationships>
-        </class>
-        <class className="ChunkFiveLabel" superclassName="UILabel">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ChunkFiveLabel.h"/>
-        </class>
-        <class className="ConfirmationViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ConfirmationViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="askUs:"/>
-                <relationship kind="action" name="completeButtonPushed:"/>
-                <relationship kind="action" name="inviteFriends:"/>
-                <relationship kind="action" name="shareQuestion:"/>
-            </relationships>
-        </class>
-        <class className="FeedObjectCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/FeedObjectCell.h"/>
-            <relationships>
-                <relationship kind="action" name="facebookNotify:"/>
-                <relationship kind="action" name="switched:"/>
-                <relationship kind="outlet" name="facebookButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftCheck" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="onOffButton" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="responseCount" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="rightCheck" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightNum" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightX" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="GameController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GameController.h"/>
-            <relationships>
-                <relationship kind="action" name="inviteFriends:"/>
-                <relationship kind="action" name="sendEmail:"/>
-                <relationship kind="outlet" name="emailButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="GroupGameController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupGameController.h"/>
-            <relationships>
-                <relationship kind="action" name="backButtonPushed:"/>
-                <relationship kind="action" name="viewMembers:"/>
-                <relationship kind="outlet" name="refreshButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="GroupListCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupListCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="backgroundImage" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="groupMembers" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="groupName" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="GroupViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/GroupViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="addGroup:"/>
-                <relationship kind="action" name="editTableView:"/>
-                <relationship kind="outlet" name="addGroupButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="LatoBoldLabel" superclassName="UILabel">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LatoBoldLabel.h"/>
-        </class>
-        <class className="LatoBoldTextView" superclassName="UITextView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LatoBoldTextView.h"/>
-        </class>
-        <class className="LatoLightTextView" superclassName="UITextView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LatoLightTextView.h"/>
-        </class>
-        <class className="LatoRegularLabel" superclassName="UILabel">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LatoRegularLabel.h"/>
-        </class>
-        <class className="LatoRegularTextField" superclassName="UITextField">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LatoRegularTextField.h"/>
-        </class>
-        <class className="LatoRegularTextView" superclassName="UITextView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LatoRegularTextView.h"/>
-        </class>
-        <class className="LoginViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LoginViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="instructionButtonTouch:"/>
-                <relationship kind="action" name="loginButtonTouch:"/>
-                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="connectWith" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="dividingBar" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="instructionButton1" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="loginButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="loginInfo" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="PersonalFeedController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PersonalFeedController.h"/>
-            <relationships>
-                <relationship kind="action" name="changeTable:"/>
-                <relationship kind="action" name="inviteFriends:"/>
-                <relationship kind="action" name="logout:"/>
-                <relationship kind="action" name="refresh:"/>
-                <relationship kind="action" name="viewAnswers:"/>
-                <relationship kind="action" name="viewInsights:"/>
-                <relationship kind="action" name="viewQuestions:"/>
-                <relationship kind="outlet" name="answers" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="answersButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="answersLoading" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="answersTextField" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="insightsButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="insightsLoading" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="levelTextField" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="loading" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="logoutButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="name" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="profile" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="questionsButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="questionsLoading" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="questionsTextField" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="recs" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="tableViewBackground" candidateClass="UIView"/>
-                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
-                <relationship kind="outlet" name="ugQuestions" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="votesTextField" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-        <class className="RecsCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/RecsCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="agree" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="disagree" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="image" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="level" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="text" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="SettingsViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/SettingsViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="dismiss:"/>
-                <relationship kind="action" name="feedbackPushed:"/>
-                <relationship kind="action" name="invitePushed:"/>
-                <relationship kind="action" name="logoutPushed:"/>
-                <relationship kind="action" name="ratePushed:"/>
-            </relationships>
-        </class>
-        <class className="TrainingController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrainingController.h"/>
-            <relationships>
-                <relationship kind="action" name="inviteFriends:"/>
-                <relationship kind="action" name="leftTap:"/>
-                <relationship kind="action" name="rightTap:"/>
-                <relationship kind="action" name="skip:"/>
-                <relationship kind="outlet" name="leftActivityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="leftCheck" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftX" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="level" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightActivityIndicator" candidateClass="UIActivityIndicatorView"/>
-                <relationship kind="outlet" name="rightCheck" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightX" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="TrendingController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingController.h"/>
-            <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="outlet" name="backButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="header" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-                <relationship kind="outlet" name="topBar" candidateClass="UINavigationBar"/>
-            </relationships>
-        </class>
-        <class className="TrendingListCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingListCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="label" candidateClass="UILabel"/>
-            </relationships>
-        </class>
-        <class className="TrendingObjectCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingObjectCell.h"/>
-            <relationships>
-                <relationship kind="action" name="leftSend:"/>
-                <relationship kind="action" name="rightSend:"/>
-                <relationship kind="outlet" name="leftBackground" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftFacebookButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="leftNum" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="profilePicture" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="profilePictureBackground" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="responseCount" candidateClass="UITextView"/>
-                <relationship kind="outlet" name="rightBackground" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightFacebookButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="rightLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightNum" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="TrendingTopicsListViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrendingTopicsListViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="refresh:"/>
-                <relationship kind="outlet" name="refreshButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="tableView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="UGQuestionsCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UGQuestionsCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="detail" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftDetail" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="leftNumber" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="leftProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="question" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightDetail" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="rightNumber" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightProduct" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="share" candidateClass="UIButton"/>
-            </relationships>
-        </class>
-        <class className="UICollectionReusableView" superclassName="UIView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
-        </class>
-        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
-        </class>
-        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="WebImageCell" superclassName="UICollectionViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebImageCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="image" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="WebSearchViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/WebSearchViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="back:"/>
-                <relationship kind="action" name="search:"/>
-                <relationship kind="outlet" name="collection" candidateClass="UICollectionView"/>
-                <relationship kind="outlet" name="searchBar" candidateClass="UISearchBar"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="l43-7u-TdC"/>
-        <segue reference="dVu-9J-WCR"/>
+        <segue reference="DIQ-Ig-64G"/>
         <segue reference="ynT-c2-fcI"/>
+        <segue reference="l43-7u-TdC"/>
     </inferredMetricsTieBreakers>
 </document>

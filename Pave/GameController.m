@@ -29,7 +29,7 @@
 @implementation GameController
 
 - (void)viewDidLoad
-{
+{    
     [super viewDidLoad];
    
     // instantiate the status bar and set it to the right location
@@ -800,6 +800,9 @@
         
         // Configure the cell...
         cell.profilePicture.clipsToBounds = YES;
+        cell.leftProduct.clipsToBounds = YES;
+        cell.rightProduct.clipsToBounds = YES;
+
         [cell.rightX setHidden:TRUE];
         [cell.leftX setHidden:TRUE];
         [cell.rightCheck setHidden:TRUE];
